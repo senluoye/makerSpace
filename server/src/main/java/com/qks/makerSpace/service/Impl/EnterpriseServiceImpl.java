@@ -6,10 +6,7 @@ import com.qks.makerSpace.service.EnterpriseService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,11 +73,43 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Override
     public Map<String, Object> updateEnterprise(Map<String, Object> map) {
-        return null;
+        String enterpriseId = map.get("enterpriseId").toString();
+        if (enterpriseDao.updateEnterprise(
+                enterpriseId,
+                map.get("teamName").toString(),
+                map.get("head").toString(),
+                map.get("phone").toString(),
+                map.get("joinTime").toString(),
+                map.get("teamNumber").toString(),
+                map.get("characteristic").toString(),
+                map.get("kind").toString(),
+                map.get("field").toString(),
+                map.get("achievements").toString(),
+                map.get("scope").toString(),
+                map.get("income").toString(),
+                map.get("tax").toString(),
+                map.get("preferentialTax").toString(),
+                map.get("taxFree").toString(),
+                map.get("support").toString(),
+                map.get("supportAmount").toString(),
+                map.get("riskInvestment").toString(),
+                map.get("investmentAmount").toString(),
+                map.get("cooperation").toString(),
+                map.get("projectName").toString(),
+                map.get("projectAmount").toString(),
+                map.get("highTec").toString(),
+                map.get("tecSme").toString()
+        ) >= 1)
+            return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", enterpriseId), 0, "success");
+        else
+            return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");
     }
 
     @Override
     public Map<String, Object> deleteEnterprise(String id) {
-        return null;
+        if (enterpriseDao.deleteEnterprise(id) > 0)
+            return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", id), 0, "success");
+        else
+            return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");
     }
 }
