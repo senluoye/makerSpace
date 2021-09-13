@@ -1,13 +1,14 @@
 package com.qks.makerSpace.entity;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class Activity {
 
-    private String activityId;
+    @NonNull private String activityId;
     private Integer underProjects;
     private Integer nationalProject;
     private Integer expenditure;

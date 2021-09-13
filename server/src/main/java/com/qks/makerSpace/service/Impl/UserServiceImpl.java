@@ -13,11 +13,9 @@ import java.util.Map;
 public class UserServiceImpl implements UserService {
 
     private final UserDao userDao;
-    private final MyResponseUtil myResponseUtil;
     private final JWTUtils jwtUtils;
 
-    public UserServiceImpl(MyResponseUtil myResponseUtil, UserDao userDao, JWTUtils jwtUtils) {
-        this.myResponseUtil = myResponseUtil;
+    public UserServiceImpl(UserDao userDao, JWTUtils jwtUtils) {
         this.userDao = userDao;
         this.jwtUtils = jwtUtils;
     }
@@ -33,9 +31,9 @@ public class UserServiceImpl implements UserService {
             userMap.put("name", name);
             userMap.put("password", password);
             data.put("token", jwtUtils.createToken(userMap));
-            return myResponseUtil.getResultMap(data, 0, "success");
+            return MyResponseUtil.getResultMap(data, 0, "success");
         } else
-            return myResponseUtil.getResultMap(null, -1, "The user name or password is incorrect");
+            return MyResponseUtil.getResultMap(null, -1, "The user name or password is incorrect");
     }
 }
 

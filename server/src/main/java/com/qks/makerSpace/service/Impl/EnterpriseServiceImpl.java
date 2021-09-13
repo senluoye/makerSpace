@@ -12,11 +12,9 @@ import java.util.Map;
 public class EnterpriseServiceImpl implements EnterpriseService {
 
     private final EnterpriseDao enterpriseDao;
-    private final MyResponseUtil myResponseUtil;
 
-    public EnterpriseServiceImpl(EnterpriseDao enterpriseDao, MyResponseUtil myResponseUtil) {
+    public EnterpriseServiceImpl(EnterpriseDao enterpriseDao) {
         this.enterpriseDao = enterpriseDao;
-        this.myResponseUtil = myResponseUtil;
     }
 
     @Override
@@ -25,6 +23,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
 
 
+        return null;
     }
 
     @Override

@@ -899,7 +899,7 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/activitie/{activitieId}`
+- `/api/activity/{activitieId}`
 
 **请求方式：**
 
@@ -1029,7 +1029,7 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/activitie`
+- `/api/activity`
 
 **请求方式：**
 
@@ -1077,7 +1077,7 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/activitie`
+- `/api/activitiy`
 
 **请求方式：**
 

@@ -1,14 +1,19 @@
 package com.qks.makerSpace.entity;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class Enterprise {
 
+    @NonNull
     private String enterpriseId;
+
+    @NonNull
     private String teamName;
+
     private String head;
     private String phone;
     private String joinTime;
