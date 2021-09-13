@@ -4,5 +4,9 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qks.makerSpace.dao.EnterpriseDao">
 
+    <select id="getOneEnterpriseById" resultType="com.qks.makerSpace.entity.Enterprise">
+        select * from enterprise where enterprise_id = #{id}
+    </select>
+
 
 </mapper>

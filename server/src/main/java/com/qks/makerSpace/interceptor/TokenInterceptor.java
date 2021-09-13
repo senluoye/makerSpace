@@ -21,17 +21,7 @@ import java.io.PrintWriter;
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
 
-    private final Logger logger = LoggerFactory.getLogger(TokenInterceptor.class);
-    /**
-     * 忽略拦截的url
-     */
-    private String urls[] = {
-            "/login",
-            "/register"
-    };
-
-    @Autowired
-    private UserService userService;
+//    private final Logger logger = LoggerFactory.getLogger(TokenInterceptor.class);
 
     /**
      * 进入controller层之前拦截请求
@@ -53,24 +43,24 @@ public class TokenInterceptor implements HandlerInterceptor {
         }else{
 
             //token错误 返回错误response
-            System.out.println("token is error");
-            PrintWriter writer = null;
-
-            try {
-                httpServletResponse.setCharacterEncoding("utf-8");
-                httpServletResponse.setHeader("Content-Type","application/json");
-                writer = httpServletResponse.getWriter();
-
-                //将返回的错误提示压入流中
-                writer.write(JSON.toJSONString(MyResponseUtil.getResultMap(null, -1, "token error")));
-                writer.flush();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                if (null != writer) {
-                    writer.close();
-                }
-            }
+//            System.out.println("token is error");
+//            PrintWriter writer = null;
+//
+//            try {
+//                httpServletResponse.setCharacterEncoding("utf-8");
+//                httpServletResponse.setHeader("Content-Type","application/json");
+//                writer = httpServletResponse.getWriter();
+//
+//                //将返回的错误提示压入流中
+//                writer.write(JSON.toJSONString(MyResponseUtil.getResultMap(null, -1, "token error")));
+//                writer.flush();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            } finally {
+//                if (null != writer) {
+//                    writer.close();
+//                }
+//            }
             return false;
         }
 
@@ -80,7 +70,6 @@ public class TokenInterceptor implements HandlerInterceptor {
     public void postHandle(HttpServletRequest httpServletRequest,
                            HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) {
-
     }
 
     @Override
