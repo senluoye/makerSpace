@@ -1,17 +1,30 @@
 package com.qks.makerSpace.service.Impl;
 
+import com.qks.makerSpace.dao.EnterpriseDao;
 import com.qks.makerSpace.service.EnterpriseService;
+import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class EnterpriseServiceImpl implements EnterpriseService {
 
+    private final EnterpriseDao enterpriseDao;
+    private final MyResponseUtil myResponseUtil;
+
+    public EnterpriseServiceImpl(EnterpriseDao enterpriseDao, MyResponseUtil myResponseUtil) {
+        this.enterpriseDao = enterpriseDao;
+        this.myResponseUtil = myResponseUtil;
+    }
 
     @Override
     public Map<String, Object> getOneEnterprise(String id) {
-        return null;
+        Map<String, Object> data = new HashMap<>();
+
+
+
     }
 
     @Override

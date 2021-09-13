@@ -32,6 +32,12 @@ public class JWTUtils {
                 .compact();
     }
 
+    /**
+     * 验证token
+     * 这个方法后续得改一改
+     * @param token
+     * @return
+     */
     public Boolean verify(String token) {
         Claims claims;
         try {
