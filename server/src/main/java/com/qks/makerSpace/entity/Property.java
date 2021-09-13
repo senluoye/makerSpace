@@ -1,13 +1,16 @@
 package com.qks.makerSpace.entity;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class Property {
 
+    @NonNull
     private String propertyID;
+
     private Integer applications;
     private Integer applicationsPatent;
     private Integer patentNum;

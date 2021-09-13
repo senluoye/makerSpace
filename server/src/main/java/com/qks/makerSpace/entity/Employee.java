@@ -1,13 +1,16 @@
 package com.qks.makerSpace.entity;
 
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
 @Setter
 public class Employee {
 
+    @NonNull
     private String employeeId;
+
     private Integer employee;
     private Integer doctor;
     private Integer master;

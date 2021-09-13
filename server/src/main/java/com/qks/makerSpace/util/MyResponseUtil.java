@@ -8,7 +8,14 @@ import java.util.Map;
 @Component
 public class MyResponseUtil {
 
-    public Map<String, Object> getResultMap(Object data, Integer code, String msg){
+    /**
+     * 这里图个方便，直接定义返回格式，简单易懂
+     * @param data
+     * @param code
+     * @param msg
+     * @return
+     */
+    public static Map<String, Object> getResultMap(Object data, Integer code, String msg){
         Map<String, Object> resultMap = new HashMap<>();
         resultMap.put("data", data);
         resultMap.put("code", code);
