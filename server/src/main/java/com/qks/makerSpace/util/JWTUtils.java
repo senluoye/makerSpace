@@ -13,8 +13,8 @@ import java.util.Map;
 public class JWTUtils {
 
     // 生成密钥
-    String key = "0123456789_0123456789_0123456789";
-    SecretKey secretKey = new SecretKeySpec(key.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+    private static final String key = "0123456789_0123456789_0123456789";
+    private static final SecretKey secretKey = new SecretKeySpec(key.getBytes(), SignatureAlgorithm.HS256.getJcaName());
 
     public String createToken(Map<String, Object> user){
         // 1. 生成 token
@@ -38,11 +38,11 @@ public class JWTUtils {
      * @param token
      * @return
      */
-    public Boolean verify(String token) {
+    public static Boolean verify(String token) {
         Claims claims;
         try {
             claims = Jwts.parser()
-                    .setSigningKey(this.secretKey)
+                    .setSigningKey(secretKey)
                     .parseClaimsJws(token)
                     .getBody();
 
@@ -55,11 +55,11 @@ public class JWTUtils {
         return true;
     }
 
-    public Map<String, Object> parser(String token){
+    public static Map<String, Object> parser(String token){
         // 3. 解析token
-        return Jwts.parser()     // 创建解析对象
+        return Jwts.parser()                // 创建解析对象
                 .setSigningKey(secretKey)   // 设置安全密钥（生成签名所需的密钥和算法）
-                .parseClaimsJws(token)  // 解析token
+                .parseClaimsJws(token)      // 解析token
                 .getBody();
     }
 

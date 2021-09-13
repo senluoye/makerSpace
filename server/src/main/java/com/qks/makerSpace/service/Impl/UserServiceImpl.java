@@ -30,7 +30,8 @@ public class UserServiceImpl implements UserService {
 
             userMap.put("name", name);
             userMap.put("password", password);
-            data.put("token", jwtUtils.createToken(userMap));
+            String token = jwtUtils.createToken(userMap);
+            data.put("token", token);
             return MyResponseUtil.getResultMap(data, 0, "success");
         } else
             return MyResponseUtil.getResultMap(null, -1, "The user name or password is incorrect");

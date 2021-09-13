@@ -1,11 +1,15 @@
 package com.qks.makerSpace.interceptor;
 
+import com.alibaba.fastjson.JSON;
 import com.qks.makerSpace.service.UserService;
+import com.qks.makerSpace.util.JWTUtils;
+import com.qks.makerSpace.util.MyResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,65 +39,54 @@ public class TokenInterceptor implements HandlerInterceptor {
      * @param httpServletResponse
      * @param o
      * @return
-     * @throws Exception
      */
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest,
                              HttpServletResponse httpServletResponse,
-                             Object o) throws Exception {
+                             Object o) {
 
-        String url = httpServletRequest.getRequestURI();
         String token = httpServletRequest.getHeader("token");
-        String method = httpServletRequest.getMethod();
 
-        if (!method.equals("OPTIONS")){
-            logger.info(token);
-            logger.info(url);
-            logger.info(method);
-
-            // 遍历需要忽略拦截的路径
-            for (String item : this.urls){
-                if (item.equals(url)){
-                    return true;
-                }
-            }
-
-            // 查询验证token
-            User userByToken = userService.getUserByToken(token);
-
-            if (userByToken == null){
-                httpServletResponse.setCharacterEncoding("UTF-8");
-                httpServletResponse.setContentType("application/json; charset=utf-8");
-                PrintWriter out = null ;
-
-                try{
-                    Result res = new Result(10001,"登录失效重新登录");
-                    String json = JSON.toJSONString(res);
-                    httpServletResponse.setContentType("application/json");
-                    out = httpServletResponse.getWriter();
-                    // 返回json信息给前端
-                    out.append(json);
-                    out.flush();
-                    return false;
-                } catch (Exception e){
-                    e.printStackTrace();
-                    httpServletResponse.sendError(500);
-                    return false;
-                }
-            }
+        //判断从前端传来的头部信息中AUTH-TOKEN的值是否与我们后台定义的token值一致
+        if(JWTUtils.verify(token)){
             return true;
+        }else{
+
+            //token错误 返回错误response
+            System.out.println("token is error");
+            PrintWriter writer = null;
+
+            try {
+                httpServletResponse.setCharacterEncoding("utf-8");
+                httpServletResponse.setHeader("Content-Type","application/json");
+                writer = httpServletResponse.getWriter();
+
+                //将返回的错误提示压入流中
+                writer.write(JSON.toJSONString(MyResponseUtil.getResultMap(null, -1, "token error")));
+                writer.flush();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                if (null != writer) {
+                    writer.close();
+                }
+            }
+            return false;
         }
-        return false;
+
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        // System.out.println("处理请求完成后视图渲染之前的处理操作");
+    public void postHandle(HttpServletRequest httpServletRequest,
+                           HttpServletResponse httpServletResponse,
+                           Object o, ModelAndView modelAndView) {
+
     }
 
     @Override
-    public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        // System.out.println("视图渲染之后的操作");
+    public void afterCompletion(HttpServletRequest httpServletRequest,
+                                HttpServletResponse httpServletResponse,
+                                Object o, Exception e) {
     }
 }
 
