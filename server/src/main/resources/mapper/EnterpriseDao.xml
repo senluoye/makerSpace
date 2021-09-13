@@ -8,5 +8,8 @@
         select * from enterprise where enterprise_id = #{id}
     </select>
 
-
+    <select id="getAllEnterprise" resultType="com.qks.makerSpace.entity.Enterprise">
+        select enterprise_id, team_name, head, phone, join_time, team_number
+        from enterprise
+    </select>
 </mapper>

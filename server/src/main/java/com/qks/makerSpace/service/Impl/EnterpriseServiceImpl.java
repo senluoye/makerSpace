@@ -6,8 +6,11 @@ import com.qks.makerSpace.service.EnterpriseService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class EnterpriseServiceImpl implements EnterpriseService {
@@ -30,14 +33,45 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public Map<String, Object> getAllEnterprise() {
 
-
+        List<Enterprise> data = enterpriseDao.getAllEnterprise()
+                .parallelStream()
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     @Override
     public Map<String, Object> addEnterprise(Map<String, Object> map) {
-        return null;
+        String enterpriseId = UUID.randomUUID().toString();
+        if (enterpriseDao.addEnterprise(
+                map.get("teamName").toString(),
+                map.get("head").toString(),
+                map.get("phone").toString(),
+                map.get("joinTime").toString(),
+                map.get("teamNumber").toString(),
+                map.get("characteristic").toString(),
+                map.get("kind").toString(),
+                map.get("field").toString(),
+                map.get("achievements").toString(),
+                map.get("scope").toString(),
+                map.get("income").toString(),
+                map.get("tax").toString(),
+                map.get("preferentialTax").toString(),
+                map.get("taxFree").toString(),
+                map.get("support").toString(),
+                map.get("supportAmount").toString(),
+                map.get("riskInvestment").toString(),
+                map.get("investmentAmount").toString(),
+                map.get("cooperation").toString(),
+                map.get("projectName").toString(),
+                map.get("projectAmount").toString(),
+                map.get("highTec").toString(),
+                map.get("tecSme").toString()
+        ) >= 1)
+            return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
+        else
+            return MyResponseUtil.getResultMap(null, -1, "teamName doesn't exist");
     }
 
     @Override
