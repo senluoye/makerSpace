@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <title>Makerspace</title>
+</head>
+
+<body>
+    <div class="contain">
+        <div class="main">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="index.html">企业/团队基本状况</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="people.html">入驻企业/团队就业人员情况</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="rights.html">在孵企业知识产权情况</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="activity.html">在孵企业科技活动情况</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="login.html">登录导出</a>
+                </li>
+            </ul>
+        </div>
+        <form>
+            <div class="form-group">
+                <label class="mylabel">企业/团队名称</label>
+                <input type="email" class="myinput" id="exampleFormControlInput1">
+            </div>
+            <div class="form-row">
+                <div class="col-md-6 mb-3">
+                    <label class="mylabel">企业负责人</label>
+                    <input type="text" class="myinput" id="validationTooltip01" value="" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="mylabel">联系方式</label>
+                    <input type="text" class="myinput" id="validationTooltip02" value="" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="mylabel">入驻众创空间时间</label>
+                <input type="email" class="myinput" id="exampleFormControlInput1">
+            </div>
+            <div class="form-group">
+                <label class="mylabel">企业/团队人数</label>
+                <input type="email" class="myinput" id="exampleFormControlInput1">
+            </div>
+            <hr>
+            <fieldset class="form-group row">
+                <label class="mylabel">企业/团队主要负责人创业特征</label>
+                <div class="col-sm-10">
+                    <div class="flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                                value="option1" checked>
+                            <label class="form-check-label" for="gridRadios1">
+                                往届毕业生
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
+                                value="option2">
+                            <label class="form-check-label" for="gridRadios2">
+                                应届毕业生
+                            </label>
+                        </div>
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
+                                value="option3">
+                            <label class="form-check-label" for="gridRadios3">
+                                在校研究生
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
+                                value="option3">
+                            <label class="form-check-label" for="gridRadios3">
+                                在校学生
+                            </label>
+                        </div>
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
+                                value="option3">
+                            <label class="form-check-label" for="gridRadios3">
+                                学校教职工
+                            </label>
+                        </div>
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
+                                value="option3">
+                            <label class="form-check-label" for="gridRadios3">
+                                留学归国人员
+                            </label>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
+                                value="option3">
+                            <label class="form-check-label" for="gridRadios3">
+                                大企业离职人员
+                            </label>
+                        </div>
+                        <div class="form-check disabled">
+                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
+                                value="option3">
+
+                            <label class="form-check-label" for="gridRadios3">
+                                机关事业单位离职人员
+                            </label>
+                        </div>
+
+                    </div>
+                    <div class="form-check disabled">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3" value="option3">
+                        <label>其他</label>
+                        <input type="email" class="myinput" id="inputEmail3">
+                    </div>
+
+
+                </div>
+            </fieldset>
+            <hr>
+            <fieldset class="form-group row">
+                <div class="col-sm-10">
+                    <label class="mylabel">行业类别</label>
+                    <div class="flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="hangye" id="gridRadios3" value="option3">
+                            <label class="form-check-label" for="hangye1">制造业</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="hangye" id="gridRadios3" value="option3">
+                            <label class="form-check-label" for="hangye2">信息传输、软件和信息技术服务业</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="hangye" id="gridRadios3" value="option3">
+                            <label class="form-check-label" for="hangye2">文化、体育、娱乐业</label>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="hangye" id="gridRadios3" value="option3">
+                            <label class="form-check-label" for="hangye2">金融业</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="hangye" id="gridRadios3" value="option3">
+                            <label class="form-check-label" for="hangye2">科学研究和技术服务业</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="hangye" id="gridRadios3" value="option3">
+                            <label class="form-check-label" for="hangye2">教育</label>
+                        </div>
+                    </div>
+                    <div class="form-check disabled">
+                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3">
+                        <label class="form-check-label" for="gridRadios3">
+                            其他<input type="email" class="myinput" id="inputEmail3">
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+            <hr>
+            <fieldset class="form-group row">
+                <label class="mylabel">企业所属技术领域</label>
+                <div class="flex">
+                    <div class="form-check">
+                        <input type="radio" id="hangye1" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye1">电子信息</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">先进制造 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">航天航空</label>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">现代交通 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">生物医药与医疗器械</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">新材料</label>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">新能源与节能</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">环境保护</label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">地球、空间与海洋</label>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">核应用技术 </label>
+                    </div>
+                    <div class="form-check">
+                        <input type="radio" id="hangye2" name="lingyu" class="custom-control-input">
+                        <label class="form-check-label" for="hangye2">现代农业</label>
+                    </div>
+                </div>
+            </fieldset>
+            <hr>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="form-group">
+                            <label class="mylabel">企业/团队获奖成果</label>
+                            <input type="email" class="myinput" id="exampleFormControlInput1">
+                        </div>
+                        <div class="form-group">
+                            <label class="mylabel">企业经营的范围</label>
+                            <input type="email" class="myinput" id="exampleFormControlInput1">
+                        </div>
+                        <div class="form-group">
+                            <label class="mylabel">企业/团队总收入</label>
+                            <input type="email" class="myinput" id="exampleFormControlInput1">
+                        </div>
+                        <div class="form-group">
+                            <label class="mylabel">上缴税额</label>
+                            <input type="email" class="myinput" id="exampleFormControlInput1">
+                        </div>
+                        <div class="form-group">
+                            <label class="mylabel">享受税收优惠政策</label>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" id="inlineFormCheck" name="shuishou" type="radio">
+                                <label class="form-check-label" for="inlineFormCheck">是</label>
+                            </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" id="inlineFormCheck" name="shuishou" type="radio">
+                                <label class="form-check-label" for="inlineFormCheck">否</label><br />
+                            </div>
+
+                            <label class="mylabel">免税金额</label>
+                            <input type="email" class="myinput" id="exampleFormControlInput1">
+                        </div>
+                    </div>
+                    <div class="col-sm">
+
+                        <div class="form-group">
+                            <label class="mylabel">获得财政资金支持</label>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="czzj">
+                                <label class="form-check-label" for="inlineFormCheck">是</label>
+                            </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="czzj">
+                                <label class="form-check-label" for="inlineFormCheck">否</label><br />
+                            </div>
+
+                            <label class="mylabel">支持金额</label>
+                            <input type="email" class="myinput" id="exampleFormControlInput1">
+                        </div>
+                        <div class="form-group">
+                            <label class="mylabel">获天使或风险投资额</label>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="tstz">
+                                <label class="form-check-label" for="inlineFormCheck">是</label>
+                            </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="tstz">
+                                <label class="form-check-label" for="inlineFormCheck">否</label><br />
+                            </div>
+
+                            <label class="mylabel">投融资总额</label>
+                            <input type="email" class="myinput" id="exampleFormControlInput1">
+                        </div>
+                        <div class="form-group">
+                            <label class="mylabel">是否参与校企合作</label>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="xqhz">
+                                <label class="form-check-label" for="inlineFormCheck">是</label>
+                            </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="xqhz">
+                                <label class="form-check-label" for="inlineFormCheck">否</label><br />
+                            </div>
+
+                            <label class="mylabel">合作项目名称及申报项目金额</label>
+                            <input type="email" class="myinput" id="exampleFormControlInput1">
+                        </div>
+                        <div class="form-group">
+                            <label class="mylabel">是否高新技术企业</label>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="gxjscy">
+                                <label class="form-check-label" for="inlineFormCheck">是</label>
+                            </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="gxjscy">
+                                <label class="form-check-label" for="inlineFormCheck">否</label><br />
+                            </div>
+                            <label class="mylabel">是否是科技型中小企业</label>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="kjzxqy">
+                                <label class="form-check-label" for="inlineFormCheck">是</label>
+                            </div>
+                            <div class="form-check mb-2 mr-sm-2">
+                                <input class="form-check-input" type="radio" id="inlineFormCheck" name="kjzxqy">
+                                <label class="form-check-label" for="inlineFormCheck">否</label><br />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-outline-dark mybutton">提交</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="index.js"></script>
+</body>
+
+</html>
