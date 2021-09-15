@@ -258,7 +258,7 @@ id为表示企业/团队的唯一id
     "preferentialTax":"<Boolean>",			//享受税收优惠政策 (是：true 否：false)
     "taxFree":"<String>",					//免税金额 (是：具体金额 否：null)
     "support":"<Boolean>",					//获得财政资金支持
-    "supportAmount":"<String>",			//支持金额 
+    "supportAmount":"<String>",				//支持金额 
     "riskInvestment":"<Boolean>",			//获天使或风险投资额
     "investmentAmount":"<String>",			//投融资总额
     "cooperation":"<Boolean>",				//是否参与校企合作
