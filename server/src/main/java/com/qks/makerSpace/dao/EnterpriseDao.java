@@ -8,9 +8,11 @@ import java.util.Map;
 
 @Repository
 public interface EnterpriseDao {
+
     Enterprise getOneEnterpriseById(String id);
     List<Enterprise> getAllEnterprise();
-    Integer addEnterprise(Map<String, Object> map);
-    Integer updateEnterprise();
+    void addEnterprise(Map<String, Object> map);
+    Integer updateEnterprise(Map<String, Object> map);
     Integer deleteEnterprise(String id);
+
 }

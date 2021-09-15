@@ -21,6 +21,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public Map<String, Object> getOneEnterprise(String id) {
         Enterprise data = enterpriseDao.getOneEnterpriseById(id);
+
         if (data == null)
             return MyResponseUtil.getResultMap(null, -1, "EnterpriseID doesn't exist");
         else
@@ -29,7 +30,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Override
     public Map<String, Object> getAllEnterprise() {
-
         List<Enterprise> data = enterpriseDao.getAllEnterprise()
                 .parallelStream()
                 .filter(Objects::nonNull)
@@ -41,42 +41,17 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public Map<String, Object> addEnterprise(Map<String, Object> map) {
         String enterpriseId = UUID.randomUUID().toString();
-        if (enterpriseDao.addEnterprise(
-//                map.get("teamName").toString(),
-//                map.get("head").toString(),
-//                map.get("phone").toString(),
-//                map.get("joinTime").toString(),
-//                map.get("teamNumber").toString(),
-//                map.get("characteristic").toString(),
-//                map.get("kind").toString(),
-//                map.get("field").toString(),
-//                map.get("achievements").toString(),
-//                map.get("scope").toString(),
-//                map.get("income").toString(),
-//                map.get("tax").toString(),
-//                map.get("preferentialTax").toString(),
-//                map.get("taxFree").toString(),
-//                map.get("support").toString(),
-//                map.get("supportAmount").toString(),
-//                map.get("riskInvestment").toString(),
-//                map.get("investmentAmount").toString(),
-//                map.get("cooperation").toString(),
-//                map.get("projectName").toString(),
-//                map.get("projectAmount").toString(),
-//                map.get("highTec").toString(),
-//                map.get("tecSme").toString()
-                map
-        ) >= 1)
-            return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
-        else
-            return MyResponseUtil.getResultMap(null, -1, "teamName doesn't exist");
+        map.put("enterpriseId", enterpriseId);
+        enterpriseDao.addEnterprise(map);
+        return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
     }
 
     @Override
     public Map<String, Object> updateEnterprise(Map<String, Object> map) {
         String enterpriseId = map.get("enterpriseId").toString();
         if (enterpriseDao.updateEnterprise(
-                enterpriseId
+                map
+                //这串注释先不删，万一有用呢
 //                map.get("teamName").toString(),
 //                map.get("head").toString(),
 //                map.get("phone").toString(),
@@ -100,7 +75,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 //                map.get("projectAmount").toString(),
 //                map.get("highTec").toString(),
 //                map.get("tecSme").toString()
-        ) >= 1)
+        ) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", enterpriseId), 0, "success");
         else
             return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");

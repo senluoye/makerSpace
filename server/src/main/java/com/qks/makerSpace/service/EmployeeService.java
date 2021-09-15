@@ -1,8 +1,6 @@
 package com.qks.makerSpace.service;
 
 
-import com.qks.makerSpace.entity.User;
-
 import java.util.Map;
 
 public interface EmployeeService {
