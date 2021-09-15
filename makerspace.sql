@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 09/09/2021 20:11:54
+ Date: 15/09/2021 20:32:33
 */
 
 SET NAMES utf8mb4;
@@ -28,7 +28,7 @@ CREATE TABLE `activity`  (
   `expenditure` int NULL DEFAULT NULL,
   `rad_expenditure` int NULL DEFAULT NULL,
   `product_expenditure` int NULL DEFAULT NULL,
-  `goverment_grant` int NULL DEFAULT NULL,
+  `government_grant` int NULL DEFAULT NULL,
   `self_raised` int NULL DEFAULT NULL,
   PRIMARY KEY (`activity_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
@@ -99,8 +99,8 @@ CREATE TABLE `enterprise`  (
   `scope` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `income` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `tax` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `preferentialTax` tinyint(1) NOT NULL,
-  `tax_Free` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `preferential_tax` tinyint(1) NOT NULL,
+  `tax_free` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `support` tinyint(1) NOT NULL,
   `support_amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `risk_investment` tinyint(1) NOT NULL,
