@@ -264,7 +264,7 @@ id为表示企业/团队的唯一id
     "cooperation":"<Boolean>",				//是否参与校企合作
     "projectName":"<String>",				//合作项目名称
     "projectAount":"<String>",				//申报项目金额
-    "highTc":"<Boolean>",					//是否高新技术企业
+    "highTec":"<Boolean>",					//是否高新技术企业
     "tecSme":"<Boolean>"					//是否是科技型中小企业
 }
 ```
@@ -360,7 +360,7 @@ id为表示企业/团队的唯一id
 	"data":{
         "employee":{
 			"employeeId":"<string>",		//企业/团队从业情况表唯一ID
-            "employee":"<int>",				//在孵企业/团队从业人员
+            "employees":"<int>",				//在孵企业/团队从业人员
             "doctor":"<int>",				//博士
             "master":"<int>",				//硕士
             "graduate":"<int>",				//研究生学历
@@ -418,12 +418,12 @@ id为表示企业/团队的唯一id
         "employeeId":"<string>",		//企业/团队从业情况表唯一ID
         "enterpriseId":"<string>",		//表示企业/团队的唯一ID
         "teamName":"<string>",			//表示企业/团队的名称
-        "employee":"<int>",				//在孵企业/团队从业人员
+        "employees":"<int>",				//在孵企业/团队从业人员
     },{
         "employeeId":"<string>",		//企业/团队从业情况表唯一ID
         "enterpriseId":"<string>",		//表示企业/团队的唯一ID
         "teamName":"<string>",			//表示企业/团队的名称
-        "employee":"<int>",				//在孵企业/团队从业人员
+        "employees":"<int>",				//在孵企业/团队从业人员
     },
     	......
     ],
@@ -453,7 +453,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "enterpriseId":"<string>",			//表示企业/团队的唯一ID
-    "employee":"<int>",					//在孵企业/团队从业人员
+    "employees":"<int>",					//在孵企业/团队从业人员
     "doctor":"<int>",					//博士
     "master":"<int>",					//硕士
     "graduate":"<int>",					//研究生学历
@@ -514,7 +514,7 @@ id为表示企业/团队的唯一id
 ```json
 {
 		"employeeId":"<string>",		//企业/团队从业情况表唯一ID
-        "employee":"<int>",				//在孵企业/团队从业人员
+        "employees":"<int>",				//在孵企业/团队从业人员
         "doctor":"<int>",				//博士
         "master":"<int>",				//硕士
         "graduate":"<int>",				//研究生学历
