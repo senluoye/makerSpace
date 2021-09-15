@@ -12,4 +12,58 @@
         select enterprise_id, team_name, head, phone, join_time, team_number
         from enterprise
     </select>
+
+    <insert id="addEnterprise">
+
+    </insert>
+
+    <update id="updateEnterprise" parameterType="Map">
+        update enterprise
+        <set>
+            <if test="teamName != null && teamName != ''">
+                team_name = #{teamName}
+            </if>
+            <if test="head != null && head != ''">
+                head = #{head}
+            </if>
+            <if test="phone != null && phone != ''">
+                phone = #{phone}
+            </if>
+            <if test="joinTime != null && joinTime != ''">
+                join_time = #{joinTime}
+            </if>
+            <if test="teamNumber != null && teamNumber != ''">
+                team_number = #{teamNumber}
+            </if>
+            <if test="characteristic != null && characteristic != ''">
+                characteristic = #{characteristic}
+            </if>
+            <if test="kind != null && kind != ''">
+                kind = #{kind}
+            </if>
+            <if test="field != null && field != ''">
+                field = #{field}
+            </if>
+            <if test="achievements != null && achievements != ''">
+                achievements = #{achievements}
+            </if>
+            <if test="scope != null && scope != ''">
+                scope = #{scope}
+            </if>
+            <if test="income != null && income != ''">
+                income = #{income}
+            </if>
+            <if test="tax != null && tax != ''">
+                tax = #{tax}
+            </if>
+            <if test="preferentialTax != null">
+                preferential_tax = #{preferentialTax}
+            </if>
+        </set>
+        where enterprise_id = #{enterpriseId}
+    </update>
+
+    <delete id="deleteEnterprise">
+        delete from enterprise where enterprise_id = #{id}
+    </delete>
 </mapper>

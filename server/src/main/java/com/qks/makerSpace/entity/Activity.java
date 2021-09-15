@@ -14,7 +14,7 @@ public class Activity {
     private Integer expenditure;
     private Integer radExpenditure;
     private Integer productExpenditure;
-    private Integer govermentGrant;
+    private Integer governmentGrant;
     private Integer selfRaised;
 
 }
