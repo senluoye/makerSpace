@@ -38,31 +38,26 @@ public class TokenInterceptor implements HandlerInterceptor {
         String token = httpServletRequest.getHeader("token");
 
         //判断从前端传来的头部信息中AUTH-TOKEN的值是否与我们后台定义的token值一致
-        if(JWTUtils.verify(token)){
-            return true;
-        }else{
-
-            //token错误 返回错误response
-//            System.out.println("token is error");
-//            PrintWriter writer = null;
-//
-//            try {
-//                httpServletResponse.setCharacterEncoding("utf-8");
-//                httpServletResponse.setHeader("Content-Type","application/json");
-//                writer = httpServletResponse.getWriter();
-//
-//                //将返回的错误提示压入流中
-//                writer.write(JSON.toJSONString(MyResponseUtil.getResultMap(null, -1, "token error")));
-//                writer.flush();
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            } finally {
-//                if (null != writer) {
-//                    writer.close();
-//                }
-//            }
-            return false;
-        }
+        //token错误 返回错误response
+        //            System.out.println("token is error");
+        //            PrintWriter writer = null;
+        //
+        //            try {
+        //                httpServletResponse.setCharacterEncoding("utf-8");
+        //                httpServletResponse.setHeader("Content-Type","application/json");
+        //                writer = httpServletResponse.getWriter();
+        //
+        //                //将返回的错误提示压入流中
+        //                writer.write(JSON.toJSONString(MyResponseUtil.getResultMap(null, -1, "token error")));
+        //                writer.flush();
+        //            } catch (Exception e) {
+        //                e.printStackTrace();
+        //            } finally {
+        //                if (null != writer) {
+        //                    writer.close();
+        //                }
+        //            }
+        return JWTUtils.verify(token);
 
     }
 

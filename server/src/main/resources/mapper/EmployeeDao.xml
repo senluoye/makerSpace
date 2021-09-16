@@ -30,8 +30,47 @@
     <update id="updateEnterprise" parameterType="Map">
         update employee
         <set>
-            
+            <if test="employees != null">
+                employees = #{employees}
+            </if>
+            <if test="doctor != null">
+                doctor = #{doctor}
+            </if>
+            <if test="master != null">
+                master = #{master}
+            </if>
+            <if test="graduate != null">
+                graduate = #{graduate}
+            </if>
+            <if test="bachelor != null">
+                bachelor = #{bachelor}
+            </if>
+            <if test="college != null">
+                college = #{college}
+            </if>
+            <if test="tecSecondary != null">
+                tec_secondary = #{tecSecondary}
+            </if>
+            <if test="tecActivists != null">
+                tec_activists = #{tecActivists}
+            </if>
+            <if test="radNumber != null">
+                rad_number = #{raNumber}
+            </if>
+            <if test="returnees != null">
+                returnees = #{returnees}
+            </if>
+            <if test="talents != null">
+                talents = #{talents}
+            </if>
+            <if test="trainee != null">
+                trainee = #{trainee}
+            </if>
+            <if test="employment != null">
+                employment = #{employment}
+            </if>
         </set>
+        where employee_id = #{employeeId}
     </update>
 
     <delete id="deleteEnterprise">

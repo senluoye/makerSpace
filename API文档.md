@@ -465,7 +465,7 @@ id为表示企业/团队的唯一id
     "returnees":"<int>",				//留学回国人员
     "talents":"<int>",					//千人计划人数
     "trainee":"<int>",					//接纳大学生、研究生实习人员(人/天)
-    "empolyment":"<int>"				//接纳应届毕业生就业人员
+    "employment":"<int>"				//接纳应届毕业生就业人员
 }
 ```
 
@@ -526,7 +526,7 @@ id为表示企业/团队的唯一id
         "returnees":"<int>",			//留学回国人员
         "talents":"<int>",				//千人计划人数
         "trainee":"<int>",				//接纳大学生、研究生实习人员(人/天)
-        "empolyment":"<int>"			//接纳应届毕业生就业人员
+        "employment":"<int>"			//接纳应届毕业生就业人员
 }
 ```
 

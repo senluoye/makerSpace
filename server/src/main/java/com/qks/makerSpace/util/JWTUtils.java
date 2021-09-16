@@ -39,16 +39,8 @@ public class JWTUtils {
     public static Boolean verify(String token) {
         System.out.println();
 
-        Claims claims;
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(secretKey)
-                    .parseClaimsJws(token)
-                    .getBody();
-            System.out.println(claims);
-//            final Date exp = claims.getExpiration();
-//            Date now = new Date(System.currentTimeMillis());
-//            return now.before(exp);
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
         } catch (Exception e) {
             return false;
         }
