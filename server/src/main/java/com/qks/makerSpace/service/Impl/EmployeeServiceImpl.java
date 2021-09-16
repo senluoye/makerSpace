@@ -25,7 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeTemp != null){
             Map<String, Object> data = new HashMap<>();
             data.put("employee", employeeTemp);
-            data.put("enterprise", employeeDao.getEmployeeDetails());
+            data.put("enterprise", employeeDao.getEnterpriseDetails(id));
 
             return MyResponseUtil.getResultMap(data, 0, "success");
         } else

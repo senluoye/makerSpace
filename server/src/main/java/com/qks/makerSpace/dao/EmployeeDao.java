@@ -14,5 +14,6 @@ public interface EmployeeDao {
     void addEmployee(Map<String, Object> map);
     Integer updateEnterprise(Map<String, Object> map);
     Integer deleteEnterprise(String id);
+    Map<String, Object> getEnterpriseDetails(String id);
 
 }
