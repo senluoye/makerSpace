@@ -20,7 +20,7 @@ public class EnterpriseController {
         return enterpriseService.getOneEnterprise(id);
     }
 
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "", method = RequestMethod.GET)
     private Map<String, Object> getAllEnterprise() {
         return enterpriseService.getAllEnterprise();
     }

@@ -41,67 +41,67 @@
     <update id="updateEnterprise" parameterType="Map">
         update enterprise
         <set>
-            <if test="teamName != null && teamName != ''">
+            <if test="teamName != null and teamName != ''">
                 team_name = #{teamName}
             </if>
-            <if test="head != null && head != ''">
+            <if test="head != null and head != ''">
                 head = #{head}
             </if>
-            <if test="phone != null && phone != ''">
+            <if test="phone != null and phone != ''">
                 phone = #{phone}
             </if>
-            <if test="joinTime != null && joinTime != ''">
+            <if test="joinTime != null and joinTime != ''">
                 join_time = #{joinTime}
             </if>
-            <if test="teamNumber != null && teamNumber != ''">
+            <if test="teamNumber != null and teamNumber != ''">
                 team_number = #{teamNumber}
             </if>
-            <if test="characteristic != null && characteristic != ''">
+            <if test="characteristic != null and characteristic != ''">
                 characteristic = #{characteristic}
             </if>
-            <if test="kind != null && kind != ''">
+            <if test="kind != null and kind != ''">
                 kind = #{kind}
             </if>
-            <if test="field != null && field != ''">
+            <if test="field != null and field != ''">
                 field = #{field}
             </if>
-            <if test="achievements != null && achievements != ''">
+            <if test="achievements != null and achievements != ''">
                 achievements = #{achievements}
             </if>
-            <if test="scope != null && scope != ''">
+            <if test="scope != null and scope != ''">
                 scope = #{scope}
             </if>
-            <if test="income != null && income != ''">
+            <if test="income != null and income != ''">
                 income = #{income}
             </if>
-            <if test="tax != null && tax != ''">
+            <if test="tax != null and tax != ''">
                 tax = #{tax}
             </if>
             <if test="preferentialTax != null">
                 preferential_tax = #{preferentialTax}
             </if>
-            <if test="taxFree != null && taxFree != ''">
+            <if test="taxFree != null and taxFree != ''">
                 tax_free = #{taxFree}
             </if>
             <if test="support != null">
                 support = #{support}
             </if>
-            <if test="supportAmount != null && supportAmount != ''">
+            <if test="supportAmount != null and supportAmount != ''">
                 support_amount = #{supportAmount}
             </if>
             <if test="riskInvestment != null">
                 risk_investment = #{riskInvestment}
             </if>
-            <if test="investmentAmount != null && investmentAmount != ''">
+            <if test="investmentAmount != null and investmentAmount != ''">
                 investment_amount = #{investmentAmount}
             </if>
             <if test="cooperation != null">
                 cooperation = #{cooperation}
             </if>
-            <if test="projectName != null && projectName != ''">
+            <if test="projectName != null and projectName != ''">
                 project_name = #{projectName}
             </if>
-            <if test="projectAount != null && projectAount != ''">
+            <if test="projectAount != null and projectAount != ''">
                 project_aount = #{projectAount}
             </if>
             <if test="highTec != null">
