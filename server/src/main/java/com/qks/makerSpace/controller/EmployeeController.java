@@ -27,17 +27,17 @@ public class EmployeeController {
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     private Map<String, Object> AddEmployee(@RequestBody Map<String, Object> map) {
-        return employeeService.AddEmployee(map);
+        return employeeService.addEmployee(map);
     }
 
     @RequestMapping(value = "", method = RequestMethod.PUT)
     private Map<String, Object> UpdateEmployee(@RequestBody Map<String, Object> map) {
-        return employeeService.UpdateEmployee(map);
+        return employeeService.updateEmployee(map);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     private Map<String, Object> DeleteEmployee(@PathVariable String id) {
-        return employeeService.DeleteEmployee(id);
+        return employeeService.deleteEmployee(id);
     }
 
 }

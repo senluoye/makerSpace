@@ -1,4 +1,4 @@
-package com.qks.makerSpace.config;
+package com.qks.makerSpace.config.controller;
 
 import com.qks.makerSpace.interceptor.TokenInterceptor;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

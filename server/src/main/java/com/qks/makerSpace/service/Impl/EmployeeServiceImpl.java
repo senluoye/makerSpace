@@ -42,15 +42,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Map<String, Object> AddEmployee(Map<String, Object> map) {
+    public Map<String, Object> addEmployee(Map<String, Object> map) {
         String employeeId = UUID.randomUUID().toString();
         map.put("employeeId", employeeId);
-        employeeDao.addEmployee(map);
-        return MyResponseUtil.getResultMap(employeeId, 0, "success");
+        if (employeeDao.addEmployee(map) > 0 &&
+                employeeDao.updateConnect(map.get("enterpriseId").toString(), employeeId) > 0) {
+            return MyResponseUtil.getResultMap(employeeId, 0, "success");
+        } else {
+            return MyResponseUtil.getResultMap(null, -1, "failure");
+        }
     }
 
     @Override
-    public Map<String, Object> UpdateEmployee(Map<String, Object> map) {
+    public Map<String, Object> updateEmployee(Map<String, Object> map) {
         String enterpriseId = map.get("enterpriseId").toString();
         if (employeeDao.updateEnterprise(map) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", enterpriseId), 0, "success");
@@ -60,7 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Map<String, Object> DeleteEmployee(String id) {
+    public Map<String, Object> deleteEmployee(String id) {
         if (employeeDao.deleteEnterprise(id) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", id), 0, "success");
         else

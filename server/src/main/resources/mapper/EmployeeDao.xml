@@ -27,6 +27,12 @@
                 #{trainee}, #{employment})
     </insert>
 
+    <update id="updateConnect">
+        update connect
+        set employee_id = #{employeeId}
+        where enterprise_id = #{enterpriseId}
+    </update>
+
     <update id="updateEnterprise" parameterType="Map">
         update employee
         <set>

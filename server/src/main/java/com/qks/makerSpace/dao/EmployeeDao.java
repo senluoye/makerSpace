@@ -11,7 +11,8 @@ public interface EmployeeDao {
 
     Employee getEmployeeById(String id);
     List<Employee> getAllEmployee();
-    void addEmployee(Map<String, Object> map);
+    Integer addEmployee(Map<String, Object> map);
+    Integer updateConnect(String enterpriseId, String employeeId);
     Integer updateEnterprise(Map<String, Object> map);
     Integer deleteEnterprise(String id);
     Map<String, Object> getEnterpriseDetails(String id);

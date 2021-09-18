@@ -11,7 +11,8 @@ public interface EnterpriseDao {
 
     Enterprise getOneEnterpriseById(String id);
     List<Enterprise> getAllEnterprise();
-    void addEnterprise(Map<String, Object> map);
+    Integer addEnterprise(Map<String, Object> map);
+    Integer addConnect(String id, String enterpriseId);
     Integer updateEnterprise(Map<String, Object> map);
     Integer deleteEnterprise(String id);
 

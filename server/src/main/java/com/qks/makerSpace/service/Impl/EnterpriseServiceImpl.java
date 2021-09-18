@@ -42,40 +42,18 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     public Map<String, Object> addEnterprise(Map<String, Object> map) {
         String enterpriseId = UUID.randomUUID().toString();
         map.put("enterpriseId", enterpriseId);
-        enterpriseDao.addEnterprise(map);
-        return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
+        if (enterpriseDao.addEnterprise(map) > 0 &&
+                enterpriseDao.addConnect(UUID.randomUUID().toString(), enterpriseId) > 0) {
+            return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
+        } else {
+            return MyResponseUtil.getResultMap(null, -1, "failure");
+        }
     }
 
     @Override
     public Map<String, Object> updateEnterprise(Map<String, Object> map) {
         String enterpriseId = map.get("enterpriseId").toString();
-        if (enterpriseDao.updateEnterprise(
-                map
-                //这串注释先不删，万一有用呢
-//                map.get("teamName").toString(),
-//                map.get("head").toString(),
-//                map.get("phone").toString(),
-//                map.get("joinTime").toString(),
-//                map.get("teamNumber").toString(),
-//                map.get("characteristic").toString(),
-//                map.get("kind").toString(),
-//                map.get("field").toString(),
-//                map.get("achievements").toString(),
-//                map.get("scope").toString(),
-//                map.get("income").toString(),
-//                map.get("tax").toString(),
-//                map.get("preferentialTax").toString(),
-//                map.get("taxFree").toString(),
-//                map.get("support").toString(),
-//                map.get("supportAmount").toString(),
-//                map.get("riskInvestment").toString(),
-//                map.get("investmentAmount").toString(),
-//                map.get("cooperation").toString(),
-//                map.get("projectName").toString(),
-//                map.get("projectAmount").toString(),
-//                map.get("highTec").toString(),
-//                map.get("tecSme").toString()
-        ) > 0)
+        if (enterpriseDao.updateEnterprise(map) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", enterpriseId), 0, "success");
         else
             return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");
