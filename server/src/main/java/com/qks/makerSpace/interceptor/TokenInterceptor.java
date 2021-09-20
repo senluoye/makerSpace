@@ -49,7 +49,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         //                }
         //            }
 
-        /**
+        /*
          *  其实登陆验证几乎算是没有，因为只有单用户，并且没有设置如过期时间等
          *  pom加入了redis的依赖，实际也是用不到的
          */

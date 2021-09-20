@@ -38,7 +38,7 @@
                 #{tecSme})
     </insert>
 
-    <insert id="addEnterprise">
+    <insert id="addConnect">
         insert into connect(id, enterprise_id)
         values (#{id}, #{enterpriseId})
     </insert>
