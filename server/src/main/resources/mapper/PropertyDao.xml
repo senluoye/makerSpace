@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qks.makerSpace.dao.PropertyDao">
+    <select id="getPropertyById" resultType="com.qks.makerSpace.entity.Property">
+        select *
+        from property
+        where property_id = #{id}
+    </select>
+
+    <select id="getAllProperty" resultType="com.qks.makerSpace.entity.Property">
+        select property.property_id,connect.enterprise_id,connect.team_name,
+               property.applications,property.be_granted,property.valid
+        from property,connect
+        where connect.property_id = property.property_id
+    </select>
+
+    <insert id="addProperty" parameterType="Map">
+        insert into property(property_id,applications,applications_patent,patent_num,
+                             soft_num,trademark_num,granted,granted_patent,valid,valid_patent,
+                             soft_copyright,plant_variety,icLayout,foreign_paents,
+                             contract_transaction,contract_turnover,project_num,awards)
+        values (#{properytID},#{applications},#{applicationsPatent},#{patentNum},#{softNum},
+                #{trademarkNum},#{granted},#{grantedPatent},#{valid},#{validPatent},
+                #{softCopyright},#{plantVariety},#{ic_layout},#{foreignPatents},
+                #{contractTransaction},#{contractTurnover},#{projectNum},#{awards})
+
+    </insert>
+
+    <update id="updateConnect">
+        update connect
+        set property_id = #{propertyId}
+        where enterprise_id = #{enterpriseId}
+    </update>
+
+    <delete id="deleteProperty">
+        delete from property
+        where property_id = #{id}
+    </delete>
+
+    <update id="updateProperty" parameterType="Map">
+        update property
+        <set>
+            <if test="applications != null">
+                applications = #{applications}
+            </if>
+            <if test="applicationsPatent != null">
+                applications_patent = #{applications_patent}
+            </if>
+            <if test="patentNum != null">
+                patent_num = #{patent_num}
+            </if>
+            <if test="softNum != null">
+                soft_num = #{soft_num}
+            </if>
+            <if test="trademarkNum != null">
+                trademark_num = #{trademark_num}
+            </if>
+            <if test="beGranted != null">
+                be_granted = #{be_granted}
+            </if>
+            <if test="grantedPatent != null">
+                granted_patent = #{granted_patent}
+            </if>
+            <if test="valid != null">
+                valid = #{valid}
+            </if>
+            <if test="validPatent != null">
+                valid_patent = #{valid_patent}
+            </if>
+            <if test="softCopyright != null">
+                soft_copyright = #{soft_copyright}
+            </if>
+            <if test="icLayout != null">
+                ic_layout = #{ic_layout}
+            </if>
+            <if test="foreignPatents != null">
+                foreign_patents = #{foreign_patents}
+            </if>
+            <if test="contractTransaction != null">
+                contract_transaction = #{contract_transaction}
+            </if>
+            <if test="contractTurnover != null">
+                contract_turnover = #{contract_turnover}
+            </if>
+            <if test="projectNum != null">
+                project_num = #{project_num}
+            </if>
+            <if test="awards != null">
+                awards = #{awards}
+            </if>
+        </set>
+        where property_id = #{propertyId}
+    </update>
+
+</mapper>

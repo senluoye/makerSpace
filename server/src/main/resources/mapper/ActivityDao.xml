@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.qks.makerSpace.dao.ActivityDao">
+    <select id="getOneActivityById" resultType="com.qks.makerSpace.entity.Activity">
+        select *
+        from activity
+        where activity_id = #{id}
+    </select>
+    
+    <select id="getAllActivity" resultType="com.qks.makerSpace.entity.Activity">
+        select activity.activity_id,connect.enterprised_id,
+               activity.under_projects,activity.national_project,
+               activity.expenditure
+        from activity,connect;
+        where connect.activity_id = activity.activity_id
+    </select>
+    
+    <insert id="addActivity" parameterType="Map">
+        insert into activity(activity_id,under_projects,national_project,
+                            expenditure,rad_expenditure,product_expenditure,
+                             government_grant,self_raised)
+        values (#{activityId},#{underProjects},#{nationalProject},
+                #{expenditure},#{radExpenditure},#{productExpenditure},
+                #{governmentGrant},#{selfRaised})
+    </insert>
+
+    <update id="updateConnect">
+        update connect
+        set activity_id = #{activityId}
+        where enterprise_id = #{enterpriseId}
+    </update>
+    
+    <delete id="deleteActivity">
+        delete from activity
+        where activity_id = #{id}
+    </delete>
+
+    <update id="updateActivity" parameterType="Map">
+        update activity
+        <set>
+            <if test="under_projects != null">
+                underProjects = #{underProjects}
+            </if>
+            <if test="national_project != null">
+                nationalProject = #{nationalProject}
+            </if>
+            <if test="expenditure != null">
+                expenditure = #{expenditure}
+            </if>
+            <if test="rad_expenditure != null">
+                radExpenditure = #{rad_expenditure}
+            </if>
+            <if test="product_expenditure != null">
+                productExpenditure = #{productExpenditure}
+            </if>
+            <if test="government_grant != null">
+                governmentGrant = #{governmentGrant}
+            </if>
+            <if test="sel_raised != null">
+                selfRaised = #{selfRaised}
+            </if>
+
+        </set>
+        where activity_id = #{activityId}
+    </update>
+
+</mapper>
