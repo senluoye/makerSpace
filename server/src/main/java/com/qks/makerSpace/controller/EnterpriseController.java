@@ -35,8 +35,8 @@ public class EnterpriseController {
         return enterpriseService.updateEnterprise(map);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteEnterprise(@PathVariable String id) {
-        return enterpriseService.deleteEnterprise(id);
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteEnterprise(@RequestBody Map<String, Object> map) {
+        return enterpriseService.deleteEnterprise(map.get("enterpriseId").toString());
     }
 }

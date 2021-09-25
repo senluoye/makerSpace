@@ -40,8 +40,8 @@ public class ActivityController {
         return activityService.updateActivity(map);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    private Map<String ,Object> DeleteProperty(@PathVariable String id) {
-        return activityService.deleteActivity(id);
+    @RequestMapping(value = "",method = RequestMethod.DELETE)
+    private Map<String ,Object> DeleteProperty(@RequestBody Map<String ,Object> map) {
+        return activityService.deleteActivity(map.get("activityId").toString());
     }
 }

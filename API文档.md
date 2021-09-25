@@ -80,7 +80,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":{
-        "enterpriseId":"<string>",              //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+        "enterpriseId":"<string>",              //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
         "teamName":"<String>",					//企业/团队名称
         "head":"<String>",						//企业负责人
         "phone":"<String>",						//联系方式
@@ -116,7 +116,7 @@ id为表示企业/团队的唯一id
 {
     "data":null,
     "code":-1,
-    "msg":"EnterpriseID doesn't exist"
+    "msg":"EnterpriseId doesn't exist"
 }
 ```
 
@@ -141,14 +141,14 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":[{
-        "enterpriseId":"<string>",              //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+        "enterpriseId":"<string>",              //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
         "teamName":"<String>",					//企业/团队名称
         "head":"<String>",						//企业负责人
         "phone":"<String>",						//联系方式
         "joinTime":"<String>",					//入驻众创空间时间
         "teamNumber":"<String>",				//人数
     },{
-        "enterpriseId":"<string>",              //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+        "enterpriseId":"<string>",              //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
         "teamName":"<String>",					//企业/团队名称
         "head":"<String>",						//企业负责人
         "phone":"<String>",						//联系方式
@@ -215,7 +215,7 @@ id为表示企业/团队的唯一id
 ```json
 {
 	"data":{
-		"enterpriseId":"<string>",              //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+		"enterpriseId":"<string>",              //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
 	},
     "code":0,
     "msg":"succcess"
@@ -242,7 +242,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-    "enterpriseId":"<string>",              //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+    "enterpriseId":"<string>",              //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
     "teamName":"<String>",					//企业/团队名称
     "head":"<String>",						//企业负责人
     "phone":"<String>",						//联系方式
@@ -276,7 +276,7 @@ id为表示企业/团队的唯一id
 ```json
 {
 	"data":{
-		"enterpriseId":"<string>",              //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+		"enterpriseId":"<string>",              //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
 	},
     "code":0,
     "msg":"succcess"
@@ -289,7 +289,7 @@ id为表示企业/团队的唯一id
 {
 	"data":null,
     "code":-1,
-    "msg":"enterpriseID doesn't exist"
+    "msg":"enterpriseId doesn't exist"
 }
 ```
 
@@ -303,11 +303,19 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/enterprise/{id}`
+- `/api/enterprise`
 
 **请求方式：**
 
 - DELETE（带token）
+
+**参数**：
+
+```json
+{
+    "enterpriseId":"<string>"
+}
+```
 
 **返回：**
 
@@ -316,7 +324,7 @@ id为表示企业/团队的唯一id
 ```json
 {
 	"data":{
-		"enterpriseId":"<string>",              //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+		"enterpriseId":"<string>",              //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
 	},
     "code":0,
     "msg":"succcess"
@@ -329,7 +337,7 @@ id为表示企业/团队的唯一id
 {
 	"data":null,
     "code":-1,
-    "msg":"enterpriseID doesn't exist"
+    "msg":"enterpriseId doesn't exist"
 }
 ```
 
@@ -359,7 +367,7 @@ id为表示企业/团队的唯一id
 {
 	"data":{
         "employee":{
-			"employeeId":"<string>",		//企业/团队从业情况表唯一ID
+			"employeeId":"<string>",		//企业/团队从业情况表唯一Id
             "employees":"<int>",				//在孵企业/团队从业人员
             "doctor":"<int>",				//博士
             "master":"<int>",				//硕士
@@ -375,7 +383,7 @@ id为表示企业/团队的唯一id
             "employment":"<int>"			//接纳应届毕业生就业人员
         },
 		"enterprise":{
-            "enterpriseId":"<string>",          //企业/团队的唯一ID
+            "enterpriseId":"<string>",          //企业/团队的唯一Id
             "teamName":"<string>",				//表示企业/团队的名称
         }
     },
@@ -390,7 +398,7 @@ id为表示企业/团队的唯一id
 {
 	"data":null,
     "code":0,
-    "msg":"employeeID doesn't exist"
+    "msg":"employeeId doesn't exist"
 }
 ```
 
@@ -415,13 +423,13 @@ id为表示企业/团队的唯一id
 ```json
 {
 	"data":[{
-        "employeeId":"<string>",		//企业/团队从业情况表唯一ID
-        "enterpriseId":"<string>",		//表示企业/团队的唯一ID
+        "employeeId":"<string>",		//企业/团队从业情况表唯一Id
+        "enterpriseId":"<string>",		//表示企业/团队的唯一Id
         "teamName":"<string>",			//表示企业/团队的名称
         "employees":"<int>",				//在孵企业/团队从业人员
     },{
-        "employeeId":"<string>",		//企业/团队从业情况表唯一ID
-        "enterpriseId":"<string>",		//表示企业/团队的唯一ID
+        "employeeId":"<string>",		//企业/团队从业情况表唯一Id
+        "enterpriseId":"<string>",		//表示企业/团队的唯一Id
         "teamName":"<string>",			//表示企业/团队的名称
         "employees":"<int>",				//在孵企业/团队从业人员
     },
@@ -452,7 +460,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-    "enterpriseId":"<string>",			//表示企业/团队的唯一ID
+    "enterpriseId":"<string>",			//表示企业/团队的唯一Id
     "employees":"<int>",					//在孵企业/团队从业人员
     "doctor":"<int>",					//博士
     "master":"<int>",					//硕士
@@ -476,7 +484,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":{
-       	"employeeId":"<string>",		//企业/团队从业情况表唯一ID
+       	"employeeId":"<string>",		//企业/团队从业情况表唯一Id
     },
     "code":0，
     "msg":"success",
@@ -513,7 +521,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-		"employeeId":"<string>",		//企业/团队从业情况表唯一ID
+		"employeeId":"<string>",		//企业/团队从业情况表唯一Id
         "employees":"<int>",				//在孵企业/团队从业人员
         "doctor":"<int>",				//博士
         "master":"<int>",				//硕士
@@ -537,7 +545,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":{
-        "employeeId":"<string>",		//企业/团队从业情况表唯一ID
+        "employeeId":"<string>",		//企业/团队从业情况表唯一Id
     },
     "code":0，
     "msg":"success"
@@ -550,7 +558,7 @@ id为表示企业/团队的唯一id
 {
     "data":null,
     "code":-1，
-    "msg":"employeeID doesn't exist"
+    "msg":"employeeId doesn't exist"
 }
 ```
 
@@ -574,7 +582,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-    "employeeId":"<string>",		//企业/团队从业情况表唯一ID
+    "employeeId":"<string>",		//企业/团队从业情况表唯一Id
 }
 ```
 
@@ -585,7 +593,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":{
-        "employeeId":"<string>",		//企业/团队从业情况表唯一ID
+        "employeeId":"<string>",		//企业/团队从业情况表唯一Id
     },
     "code":0，
     "msg":"success"
@@ -598,7 +606,7 @@ id为表示企业/团队的唯一id
 {
     "data":null,
     "code":-1，
-    "msg":"employeeID not exist"
+    "msg":"employeeId not exist"
 }
 ```
 
@@ -628,7 +636,7 @@ id为表示企业/团队的唯一id
 {
     "data":{
         "property":{
-            "propertyID":"<string>",			//在孵企业知识产权情况表唯一Id
+            "propertyId":"<string>",			//在孵企业知识产权情况表唯一Id
             "applications":"<int>",				//当年知识产权申请数
             "applicationsPatent":"<int>",		//当年知识产权申请数中的专利发明数
             "patentNum":"<string>",				//当年知识产权申请数中专利发明对应的专利号
@@ -648,7 +656,7 @@ id为表示企业/团队的唯一id
             "awards":"<int>",					//当年获得省级以上奖励
         },
         "enterprise":{
-            "enterpriseId":"<string>",          //企业/团队的唯一ID
+            "enterpriseId":"<string>",          //企业/团队的唯一Id
             "teamName":"<string>",				//表示企业/团队的名称
         }
     },
@@ -663,7 +671,7 @@ id为表示企业/团队的唯一id
 {
     "data":null,
     "code":-1,
-	"msg":"propertyID not exist"
+	"msg":"propertyId not exist"
 }
 ```
 
@@ -688,15 +696,15 @@ id为表示企业/团队的唯一id
 ```json
 {
 	"data":[{
-        "propertyID":"<string>",			//在孵企业知识产权情况表唯一Id
-        "enterpriseId":"<string>",          //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+        "propertyId":"<string>",			//在孵企业知识产权情况表唯一Id
+        "enterpriseId":"<string>",          //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
         "teamName":"<string>",				//表示企业/团队的名称
         "applications":"<int>",				//当年知识产权申请数
         "granted":"<int>",					//当年知识产权授权数
         "valid":"<int>",					//拥有有效知识产权数
     },{
-        "propertyID":"<string>",			//在孵企业知识产权情况表唯一Id
-        "enterpriseId":"<string>",          //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
+        "propertyId":"<string>",			//在孵企业知识产权情况表唯一Id
+        "enterpriseId":"<string>",          //表示企业/团队表的唯一Id，也是企业/团队的唯一Id
         "teamName":"<string>",				//表示企业/团队的名称
         "applications":"<int>",				//当年知识产权申请数
         "granted":"<int>",					//当年知识产权授权数
@@ -729,7 +737,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-    "enterpriseId":"<string>",			//表示企业/团队的唯一ID
+    "enterpriseId":"<string>",			//表示企业/团队的唯一Id
     "applications":"<int>",				//当年知识产权申请数
     "applicationsPatent":"<int>",		//当年知识产权申请数中的专利发明数
     "patentNum":"<string>",				//当年知识产权申请数中专利发明对应的专利号
@@ -757,7 +765,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":{
-		"propertyID":"<string>",		//在孵企业知识产权情况表唯一Id
+		"propertyId":"<string>",		//在孵企业知识产权情况表唯一Id
     },
     "code":0，
     "msg":"success",
@@ -794,7 +802,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-    "propertyId":"<string>",		//产权情况表唯一ID
+    "propertyId":"<string>",		//产权情况表唯一Id
 }
 ```
 
@@ -805,7 +813,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":{
-        "propertyID":"<string>",			//在孵企业知识产权情况表唯一Id
+        "propertyId":"<string>",			//在孵企业知识产权情况表唯一Id
     },
     "code":0，
     "msg":"success"
@@ -842,7 +850,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-	"propertyID":"<string>",			//在孵企业知识产权情况表唯一Id
+	"propertyId":"<string>",			//在孵企业知识产权情况表唯一Id
     "applications":"<int>",				//当年知识产权申请数
     "applicationsPatent":"<int>",		//当年知识产权申请数中的专利发明数
     "patentNum":"<string>",				//当年知识产权申请数中专利发明对应的专利号
@@ -870,7 +878,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":{
-        "propertyID":"<string>",		//在孵企业知识产权情况表唯一Id
+        "propertyId":"<string>",		//在孵企业知识产权情况表唯一Id
     },
     "code":0，
     "msg":"success"
@@ -883,7 +891,7 @@ id为表示企业/团队的唯一id
 {
     "data":null,
     "code":-1，
-    "msg":"propertyID doesn't exist"
+    "msg":"propertyId doesn't exist"
 }
 ```
 
@@ -899,7 +907,7 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/activity/{activitieId}`
+- `/api/activity/{activityId}`
 
 **请求方式：**
 
@@ -910,7 +918,7 @@ id为表示企业/团队的唯一id
 ```json
 {
 	"activity":{
-        "activityId":"<string>",			//活动情况表唯一ID
+        "activityId":"<string>",			//活动情况表唯一Id
         "underProjects":"<int>",			//承担各类计划项目
         "nationalProject":"<int>",			//国家级项目
         "expenditure":"<int>",				//科技活动经费支出总额
@@ -920,7 +928,7 @@ id为表示企业/团队的唯一id
         "selfRaised":"<int>",				//企业自筹
     },
     "enterprise":{
-        "enterpriseId":"<string>",          //企业/团队的唯一ID
+        "enterpriseId":"<string>",          //企业/团队的唯一Id
 	    "teamName":"<string>",				//表示企业/团队的名称
     }
 }
@@ -947,14 +955,14 @@ id为表示企业/团队的唯一id
 ```json
 {
 	"data":[{
-		"activityId":"<string>",			//活动情况表唯一ID
-        "enterpriseId":"<string>",          //企业/团队的唯一ID
+		"activityId":"<string>",			//活动情况表唯一Id
+        "enterpriseId":"<string>",          //企业/团队的唯一Id
         "underProjects":"<int>",			//承担各类计划项目
         "nationalProject":"<int>",			//国家级项目
         "expenditure":"<int>",				//科技活动经费支出总额
     },{
-		"activityId":"<string>",			//活动情况表唯一ID
-        "enterpriseId":"<string>",          //企业/团队的唯一ID
+		"activityId":"<string>",			//活动情况表唯一Id
+        "enterpriseId":"<string>",          //企业/团队的唯一Id
         "underProjects":"<int>",			//承担各类计划项目
         "nationalProject":"<int>",			//国家级项目
         "expenditure":"<int>",				//科技活动经费支出总额
@@ -986,7 +994,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-	"enterpriseId":"<string>",			//表示企业/团队的唯一ID
+	"enterpriseId":"<string>",			//表示企业/团队的唯一Id
 	"underProjects":"<int>",			//承担各类计划项目
     "nationalProject":"<int>",			//国家级项目
     "expenditure":"<int>",				//科技活动经费支出总额
@@ -1039,7 +1047,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-    "activitieId":"<string>",		//科技活动表唯一ID
+    "activityId":"<string>",		//科技活动表唯一Id
 }
 ```
 
@@ -1050,7 +1058,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "data":{
-        "activitieId":"<string>",			//在孵企业科技活动表唯一Id
+        "activityId":"<string>",			//在孵企业科技活动表唯一Id
     },
     "code":0，
     "msg":"success"
@@ -1063,7 +1071,7 @@ id为表示企业/团队的唯一id
 {
     "data":null,
     "code":-1，
-    "msg":"activitieId doesn't exist"
+    "msg":"activityId doesn't exist"
 }
 ```
 
@@ -1087,7 +1095,7 @@ id为表示企业/团队的唯一id
 
 ```json
 {
-	"activityId":"<string>",			//活动情况表唯一ID
+	"activityId":"<string>",			//活动情况表唯一Id
     "underProjects":"<int>",			//承担各类计划项目
     "nationalProject":"<int>",			//国家级项目
     "expenditure":"<int>",				//科技活动经费支出总额
@@ -1118,7 +1126,7 @@ id为表示企业/团队的唯一id
 {
     "data":null,
     "code":-1，
-    "msg":"propertyID doesn't exist"
+    "msg":"propertyId doesn't exist"
 }
 ```
 

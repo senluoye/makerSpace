@@ -35,9 +35,9 @@ public class EmployeeController {
         return employeeService.updateEmployee(map);
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
-    private Map<String, Object> DeleteEmployee(@PathVariable String id) {
-        return employeeService.deleteEmployee(id);
+    @RequestMapping(value = "", method = RequestMethod.DELETE)
+    private Map<String, Object> DeleteEmployee(@RequestBody Map<String, Object> map) {
+        return employeeService.deleteEmployee(map.get("enterpriseId").toString());
     }
 
 }

@@ -14,5 +14,4 @@ public interface PropertyService {
     Map<String, Object> updateProperty(Map<String, Object> map);
     Map<String, Object> deleteProperty(String id);
 
-
 }

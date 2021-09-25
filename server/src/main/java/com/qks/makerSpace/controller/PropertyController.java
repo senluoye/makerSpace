@@ -39,8 +39,8 @@ public class PropertyController {
         return propertyService.updateProperty(map);
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
-    private Map<String, Object> DeleteProperty(@PathVariable String id) {
-        return propertyService.deleteProperty(id);
+    @RequestMapping(value = "",method = RequestMethod.DELETE)
+    private Map<String, Object> DeleteProperty(@RequestBody Map<String, Object> map) {
+        return propertyService.deleteProperty(map.get("propertyId").toString());
     }
 }

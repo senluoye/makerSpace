@@ -10,4 +10,5 @@ public interface EmployeeService {
     Map<String, Object> addEmployee(Map<String, Object> map);
     Map<String, Object> updateEmployee(Map<String, Object> map);
     Map<String, Object> deleteEmployee(String id);
+
 }
