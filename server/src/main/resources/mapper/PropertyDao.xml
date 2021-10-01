@@ -46,46 +46,46 @@
                 applications = #{applications}
             </if>
             <if test="applicationsPatent != null">
-                applications_patent = #{applications_patent}
+                applications_patent = #{applicationsPatent}
             </if>
             <if test="patentNum != null">
-                patent_num = #{patent_num}
+                patent_num = #{patentNum}
             </if>
             <if test="softNum != null">
-                soft_num = #{soft_num}
+                soft_num = #{softNum}
             </if>
             <if test="trademarkNum != null">
-                trademark_num = #{trademark_num}
+                trademark_num = #{trademarkNum}
             </if>
             <if test="beGranted != null">
-                be_granted = #{be_granted}
+                be_granted = #{beGranted}
             </if>
             <if test="grantedPatent != null">
-                granted_patent = #{granted_patent}
+                granted_patent = #{grantedPatent}
             </if>
             <if test="valid != null">
                 valid = #{valid}
             </if>
             <if test="validPatent != null">
-                valid_patent = #{valid_patent}
+                valid_patent = #{validPatent}
             </if>
             <if test="softCopyright != null">
-                soft_copyright = #{soft_copyright}
+                soft_copyright = #{softCopyright}
             </if>
             <if test="icLayout != null">
-                ic_layout = #{ic_layout}
+                ic_layout = #{icLayout}
             </if>
             <if test="foreignPatents != null">
-                foreign_patents = #{foreign_patents}
+                foreign_patents = #{foreignPatents}
             </if>
             <if test="contractTransaction != null">
-                contract_transaction = #{contract_transaction}
+                contract_transaction = #{contractTransaction}
             </if>
             <if test="contractTurnover != null">
-                contract_turnover = #{contract_turnover}
+                contract_turnover = #{contractTurnover}
             </if>
             <if test="projectNum != null">
-                project_num = #{project_num}
+                project_num = #{projectNum}
             </if>
             <if test="awards != null">
                 awards = #{awards}
