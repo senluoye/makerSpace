@@ -1,10 +1,12 @@
 package com.qks.makerSpace.config.controller;
 
 import com.qks.makerSpace.interceptor.TokenInterceptor;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+@Configuration
 public class MvcConfigurer implements WebMvcConfigurer {
 
     //注册拦截器
@@ -15,7 +17,8 @@ public class MvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/api/enterprise/**")
                 .addPathPatterns("/api/employee/**")
                 .addPathPatterns("/api/property/**")
-                .addPathPatterns("/api/activity");
+                .addPathPatterns("/api/activity/**")
+                .addPathPatterns("/api/login/**");
     }
 
     //跨域访问 配置

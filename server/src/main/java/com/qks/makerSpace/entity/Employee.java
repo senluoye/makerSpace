@@ -11,7 +11,7 @@ public class Employee {
     @NonNull
     private String employeeId;
 
-    private Integer employee;
+    private Integer employees;
     private Integer doctor;
     private Integer master;
     private Integer graduate;

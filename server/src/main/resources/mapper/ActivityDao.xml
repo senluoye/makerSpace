@@ -10,8 +10,8 @@
     </select>
     
     <select id="getAllActivity" resultType="com.qks.makerSpace.entity.Activity">
-        select activity.activity_id,connect.enterprised_id,
-               activity.under_projects,activity.national_project,
+        select activity.activity_id activityId,connect.enterprise_id enterpriseId,
+               activity.under_projects underProjects,activity.national_project nationalProject,
                activity.expenditure
         from activity,connect;
         where connect.activity_id = activity.activity_id

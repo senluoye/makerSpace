@@ -7,6 +7,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 验证token，是否登录
@@ -55,7 +57,10 @@ public class TokenInterceptor implements HandlerInterceptor {
          */
 //        return JWTUtils.verify(httpServletRequest.getHeader("token"));
 
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println("最新的请求: " + df.format(new Date()));
         return true;
+
     }
 
     @Override

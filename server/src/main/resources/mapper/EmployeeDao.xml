@@ -11,7 +11,8 @@
     </select>
 
     <select id="getAllEmployee" resultType="com.qks.makerSpace.entity.Employee">
-        select employee.employee_id, connect.enterprise_id, connect.team_name, employee.employees
+        select employee.employee_id employeeId, connect.enterprise_id enterpriseId,
+               connect.team_name teamName, employee.employees
         from employee, connect
         where connect.employee_id = employee.employee_id
     </select>

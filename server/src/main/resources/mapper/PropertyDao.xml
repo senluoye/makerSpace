@@ -10,8 +10,8 @@
     </select>
 
     <select id="getAllProperty" resultType="com.qks.makerSpace.entity.Property">
-        select property.property_id,connect.enterprise_id,connect.team_name,
-               property.applications,property.be_granted,property.valid
+        select property.property_id propertyId,connect.enterprise_id enterpriseId,connect.team_name teamName,
+               property.applications,property.granted,property.valid
         from property,connect
         where connect.property_id = property.property_id
     </select>
@@ -19,7 +19,7 @@
     <insert id="addProperty" parameterType="Map">
         insert into property(property_id,applications,applications_patent,patent_num,
                              soft_num,trademark_num,granted,granted_patent,valid,valid_patent,
-                             soft_copyright,plant_variety,icLayout,foreign_paents,
+                             soft_copyright,plant_variety,icLayout,foreign_patents,
                              contract_transaction,contract_turnover,project_num,awards)
         values (#{properytID},#{applications},#{applicationsPatent},#{patentNum},#{softNum},
                 #{trademarkNum},#{granted},#{grantedPatent},#{valid},#{validPatent},

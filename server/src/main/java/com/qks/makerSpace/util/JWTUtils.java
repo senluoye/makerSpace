@@ -39,7 +39,7 @@ public class JWTUtils {
      */
     public static Boolean verify(String token) {
         Map<String, Object> map = parser(token);
-        System.out.println(map);
+//        System.out.println(map);
         return Objects.equals(map.get("name").toString(), "admin")
                 && Objects.equals(map.get("password").toString(), "123456");
     }
