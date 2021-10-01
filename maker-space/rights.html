@@ -6,99 +6,125 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
-
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 官网提供的 axios 在线地址 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <title>Hello, world!</title>
 </head>
 
 <body>
-    <div class="contain">
-        <div class="main">
-            <ul class="nav nav-tabs">
-                <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="index.html">企业/团队基本状况</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="people.html">入驻企业/团队就业人员情况</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="rights.html">在孵企业知识产权情况</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="activity.html">在孵企业科技活动情况</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="login.html">登录导出</a>
-                </li>
-            </ul>
+    <div id="app">
+        <div class="contain">
+            <div class="main">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="index.html">企业/团队基本状况</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="people.html">入驻企业/团队就业人员情况</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="rights.html">在孵企业知识产权情况</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="activity.html">在孵企业科技活动情况</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.html">登录导出</a>
+                    </li>
+                </ul>
 
-        </div>
-        <form action="">
-            <div class="form-group row">
-                <label for="staticEmail" class="col-sm-2 col-form-label">当年知识产权申请数
-                    <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                </label>
-                <div class="col-sm-10">
-                    <label for="staticEmail" class=" col-form-label">其中：发明专利</label>
-                    <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                </div>
-                <label for="staticEmail" class="col-sm-2 col-form-label">当年知识产权授权数
-                    <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                </label>
-                <div class="col-sm-10">
-                    <label for="staticEmail" class=" col-form-label">其中：发明专利</label>
-                    <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                </div>
-                <label for="staticEmail" class="col-sm-2 col-form-label">拥有有效知识产权数
-                    <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                </label>
-                <div class="col-sm-10">
+            </div>
+            <form action="">
+                <div class="form-group row">
+                    <label for="staticEmail" class="col-sm-2 col-form-label">当年知识产权申请数
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.applications"><label>件</label>
+                    </label>
                     <div class="col-sm-10">
                         <label for="staticEmail" class=" col-form-label">其中：发明专利</label>
-                        <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                    </div>
-                    <div class="col-sm-10">
-                        <label for="staticEmail" class="col-form-label">&nbsp;软件著作权</label>
-                        <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                    </div>
-                    <div class="col-sm-10">
-                        <label for="staticEmail" class=" col-form-label">&nbsp;植物新品种</label>
-                        <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                    </div>
-                    <div class="col-sm-10">
-                        <label for="staticEmail" class=" col-form-label">&nbsp;集成电路布图</label>
-                        <input type="email" class="form-control" id="peoplenum"><label>件</label>
-                        <br><br>
-                    </div>
-                </div>
-                <hr>
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.applicationsPatent"><label>件</label><br>
 
-                <div class="col-sm-10">
-                    <label for="staticEmail" class=" col-form-label">购买国外技术专利</label>
-                    <input type="email" class="form-control" id="peoplenum"><label>件</label>
+                        <label for="staticEmail" class=" col-form-label">专利发明的软著登记号:</label>
+                        <input type="email" class="form-control" id="peoplenum" v-model="propertyDetail.softNum"><br>
+
+                        <label for="staticEmail" class=" col-form-label">专利发明的商标号:</label>
+                        <input type="email" class="form-control" id="peoplenum" v-model="propertyDetail.trademarkNum">
+                    </div>
+                    <br>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">当年知识产权授权数
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.granted"><label>件</label>
+                    </label>
+                    <div class="col-sm-10">
+                        <label for="staticEmail" class=" col-form-label">其中：发明专利</label>
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.grantedPatent"><label>件</label>
+                    </div>
+                    <label for="staticEmail" class="col-sm-2 col-form-label">拥有有效知识产权数
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.valid"><label>件</label>
+                    </label>
+                    <div class="col-sm-10">
+                        <div class="col-sm-10">
+                            <label for="staticEmail" class=" col-form-label">其中：发明专利</label>
+                            <input type="email" class="form-control" id="peoplenum"
+                                v-model="propertyDetail.validPatent"><label>件</label>
+                        </div>
+                        <div class="col-sm-10">
+                            <label for="staticEmail" class="col-form-label">&nbsp;软件著作权</label>
+                            <input type="email" class="form-control" id="peoplenum"
+                                v-model="propertyDetail.softCopyright"><label>件</label>
+                        </div>
+                        <div class="col-sm-10">
+                            <label for="staticEmail" class=" col-form-label">&nbsp;植物新品种</label>
+                            <input type="email" class="form-control" id="peoplenum"
+                                v-model="propertyDetail.plantVariety"><label>件</label>
+                        </div>
+                        <div class="col-sm-10">
+                            <label for="staticEmail" class=" col-form-label">&nbsp;集成电路布图</label>
+                            <input type="email" class="form-control" id="peoplenum"
+                                v-model="propertyDetail.icLayout"><label>件</label>
+                            <br><br>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="col-sm-10">
+                        <label for="staticEmail" class=" col-form-label">购买国外技术专利</label>
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.foreignPatents"><label>件</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <label for="staticEmail" class=" col-form-label">技术合同交易数量</label>
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.contractTransaction"><label>项</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <label for="staticEmail" class=" col-form-label">技术合同交易额</label>
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.contractTurnover"><label>千元</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <label for="staticEmail" class=" col-form-label">当年承担国家级科技计划项目数</label>
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.projectNum"><label>项</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <label for="staticEmail" class="col-form-label">当年获得省级以上奖励</label>
+                        <input type="email" class="form-control" id="peoplenum"
+                            v-model="propertyDetail.awards"><label>项</label>
+                    </div>
                 </div>
-                <div class="col-sm-10">
-                    <label for="staticEmail" class=" col-form-label">技术合同交易数量</label>
-                    <input type="email" class="form-control" id="peoplenum"><label>项</label>
-                </div>
-                <div class="col-sm-10">
-                    <label for="staticEmail" class=" col-form-label">技术合同交易额</label>
-                    <input type="email" class="form-control" id="peoplenum"><label>千元</label>
-                </div>
-                <div class="col-sm-10">
-                    <label for="staticEmail" class=" col-form-label">当年承担国家级科技计划项目数</label>
-                    <input type="email" class="form-control" id="peoplenum"><label>项</label>
-                </div>
-                <div class="col-sm-10">
-                    <label for="staticEmail" class="col-form-label">当年获得省级以上奖励</label>
-                    <input type="email" class="form-control" id="peoplenum"><label>项</label>
-                </div>
-            </div>
-            <button type="button" class="btn btn-outline-dark mybutton">提交</button>
-        </form>
+                <button type="button" class="btn btn-outline-dark mybutton" @click="putFormThree">提交</button>
+            </form>
+        </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="index.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="index.js"></script> -->
+    <script src="main.js"></script>
 </body>
 
 </html>
