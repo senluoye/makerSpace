@@ -47,9 +47,13 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public Map<String, Object> addActivity(Map<String, Object> map) {
         String activityId = UUID.randomUUID().toString();
+        String enterpriseId = map.get("enterpriseId").toString();
+
         map.put("activityId",activityId);
+
+
         if (activityDao.addActivity(map) > 0 &&
-                activityDao.updateConnect(map.get("enterpriseId").toString(),activityId) >0) {
+                activityDao.updateConnect(enterpriseId, activityId) >0) {
             return MyResponseUtil.getResultMap(activityId,0,"success");
         } else {
             return MyResponseUtil.getResultMap(null,-1,"failure");

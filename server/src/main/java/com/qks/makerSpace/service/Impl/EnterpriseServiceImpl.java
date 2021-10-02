@@ -20,6 +20,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Override
     public Map<String, Object> getOneEnterprise(String id) {
+        System.out.println("??????????????????" + id);
         Enterprise data = enterpriseDao.getOneEnterpriseById(id);
 
         if (data == null)
@@ -43,7 +44,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         String enterpriseId = UUID.randomUUID().toString();
         map.put("enterpriseId", enterpriseId);
         if (enterpriseDao.addEnterprise(map) > 0 &&
-                enterpriseDao.addConnect(UUID.randomUUID().toString(), enterpriseId) > 0) {
+                enterpriseDao.addConnect(UUID.randomUUID().toString(), map.get("teamName").toString(), enterpriseId) > 0) {
             return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
         } else {
             return MyResponseUtil.getResultMap(null, -1, "failure");

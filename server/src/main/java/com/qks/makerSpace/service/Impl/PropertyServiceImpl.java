@@ -24,7 +24,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public Map<String, Object> getOneProperty(String id) {
-        Property propertyTemp = propertyDao.getPropertyByID(id);
+        Property propertyTemp = propertyDao.getPropertyById(id);
         if (propertyTemp != null) {
             Map<String, Object> data = new HashMap<>();
             data.put("property",propertyTemp);
@@ -47,9 +47,10 @@ public class PropertyServiceImpl implements PropertyService {
     @Override
     public Map<String, Object> addProperty(Map<String, Object> map) {
         String propertyId = UUID.randomUUID().toString();
-        map.put("propertyId",propertyId);
+        map.put("propertyId", propertyId);
+        String enterpriseId = map.get("enterpriseId").toString();
         if (propertyDao.addProperty(map) > 0 &&
-                propertyDao.updateConnect(map.get("enterpriseId").toString(),propertyId) > 0) {
+                propertyDao.updateConnect(enterpriseId, propertyId) > 0) {
             return MyResponseUtil.getResultMap(propertyId,0,"success");
         } else {
             return MyResponseUtil.getResultMap(null,-1,"failure");

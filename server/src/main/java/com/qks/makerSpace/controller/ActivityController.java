@@ -10,8 +10,8 @@ import java.util.Map;
  * @author 张以恒
  * @create 2021/9/18-18:45
  **/
-//@RestController
-//@RequestMapping("/api/activity")
+@RestController
+@RequestMapping("/api/activity")
 public class ActivityController {
 
     private final ActivityService activityService;

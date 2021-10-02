@@ -12,7 +12,7 @@ public interface EnterpriseDao {
     Enterprise getOneEnterpriseById(String id);
     List<Enterprise> getAllEnterprise();
     Integer addEnterprise(Map<String, Object> map);
-    Integer addConnect(String id, String enterpriseId);
+    Integer addConnect(String id, String teamName, String enterpriseId);
     Integer updateEnterprise(Map<String, Object> map);
     Integer deleteEnterprise(String id);
 

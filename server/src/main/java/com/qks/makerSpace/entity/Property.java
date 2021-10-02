@@ -9,7 +9,7 @@ import lombok.Setter;
 public class Property {
 
     @NonNull
-    private String propertyID;
+    private String propertyId;
 
     private Integer applications;
     private Integer applicationsPatent;

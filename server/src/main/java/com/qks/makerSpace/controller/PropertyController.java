@@ -19,7 +19,7 @@ public class PropertyController {
         this.propertyService = propertyService;
     }
 
-    @RequestMapping(value = "/{id}",method = RequestMethod.GET)
+    @RequestMapping(value = "{id}",method = RequestMethod.GET)
     private Map<String, Object> GetOneProperty(@PathVariable String id) {
         return propertyService.getOneProperty(id);
     }

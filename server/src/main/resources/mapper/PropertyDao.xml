@@ -19,12 +19,12 @@
     <insert id="addProperty" parameterType="Map">
         insert into property(property_id,applications,applications_patent,patent_num,
                              soft_num,trademark_num,granted,granted_patent,valid,valid_patent,
-                             soft_copyright,plant_variety,icLayout,foreign_patents,
+                             soft_copyright,plant_variety,ic_layout,foreign_patents,
                              contract_transaction,contract_turnover,project_num,awards)
-        values (#{properytID},#{applications},#{applicationsPatent},#{patentNum},#{softNum},
-                #{trademarkNum},#{granted},#{grantedPatent},#{valid},#{validPatent},
-                #{softCopyright},#{plantVariety},#{ic_layout},#{foreignPatents},
-                #{contractTransaction},#{contractTurnover},#{projectNum},#{awards})
+        values (#{propertyId}, #{applications}, #{applicationsPatent}, #{patentNum}, #{softNum},
+                #{trademarkNum}, #{granted}, #{grantedPatent}, #{valid}, #{validPatent},
+                #{softCopyright}, #{plantVariety}, #{icLayout}, #{foreignPatents},
+                #{contractTransaction}, #{contractTurnover}, #{projectNum},#{awards})
 
     </insert>
 

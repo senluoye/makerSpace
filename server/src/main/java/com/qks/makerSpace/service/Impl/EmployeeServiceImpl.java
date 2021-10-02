@@ -45,8 +45,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Map<String, Object> addEmployee(Map<String, Object> map) {
         String employeeId = UUID.randomUUID().toString();
         map.put("employeeId", employeeId);
+        String enterpriseId = map.get("enterpriseId").toString();
         if (employeeDao.addEmployee(map) > 0 &&
-                employeeDao.updateConnect(map.get("enterpriseId").toString(), employeeId) > 0) {
+                employeeDao.updateConnect(enterpriseId, employeeId) > 0) {
             return MyResponseUtil.getResultMap(employeeId, 0, "success");
         } else {
             return MyResponseUtil.getResultMap(null, -1, "failure");

@@ -353,7 +353,7 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/employee/{enterpriseId}`
+- `/api/employee/{employeeId}`
 
 **请求方式：**
 

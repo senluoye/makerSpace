@@ -9,7 +9,7 @@ import java.util.Map;
 @Repository
 public interface PropertyDao {
 
-    Property getPropertyByID(String id);
+    Property getPropertyById(String id);
     List<Property> getAllProperty();
     Integer addProperty(Map<String,Object> map);
     Integer updateConnect(String enterpriseId, String propertyId);

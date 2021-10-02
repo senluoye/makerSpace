@@ -7,7 +7,7 @@
     <select id="getEmployeeById" resultType="com.qks.makerSpace.entity.Employee">
         select *
         from employee
-        where employee_id = #{getEmployeeById}
+        where employee_id = #{id}
     </select>
 
     <select id="getAllEmployee" resultType="com.qks.makerSpace.entity.Employee">
@@ -16,6 +16,13 @@
         from employee, connect
         where connect.employee_id = employee.employee_id
     </select>
+
+    <select id="getEnterpriseDetails" resultType="Map">
+        select enterprise_id enterpriseId, team_name teamName
+        from connect
+        where employee_id = #{id}
+    </select>
+
 
     <insert id="addEmployee" parameterType="Map">
         insert into employee(employee_id, employees, doctor, master,

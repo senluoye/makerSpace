@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qks.makerSpace.dao.ActivityDao">
+    <select id="getId">
+        select property_id
+        from connect
+        where enterprise_id = #{id}
+    </select>
+
     <select id="getOneActivityById" resultType="com.qks.makerSpace.entity.Activity">
         select *
         from activity
@@ -10,10 +16,10 @@
     </select>
     
     <select id="getAllActivity" resultType="com.qks.makerSpace.entity.Activity">
-        select activity.activity_id activityId,connect.enterprise_id enterpriseId,
-               activity.under_projects underProjects,activity.national_project nationalProject,
+        select activity.activity_id activityId, connect.enterprise_id enterpriseId,
+               activity.under_projects underProjects, activity.national_project nationalProject,
                activity.expenditure
-        from activity,connect;
+        from activity, connect
         where connect.activity_id = activity.activity_id
     </select>
     
