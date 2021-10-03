@@ -41,17 +41,16 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Override
     public Map<String, Object> addEnterprise(Map<String, Object> map) {
-        if (enterpriseDao.getEnterpriseByTeamName(map.get("teamName").toString()) == null){
-            String enterpriseId = UUID.randomUUID().toString();
-            map.put("enterpriseId", enterpriseId);
+        String enterpriseId = UUID.randomUUID().toString();
+        map.put("enterpriseId", enterpriseId);
+        String teamName = map.get("teamName").toString();
+        String connectId = UUID.randomUUID().toString();
 
-            if (enterpriseDao.addEnterprise(map) > 0 &&
-                    enterpriseDao.addConnect(UUID.randomUUID().toString(), map.get("teamName").toString(), enterpriseId) > 0) {
-                return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
+        if (enterpriseDao.addEnterprise(map) > 0 &&
+                enterpriseDao.addConnect(connectId, teamName, enterpriseId) > 0) {
+            return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
 
-            } else return MyResponseUtil.getResultMap(null, -1, "failure");
-
-        } else return MyResponseUtil.getResultMap(null, -1, "teamName was exist");
+        } else return MyResponseUtil.getResultMap(null, -1, "failure");
 
     }
 

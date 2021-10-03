@@ -1,11 +1,13 @@
 package com.qks.makerSpace.service.Impl;
 
+import ch.qos.logback.core.joran.conditional.ElseAction;
 import com.qks.makerSpace.dao.ActivityDao;
 import com.qks.makerSpace.entity.Activity;
 import com.qks.makerSpace.service.ActivityService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
+import java.lang.annotation.ElementType;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -36,7 +38,7 @@ public class ActivityServiceImpl implements ActivityService {
             } else
                 return MyResponseUtil.getResultMap(null, -1, "propertyId doesn't exist");
 
-        } else return MyResponseUtil.getResultMap(null, -1, "activityId doesn't exist");
+        } else return MyResponseUtil.getResultMap(null, -2, "activityId doesn't exist");
 
     }
 
@@ -62,19 +64,22 @@ public class ActivityServiceImpl implements ActivityService {
                     activityDao.updateConnect(enterpriseId, activityId) > 0) {
                 return MyResponseUtil.getResultMap(activityId,0,"success");
             } else
-                return MyResponseUtil.getResultMap(null,-1,"failure");
+                return MyResponseUtil.getResultMap(null,-1,"add failure");
 
-        } else return MyResponseUtil.getResultMap(null,-1,"activityId was exist");
+        } else return MyResponseUtil.getResultMap(null,-2,"activityId was exist or enterpriseId was null");
 
     }
 
     @Override
     public Map<String, Object> updateActivity(Map<String, Object> map) {
+
         String activityId = map.get("activityId").toString();
+
         if (activityDao.updateActivity(map) > 0)
-            return MyResponseUtil.getResultMap(new HashMap<>().put("activityId",activityId),0,"success");
+            return MyResponseUtil.getResultMap(new HashMap<>().put("activityId", activityId),0,"success");
         else
-            return MyResponseUtil.getResultMap(null,-1,"activityId doesn't exist");
+            return MyResponseUtil.getResultMap(null, 0, "update failure");
+
     }
 
     @Override

@@ -36,7 +36,7 @@ public class PropertyServiceImpl implements PropertyService {
             } else
                 return MyResponseUtil.getResultMap(null,-1,"propertyId not exist");
 
-        } else return MyResponseUtil.getResultMap(null,-1,"enterpriseId not exist");
+        } else return MyResponseUtil.getResultMap(null,-2,"enterpriseId not exist");
 
     }
 
@@ -56,16 +56,15 @@ public class PropertyServiceImpl implements PropertyService {
 
         if (propertyId == null){
             propertyId = UUID.randomUUID().toString();
-
             map.put("propertyId", propertyId);
 
             if (propertyDao.addProperty(map) > 0 &&
                     propertyDao.updateConnect(enterpriseId, propertyId) > 0) {
                 return MyResponseUtil.getResultMap(propertyId,0,"success");
 
-            } else return MyResponseUtil.getResultMap(null,-1,"failure");
+            } else return MyResponseUtil.getResultMap(null,-1,"add failure");
 
-        } else return MyResponseUtil.getResultMap(null,-1,"propertyId was exist");
+        } else return MyResponseUtil.getResultMap(null,-2,"propertyId was exist or enterpriseId was null");
 
     }
 

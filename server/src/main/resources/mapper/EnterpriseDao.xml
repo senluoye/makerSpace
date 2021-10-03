@@ -112,8 +112,8 @@
             <if test="projectName != null and projectName != ''">
                 project_name = #{projectName}
             </if>
-            <if test="projectAount != null and projectAount != ''">
-                project_aount = #{projectAount}
+            <if test="projectAmount != null and projectAmount != ''">
+                project_amount = #{projectAmount}
             </if>
             <if test="highTec != null">
                 high_tec = #{highTec}

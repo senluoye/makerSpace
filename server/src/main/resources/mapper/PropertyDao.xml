@@ -10,7 +10,7 @@
     </select>
 
     <select id="getPropertyIdByEnterpriseId" resultType="String">
-        select property_id
+        select property_id propertyId
         from connect
         where enterprise_id = #{id}
     </select>

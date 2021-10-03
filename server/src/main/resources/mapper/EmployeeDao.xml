@@ -11,7 +11,7 @@
     </select>
 
     <select id="getEmployeeIdByEnterpriseId" resultType="String">
-        select employee_id
+        select employee_id employeeId
         from connect
         where enterprise_id = #{id}
     </select>

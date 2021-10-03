@@ -32,9 +32,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
                 return MyResponseUtil.getResultMap(data, 0, "success");
 
-            } else return MyResponseUtil.getResultMap(null, -1, "employeeId doesn't exist");
+            } else return MyResponseUtil.getResultMap(null, -1, "employee doesn't exist");
 
-        } else return MyResponseUtil.getResultMap(null, -1, "EnterpriseId doesn't exist");
+        } else return MyResponseUtil.getResultMap(null, -2, "employeeId doesn't exist");
 
     }
 
@@ -51,7 +51,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Map<String, Object> addEmployee(Map<String, Object> map) {
         String enterpriseId = map.get("enterpriseId").toString();
-
         String employeeId = employeeDao.getEmployeeIdByEnterpriseId(enterpriseId);
 
         if (employeeId == null){
@@ -62,9 +61,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                     employeeDao.updateConnect(enterpriseId, employeeId) > 0) {
                 return MyResponseUtil.getResultMap(employeeId, 0, "success");
 
-            } else return MyResponseUtil.getResultMap(null, -1, "failure");
+            } else return MyResponseUtil.getResultMap(null, -1, "add failure");
 
-        } else return MyResponseUtil.getResultMap(null, -1, "employeeId was exist");
+        } else return MyResponseUtil.getResultMap(null, -2, "employeeId was exist or enterpriseId was null");
 
     }
 
@@ -74,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeDao.updateEnterprise(map) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", enterpriseId), 0, "success");
         else
-            return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");
+            return MyResponseUtil.getResultMap(null, -1, "update failure");
 
     }
 
