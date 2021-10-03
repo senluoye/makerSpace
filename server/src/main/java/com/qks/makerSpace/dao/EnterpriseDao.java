@@ -14,6 +14,6 @@ public interface EnterpriseDao {
     Integer addEnterprise(Map<String, Object> map);
     Integer addConnect(String id, String teamName, String enterpriseId);
     Integer updateEnterprise(Map<String, Object> map);
-    Integer deleteEnterprise(String id);
+    Integer deleteEnterpriseAll(String id);
 
 }

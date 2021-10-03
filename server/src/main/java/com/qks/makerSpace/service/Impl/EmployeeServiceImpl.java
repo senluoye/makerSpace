@@ -20,15 +20,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Map<String, Object> getOneEmployee(String id) {
-        Employee employeeTemp = employeeDao.getEmployeeById(id);
-        if (employeeTemp != null){
-            Map<String, Object> data = new HashMap<>();
-            data.put("employee", employeeTemp);
-            data.put("enterprise", employeeDao.getEnterpriseDetails(id));
+        String employeeId = employeeDao.getEmployeeIdByEnterpriseId(id);
 
-            return MyResponseUtil.getResultMap(data, 0, "success");
-        } else
-            return MyResponseUtil.getResultMap(null, -1, "employeeID doesn't exist");
+        if (employeeId != null){
+            Employee employee = employeeDao.getEmployeeById(employeeId);
+
+            if (employee != null){
+                Map<String, Object> data = new HashMap<>();
+                data.put("employee", employee);
+                data.put("enterprise", employeeDao.getEnterpriseDetails(id));
+
+                return MyResponseUtil.getResultMap(data, 0, "success");
+
+            } else return MyResponseUtil.getResultMap(null, -1, "employeeId doesn't exist");
+
+        } else return MyResponseUtil.getResultMap(null, -1, "EnterpriseId doesn't exist");
+
     }
 
     @Override
@@ -43,15 +50,22 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Map<String, Object> addEmployee(Map<String, Object> map) {
-        String employeeId = UUID.randomUUID().toString();
-        map.put("employeeId", employeeId);
         String enterpriseId = map.get("enterpriseId").toString();
-        if (employeeDao.addEmployee(map) > 0 &&
-                employeeDao.updateConnect(enterpriseId, employeeId) > 0) {
-            return MyResponseUtil.getResultMap(employeeId, 0, "success");
-        } else {
-            return MyResponseUtil.getResultMap(null, -1, "failure");
-        }
+
+        String employeeId = employeeDao.getEmployeeIdByEnterpriseId(enterpriseId);
+
+        if (employeeId == null){
+            employeeId = UUID.randomUUID().toString();
+            map.put("employeeId", employeeId);
+
+            if (employeeDao.addEmployee(map) > 0 &&
+                    employeeDao.updateConnect(enterpriseId, employeeId) > 0) {
+                return MyResponseUtil.getResultMap(employeeId, 0, "success");
+
+            } else return MyResponseUtil.getResultMap(null, -1, "failure");
+
+        } else return MyResponseUtil.getResultMap(null, -1, "employeeId was exist");
+
     }
 
     @Override

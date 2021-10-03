@@ -20,9 +20,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Override
     public Map<String, Object> getOneEnterprise(String id) {
-        System.out.println("??????????????????" + id);
         Enterprise data = enterpriseDao.getOneEnterpriseById(id);
 
+        System.out.println(id);
         if (data == null)
             return MyResponseUtil.getResultMap(null, -1, "EnterpriseID doesn't exist");
         else
@@ -62,7 +62,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Override
     public Map<String, Object> deleteEnterprise(String id) {
-        if (enterpriseDao.deleteEnterprise(id) > 0)
+        if (enterpriseDao.deleteEnterpriseAll(id) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", id), 0, "success");
         else
             return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");

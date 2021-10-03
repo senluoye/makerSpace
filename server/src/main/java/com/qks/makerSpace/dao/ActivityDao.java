@@ -17,4 +17,6 @@ public interface ActivityDao {
     Integer updateConnect(String enterpriseId, String activityId);
     Integer deleteActivity(String id);
     Integer updateActivity(Map<String,Object> map);
+    String getActivityIdByEnterpriseId(String id);
+
 }

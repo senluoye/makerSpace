@@ -9,6 +9,12 @@
         where enterprise_id = #{id}
     </select>
 
+    <select id="getActivityIdByEnterpriseId" resultType="String">
+        select activity_id
+        from connect
+        where enterprise_id = #{id}
+    </select>
+
     <select id="getOneActivityById" resultType="com.qks.makerSpace.entity.Activity">
         select *
         from activity
@@ -46,26 +52,26 @@
     <update id="updateActivity" parameterType="Map">
         update activity
         <set>
-            <if test="under_projects != null">
-                underProjects = #{underProjects}
+            <if test="underProjects != null">
+                under_projects = #{underProjects}
             </if>
-            <if test="national_project != null">
-                nationalProject = #{nationalProject}
+            <if test="nationalProject != null">
+                national_project = #{nationalProject}
             </if>
             <if test="expenditure != null">
                 expenditure = #{expenditure}
             </if>
-            <if test="rad_expenditure != null">
-                radExpenditure = #{rad_expenditure}
+            <if test="radExpenditure != null">
+                rad_expenditure = #{radExpenditure}
             </if>
-            <if test="product_expenditure != null">
-                productExpenditure = #{productExpenditure}
+            <if test="productExpenditure != null">
+                product_expenditure = #{productExpenditure}
             </if>
-            <if test="government_grant != null">
-                governmentGrant = #{governmentGrant}
+            <if test="governmentGrant != null">
+                government_grant = #{governmentGrant}
             </if>
-            <if test="sel_raised != null">
-                selfRaised = #{selfRaised}
+            <if test="selfRaised != null">
+                sel_raised = #{selfRaised}
             </if>
 
         </set>

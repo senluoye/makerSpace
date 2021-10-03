@@ -119,8 +119,12 @@
         where enterprise_id = #{enterpriseId}
     </update>
 
-    <delete id="deleteEnterprise">
-        delete from enterprise
-        where enterprise_id = #{id}
+    <delete id="deleteEnterpriseAll">
+        delete connect, enterprise, employee, property, activity
+        from connect, enterprise, employee, property, activity
+        where connect.enterprise_id = #{id}
+        and connect.property_id = property.property_id
+        and connect.employee_id = employee.employee_id
+        and connect.activity_id = activity.activity_id
     </delete>
 </mapper>

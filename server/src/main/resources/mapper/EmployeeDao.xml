@@ -10,6 +10,12 @@
         where employee_id = #{id}
     </select>
 
+    <select id="getEmployeeIdByEnterpriseId" resultType="String">
+        select employee_id
+        from connect
+        where enterprise_id = #{id}
+    </select>
+
     <select id="getAllEmployee" resultType="com.qks.makerSpace.entity.Employee">
         select employee.employee_id employeeId, connect.enterprise_id enterpriseId,
                connect.team_name teamName, employee.employees

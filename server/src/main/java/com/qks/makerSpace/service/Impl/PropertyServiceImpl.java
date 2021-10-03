@@ -24,15 +24,20 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public Map<String, Object> getOneProperty(String id) {
-        Property propertyTemp = propertyDao.getPropertyById(id);
-        if (propertyTemp != null) {
-            Map<String, Object> data = new HashMap<>();
-            data.put("property",propertyTemp);
+        String propertyId = propertyDao.getPropertyIdByEnterpriseId(id);
 
-            return MyResponseUtil.getResultMap(data,0,"success");
-        } else {
-            return MyResponseUtil.getResultMap(null,-1,"propertyId not exist");
-        }
+        if (propertyId != null){
+            Property propertyTemp = propertyDao.getPropertyById(propertyId);
+
+            if (propertyTemp != null) {
+                Map<String, Object> data = new HashMap<>();
+                data.put("property",propertyTemp);
+                return MyResponseUtil.getResultMap(data,0,"success");
+            } else
+                return MyResponseUtil.getResultMap(null,-1,"propertyId not exist");
+
+        } else return MyResponseUtil.getResultMap(null,-1,"enterpriseId not exist");
+
     }
 
     @Override
@@ -46,15 +51,21 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public Map<String, Object> addProperty(Map<String, Object> map) {
-        String propertyId = UUID.randomUUID().toString();
-        map.put("propertyId", propertyId);
         String enterpriseId = map.get("enterpriseId").toString();
-        if (propertyDao.addProperty(map) > 0 &&
-                propertyDao.updateConnect(enterpriseId, propertyId) > 0) {
-            return MyResponseUtil.getResultMap(propertyId,0,"success");
-        } else {
-            return MyResponseUtil.getResultMap(null,-1,"failure");
-        }
+        String propertyId = propertyDao.getPropertyIdByEnterpriseId(enterpriseId);
+
+        if (propertyId == null){
+            propertyId = UUID.randomUUID().toString();
+
+            map.put("propertyId", propertyId);
+
+            if (propertyDao.addProperty(map) > 0 &&
+                    propertyDao.updateConnect(enterpriseId, propertyId) > 0) {
+                return MyResponseUtil.getResultMap(propertyId,0,"success");
+
+            } else return MyResponseUtil.getResultMap(null,-1,"failure");
+
+        } else return MyResponseUtil.getResultMap(null,-1,"propertyId was exist");
 
     }
 

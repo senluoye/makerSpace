@@ -353,7 +353,7 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/employee/{employeeId}`
+- `/api/employee/{enterpriseId}`
 
 **请求方式：**
 
@@ -622,7 +622,7 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/property/{propertyId}`
+- `/api/property/{enterpriseId}`
 
 **请求方式：**
 
@@ -907,7 +907,7 @@ id为表示企业/团队的唯一id
 
 **请求URL：**
 
-- `/api/activity/{activityId}`
+- `/api/activity/{enterpriseId}`
 
 **请求方式：**
 

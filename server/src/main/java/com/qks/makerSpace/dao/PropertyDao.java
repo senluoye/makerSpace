@@ -15,4 +15,6 @@ public interface PropertyDao {
     Integer updateConnect(String enterpriseId, String propertyId);
     Integer deleteProperty(String id);
     Integer updateProperty(Map<String,Object> map);
+    String getPropertyIdByEnterpriseId(String id);
+
 }
