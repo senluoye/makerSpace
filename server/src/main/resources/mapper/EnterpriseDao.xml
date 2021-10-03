@@ -21,6 +21,12 @@
         from enterprise
     </select>
 
+    <select id="getEnterpriseByTeamName" resultType="com.qks.makerSpace.entity.Enterprise">
+        select *
+        from enterprise
+        where team_name = #{teamName}
+    </select>
+
     <insert id="addEnterprise" parameterType="Map">    
         insert into enterprise(enterprise_id, team_name, head, phone,
                                join_time, team_number, characteristic,

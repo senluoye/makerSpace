@@ -11,6 +11,7 @@ public interface EnterpriseDao {
 
     Enterprise getOneEnterpriseById(String id);
     List<Enterprise> getAllEnterprise();
+    Enterprise getEnterpriseByTeamName(String teamName);
     Integer addEnterprise(Map<String, Object> map);
     Integer addConnect(String id, String teamName, String enterpriseId);
     Integer updateEnterprise(Map<String, Object> map);
