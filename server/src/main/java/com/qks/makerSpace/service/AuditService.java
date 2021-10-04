@@ -1,10 +1,10 @@
 package com.qks.makerSpace.service;
 
-import org.springframework.stereotype.Service;
+import java.util.Map;
 
-@Service
+public interface AuditService {
 
-public class PostService {
-
+    Map<String, Object> getAuditById(String id);
+    Map<String, Object> changeAuditById(Map<String, Object> map);
 
 }

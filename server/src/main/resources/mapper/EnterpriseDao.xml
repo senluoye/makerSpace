@@ -4,9 +4,15 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.qks.makerSpace.dao.EnterpriseDao">
 
-    <select id="getOneEnterpriseById" resultType="com.qks.makerSpace.entity.Enterprise">
+    <select id="getOneEnterpriseById" resultType="Map">
         select *
         from enterprise
+        where enterprise_id = #{id}
+    </select>
+
+    <select id="getSubmissionTime">
+        select submission_time
+        from audit
         where enterprise_id = #{id}
     </select>
 
@@ -47,6 +53,11 @@
     <insert id="addConnect">
         insert into connect(id, team_name, enterprise_id)
         values (#{id}, #{teamName}, #{enterpriseId})
+    </insert>
+
+    <insert id="addAudit">
+        insert into audit(audit_id, enterprise_id, submission_time)
+        VALUES (#{auditId}, #{enterpriseId}, #{submissionTime})
     </insert>
 
     <update id="updateEnterprise" parameterType="Map">
@@ -124,6 +135,11 @@
         </set>
         where enterprise_id = #{enterpriseId}
     </update>
+
+    <delete id="deleteConnect">
+        delete from connect
+        where id = #{connectId}
+    </delete>
 
     <delete id="deleteEnterpriseAll">
         delete connect, enterprise, employee, property, activity

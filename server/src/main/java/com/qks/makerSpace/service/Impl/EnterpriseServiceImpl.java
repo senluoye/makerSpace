@@ -1,11 +1,13 @@
 package com.qks.makerSpace.service.Impl;
 
+import com.mysql.cj.xdevapi.TableImpl;
 import com.qks.makerSpace.dao.EnterpriseDao;
 import com.qks.makerSpace.entity.Enterprise;
 import com.qks.makerSpace.service.EnterpriseService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -20,10 +22,12 @@ public class EnterpriseServiceImpl implements EnterpriseService {
 
     @Override
     public Map<String, Object> getOneEnterprise(String id) {
-        Enterprise data = enterpriseDao.getOneEnterpriseById(id);
+        Map<String, Object> data = enterpriseDao.getOneEnterpriseById(id);
 
-        if (data == null)
+        if (data == null){
+            data.put("submissionTime", enterpriseDao.getSubmissionTime(id));
             return MyResponseUtil.getResultMap(null, -1, "对应企业不存在");
+        }
         else
             return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -44,12 +48,25 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         map.put("enterpriseId", enterpriseId);
         String teamName = map.get("teamName").toString();
         String connectId = UUID.randomUUID().toString();
+        String auditId = UUID.randomUUID().toString();
+        Timestamp submissionTime = new Timestamp(System.currentTimeMillis());
 
-        if (enterpriseDao.addEnterprise(map) > 0 &&
-                enterpriseDao.addConnect(connectId, teamName, enterpriseId) > 0) {
-            return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
+//        if (enterpriseDao.addEnterprise(map) > 0 &&
+//                enterpriseDao.addConnect(connectId, teamName, enterpriseId) > 0) {
+//            return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
+//
+//        } else return MyResponseUtil.getResultMap(null, -1, "增加企业失败");
 
-        } else return MyResponseUtil.getResultMap(null, -1, "增加企业失败");
+        if (enterpriseDao.addEnterprise(map) > 0)
+            if (enterpriseDao.addConnect(connectId, teamName, enterpriseId) > 0)
+                if (enterpriseDao.addAudit(auditId, enterpriseId, submissionTime) > 0)
+                    return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
+                else
+                    enterpriseDao.deleteConnect(connectId);
+            else
+                enterpriseDao.deleteEnterpriseAll(enterpriseId);
+
+        return MyResponseUtil.getResultMap(null, -1, "增加企业失败");
 
     }
 

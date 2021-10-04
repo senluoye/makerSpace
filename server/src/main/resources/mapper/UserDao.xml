@@ -10,4 +10,15 @@
         where name = #{name} and password = #{password}
     </select>
 
+    <select id="getAllUser" resultType="com.qks.makerSpace.entity.User">
+        select *
+        from user
+        where name != #{admin}
+    </select>
+
+    <insert id="addUser">
+        insert into user(name, password, user_id)
+        VALUES (#{name}, #{password}, #{id})
+    </insert>
+
 </mapper>
