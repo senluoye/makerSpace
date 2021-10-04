@@ -11,7 +11,7 @@
  Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 15/09/2021 20:43:25
+ Date: 04/10/2021 21:51:35
 */
 
 SET NAMES utf8mb4;
@@ -31,11 +31,20 @@ CREATE TABLE `activity`  (
   `government_grant` int NULL DEFAULT NULL,
   `self_raised` int NULL DEFAULT NULL,
   PRIMARY KEY (`activity_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
--- Records of activity
+-- Table structure for audit
 -- ----------------------------
+DROP TABLE IF EXISTS `audit`;
+CREATE TABLE `audit`  (
+  `audit_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `enterprise_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `submission_time` timestamp(0) NULL DEFAULT NULL,
+  `audit_time` timestamp(0) NULL DEFAULT NULL,
+  `is_audit` tinyint NULL DEFAULT 0,
+  PRIMARY KEY (`audit_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for connect
@@ -47,13 +56,10 @@ CREATE TABLE `connect`  (
   `employee_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `property_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   `activity_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
-  `team_name` int NULL DEFAULT NULL,
+  `team_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
+  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of connect
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for employee
@@ -61,7 +67,7 @@ CREATE TABLE `connect`  (
 DROP TABLE IF EXISTS `employee`;
 CREATE TABLE `employee`  (
   `employee_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `employee` int NOT NULL,
+  `employees` int NOT NULL,
   `doctor` int NOT NULL,
   `master` int NOT NULL,
   `graduate` int NOT NULL,
@@ -75,11 +81,7 @@ CREATE TABLE `employee`  (
   `trainee` int NOT NULL,
   `employment` int NOT NULL,
   PRIMARY KEY (`employee_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of employee
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for enterprise
@@ -110,12 +112,8 @@ CREATE TABLE `enterprise`  (
   `project_amount` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `high_tec` tinyint(1) NOT NULL,
   `tec_sme` tinyint(1) NOT NULL,
-  PRIMARY KEY (`enterprise_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of enterprise
--- ----------------------------
+  PRIMARY KEY (`enterprise_id`, `team_name`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for property
@@ -134,18 +132,14 @@ CREATE TABLE `property`  (
   `valid_patent` int NULL DEFAULT NULL,
   `soft_copyright` int NULL DEFAULT NULL,
   `plant_variety` int NULL DEFAULT NULL,
-  `icLayout` int NULL DEFAULT NULL,
+  `ic_layout` int NULL DEFAULT NULL,
   `foreign_patents` int NULL DEFAULT NULL,
   `contract_transaction` int NULL DEFAULT NULL,
   `contract_turnover` int NULL DEFAULT NULL,
   `project_num` int NULL DEFAULT NULL,
   `awards` int NULL DEFAULT NULL,
   PRIMARY KEY (`property_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of property
--- ----------------------------
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for user
@@ -154,12 +148,8 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  PRIMARY KEY (`name`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of user
--- ----------------------------
-INSERT INTO `user` VALUES ('admin', '123456');
+  `user_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  PRIMARY KEY (`user_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 SET FOREIGN_KEY_CHECKS = 1;
