@@ -19,6 +19,7 @@ axios.defaults.headers.token=""|| sessionStorage.getItem('token');
 //     }, 150);
 // }
 
+
 var app = new Vue({
     el: "#app",
     data: {
@@ -61,12 +62,17 @@ var app = new Vue({
         highTec:false|| sessionStorage.getItem('highTec'),	//是否高新技术企业
         tecSme:false|| sessionStorage.getItem('tecSme'),	//是否是科技型中小企业
     }||sessionStorage.getItem('enterpriseDetail'),
+    //企业基本数据
     enterprise:{
         enterpriseId:""||sessionStorage.getItem('enterpriseId'),          //企业/团队的唯一ID
         teamName:""||sessionStorage.getItem('teamName'),				//表示企业/团队的名称
-        propertyId:""||sessionStorage.getItem('propertyId'),           //在孵企业知识产权情况表唯一Id
-        activityId:""||sessionStorage.getItem('activityId')               //活动情况表唯一ID
-    },
+        head:""|| sessionStorage.getItem('head'),	//企业负责人
+        phone:""|| sessionStorage.getItem('phone'),		//联系方式
+        joinTime:""|| sessionStorage.getItem('joinTime'),	//入驻众创空间时间
+        teamNumber:""|| sessionStorage.getItem('teamNumber'),	//人数
+    }||sessionStorage.getItem('enterprise'),
+    //企业概览数据
+    enterpriseGaiLan:[],
         // 提交某个企业/团队从业人员详细情况
         employeeDetail:{
             enterpriseId:""||sessionStorage.getItem('enterpriseId'),			//在孵企业知识产权情况表唯一Id
@@ -188,15 +194,20 @@ var app = new Vue({
     },
     created() {
         this.getAllEnterprise();
-
+        setTimeout(() => {
+             sessionStorage.setItem("enterprise",this.res.data.data);
+             this.getEnterprise();
+        }, 1000);
+            
     },
     methods: {
         //test
         putFormFour(){
+            daochu()
             this.addActivity();
         },
         putFormThree(){
-            console.log(13213);
+            daochu()
             this.addProperty();
             // axios({
             //     method:'post',
@@ -228,76 +239,25 @@ var app = new Vue({
             // })
         },
         putFormTwo(){
+            // console.log(this.enterprise.enterpriseId);
+            daochu()
             this.addEmployee();
-            // axios({
-            //     method:'post',
-            //     url:"/api/employee?"+this.token,
-            //     data:{
-            //         employeeId:this.employeeId,		//企业/团队从业情况表唯一ID
-            //         employees:this.employees,				//在孵企业/团队从业人员
-            //         doctor:this.doctor,				//博士
-            //         master:this.master,				//硕士
-            //         graduate:this.graduate,				//研究生学历
-            //         bachelor:this.bachelor,				//本科学历
-            //         college:this.college,				//大专学历
-            //         tecSecondary:this.tecSecondary,			//中专学历
-            //         tecActivists:this.tecActivists,			//科技活动人员
-            //         radNumber:this.radNumber,			//研究与试验发展(R&D)人员
-            //         returnees:this.returnees,			//留学回国人员
-            //         talents:this.talents,				//千人计划人数
-            //         trainee:this.trainee,				//接纳大学生、研究生实习人员(人/天)
-            //         employment:this.employment,			//接纳应届毕业生就业人员
-                
-            //     }
-            // }).then(res=>{
-            //     console.log(res);
-            // }).catch(err=>{
-            //     console.log(err);
-            // })
         },
         putFormOne(){
+            daochu()
+
             this.addEnterprise();
-            // axios({
-            //     method:'post',
-            //     url:"/api/enterprise?"+this.token,
-            //     data:{    
-            //         teamName:this.teamName,	//企业/团队名称
-            //         head:this.head,	//企业负责人
-            //         phone:this.phone,		//联系方式
-            //         joinTime:this.joinTime,	//入驻众创空间时间
-            //         teamNumber:this.teamNumber,	//人数
-            //         characteristic:this.characteristic,	//主要负责人创业特征
-            //         kind:this.kind,	//行业类别
-            //         field:this.field,		//技术领域
-            //         achievements:this.achievements,	//获奖成果
-            //         scope:this.scope,		//经营范围
-            //         income:this.income,	//总收入
-            //         tax:this.tax,	//上缴税额
-            //         preferentialTax:this.preferentialTax,	//享受税收优惠政策 (是：true 否：false)
-            //         taxFree:this.taxFree,	//免税金额 (是：具体金额 否：null)
-            //         support:this.support,	//获得财政资金支持
-            //         supportAmount:this.supportAmount,	    //支持金额 
-            //         riskInvestment:this.riskInvestment,	//获天使或风险投资额
-            //         investmentAmount:this.investmentAmount,	//投融资总额
-            //         cooperation:this.cooperation,	//是否参与校企合作
-            //         projectName:this.projectName,	//合作项目名称
-            //         projectAmount:this.projectAmount,		//申报项目金额
-            //         highTec:this.highTec,	//是否高新技术企业
-            //         tecSme:this.tecSme,	//是否是科技型中小企业
-            //     }
-            // }).then(res=>{
-            //     console.log(res);
-            // }).catch(err=>{
-            //     console.log(err);
-            // })
+           
         },
         //获取数据
-        getAllData(){
+        getAllData(data){
             // this.getAllEnterprise();
-            // this.getEnterprise();
-            // this.getEmployee();
+            this.enterprise.enterpriseId=data;
+            console.log(this.enterprise.enterpriseId);
+            this.getEnterprise();
+            this.getEmployee();
             this.getProperty();
-            // this.getActivity();
+            this.getActivity();
         },
         // 发送获取请求
         getData(){
@@ -367,7 +327,7 @@ var app = new Vue({
                 method:'get',
                 url: this.url,
             }).then(res => {
-                console.log(res);
+                console.log(res.data);
                 this.res=res;
                 sessionStorage.setItem("enterpriseId",res.data.data[0].enterpriseId);//暂时的测试
                 // this.enterprise.enterpriseId=;
@@ -385,45 +345,16 @@ var app = new Vue({
             axios({
                 method:"get",
                 url:"/api/enterprise/"+this.enterprise.enterpriseId,
-               
             }).then(res=>{
-                console.log("获取某个企业/团队从业人员详细情况");
-                console.log(res);
+                console.log("获取某个企业/团队从业人员详细情况",res.data);
             }).catch(err=>{
                 console.log(err);
             })
-            // setTimeout(() => {    
-            //     enterpriseId=this.res.data.enterpriseId;            //表示企业/团队表的唯一ID，也是企业/团队的唯一ID
-            //     teamName=this.res.data.teamName; 					//企业/团队名称
-            //     head=this.res.data.head; 				//企业负责人
-            //     phone=this.res.data.phone; 						//联系方式
-            //     joinTime=this.res.data.joinTime; 					//入驻众创空间时间
-            //     teamNumber=this.res.data.teamNumber; 				//人数
-            //     characteristic=this.res.data.characteristic; 			//主要负责人创业特征
-            //     kind=this.res.data.kind; 						//行业类别
-            //     field=this.res.data.field; 					//技术领域
-            //     achievements=this.res.data.achievements; 				//获奖成果
-            //     scope=this.res.data.scope; 						//经营范围
-            //     income=this.res.data.income; 					//总收入
-            //     tax=this.res.data.tax; 						//上缴税额
-            //     preferentialTax=this.res.data.preferentialTax; 			//享受税收优惠政策 (是：true 否：false)
-            //     taxFree=this.res.data.taxFree; 					//免税金额 (是：具体金额 否：null)
-            //     support=this.res.data.support; 				//获得财政资金支持
-            //     supportAmount=this.res.data.supportAmount; 				//支持金额 
-            //     riskInvestment=this.res.data.riskInvestment; 			//获天使或风险投资额
-            //     investmentAmount=this.res.data.investmentAmount; 			//投融资总额
-            //     cooperation=this.res.data.cooperation; 				//是否参与校企合作
-            //     projectName=this.res.data.projectName; 				//合作项目名称
-            //     projectAmount=this.res.data.projectAmount; 				//申报项目金额
-            //     highTec=this.res.data.highTec; 					//是否高新技术企业
-            //     tecSme=this.res.data.tecSme; 					//是否是科技型中小企业
-            //     }, 5000); 
             
         },
         // 增加某个企业/团队
         addEnterprise(){
             this.url="/api/enterprise";
-            // this.postApi(this.enterpriseDetail);
             axios({
                 method:'post',
                 url: "/api/enterprise",
@@ -432,18 +363,22 @@ var app = new Vue({
             }).then(res => {
                 this.res=res;
                 console.log(res);
-                console.log(this.res);
-                sessionStorage.setItem('enterpriseId',res.data.data.enterpriseId);
-                // this.msg = res;
+                // console.log(this.res);
+                sessionStorage.setItem('enterpriseId',res.data.data);
+
+                if(this.res.data.msg==="success") {
+                    alert("入驻成功");
+                    this.$refs.next1.href="people.html"
+                    this.$refs.next1.click()
+                }
+                else{
+                    alert("入驻失败");
+                }
+
             }).catch(err => {
                 console.log(err);
             })
-            setTimeout(() => {
-                if(this.res.data.msg==="success") alert("入驻成功");
-                else {
-                    alert("入驻失败");
-                }  
-            }, 3000);
+
         },
         // 修改某个企业/团队详细情况
         changeEnterprise(){
@@ -495,8 +430,7 @@ var app = new Vue({
                 url:"/api/employee/"+this.enterprise.enterpriseId,
                
             }).then(res=>{
-                console.log("获取某个企业/团队从业人员的基本情况");
-                console.log(res);
+                console.log("获取某个企业/团队从业人员的基本情况",res.data);
             }).catch(err=>{
                 console.log(err);
             })
@@ -519,15 +453,19 @@ var app = new Vue({
                 // console.log(this.res);
                 // sessionStorage.setItem('enterpriseId',res.data.data.enterpriseId);
                 // this.msg = res;
+
+                if(this.res.data.msg==="success") {
+                    alert("增加成功");
+                    this.$refs.next1.href="rights.html"
+                    this.$refs.next1.click()
+                }
+                else{
+                    alert(this.res.data.msg);
+                }
+
             }).catch(err => {
                 console.log(err);
             })
-            setTimeout(() => {
-                if(this.res.data.msg==="success") alert("增加成功");
-                else {
-                    alert("增加失败");
-                }  
-            }, 3000);
         },
         // 修改某个企业/团队从业人员详细情况
         changeEmployee(){
@@ -536,7 +474,7 @@ var app = new Vue({
             setTimeout(() => {
                 if(this.res.msg==="success") console.log("修改成功");
                 else {
-                    alert("修改失败");
+                    alert(this.res.data.msg);
                 }  
             }, 3000);
         },
@@ -566,18 +504,17 @@ var app = new Vue({
         },
         // 获取某个在孵企业知识产权详细情况 *
         getProperty(index){
-            this.getAllProperty();
+            // this.getAllProperty();
             // setTimeout(() => {
             //     this.url="/api/property?propertyId=this.res.data["+index+"].propertyID";
             //     this.getData();
             // }, 3000);
             axios({
                 method:"get",
-                url:"/api/property/"+this.enterprise.propertyId,
+                url:"/api/property/"+this.enterprise.enterpriseId,
               
             }).then(res=>{
-                console.log("获取某个在孵企业知识产权详细情况");
-                console.log(res);
+                console.log("获取某个在孵企业知识产权详细情况",res.data);
             }).catch(err=>{
                 console.log(err);
             })
@@ -595,8 +532,13 @@ var app = new Vue({
                 console.log(res);
                 console.log(this.res);
                 sessionStorage.setItem("propertyID",res.data.data);
-                if (res.data.msg==='success') {
+                if(this.res.data.msg==="success") {
                     alert("增加成功");
+                    this.$refs.next1.href="activity.html"
+                    this.$refs.next1.click()
+                }
+                else{
+                    alert(this.res.data.msg);
                 }
             }).catch(err=>{
                 console.log(err);
@@ -638,11 +580,9 @@ var app = new Vue({
             // }, 3000);
             axios({
                 method:"get",
-                url:"/api/activity/"+this.enterprise.activityId,
-             
+                url:"/api/activity/"+this.enterprise.enterpriseId
             }).then(res=>{
-                console.log("获取某个在孵企业科技活动基本情况");
-                console.log(res);
+                console.log("获取某个在孵企业科技活动基本情况",res.data);
             }).catch(err=>{
                 console.log(err);
             })
@@ -661,16 +601,17 @@ var app = new Vue({
                 console.log(res);
                 // console.log(this.res);
                 sessionStorage.setItem("activityId",res.data.data);
+                if(this.res.data.msg==="success") {
+                    alert("增加成功");
+                }
+                else{
+                    alert(this.res.data.msg);
+                }
 
             }).catch(err=>{
                 console.log(err);
             })
-            setTimeout(() => {
-                if(this.res.data.msg==="success") alert("增加成功");
-                else {
-                    alert("增加失败");
-                }  
-            }, 3000);
+            
         },
         //修改某个在孵企业科技活动基本情况
         changeActivity(){
@@ -718,10 +659,11 @@ var app = new Vue({
                 if (res.data.msg==="success") {
                     // 存储token
                     sessionStorage.setItem('token',res.data.data.token);
-                    alert("登录成功");
+                    // alert("登录成功");
                     this.isImport=!this.isImport;
-              
-
+                    this.$refs.next2.href='all.html'
+                    console.log(this.$refs.next2);
+                    this.$refs.next2.click()
                 }else{
                     alert("登录失败");
 

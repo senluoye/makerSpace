@@ -1,10 +1,29 @@
 body {
-    background: url(img/bg-3.png) no-repeat fixed;
+    background: url(../img/bg-3.png) no-repeat fixed;
     background-size: 100%;
 }
 
-form {
+/* form {
     background: rgb(245, 244, 244);
+}
+
+*/
+a {
+    text-decoration: none !important;
+    color: black !important;
+}
+
+.mywarn {
+    width: 60%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    transition: all 1s;
+}
+
+.mywarn::after {
+    content: '';
 }
 
 .contain {

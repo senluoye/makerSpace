@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/all.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <title>企业/团队概览</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="alert alert-warning alert-dismissible fade show myalert" id="load">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+      <strong>加载中......</strong>
+    </div>
+    <table class="table table-striped table-hover" id="all">
+      <h1 style="margin: 30px auto;text-align: center;" id="title">企业概览</h1>
+      <thead style="display: inline;">
+        <tr>
+          <td><button type="xiazai" class="btn btn-outline-dark " id="xiazai">导出表格</button></td>
+          <th scope="col">企业/团队名称</th>
+          <th scope="col">企业负责人</th>
+          <th scope="col">联系方式</th>
+          <th scope="col">入驻众创空间时间</th>
+          <th scope="col">人数</th>
+          <th scope="col">#</th>
+        </tr>
+      </thead>
+      <tbody style="display: table;">
+      </tbody>
+    </table>
+
+    <div id="deinf">
+      <dl class="row">
+        <h1>企业/团队基本情况</h1>
+        <dt class="col-sm-3">企业/团队名称</dt>
+        <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+
+        <dt class="col-sm-3">企业负责人</dt>
+        <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+
+        <dt class="col-sm-3">联系方式</dt>
+        <dd class="col-sm-9">This definition is short, so no extra paragraphs or anything.</dd>
+
+        <dt class="col-sm-3">入驻众创空间时间</dt>
+        <dd class="col-sm-9">This definition is short, so no extra paragraphs or anything.</dd>
+
+        <dt class="col-sm-3 text-truncate">企业/团队人数</dt>
+        <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the end.</dd>
+
+        <dt class="col-sm-3 text-truncate">企业/团队主要负责人创业特征</dt>
+        <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the end.</dd>
+
+        <dt class="col-sm-3 text-truncate">行业类别</dt>
+        <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the end.</dd>
+
+        <dt class="col-sm-3 text-truncate">企业所属技术领域</dt>
+        <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the end.</dd>
+
+        <dt class="col-sm-3 text-truncate">企业/团队获奖成果</dt>
+        <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the end.</dd>
+
+        <dt class="col-sm-3 text-truncate">企业经营的范围</dt>
+        <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the end.</dd>
+
+      </dl>
+      <dl class="row" id="income">
+
+        <dt class="col-sm-3">企业/团队总收入</dt>
+        <dd class="col-sm-3">123</dd>
+        <dt class="col-sm-3">上缴税额</dt>
+        <dd class="col-sm-3">123</dd>
+
+        <dt class="col-sm-3">享受税收优惠政策</dt>
+        <dd class="col-sm-3">是</dd>
+        <dt class="col-sm-3">免税金额</dt>
+        <dd class="col-sm-3">123</dd>
+
+        <dt class="col-sm-3">获得财政资金支持</dt>
+        <dd class="col-sm-3">123</dd>
+        <dt class="col-sm-3">支持金额</dt>
+        <dd class="col-sm-3">123</dd>
+
+        <dt class="col-sm-3">获天使或风险投资额</dt>
+        <dd class="col-sm-3">123</dd>
+        <dt class="col-sm-3">投融资总额</dt>
+        <dd class="col-sm-3">123</dd>
+
+        <dt class="col-sm-3">是否参与校企合作</dt>
+        <dd class="col-sm-3">123</dd>
+        <dt class="col-sm-3">合作项目名称及申报项目金额</dt>
+        <dd class="col-sm-3">123</dd>
+
+        <dt class="col-sm-3">是否高新技术企业</dt>
+        <dd class="col-sm-3">123</dd>
+        <dt class="col-sm-3">是否是科技型中小企业</dt>
+        <dd class="col-sm-3">123</dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-sm-3">在孵企业/团队从业人员</dt>
+        <dd class="col-sm-9">
+          <p>共 人</p>
+          <p>其中：博士 人，硕士 人</p>
+          <p>其中：研究生学历 人，本科学历 人，大专学历 人，中专学历 人</p>
+          <p>其中：科技活动人员 人</p>
+          <p>其中：研究与试验发展(R&D)人员 人</p>
+          <p>其中：留学回国人员 人</p>
+          <p>其中：千人计划人数 人</p>
+          <p>接纳大学生、研究生实习人员 人/天</p>
+          <p>接纳应届毕业生就业人员</p>
+        </dd>
+      </dl>
+      <dl class="row">
+        <dt class="col-sm-6">当年知识产权申请数共 件</dt>
+        <dd class="col-sm-6">
+          <p>其中：发明专利 件 </p>
+          <p>专利号/软著登记号/商标号： </p>
+        </dd>
+
+        <dt class="col-sm-6">当年知识产权授权数共 件</dt>
+        <dd class="col-sm-6">
+          <p>其中：发明专利 件</p>
+        </dd>
+
+        <dt class="col-sm-6">拥有有效知识产权数共 件</dt>
+        <dd class="col-sm-6">
+          <p>其中：发明专利 件</p>
+          <p>软件著作权 件</p>
+          <p>植物新品种 件</p>
+          <p>集成电路布图 件</p>
+        </dd>
+
+        <dt class="col-sm-6">购买国外技术专利 件</dt>
+        <dd class="col-sm-6">
+          <p></p>
+        </dd>
+
+        <dt class="col-sm-6">技术合同交易数量 件</dt>
+        <dd class="col-sm-6">
+          <p></p>
+        </dd>
+
+        <dt class="col-sm-6">技术合同交易额 千元</dt>
+        <dd class="col-sm-6">
+          <p></p>
+        </dd>
+
+        <dt class="col-sm-6">当年承担国家级科技计划项目数 件</dt>
+        <dd class="col-sm-6">
+          <p></p>
+        </dd>
+
+        <dt class="col-sm-6">当年获得省级以上奖励 件</dt>
+        <dd class="col-sm-6">
+          <p></p>
+        </dd>
+
+      </dl>
+
+      <dl class="row">
+        <dt class="col-sm-3">承担各类计划项目 项</dt>
+        <dd class="col-sm-9">
+          <p>其中：国家级项目 项</p>
+        </dd>
+
+        <dt class="col-sm-3">科技活动经费支出总额 千元</dt>
+        <dd class="col-sm-9">
+          <p>其中：研究与试验发展（R&D）经费支出 千元</p>
+          <p>其中：新产品开发经费支出 千元</p>
+          <p>其中：政府拨款 千元</p>
+          <p>企业自筹 千元</p>
+        </dd>
+      </dl>
+      <div class="control">
+        <button type="button" class="btn btn-outline-dark" id="prepage">上一页</button>
+        <button type="button" class="btn btn-outline-dark" id="back"><a href="">返回概览</a></button>
+        <button type="button" class="btn btn-outline-dark" id="nextpage">下一页</button>
+      </div>
+    </div>
+  </div>
+  <script src="js/main.js"></script>
+  <script src="js/all.js"></script>
+</body>
+
+</html>

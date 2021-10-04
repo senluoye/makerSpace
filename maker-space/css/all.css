@@ -1,0 +1,95 @@
+* {
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.table {
+    width: 80%;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+
+#all {
+    text-align: center;
+    display: none;
+}
+
+#title {
+    display: none;
+}
+
+.myalert {
+    width: 200px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    text-align: center;
+    transform: translate(-50%, -50%);
+    margin-top: 30px;
+    visibility: visible;
+}
+
+thead th {
+    cursor: default;
+}
+
+tr:hover {
+    cursor: pointer;
+}
+
+dt {
+    border-right: solid black 1px;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+dd {
+    padding-top: 10px !important;
+
+}
+
+dl {
+    border: black 1px solid;
+    border-top: 0;
+    margin: 5px;
+    box-sizing: border-box;
+}
+
+#deinf {
+    display: none;
+    text-align: center;
+    position: absolute;
+    width: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 50px;
+}
+
+#deinf h1 {
+    border-bottom: 1px black solid !important;
+    border-top: 1px black solid !important;
+    padding: 20px;
+    margin: 0;
+}
+
+#deinf dl {
+    margin: 0 auto;
+}
+
+#income {
+    border-left: none;
+}
+
+#income dt {
+    border-left: 1px black solid;
+}
+
+.control {
+    margin: 50px;
+}
