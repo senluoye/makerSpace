@@ -23,18 +23,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         String employeeId = employeeDao.getEmployeeIdByEnterpriseId(id);
 
         if (employeeId != null){
+
             Employee employee = employeeDao.getEmployeeById(employeeId);
+            Map<String, Object> data = new HashMap<>();
+            data.put("employee", employee);
+            data.put("enterprise", employeeDao.getEnterpriseDetails(id));
 
-            if (employee != null){
-                Map<String, Object> data = new HashMap<>();
-                data.put("employee", employee);
-                data.put("enterprise", employeeDao.getEnterpriseDetails(id));
+            return MyResponseUtil.getResultMap(data, 0, "success");
 
-                return MyResponseUtil.getResultMap(data, 0, "success");
-
-            } else return MyResponseUtil.getResultMap(null, -1, "employee doesn't exist");
-
-        } else return MyResponseUtil.getResultMap(null, -2, "employeeId doesn't exist");
+        } else return MyResponseUtil.getResultMap(null, -2, "对应企业人员数据不存在");
 
     }
 
@@ -44,6 +41,8 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .parallelStream()
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
+
+
 
         return MyResponseUtil.getResultMap(list, 0, "success");
     }
@@ -61,9 +60,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                     employeeDao.updateConnect(enterpriseId, employeeId) > 0) {
                 return MyResponseUtil.getResultMap(employeeId, 0, "success");
 
-            } else return MyResponseUtil.getResultMap(null, -1, "add failure");
+            } else return MyResponseUtil.getResultMap(null, -1, "企业人员数据添加失败");
 
-        } else return MyResponseUtil.getResultMap(null, -2, "employeeId was exist or enterpriseId was null");
+        } else return MyResponseUtil.getResultMap(null, -2, "企业从业人员数据已经存在 或者 对应企业不存在");
 
     }
 
@@ -73,7 +72,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeDao.updateEnterprise(map) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", enterpriseId), 0, "success");
         else
-            return MyResponseUtil.getResultMap(null, -1, "update failure");
+            return MyResponseUtil.getResultMap(null, -1, "企业从业人员数据修改失败");
 
     }
 
@@ -82,7 +81,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (employeeDao.deleteEnterprise(id) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", id), 0, "success");
         else
-            return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");
+            return MyResponseUtil.getResultMap(null, -1, "对应企业人员数据不存在");
 
     }
 }

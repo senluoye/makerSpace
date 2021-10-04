@@ -11,6 +11,9 @@ public class Activity {
     @NonNull
     private String activityId;
 
+    private String enterpriseId;
+    private String teamName;
+
     private Integer underProjects;
     private Integer nationalProject;
     private Integer expenditure;

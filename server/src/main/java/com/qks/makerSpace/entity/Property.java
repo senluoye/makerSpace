@@ -11,6 +11,9 @@ public class Property {
     @NonNull
     private String propertyId;
 
+    private String enterpriseId;
+    private String teamName;
+
     private Integer applications;
     private Integer applicationsPatent;
     private Integer patentNum;

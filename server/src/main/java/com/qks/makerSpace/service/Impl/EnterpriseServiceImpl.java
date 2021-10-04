@@ -22,9 +22,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     public Map<String, Object> getOneEnterprise(String id) {
         Enterprise data = enterpriseDao.getOneEnterpriseById(id);
 
-        System.out.println(id);
         if (data == null)
-            return MyResponseUtil.getResultMap(null, -1, "EnterpriseID doesn't exist");
+            return MyResponseUtil.getResultMap(null, -1, "对应企业不存在");
         else
             return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -50,7 +49,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
                 enterpriseDao.addConnect(connectId, teamName, enterpriseId) > 0) {
             return MyResponseUtil.getResultMap(enterpriseId, 0, "success");
 
-        } else return MyResponseUtil.getResultMap(null, -1, "failure");
+        } else return MyResponseUtil.getResultMap(null, -1, "增加企业失败");
 
     }
 
@@ -60,7 +59,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         if (enterpriseDao.updateEnterprise(map) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", enterpriseId), 0, "success");
         else
-            return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");
+            return MyResponseUtil.getResultMap(null, -1, "企业基本数据修改失败");
     }
 
     @Override
@@ -68,6 +67,6 @@ public class EnterpriseServiceImpl implements EnterpriseService {
         if (enterpriseDao.deleteEnterpriseAll(id) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("enterpriseId", id), 0, "success");
         else
-            return MyResponseUtil.getResultMap(null, -1, "enterpriseID doesn't exist");
+            return MyResponseUtil.getResultMap(null, -1, "对应企业不存在");
     }
 }

@@ -11,6 +11,9 @@ public class Employee {
     @NonNull
     private String employeeId;
 
+    private String enterpriseId;
+    private String teamName;
+
     private Integer employees;
     private Integer doctor;
     private Integer master;

@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.Activity;
+import com.qks.makerSpace.entity.Connect;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +14,7 @@ public interface ActivityDao {
 
     Activity getOneActivityById(String id);
     List<Activity> getAllActivity();
+    List<Connect> getEnterpriseDetails(String id);
     Integer addActivity(Map<String,Object> map);
     Integer updateConnect(String enterpriseId, String activityId);
     Integer deleteActivity(String id);

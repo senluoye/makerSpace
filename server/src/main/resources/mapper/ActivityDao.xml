@@ -16,7 +16,15 @@
     </select>
 
     <select id="getEnterpriseById" resultType="String">
-        select id from connect where enterprise_id = #{id}
+        select id
+        from connect
+        where enterprise_id = #{id}
+    </select>
+
+    <select id="getEnterpriseDetails" resultType="com.qks.makerSpace.entity.Connect">
+        select enterprise_id enterpriseId, team_name teamName
+        from connect
+        where enterprise_id = #{id}
     </select>
 
     <select id="getActivityIdByTeamName" resultType="String">
@@ -32,9 +40,7 @@
     </select>
     
     <select id="getAllActivity" resultType="com.qks.makerSpace.entity.Activity">
-        select activity.activity_id activityId, connect.enterprise_id enterpriseId,
-               activity.under_projects underProjects, activity.national_project nationalProject,
-               activity.expenditure
+        select activity.*, connect.enterprise_id enterpriseId, connect.team_name
         from activity, connect
         where connect.activity_id = activity.activity_id
     </select>

@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
  * @author 张以恒
  * @create 2021/9/18-18:06
  **/
+
 @Service
 public class ActivityServiceImpl implements ActivityService {
 
@@ -29,16 +30,15 @@ public class ActivityServiceImpl implements ActivityService {
         String activityId = activityDao.getActivityIdByEnterpriseId(id);
 
         if (activityId != null) {
+
             Activity activityTemp= activityDao.getOneActivityById(activityId);
+            Map<String, Object> data = new HashMap<>();
+            data.put("activity", activityTemp);
+            data.put("enterprise", activityDao.getEnterpriseDetails(id));
 
-            if (activityTemp != null) {
-                Map<String, Object> data = new HashMap<>();
-                data.put("activity", activityTemp);
-                return MyResponseUtil.getResultMap(data, 0, "success");
-            } else
-                return MyResponseUtil.getResultMap(null, -1, "propertyId doesn't exist");
+            return MyResponseUtil.getResultMap(data, 0, "success");
 
-        } else return MyResponseUtil.getResultMap(null, -2, "activityId doesn't exist");
+        } else return MyResponseUtil.getResultMap(null, -2, "对应企业科技活动数据不存在");
 
     }
 
@@ -64,9 +64,9 @@ public class ActivityServiceImpl implements ActivityService {
                     activityDao.updateConnect(enterpriseId, activityId) > 0) {
                 return MyResponseUtil.getResultMap(activityId,0,"success");
             } else
-                return MyResponseUtil.getResultMap(null,-1,"add failure");
+                return MyResponseUtil.getResultMap(null,-1,"企业活动数据添加失败");
 
-        } else return MyResponseUtil.getResultMap(null,-2,"activityId was exist or enterpriseId was null");
+        } else return MyResponseUtil.getResultMap(null,-2,"企业科技活动数据已经存在 或者 对应企业不存在");
 
     }
 
@@ -78,7 +78,7 @@ public class ActivityServiceImpl implements ActivityService {
         if (activityDao.updateActivity(map) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("activityId", activityId),0,"success");
         else
-            return MyResponseUtil.getResultMap(null, 0, "update failure");
+            return MyResponseUtil.getResultMap(null, 0, "企业科技活动数据修改失败");
 
     }
 
@@ -87,6 +87,6 @@ public class ActivityServiceImpl implements ActivityService {
         if (activityDao.deleteActivity(id) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("activityId", id), 0, "success");
         else
-            return MyResponseUtil.getResultMap(null,-1,"activityId doesn't exist");
+            return MyResponseUtil.getResultMap(null,-1,"对应企业科技活动数据不存在");
     }
 }

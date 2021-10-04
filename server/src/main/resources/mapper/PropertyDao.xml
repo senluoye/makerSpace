@@ -15,9 +15,14 @@
         where enterprise_id = #{id}
     </select>
 
+    <select id="getEnterpriseDetails" resultType="Map">
+        select enterprise_id enterpriseId, team_name teamName
+        from connect
+        where employee_id = #{id}
+    </select>
+
     <select id="getAllProperty" resultType="com.qks.makerSpace.entity.Property">
-        select property.property_id propertyId,connect.enterprise_id enterpriseId,connect.team_name teamName,
-               property.applications,property.granted,property.valid
+        select property.*,connect.enterprise_id enterpriseId,connect.team_name teamName
         from property,connect
         where connect.property_id = property.property_id
     </select>

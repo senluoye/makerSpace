@@ -17,7 +17,7 @@
     </select>
 
     <select id="getAllEnterprise" resultType="com.qks.makerSpace.entity.Enterprise">
-        select enterprise_id enterpriseId, team_name teamName, head, phone, join_time joinTime, team_number teamNumber
+        select *
         from enterprise
     </select>
 

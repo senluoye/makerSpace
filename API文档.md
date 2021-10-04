@@ -57,7 +57,7 @@
 
 ## 企业/团队基本情况(enterprise)
 
-#### 获取某个企业/团队的详细情况
+#### 获取某个企业/团队的详细情况	
 
 **简要描述：**
 
@@ -461,7 +461,7 @@ id为表示企业/团队的唯一id
 ```json
 {
     "enterpriseId":"<string>",			//表示企业/团队的唯一Id
-    "employees":"<int>",					//在孵企业/团队从业人员
+    "employees":"<int>",				//在孵企业/团队从业人员
     "doctor":"<int>",					//博士
     "master":"<int>",					//硕士
     "graduate":"<int>",					//研究生学历

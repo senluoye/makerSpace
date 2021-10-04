@@ -11,6 +11,7 @@ public interface PropertyDao {
 
     Property getPropertyById(String id);
     List<Property> getAllProperty();
+    Map<String, Object> getEnterpriseDetails(String id);
     Integer addProperty(Map<String,Object> map);
     Integer updateConnect(String enterpriseId, String propertyId);
     Integer deleteProperty(String id);

@@ -27,16 +27,15 @@ public class PropertyServiceImpl implements PropertyService {
         String propertyId = propertyDao.getPropertyIdByEnterpriseId(id);
 
         if (propertyId != null){
+
             Property propertyTemp = propertyDao.getPropertyById(propertyId);
+            Map<String, Object> data = new HashMap<>();
+            data.put("property",propertyTemp);
+            data.put("enterprise", propertyDao.getEnterpriseDetails(id));
 
-            if (propertyTemp != null) {
-                Map<String, Object> data = new HashMap<>();
-                data.put("property",propertyTemp);
-                return MyResponseUtil.getResultMap(data,0,"success");
-            } else
-                return MyResponseUtil.getResultMap(null,-1,"propertyId not exist");
+            return MyResponseUtil.getResultMap(data,0,"success");
 
-        } else return MyResponseUtil.getResultMap(null,-2,"enterpriseId not exist");
+        } else return MyResponseUtil.getResultMap(null,-2,"对应企业知识产权数据不存在");
 
     }
 
@@ -62,9 +61,9 @@ public class PropertyServiceImpl implements PropertyService {
                     propertyDao.updateConnect(enterpriseId, propertyId) > 0) {
                 return MyResponseUtil.getResultMap(propertyId,0,"success");
 
-            } else return MyResponseUtil.getResultMap(null,-1,"add failure");
+            } else return MyResponseUtil.getResultMap(null,-1,"企业知识产权数据添加失败");
 
-        } else return MyResponseUtil.getResultMap(null,-2,"propertyId was exist or enterpriseId was null");
+        } else return MyResponseUtil.getResultMap(null,-2,"企业知识产权数据已经存在 或者 对应企业不存在");
 
     }
 
@@ -74,7 +73,7 @@ public class PropertyServiceImpl implements PropertyService {
         if (propertyDao.updateProperty(map) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("propertyId",propertyId),0,"success");
         else
-            return MyResponseUtil.getResultMap(null,-1,"propertyId doesn't exist");
+            return MyResponseUtil.getResultMap(null,-1,"企业知识产权数据修改失败");
     }
 
     @Override
@@ -82,6 +81,6 @@ public class PropertyServiceImpl implements PropertyService {
         if (propertyDao.deleteProperty(id) > 0)
             return MyResponseUtil.getResultMap(new HashMap<>().put("propertyId",id),0,"success");
         else
-            return MyResponseUtil.getResultMap(null,-1,"propertyId not exist");
+            return MyResponseUtil.getResultMap(null,-1,"对应企业知识产权数据不存在");
     }
 }
