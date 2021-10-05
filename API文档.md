@@ -367,7 +367,11 @@ id为表示企业/团队的唯一id
 {
 	"data":{
         "employee":{
+<<<<<<< HEAD
 			"employeeId":"<string>",		//企业/团队从业情况表唯一Id
+=======
+			"employeeId":"<string>",		//企业/团队从业情况表唯一ID
+>>>>>>> 4e3defc (修改了一点点API文档)
             "employees":"<int>",				//在孵企业/团队从业人员
             "doctor":"<int>",				//博士
             "master":"<int>",				//硕士
@@ -460,7 +464,11 @@ id为表示企业/团队的唯一id
 
 ```json
 {
+<<<<<<< HEAD
     "enterpriseId":"<string>",			//表示企业/团队的唯一Id
+=======
+    "enterpriseId":"<string>",			//表示企业/团队的唯一ID
+>>>>>>> 4e3defc (修改了一点点API文档)
     "employees":"<int>",					//在孵企业/团队从业人员
     "doctor":"<int>",					//博士
     "master":"<int>",					//硕士
@@ -521,7 +529,11 @@ id为表示企业/团队的唯一id
 
 ```json
 {
+<<<<<<< HEAD
 		"employeeId":"<string>",		//企业/团队从业情况表唯一Id
+=======
+		"employeeId":"<string>",		//企业/团队从业情况表唯一ID
+>>>>>>> 4e3defc (修改了一点点API文档)
         "employees":"<int>",				//在孵企业/团队从业人员
         "doctor":"<int>",				//博士
         "master":"<int>",				//硕士
