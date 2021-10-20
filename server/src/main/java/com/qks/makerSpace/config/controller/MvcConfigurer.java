@@ -14,11 +14,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //将加一个拦截器，检查会话，设置的请求都经过此拦截器
         registry.addInterceptor(new TokenInterceptor())
-                .addPathPatterns("/api/enterprise/**")
-                .addPathPatterns("/api/employee/**")
-                .addPathPatterns("/api/property/**")
-                .addPathPatterns("/api/activity/**")
-                .addPathPatterns("/api/login/**");
+                .addPathPatterns("/api/**");
     }
 
     //跨域访问 配置

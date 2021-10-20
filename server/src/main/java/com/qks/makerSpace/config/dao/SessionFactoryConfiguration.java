@@ -20,12 +20,14 @@ public class SessionFactoryConfiguration {
     @Value("${mapper_path}")
     private String mapperPath;
 
-    @Autowired
-    @Qualifier("dataSource")
-    private DataSource dataSource;
+    private final DataSource dataSource;
 
     @Value("${entity_package}")
     private String entityPackage;
+
+    public SessionFactoryConfiguration(@Qualifier("dataSource") DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Bean(name = "sqlSessionFactory")
     public SqlSessionFactoryBean createSqlSessionFactoryBean() throws IOException {

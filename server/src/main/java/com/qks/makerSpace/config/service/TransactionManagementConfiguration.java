@@ -1,5 +1,6 @@
 package com.qks.makerSpace.config.service;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
@@ -13,11 +14,14 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 public class TransactionManagementConfiguration implements TransactionManagementConfigurer {
 
-    @Autowired
-    private DataSource dataSource;
+    private final DataSource dataSource;
+
+    public TransactionManagementConfiguration(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Override
-    public PlatformTransactionManager annotationDrivenTransactionManager() {
+    public @NotNull PlatformTransactionManager annotationDrivenTransactionManager() {
         return new DataSourceTransactionManager(dataSource);
     }
 }

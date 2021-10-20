@@ -426,12 +426,12 @@ id为表示企业/团队的唯一id
         "employeeId":"<string>",		//企业/团队从业情况表唯一Id
         "enterpriseId":"<string>",		//表示企业/团队的唯一Id
         "teamName":"<string>",			//表示企业/团队的名称
-        "employees":"<int>",				//在孵企业/团队从业人员
+        "employees":"<int>",			//在孵企业/团队从业人员
     },{
         "employeeId":"<string>",		//企业/团队从业情况表唯一Id
         "enterpriseId":"<string>",		//表示企业/团队的唯一Id
         "teamName":"<string>",			//表示企业/团队的名称
-        "employees":"<int>",				//在孵企业/团队从业人员
+        "employees":"<int>",			//在孵企业/团队从业人员
     },
     	......
     ],
