@@ -10,411 +10,87 @@
     <!-- 官网提供的 axios 在线地址 -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="css/index.css">
-    <title>Makerspace</title>
+    <title>leader</title>
 </head>
 
 <body>
     <div id="app">
-        <div class="contain">
-            <div class="main">
-                <ul class="nav nav-tabs">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="index.html">企业/团队基本状况</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="people.html">入驻企业/团队就业人员情况</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="rights.html">在孵企业知识产权情况</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled" href="activity.html">在孵企业科技活动情况</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="login.html">登录导出</a>
-                    </li>
-                </ul>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-5 col-md-6 my-sty-left">
+                    <div class="card" style="width: 15rem;padding-top: 30%;">
+                        <img src="img/bg-2.png" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title card-mysty">孵化器协会</h5>
+                        </div>
+                        <div style="zoom: 0.8;text-align: center;line-height: 25px;">
+                            <a class="list-group-item list-group-item-action" href="#list-item-1">首页</a>
+                            <a class="list-group-item list-group-item-action" href="#list-item-2">用户管理</a>
+                            <a class="list-group-item list-group-item-action" href="#list-item-3">孵化器管理</a>
+                            <a class="list-group-item list-group-item-action" href="#list-item-4">数据中心</a>
+                        </div>
+
+
+
+
+                        <div class="card-body">
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-sm-5 offset-sm-2 offset-md-0 my-sty-right">
+                    <iframe src="yunYing.html" frameborder="0" width="1000px" height="500px">
+
+                    </iframe>
+                    <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0"
+                        class="scrollspy-example" tabindex="0">
+                        <h4 id="list-item-1">Item 1</h4>
+                        <p>...</p>
+
+                        <h4 id="list-item-2">Item 2</h4>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <p>...</p>
+                        <h4 id="list-item-3">Item 3</h4>
+                        <p>...</p>
+                        <h4 id="list-item-4">Item 4</h4>
+                        <p>...</p>
+                    </div>
+                </div>
             </div>
-            <form>
-                <div class="form-group">
-                    <label class="mylabel">企业/团队名称</label>
-                    <input type="email" class="myinput" id="exampleFormControlInput1"
-                        v-model="enterpriseDetail.teamName">
-                </div>
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label class="mylabel">企业负责人</label>
-                        <input type="text" class="myinput" id="validationTooltip01" value="" required
-                            v-model="enterpriseDetail.head">
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label class="mylabel">联系方式</label>
-                        <input type="text" class="myinput" id="validationTooltip02" value="" required
-                            v-model="enterpriseDetail.phone">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="mylabel">入驻众创空间时间</label>
-                    <input type="email" class="myinput" id="exampleFormControlInput1"
-                        v-model="enterpriseDetail.joinTime">
-                </div>
-                <div class="form-group">
-                    <label class="mylabel">企业/团队人数</label>
-                    <input type="email" class="myinput" id="exampleFormControlInput1"
-                        v-model="enterpriseDetail.teamNumber">
-                </div>
-                <hr>
-                <fieldset class="form-group row">
-                    <label class="mylabel">企业/团队主要负责人创业特征</label>
-                    <div class="col-sm-10">
-                        <div class="flex">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
-                                    value="往届毕业生" checked v-model="enterpriseDetail.characteristic">
-                                <label class="form-check-label" for="gridRadios1">
-                                    往届毕业生
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
-                                    value="应届毕业生" v-model="enterpriseDetail.characteristic">
-                                <label class="form-check-label" for="gridRadios2">
-                                    应届毕业生
-                                </label>
-                            </div>
-                            <div class="form-check disabled">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                    value="在校研究生" v-model="enterpriseDetail.characteristic">
-                                <label class="form-check-label" for="gridRadios3">
-                                    在校研究生
-                                </label>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="form-check disabled">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                    value="在校学生" v-model="enterpriseDetail.characteristic">
-                                <label class="form-check-label" for="gridRadios3">
-                                    在校学生
-                                </label>
-                            </div>
-                            <div class="form-check disabled">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                    value=" 学校教职工" v-model="enterpriseDetail.characteristic">
-                                <label class="form-check-label" for="gridRadios3">
-                                    学校教职工
-                                </label>
-                            </div>
-                            <div class="form-check disabled">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                    value="留学归国人员" v-model="enterpriseDetail.characteristic">
-                                <label class="form-check-label" for="gridRadios3">
-                                    留学归国人员
-                                </label>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="form-check disabled">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                    value="大企业离职人员" v-model="enterpriseDetail.characteristic">
-                                <label class="form-check-label" for="gridRadios3">
-                                    大企业离职人员
-                                </label>
-                            </div>
-                            <div class="form-check disabled">
-                                <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                    value="机关事业单位离职人员" v-model="enterpriseDetail.characteristic">
 
-                                <label class="form-check-label" for="gridRadios3">
-                                    机关事业单位离职人员
-                                </label>
-                            </div>
-
-                        </div>
-                        <div class="form-check disabled">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                value="option3" v-model="enterpriseDetail.characteristic">
-                            <label>其他</label>
-                            <input type="email" class="myinput" id="inputEmail3"
-                                v-model="enterpriseDetail.characteristic">
-                        </div>
-
-
-                    </div>
-                </fieldset>
-                <hr>
-                <fieldset class="form-group row">
-                    <div class="col-sm-10">
-                        <label class="mylabel">行业类别</label>
-                        <div class="flex">
-                            <div class="form-check">
-                                <input class="form-check-input" ref="reference" type="radio" name="hangye"
-                                    id="gridRadios3" value="制造业" v-model="enterpriseDetail.kind">
-                                <label class="form-check-label" for="hangye1">制造业</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="hangye" id="gridRadios3"
-                                    value="信息传输、软件和信息技术服务业" v-model="enterpriseDetail.kind">
-                                <label class="form-check-label" for="hangye2">信息传输、软件和信息技术服务业</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="hangye" id="gridRadios3"
-                                    value="文化、体育、娱乐业" v-model="enterpriseDetail.kind">
-                                <label class="form-check-label" for="hangye2">文化、体育、娱乐业</label>
-                            </div>
-                        </div>
-                        <div class="flex">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="hangye" id="gridRadios3" value="金融业"
-                                    v-model="enterpriseDetail.kind">
-                                <label class="form-check-label" for="hangye2">金融业</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="hangye" id="gridRadios3"
-                                    value="科学研究和技术服务业" v-model="enterpriseDetail.kind">
-                                <label class="form-check-label" for="hangye2">科学研究和技术服务业</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="hangye" id="gridRadios3" value="教育"
-                                    v-model="enterpriseDetail.kind">
-                                <label class="form-check-label" for="hangye2">教育</label>
-                            </div>
-                        </div>
-                        <div class="form-check disabled">
-                            <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios3"
-                                v-model="enterpriseDetail.kind">
-                            <label class="form-check-label" for="gridRadios3">
-                                其他<input type="email" class="myinput" id="inputEmail3" v-model="enterpriseDetail.kind">
-                            </label>
-                        </div>
-                    </div>
-                </fieldset>
-                <hr>
-                <fieldset class="form-group row">
-                    <label class="mylabel">企业所属技术领域</label>
-                    <div class="flex">
-                        <div class="form-check">
-                            <input type="radio" id="hangye1" name="lingyu" class="form-check-input" value="电子信息"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye1">电子信息</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="先进制造"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">先进制造 </label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="航天航空"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">航天航空</label>
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="现代交通"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">现代交通 </label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="生物医药与医疗器械"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">生物医药与医疗器械</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="新材料"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">新材料</label>
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="新能源与节能"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">新能源与节能</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="环境保护"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">环境保护</label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="地球、空间与海洋"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">地球、空间与海洋</label>
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="核应用技术"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">核应用技术 </label>
-                        </div>
-                        <div class="form-check">
-                            <input type="radio" id="hangye2" name="lingyu" class="form-check-input" value="现代农业"
-                                v-model="enterpriseDetail.field">
-                            <label class="form-check-label" for="hangye2">现代农业</label>
-                        </div>
-                    </div>
-                </fieldset>
-                <hr>
-
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm">
-                            <div class="form-group">
-                                <label class="mylabel">企业/团队获奖成果</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.achievements">
-                            </div>
-                            <div class="form-group">
-                                <label class="mylabel">企业经营的范围</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.scope">
-                            </div>
-                            <div class="form-group">
-                                <label class="mylabel">企业/团队总收入</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.income">
-                            </div>
-                            <div class="form-group">
-                                <label class="mylabel">上缴税额</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.tax">
-                            </div>
-                            <div class="form-group">
-                                <label class="mylabel">享受税收优惠政策</label>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" id="inlineFormCheck" name="shuishou" type="radio"
-                                        v-model="enterpriseDetail.preferentialTax" :value="true">
-                                    <label class="form-check-label" for="inlineFormCheck">是</label>
-                                </div>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" id="inlineFormCheck" name="shuishou" type="radio"
-                                        :value="false">
-                                    <label class="form-check-label" for="inlineFormCheck">否</label><br />
-                                </div>
-
-                                <label class="mylabel">免税金额</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.taxFree">
-                            </div>
-                        </div>
-                        <div class="col-sm">
-
-                            <div class="form-group">
-                                <label class="mylabel">获得财政资金支持</label>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="czzj"
-                                        :value="true" v-model="enterpriseDetail.support">
-                                    <label class="form-check-label" for="inlineFormCheck">是</label>
-                                </div>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="czzj"
-                                        :value="false" v-model="enterpriseDetail.support">
-                                    <label class="form-check-label" for="inlineFormCheck">否</label><br />
-                                </div>
-
-                                <label class="mylabel">支持金额</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.supportAmount">
-                            </div>
-                            <div class="form-group">
-                                <label class="mylabel">获天使或风险投资额</label>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="tstz"
-                                        :value="true" v-model="enterpriseDetail.riskInvestment">
-                                    <label class="form-check-label" for="inlineFormCheck">是</label>
-                                </div>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="tstz"
-                                        :value="false" v-model="enterpriseDetail.riskInvestment">
-                                    <label class="form-check-label" for="inlineFormCheck" :value="false">否</label><br />
-                                </div>
-
-                                <label class="mylabel">投融资总额</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.investmentAmount">
-                            </div>
-                            <div class="form-group">
-                                <label class="mylabel">是否参与校企合作</label>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="xqhz"
-                                        :value="true" v-model="enterpriseDetail.cooperation">
-                                    <label class="form-check-label" for="inlineFormCheck">是</label>
-                                </div>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="xqhz"
-                                        v-model="enterpriseDetail.cooperation" :value="false">
-                                    <label class="form-check-label" for="inlineFormCheck">否</label><br />
-                                </div>
-
-                                <label class="mylabel">合作项目名称</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.projectName">
-                                <label class="mylabel">申报项目金额</label>
-                                <input type="email" class="myinput" id="exampleFormControlInput1"
-                                    v-model="enterpriseDetail.projectAmount">
-                            </div>
-                            <div class="form-group">
-                                <label class="mylabel">是否高新技术企业</label>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="gxjscy"
-                                        :value="true" v-model="enterpriseDetail.highTec">
-                                    <label class="form-check-label" for="inlineFormCheck">是</label>
-                                </div>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="gxjscy"
-                                        :value="false" v-model="enterpriseDetail.highTec">
-                                    <label class="form-check-label" for="inlineFormCheck">否</label><br />
-                                </div>
-                                <label class="mylabel">是否是科技型中小企业</label>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="kjzxqy"
-                                        :value="true" v-model="enterpriseDetail.tecSme">
-                                    <label class="form-check-label" for="inlineFormCheck">是</label>
-                                </div>
-                                <div class="form-check mb-2 mr-sm-2">
-                                    <input class="form-check-input" type="radio" id="inlineFormCheck" name="kjzxqy"
-                                        :value="false" v-model="enterpriseDetail.tecSme">
-                                    <label class="form-check-label" for="inlineFormCheck">否</label><br />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button type="button" class="btn btn-outline-dark mybutton" @click="putFormOne"><a ref="next1"
-                        href="#">下一步</a></button>
-            </form>
         </div>
     </div>
-    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
-        <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path
-                d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
-        </symbol>
-        <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path
-                d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" />
-        </symbol>
-        <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
-            <path
-                d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-        </symbol>
-    </svg>
-    <div class="alert alert-warning d-flex align-items-center mywarn" role="alert">
-        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:">
-            <use xlink:href="#exclamation-triangle-fill" />
-        </svg>
-        <div>
-            您的信息还没有填完整噢
-        </div>
-    </div>
-    <div style="height: 100px;"></div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/main.js"></script>
-    <script src="js/index.js"></script>
+
 </body>
 
 </html>

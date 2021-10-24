@@ -1,29 +1,28 @@
-* {
-    margin: 0 auto;
+.my-col-left {
+    position: fixed;
+    top: 0px;
+    bottom: 0;
+    overflow: scroll;
+    background: #fff;
+    width: 15%;
+    padding-right: 0px;
 }
 
-a {
-    text-decoration: none;
-    color: black;
+.my-col-right {
+    position: fixed;
+    /* top: 52px; */
+    top: 0px;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+    padding-left: 0px;
 }
 
-.table {
-    width: 80%;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+.container .card {
+    border-right: none;
 }
 
-
-/* #all {
-    text-align: center;
-    display: none;
-}
-
-#title {
-    display: none;
-} */
-
+/* 首页 */
 .myalert {
     width: 200px;
     position: absolute;

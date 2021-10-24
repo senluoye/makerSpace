@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 官网提供的 axios 在线地址 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="../../css/user.css">
+    <link rel="stylesheet" href="../../css/adFrontPage.css">
+    <title>userHome</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="my-col-left">
+                    <div class="card" style="width: 100%;padding-top: 30%;">
+                        <img src="../../img//bg-2.png" class="card-img-use" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title card-mysty">桂林市七星区创领产业服务中心</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item ">
+                                <button class="btn" type="button" style="width: 100%;text-align: left;"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-bank2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z" />
+                                    </svg><a style="margin-left: 10px;">首页</a></button>
+                            </li>
+                            <li class="list-group-item ">
+                                <button class="btn" type="button" style="width: 100%;text-align: left;"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-file-earmark-person-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0zM9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm2 5.755V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-.245S4 12 8 12s5 1.755 5 1.755z" />
+                                    </svg><a style="margin-left: 10px;">账号资料</a></button>
+                            </li>
+                            <li class="list-group-item ">
+                                <button class="btn" type="button" style="width: 100%;text-align: left;"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-bank" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8 .95 14.61 4h.89a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5H15v7a.5.5 0 0 1 .485.379l.5 2A.5.5 0 0 1 15.5 17H.5a.5.5 0 0 1-.485-.621l.5-2A.5.5 0 0 1 1 14V7H.5a.5.5 0 0 1-.5-.5v-2A.5.5 0 0 1 .5 4h.89L8 .95zM3.776 4h8.447L8 2.05 3.776 4zM2 7v7h1V7H2zm2 0v7h2.5V7H4zm3.5 0v7h1V7h-1zm2 0v7H12V7H9.5zM13 7v7h1V7h-1zm2-1V5H1v1h14zm-.39 9H1.39l-.25 1h13.72l-.25-1z" />
+                                    </svg><a style="margin-left: 10px;">企业入驻申请</a></button>
+                            </li>
+
+                            <li class="list-group-item">
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                                aria-expanded="false" aria-controls="flush-collapseOne">
+                                                资源申请
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class=" active"><button class="btn" type="button"
+                                                            style="width: 100%;">房间变更</button>
+                                                    </li>
+                                                    <li class=" "><button class="btn" type="button"
+                                                            style="width: 100%;">续约管理</button></li>
+                                                    <li class=""><button class="btn" type="button"
+                                                            style="width: 100%;">退租管理</button></li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingTwo">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                                aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                数据填报
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is
+                                                the second item's accordion body. Let's imagine this being filled with
+                                                some actual content.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingThree">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                                aria-expanded="false" aria-controls="flush-collapseThree">
+                                                租赁缴费
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-headingThree"
+                                            data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is
+                                                the third item's accordion body. Nothing more exciting happening here in
+                                                terms of content, but just filling up the space to make it look, at
+                                                least at first glance, a bit more representative of how this would look
+                                                in a real-world application.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item "><a href="../admire/adFrontPage.html">
+                                    <button class="btn" type="button" style="width: 100%;text-align: left;"><svg
+                                            xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            fill="currentColor" class="bi bi-person-video3" viewBox="0 0 16 16">
+                                            <path
+                                                d="M14 9.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm-6 5.7c0 .8.8.8.8.8h6.4s.8 0 .8-.8-.8-3.2-4-3.2-4 2.4-4 3.2Z" />
+                                            <path
+                                                d="M2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h5.243c.122-.326.295-.668.526-1H2a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v7.81c.353.23.656.496.91.783.059-.187.09-.386.09-.593V4a2 2 0 0 0-2-2H2Z" />
+                                        </svg><span style="margin-left: 10px;">退出登录</span></button></a>
+                            </li>
+                            <!-- <li class="list-group-item">A third item</li> -->
+                        </ul>
+                        <!-- <div class="card-body">
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="my-col-right " style="width: 84%;">
+                    <div class="top">
+
+                        <div class="card">
+                            <div class="card-body">
+                                <h1 class="card-title">桂林市七星区创领产业服务中心</h1>
+                                <p class="card-text">已入驻桂林电子科技大学科技园</p>
+                                <p class="card-text"><small class="text-muted"
+                                        style="margin-right: 20px;">入驻时间：2021-12-12</small>
+                                    <small class="text-muted">现驻房间号：1510</small>
+                                </p>
+                            </div>
+                            <img src="../../img/img-2.png" style="zoom: 0.5 !important;" class="card-img-bottom"
+                                alt="...">
+                        </div>
+
+                    </div>
+                    <div class="middle" style="padding: 10px;">
+
+                        <div class="zonglan" style="width: 100%;">
+                            <div class="nav-top" style="border-bottom: black 1px solid;margin-bottom: 30px;">
+                                <span class="mid-tit zongLan">
+                                    企业详情
+                                </span>
+                            </div>
+
+                            <div id="deinf">
+                                <dl class="row">
+                                    <h1>企业/团队基本情况</h1>
+                                    <dt class="col-sm-3">企业/团队名称</dt>
+                                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+
+                                    <dt class="col-sm-3">企业负责人</dt>
+                                    <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+
+                                    <dt class="col-sm-3">联系方式</dt>
+                                    <dd class="col-sm-9">This definition is short, so no extra paragraphs or anything.
+                                    </dd>
+
+                                    <dt class="col-sm-3">入驻众创空间时间</dt>
+                                    <dd class="col-sm-9">This definition is short, so no extra paragraphs or anything.
+                                    </dd>
+
+                                    <dt class="col-sm-3 text-truncate">企业/团队人数</dt>
+                                    <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the
+                                        end.</dd>
+
+                                    <dt class="col-sm-3 text-truncate">企业/团队主要负责人创业特征</dt>
+                                    <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the
+                                        end.</dd>
+
+                                    <dt class="col-sm-3 text-truncate">行业类别</dt>
+                                    <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the
+                                        end.</dd>
+
+                                    <dt class="col-sm-3 text-truncate">企业所属技术领域</dt>
+                                    <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the
+                                        end.</dd>
+
+                                    <dt class="col-sm-3 text-truncate">企业/团队获奖成果</dt>
+                                    <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the
+                                        end.</dd>
+
+                                    <dt class="col-sm-3 text-truncate">企业经营的范围</dt>
+                                    <dd class="col-sm-9">This can be useful when space is tight. Adds an ellipsis at the
+                                        end.</dd>
+
+                                </dl>
+                                <dl class="row" id="income">
+
+                                    <dt class="col-sm-3">企业/团队总收入</dt>
+                                    <dd class="col-sm-3">123</dd>
+                                    <dt class="col-sm-3">上缴税额</dt>
+                                    <dd class="col-sm-3">123</dd>
+
+                                    <dt class="col-sm-3">享受税收优惠政策</dt>
+                                    <dd class="col-sm-3">是</dd>
+                                    <dt class="col-sm-3">免税金额</dt>
+                                    <dd class="col-sm-3">123</dd>
+
+                                    <dt class="col-sm-3">获得财政资金支持</dt>
+                                    <dd class="col-sm-3">123</dd>
+                                    <dt class="col-sm-3">支持金额</dt>
+                                    <dd class="col-sm-3">123</dd>
+
+                                    <dt class="col-sm-3">获天使或风险投资额</dt>
+                                    <dd class="col-sm-3">123</dd>
+                                    <dt class="col-sm-3">投融资总额</dt>
+                                    <dd class="col-sm-3">123</dd>
+
+                                    <dt class="col-sm-3">是否参与校企合作</dt>
+                                    <dd class="col-sm-3">123</dd>
+                                    <dt class="col-sm-3">合作项目名称及申报项目金额</dt>
+                                    <dd class="col-sm-3">123</dd>
+
+                                    <dt class="col-sm-3">是否高新技术企业</dt>
+                                    <dd class="col-sm-3">123</dd>
+                                    <dt class="col-sm-3">是否是科技型中小企业</dt>
+                                    <dd class="col-sm-3">123</dd>
+                                </dl>
+                                <dl class="row">
+                                    <dt class="col-sm-3">在孵企业/团队从业人员</dt>
+                                    <dd class="col-sm-9">
+                                        <p>共 人</p>
+                                        <p>其中：博士 人，硕士 人</p>
+                                        <p>其中：研究生学历 人，本科学历 人，大专学历 人，中专学历 人</p>
+                                        <p>其中：科技活动人员 人</p>
+                                        <p>其中：研究与试验发展(R&D)人员 人</p>
+                                        <p>其中：留学回国人员 人</p>
+                                        <p>其中：千人计划人数 人</p>
+                                        <p>接纳大学生、研究生实习人员 人/天</p>
+                                        <p>接纳应届毕业生就业人员</p>
+                                    </dd>
+                                </dl>
+                                <dl class="row">
+                                    <dt class="col-sm-6">当年知识产权申请数共 件</dt>
+                                    <dd class="col-sm-6">
+                                        <p>其中：发明专利 件 </p>
+                                        <p>专利号/软著登记号/商标号： </p>
+                                    </dd>
+
+                                    <dt class="col-sm-6">当年知识产权授权数共 件</dt>
+                                    <dd class="col-sm-6">
+                                        <p>其中：发明专利 件</p>
+                                    </dd>
+
+                                    <dt class="col-sm-6">拥有有效知识产权数共 件</dt>
+                                    <dd class="col-sm-6">
+                                        <p>其中：发明专利 件</p>
+                                        <p>软件著作权 件</p>
+                                        <p>植物新品种 件</p>
+                                        <p>集成电路布图 件</p>
+                                    </dd>
+
+                                    <dt class="col-sm-6">购买国外技术专利 件</dt>
+                                    <dd class="col-sm-6">
+                                        <p></p>
+                                    </dd>
+
+                                    <dt class="col-sm-6">技术合同交易数量 件</dt>
+                                    <dd class="col-sm-6">
+                                        <p></p>
+                                    </dd>
+
+                                    <dt class="col-sm-6">技术合同交易额 千元</dt>
+                                    <dd class="col-sm-6">
+                                        <p></p>
+                                    </dd>
+
+                                    <dt class="col-sm-6">当年承担国家级科技计划项目数 件</dt>
+                                    <dd class="col-sm-6">
+                                        <p></p>
+                                    </dd>
+
+                                    <dt class="col-sm-6">当年获得省级以上奖励 件</dt>
+                                    <dd class="col-sm-6">
+                                        <p></p>
+                                    </dd>
+
+                                </dl>
+
+                                <dl class="row">
+                                    <dt class="col-sm-3">承担各类计划项目 项</dt>
+                                    <dd class="col-sm-9">
+                                        <p>其中：国家级项目 项</p>
+                                    </dd>
+
+                                    <dt class="col-sm-3">科技活动经费支出总额 千元</dt>
+                                    <dd class="col-sm-9">
+                                        <p>其中：研究与试验发展（R&D）经费支出 千元</p>
+                                        <p>其中：新产品开发经费支出 千元</p>
+                                        <p>其中：政府拨款 千元</p>
+                                        <p>企业自筹 千元</p>
+                                    </dd>
+                                </dl>
+                                <div class="control">
+
+                                    <button type="button" class="btn btn-outline-dark" id="back"><a
+                                            href="">返回概览</a></button>
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                isShow: true,
+                navName: ["房间变更", "续约管理", "退租管理"]
+            },
+            watch: {
+                isShow() {
+
+                }
+            },
+            methods: {
+                changeNav() {
+                    this.isShow = !this.isShow;
+                }
+            },
+        });
+        // $('#myModal').on('shown.bs.modal', function () {
+        //     $('#myInput').trigger('focus')
+        // })
+    </script>
+</body>
+
+
+</html>

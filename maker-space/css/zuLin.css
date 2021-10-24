@@ -1,0 +1,44 @@
+.my-table tbody tr th {
+    background-color: rgba(192, 192, 192, 0.171);
+    text-align: left;
+}
+
+
+
+
+.my-table tr td {
+    border-bottom: rgb(223, 219, 213) 1px solid;
+
+}
+
+.my-modal-btn {
+    background-color: rgb(231, 241, 255);
+    border-color: rgb(231, 241, 255);
+    color: gray;
+    width: 60px;
+    display: inline;
+    border-style: none;
+    /* background: none; */
+    padding: 2px;
+
+}
+
+.my-modal-btn:active,
+.my-modal-btn:focus,
+.my-modal-btn:hover {
+    border-color: rgb(220, 234, 253);
+    background-color: rgb(220, 234, 253);
+    color: gray;
+
+}
+
+.my-modal .modal-dialog {
+    width: 750px;
+}
+
+@media (min-width: 576px) {
+    .modal-dialog {
+        max-width: 100%;
+        margin: 1.75rem auto;
+    }
+}

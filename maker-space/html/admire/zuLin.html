@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 引入vue -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <!-- 官网提供的 axios 在线地址 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="../../css/adFrontPage.css">
+    <title>zuLin</title>
+</head>
+
+<body>
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <div class="my-col-left  " style="width: 15%;">
+                    <div class="card" style="width: 100%;padding-top: 20%;">
+                        <img src="../../img//bg-2.png" class="card-img-use" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title card-mysty">运营管理端口</h5>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item ">
+                                <button class="btn" type="button" style="width: 100%;text-align: left;"><svg
+                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-bank2" viewBox="0 0 16 16">
+                                        <path
+                                            d="M8.277.084a.5.5 0 0 0-.554 0l-7.5 5A.5.5 0 0 0 .5 6h1.875v7H1.5a.5.5 0 0 0 0 1h13a.5.5 0 1 0 0-1h-.875V6H15.5a.5.5 0 0 0 .277-.916l-7.5-5zM12.375 6v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zm-2.5 0v7h-1.25V6h1.25zM8 4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zM.5 15a.5.5 0 0 0 0 1h15a.5.5 0 1 0 0-1H.5z" />
+                                    </svg><a style="margin-left: 10px;">用户管理</a></button>
+                            </li>
+
+
+
+                            <li class="list-group-item">
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingOne">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                                aria-expanded="false" aria-controls="flush-collapseOne">
+                                                租赁管理
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseOne" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">
+                                                <ul class="list-group list-group-flush">
+                                                    <li class=" active"><button class="btn" type="button"
+                                                            style="width: 100%;">房间变更</button>
+                                                    </li>
+                                                    <li class=" "><button class="btn" type="button"
+                                                            style="width: 100%;">续约管理</button></li>
+                                                    <li class=""><button class="btn" type="button"
+                                                            style="width: 100%;">退租管理</button></li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingTwo">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
+                                                aria-expanded="false" aria-controls="flush-collapseTwo">
+                                                物业管理
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseTwo" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is
+                                                the second item's accordion body. Let's imagine this being filled with
+                                                some actual content.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingThree">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                                aria-expanded="false" aria-controls="flush-collapseThree">
+                                                缴费管理
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-headingThree"
+                                            data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is
+                                                the third item's accordion body. Nothing more exciting happening here in
+                                                terms of content, but just filling up the space to make it look, at
+                                                least at first glance, a bit more representative of how this would look
+                                                in a real-world application.</div>
+                                        </div>
+                                    </div>
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-headingThree">
+                                            <button class="accordion-button collapsed" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
+                                                aria-expanded="false" aria-controls="flush-collapseThree">
+                                                企业详情
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapseThree" class="accordion-collapse collapse"
+                                            aria-labelledby="flush-headingThree"
+                                            data-bs-parent="#accordionFlushExample">
+                                            <div class="accordion-body">Placeholder content for this accordion, which is
+                                                intended to demonstrate the <code>.accordion-flush</code> class. This is
+                                                the third item's accordion body. Nothing more exciting happening here in
+                                                terms of content, but just filling up the space to make it look, at
+                                                least at first glance, a bit more representative of how this would look
+                                                in a real-world application.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="list-group-item"><button class="btn" type="button"
+                                    style="width: 100%;">孵化服务</button></li>
+                            <li class="list-group-item"><button class="btn" type="button"
+                                    style="width: 100%;"><a>数据中心</a><span class="badge bg-primary rounded-pill"
+                                        style="margin-left: 80px;">14</span></button>
+
+                            </li>
+                            <li class="list-group-item"><button class="btn" type="button"
+                                    style="width: 100%;"><a>孵化服务</a></button></li>
+
+                            <!-- <li class="list-group-item">A third item</li> -->
+                        </ul>
+                        <!-- <div class="card-body">
+                            <a href="#" class="card-link">Card link</a>
+                            <a href="#" class="card-link">Another link</a>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="my-col-right " style="width: 84%;">
+                    <div class="top">
+                        <nav class="navbar navbar-light bg-light">
+                            <div class="container-fluid">
+                                <a class="navbar-brand" href="#">
+                                    <img src="../../img/img-1.png" alt="" width="30" height="24"
+                                        class="d-inline-block align-text-top" style="border-radius: 5px;">
+                                    用户管理
+                                </a>
+                                <div>
+                                    <button type="button" class="btn btn-primary position-relative"
+                                        style="zoom: 0.5;margin-right: 15px;">
+                                        Profile
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                            <span class="visually-hidden">New alerts</span>
+                                        </span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary position-relative"
+                                        style="zoom: 0.5;margin-right: 15px;">
+                                        Profile
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                            <span class="visually-hidden">New alerts</span>
+                                        </span>
+                                    </button>
+                                    <button type="button" class="btn btn-primary position-relative"
+                                        style="zoom: 0.5;margin-right: 15px;">
+                                        Profile
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle p-2 bg-danger border border-light rounded-circle">
+                                            <span class="visually-hidden">New alerts</span>
+                                        </span>
+                                    </button>
+                                </div>
+
+                            </div>
+                        </nav>
+
+                    </div>
+                    <div class="middle" style="padding: 10px;">
+
+                        <div class="zonglan" style="width: 100%;">
+                            <div class="nav-top" style="border-bottom: black 1px solid;margin-bottom: 30px;">
+                                <span class="mid-tit zongLan">
+                                    {{navName[0]}}
+                                </span>
+                            </div>
+
+                            <ul class="nav nav-tabs">
+                                <li class="nav-item" style="border-width: 2px;">
+                                    <a :class="[{'active':isShow}, 'nav-link']" href="#" @click="changeNav">待处理</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a :class="[{'active':!isShow}, 'nav-link']" href="#" @click="changeNav">已通过</a>
+                                </li>
+
+
+                            </ul>
+                            <table v-show="isShow" ref="zonglan1" class="table table-striped table-hover zonglan-1"
+                                id="all all-new" style="width: auto;margin: 10px auto;">
+                                <!-- <h1 style="margin: 30px auto;text-align: center;" id="title">企业概览</h1> -->
+                                <thead>
+                                    <tr>
+                                        <!-- <td><button type="xiazai" class="btn btn-outline-dark "
+                                                id="xiazai">导出表格</button>
+                                        </td> -->
+                                        <th scope="col" width="14%">企业/团队名称</th>
+                                        <th scope="col" width="7%">申请房间号</th>
+                                        <th scope="col" width="7%">联系方式</th>
+                                        <th scope="col" width="9%">入驻众创空间时间</th>
+                                        <th scope="col" width="8%">续约开始时间</th>
+                                        <th scope="col" width="8%">续约结束时间</th>
+                                        <th scope="col" width="8%">续约申请时间</th>
+                                        <th scope="col" width="5%">状态</th>
+                                        <th scope="col" width="4%">操作</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody display="table">
+                                    <tr>
+                                        <th scope="col">1</th>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">Otto</td>
+                                        <td scope="col">@mdo</td>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">Otto</td>
+                                        <td scope="col">@mdo</td>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">
+                                            <button type="button" class="btn btn-primary my-modal-btn"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                详情
+                                            </button>
+                                        </td>
+
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">1</th>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">Otto</td>
+                                        <td scope="col">@mdo</td>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">Otto</td>
+                                        <td scope="col">@mdo</td>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col"><button type="button" class="btn btn-primary my-modal-btn"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                详情
+                                            </button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">1</th>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">Otto</td>
+                                        <td scope="col">@mdo</td>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">Otto</td>
+                                        <td scope="col">@mdo</td>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col"><button type="button" class="btn btn-primary my-modal-btn"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                详情
+                                            </button></td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">1</th>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">Otto</td>
+                                        <td scope="col">@mdo</td>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col">Otto</td>
+                                        <td scope="col">@mdo</td>
+                                        <td scope="col">Mark</td>
+                                        <td scope="col"><button type="button" class="btn btn-primary my-modal-btn"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                详情
+                                            </button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <table v-show="!isShow" ref="zonglan2" class="table table-striped table-hover zonglan-1"
+                                id="all all-old" style="width: auto;margin: 10px auto;display: none;">
+                                <!-- <h1 style="margin: 30px auto;text-align: center;" id="title">企业概览</h1> -->
+                                <thead>
+                                    <tr>
+                                        <!-- <td><button type="xiazai" class="btn btn-outline-dark "
+                                            id="xiazai">导出表格</button>
+                                    </td> -->
+
+                                        <th scope="col" width="14%">企业/团队名称</th>
+                                        <th scope="col" width="7%">申请房间号</th>
+                                        <th scope="col" width="7%">联系方式</th>
+                                        <th scope="col" width="9%">入驻众创空间时间</th>
+                                        <th scope="col" width="8%">续约开始时间</th>
+                                        <th scope="col" width="8%">续约结束时间</th>
+                                        <th scope="col" width="8%">续约申请时间</th>
+                                        <th scope="col" width="5%">状态</th>
+                                        <th scope="col" width="4%">操作</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody display="table">
+                                    <tr>
+                                        <th scope="col">zz科技</th>
+                                        <td scope="col">021</td>
+                                        <td scope="col">12345678998</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">审核通过</td>
+                                        <td scope="col">
+                                            <button type="button" class="btn btn-primary my-modal-btn"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
+                                                详情
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">zz科技</th>
+                                        <td scope="col">021</td>
+                                        <td scope="col">12345678998</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">退回申请</td>
+                                        <td scope="col"><button type="button" class="btn btn-primary my-modal-btn"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
+                                                详情
+                                            </button></td>
+
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">zz科技</th>
+                                        <td scope="col">021</td>
+                                        <td scope="col">12345678998</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">2017-7-21</td>
+                                        <td scope="col">审核通过</td>
+                                        <td scope="col"><button type="button" class="btn btn-primary my-modal-btn"
+                                                data-bs-toggle="modal" data-bs-target="#staticBackdropTwo">
+                                                详情
+                                            </button></td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+
+
+                        <!-- Modal-1 -->
+                        <div class="modal fade my-modal" id="staticBackdrop" data-bs-backdrop="static"
+                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">房间变更申请</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <table class="table table-borderless my-table">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th scope="col" style="text-align: right;background-color: rgba(192, 192, 192, 0.171);
+                                                        text-align: left;">企业名称</th>
+                                                        <th scope="col">456</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <th scope="row">联系人</th>
+                                                        <td>Mark</td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">现有房间</th>
+                                                        <td>Jacob</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">申请房间</th>
+                                                        <td>Mark</td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">入驻房间是否经过二次装修</th>
+                                                        <td>
+                                                            <div class="">
+                                                                <input type="checkbox" value="" id="defaultCheck2"
+                                                                    disabled checked>
+                                                                <label for="defaultCheck2">
+                                                                    是
+                                                                </label>
+                                                                <input type="checkbox" value="" id="defaultCheck2"
+                                                                    disabled>
+                                                                <label for="defaultCheck2">
+                                                                    否
+                                                                </label>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">二次装修是否拆除完毕</th>
+                                                        <td>Mark</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">二次装修是否留有装修物品说明</th>
+                                                        <td><textarea name="" id="" cols="50" rows="2" disabled
+                                                                style="resize:none;"></textarea></td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <!-- <th scope="row">申请状态</th>
+                                                        <td colspan="2">待处理</td> -->
+                                                        <!-- <td>待处理</td> -->
+                                                        <span>申请状态：</span>
+                                                        <span style="color: brown;">待处理</span>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-outline-success">审核通过</button>
+                                        <button type="button" class="btn btn-outline-danger">驳回申请</button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Modal-2 -->
+                        <div class="modal fade my-modal" id="staticBackdropTwo" data-bs-backdrop="static"
+                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticBackdropLabel">房间变更申请</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="container-fluid">
+                                            <table class="table table-borderless my-table">
+                                                <thead>
+                                                    <tr>
+
+                                                        <th scope="col" style="text-align: right;background-color: rgba(192, 192, 192, 0.171);
+                                                     text-align: left;">企业名称</th>
+                                                        <th scope="col">456</th>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <tr>
+                                                        <th scope="row">联系人</th>
+                                                        <td>Mark</td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">现有房间</th>
+                                                        <td>Jacob</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">申请房间</th>
+                                                        <td>Mark</td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <th scope="row">入驻房间是否经过二次装修</th>
+                                                        <td>
+                                                            <div class="">
+                                                                <input type="checkbox" value="" id="defaultCheck2"
+                                                                    disabled checked>
+                                                                <label for="defaultCheck2">
+                                                                    是
+                                                                </label>
+                                                                <input type="checkbox" value="" id="defaultCheck2"
+                                                                    disabled>
+                                                                <label for="defaultCheck2">
+                                                                    否
+                                                                </label>
+                                                            </div>
+                                                        </td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">二次装修是否拆除完毕</th>
+                                                        <td>Mark</td>
+
+                                                    </tr>
+                                                    <tr>
+                                                        <th scope="row">二次装修是否留有装修物品说明</th>
+                                                        <td><textarea name="" id="" cols="50" rows="2" disabled
+                                                                style="resize:none;"></textarea></td>
+
+                                                    </tr>
+
+                                                    <tr>
+                                                        <!-- <th scope="row">申请状态</th>
+                                                     <td colspan="2">待处理</td> -->
+                                                        <!-- <td>待处理</td> -->
+                                                        <span>申请状态：</span>
+                                                        <span style="color: green;">已处理</span>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+                                        <span>修改审核：</span>
+                                        <button type="button" class="btn btn-outline-success">审核通过</button>
+                                        <button type="button" class="btn btn-outline-danger">驳回申请</button>
+
+
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">X</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                isShow: true,
+                navName: ["房间变更", "续约管理", "退租管理"]
+            },
+            watch: {
+                isShow() {
+
+                }
+            },
+            methods: {
+                changeNav() {
+                    this.isShow = !this.isShow;
+                }
+            },
+        });
+        // $('#myModal').on('shown.bs.modal', function () {
+        //     $('#myInput').trigger('focus')
+        // })
+    </script>
+</body>
+
+
+</html>

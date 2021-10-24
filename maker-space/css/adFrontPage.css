@@ -1,0 +1,49 @@
+.col-sm-10 .top {
+    height: 10%;
+    width: 100%;
+    border: black 1px solid;
+}
+
+.middle .mid-tit {
+    display: inline-block;
+    width: auto;
+    height: 25px;
+    border-bottom: rgb(16, 19, 17) 3px solid;
+    padding: 2px 8px 27px 8px;
+    margin: 0px;
+    zoom: 1.4;
+}
+
+.jue .card-group .card {
+    margin: 15px 30px;
+}
+
+.btn-guanli {
+    /* display: block; */
+    background-color: rgb(200, 227, 243);
+    border: none;
+    width: 300px;
+    height: 150px;
+    margin: 5px;
+    /* font-size: 25px; */
+}
+
+.btn-guanli:focus,
+.btn-guanli:hover {
+    background-color: rgb(217, 229, 236);
+    border-color: rgb(228, 175, 175) !important;
+    /* box-shadow: rgb(219, 217, 217) 0 0 0; */
+}
+
+.btn-guanli svg {
+    zoom: 2.5;
+}
+
+.accordion-body .list-group-flush li {
+    padding: 5px 0px;
+
+}
+
+.accordion-body .list-group-flush li:hover {
+    background-color: rgb(231, 241, 255);
+}
