@@ -6,6 +6,7 @@ import com.qks.makerSpace.entity.OldDemand;
 import com.qks.makerSpace.service.OldEnterpriseService;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
+import com.qks.makerSpace.util.OldParserUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -59,16 +60,16 @@ public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializa
      */
     @Override
     public Map<String, Object> getOldEnterprise() {
-        List<> data = new ArrayList();
+        List<Map<String, Object>> data = new ArrayList<>();
+        List<Old> oldList = oldEnterpriseDao.getAllOldEnterprise();
 
-        List<Old> oldlist = oldEnterpriseDao.getAllOldEnterprise();
-        if (oldlist != null) {
-            for (Old old : oldlist) {
+        if (oldList != null) {
+            for (Old old : oldList) {
                 List<OldDemand> oldDemands = oldEnterpriseDao.getOldDemandById(old.getOldDemand_id());
 
 
             }
-            oldlist.add()
+            oldList.add();
         }
 
 
@@ -101,7 +102,12 @@ public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializa
      * @return
      */
     @Override
-    public Map<String, Object> updateOldEnterprise(Map<String, Object> map) {
+    public Map<String, Object> updateOldEnterprise(String token, Map<String, Object> map) {
+        String id = JWTUtils.parser(token).get("id").toString();
+        map.put("id", id);
+
+        Old old = OldParserUtils.parser(map);
+
         return null;
     }
 

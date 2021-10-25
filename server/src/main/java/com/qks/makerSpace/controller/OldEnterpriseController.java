@@ -1,10 +1,7 @@
 package com.qks.makerSpace.controller;
 
 import com.qks.makerSpace.service.OldEnterpriseService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -74,8 +71,8 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
-    private Map<String, Object> updateOldEnterprise(@RequestBody Map<String, Object> map) {
-        return oldEnterpriseService.updateOldEnterprise(map);
+    private Map<String, Object> updateOldEnterprise(@RequestHeader String token, @RequestBody Map<String, Object> map) {
+        return oldEnterpriseService.updateOldEnterprise(token, map);
     }
 
     /**

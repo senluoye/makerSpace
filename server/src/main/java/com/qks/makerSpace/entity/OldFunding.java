@@ -3,7 +3,7 @@ package com.qks.makerSpace.entity;
 import lombok.Data;
 
 @Data
-public class Funding {
+public class OldFunding {
 
     private String id;
     private String name;
