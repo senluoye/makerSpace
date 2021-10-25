@@ -71,7 +71,7 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
-    private Map<String, Object> updateOldEnterprise(@RequestHeader String token, @RequestBody Map<String, Object> map) {
+    private Map<String, Object> updateOldEnterprise(@RequestHeader String token, @RequestBody Map<String, Object> map) throws IllegalAccessException {
         return oldEnterpriseService.updateOldEnterprise(token, map);
     }
 

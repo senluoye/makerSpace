@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class OldDemand {
     private String id;
+    private String oldDemandId;
     private String lease_area;
     private String position;
     private String lease;

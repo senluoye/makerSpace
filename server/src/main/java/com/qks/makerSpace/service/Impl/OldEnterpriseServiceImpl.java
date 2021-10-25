@@ -102,7 +102,7 @@ public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializa
      * @return
      */
     @Override
-    public Map<String, Object> updateOldEnterprise(String token, Map<String, Object> map) {
+    public Map<String, Object> updateOldEnterprise(String token, Map<String, Object> map) throws IllegalAccessException {
         String id = JWTUtils.parser(token).get("id").toString();
         map.put("id", id);
 

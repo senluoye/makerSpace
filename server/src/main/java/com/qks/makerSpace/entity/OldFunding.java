@@ -6,6 +6,7 @@ import lombok.Data;
 public class OldFunding {
 
     private String id;
+    private String fundingId;
     private String name;
     private String level;
     private String time;

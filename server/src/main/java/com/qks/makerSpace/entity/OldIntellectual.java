@@ -5,9 +5,10 @@ import lombok.Data;
 @Data
 public class OldIntellectual {
     private String id;
+    private String oldIntellectualId;
     private String name;
     private String kind;
-    private String apply_time;
-    private String approval_time;
-    private byte[] intellectual_file;
+    private String applyTime;
+    private String approvalTime;
+    private byte[] intellectualFile;
 }
