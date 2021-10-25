@@ -228,54 +228,55 @@ token 保存时间待定
 
 #### 表名：old （主表）
 
-|       字段名        |  类型  |                             说名                             |
-| :-----------------: | :----: | :----------------------------------------------------------: |
-|     credit_code     | String |                 同一社会信用代码（18位字符）                 |
-|  organization_code  | String |                         组织机构代码                         |
-|      password       | String |                         企业注册密码                         |
-|        name         | String |                       申请入驻企业名称                       |
-|      represent      | String |                           法人代表                           |
-|   represent_phone   | String |                       法人代表联系电话                       |
-|   represent_email   | String |                       法人代表邮箱地址                       |
-|        agent        | String |                            经办人                            |
-|     agent_phone     | String |                        经办人联系电话                        |
-|     agent_email     | String |                        经办人邮箱地址                        |
-|  register_address   | String |                           注册地址                           |
-|       license       |  File  |                       新的营业执照上传                       |
-|  register_capital   | String |                       注册资本（万元）                       |
-|    real_address     | String |                         实际经营地址                         |
-|    real_capital     | String |                           实收资本                           |
-|     last_income     | String |                        上年度经营收入                        |
-|      last_tax       | String |                          上年度利税                          |
-|      employees      | String |                           员工人数                           |
-|    origin_number    | String |                         初始入园人数                         |
-|      set_date       | String |                           成立日期                           |
-|       nature        | String |                           企业性质                           |
-|     certificate     |  File  |          教师需要上传教师资格证/学生需要上传学生证           |
-|      involved       | String |                           所属行业                           |
-|    main_business    | String |                           主营业务                           |
-|         way         | String |                           入园方式                           |
-|      business       | String |                           入园业务                           |
-|    old_demand_id    | String |         园区场地租赁需求   -->到 oldDemand 表的外键          |
-| old_shareholder_id  | String |           股东构成  -->到 oldSharehoolder 表的外键           |
-|  old_mainperson_id  | String |          主要人员介绍  -->到 oldMainPerson表的外键           |
-|   old_project_id    | String |       入园项目简要介绍和分析  -->到 oldProject表的外键       |
-| old_intellectual_id | String |         知识产权情况  -->到 oldIntellectual表的外键          |
-|     funding_id      | String |    承担财政资金资助项目及获奖情况  -->到 funding表的外键     |
-|     cooperation     | String |                     以往与桂电的合作情况                     |
-|     suggestion      | String |                          科技园意见                          |
-|        note         | String |                                                              |
-|        state        | String | 授权状态（初始为 null，待审核为 0，审核不通过为 1，审核通过为 2） |
-|     submit_time     | String |                           提交时间                           |
-|        room         | String |                            房间号                            |
-|                     |        |                                                              |
-|   old_inapply_id    | String |         众创空间入驻申请书 -->到 oldInApply 表的外键         |
-|   old_outapply_id   | String |         科技园退租申请书 -->到 oldOutApply 表的外键          |
+|       字段名        |    类型    |                             说名                             |
+| :-----------------: | :--------: | :----------------------------------------------------------: |
+|       old_id        |   String   |                          old表主键                           |
+|     credit_code     |   String   |                 同一社会信用代码（18位字符）                 |
+|  organization_code  |   String   |                         组织机构代码                         |
+|      password       |   String   |                         企业注册密码                         |
+|        name         |   String   |                       申请入驻企业名称                       |
+|      represent      |   String   |                           法人代表                           |
+|   represent_phone   |   String   |                       法人代表联系电话                       |
+|   represent_email   |   String   |                       法人代表邮箱地址                       |
+|        agent        |   String   |                            经办人                            |
+|     agent_phone     |   String   |                        经办人联系电话                        |
+|     agent_email     |   String   |                        经办人邮箱地址                        |
+|  register_address   |   String   |                           注册地址                           |
+|       license       | MediumBolb |                       新的营业执照上传                       |
+|  register_capital   |   String   |                       注册资本（万元）                       |
+|    real_address     |   String   |                         实际经营地址                         |
+|    real_capital     |   String   |                           实收资本                           |
+|     last_income     |   String   |                        上年度经营收入                        |
+|      last_tax       |   String   |                          上年度利税                          |
+|      employees      |   String   |                           员工人数                           |
+|    origin_number    |   String   |                         初始入园人数                         |
+|      set_date       | Timestamp  |                           成立日期                           |
+|       nature        |   String   |                           企业性质                           |
+|     certificate     | MediumBolb |          教师需要上传教师资格证/学生需要上传学生证           |
+|      involved       |   String   |                           所属行业                           |
+|    main_business    |   String   |                           主营业务                           |
+|         way         |   String   |                           入园方式                           |
+|      business       |   String   |                           入园业务                           |
+|    old_demand_id    |   String   |         园区场地租赁需求   -->到 oldDemand 表的外键          |
+| old_shareholder_id  |   String   |           股东构成  -->到 oldSharehoolder 表的外键           |
+|  old_mainperson_id  |   String   |          主要人员介绍  -->到 oldMainPerson表的外键           |
+|   old_project_id    |   String   |       入园项目简要介绍和分析  -->到 oldProject表的外键       |
+| old_intellectual_id |   String   |         知识产权情况  -->到 oldIntellectual表的外键          |
+|     funding_id      |   String   |    承担财政资金资助项目及获奖情况  -->到 funding表的外键     |
+|     cooperation     |   String   |                     以往与桂电的合作情况                     |
+|     suggestion      |   String   |                          科技园意见                          |
+|        note         |   String   |                             备注                             |
+|        state        |   String   | 授权状态（初始为 null，待审核为 0，审核不通过为 1，审核通过为 2） |
+|     submit_time     |   String   |                           提交时间                           |
+|        room         |   String   |                            房间号                            |
+|   old_inapply_id    |   String   |         众创空间入驻申请书 -->到 oldInApply 表的外键         |
+|   old_outapply_id   |   String   |         科技园退租申请书 -->到 oldOutApply 表的外键          |
 
 #### 表名：old_demand （园区场地租赁需求）
 
 |    字段名     |  类型  |        说明        |
 | :-----------: | :----: | :----------------: |
+|      id       | String |        UUID        |
 | old_demand_id | String |        UUID        |
 |  lease_area   | String | 租赁面积（平方米） |
 |   position    | String |      位置需求      |
@@ -290,6 +291,7 @@ token 保存时间待定
 
 |       字段名       |  类型  |      说明      |
 | :----------------: | :----: | :------------: |
+|         id         | String |      UUID      |
 | old_shareholder_id | String |      UUID      |
 |        name        | String | 股东姓名或名称 |
 |       stake        | String |    股份比例    |
@@ -299,6 +301,7 @@ token 保存时间待定
 
 |      字段名       |  类型  |   说明   |
 | :---------------: | :----: | :------: |
+|        id         | String |   UUID   |
 | old_mainperson_id | String |   UUID   |
 |       name        | String |   姓名   |
 |       born        | String | 出生年月 |
@@ -312,6 +315,7 @@ token 保存时间待定
 
 |     字段名     |  类型  |     说明     |
 | :------------: | :----: | :----------: |
+|       id       | String |     UUID     |
 | old_project_id | String |     UUID     |
 | project_brief  | String |   项目简介   |
 |   advantage    | String | 竞争优势分析 |
@@ -323,19 +327,21 @@ token 保存时间待定
 
 #### 表名：old_intellectual（知识产权情况）
 
-|       字段名        |  类型  |          说明          |
-| :-----------------: | :----: | :--------------------: |
-| old_intellectual_id | String |          UUID          |
-|        name         | String |          名称          |
-|        kind         | String |          类别          |
-|     apply_time      | String |        申请时间        |
-|    approval_time    | String |        批准时间        |
-|  intellectual_file  |  File  | 知识产权证书等扫描文件 |
+|       字段名        |    类型    |          说明          |
+| :-----------------: | :--------: | :--------------------: |
+|         id          |   String   |          UUID          |
+| old_intellectual_id |   String   |          UUID          |
+|        name         |   String   |          名称          |
+|        kind         |   String   |          类别          |
+|     apply_time      |   String   |        申请时间        |
+|    approval_time    |   String   |        批准时间        |
+|  intellectual_file  | MediumBolb | 知识产权证书等扫描文件 |
 
 #### 表名：funding（承担财政资金资助项目及获奖情况）
 
 |   字段名   |  类型  |       说明       |
 | :--------: | :----: | :--------------: |
+|     id     | String |       UUID       |
 | funding_id | String |       UUID       |
 |    name    | String |   项目奖项名称   |
 |   level    | String |       级别       |
@@ -429,11 +435,11 @@ token 保存时间待定
 
 **简要描述：**
 
-注册 迁入和独立注册企业 账号，其中填写部分信息
+注册**迁入和独立注册企业**账号，其中填写部分信息
 
 **请求URL：**
 
-- `/api/oldregister`
+- `/api/old/oldregister`
 
 **请求方式：**
 
@@ -474,7 +480,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/oldEnterprise`
+- `/api/old/oldEnterprise`
 
 **请求方式：**
 
@@ -629,9 +635,21 @@ token 保存时间待定
 }
 ~~~
 
-
-
 ## 导出信息表填写
+
+**简要描述：**
+
+导出企业信息表格
+
+**请求URL：**
+
+- `/api/old/form`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
 
 ~~~json
 {
@@ -652,8 +670,6 @@ token 保存时间待定
 }
 ~~~
 
-
-
 ## 信息状态及展示
 
 **简要描述：**
@@ -662,7 +678,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/oldEnterprise`
+- `/api/old/oldEnterprise`
 
 **请求方式：**
 
@@ -672,8 +688,8 @@ token 保存时间待定
 
 ~~~json
 {
-	    "data":[{
-	        "registerAddress":"<String>",									//注册地址
+	"data":[{
+        "registerAddress":"<String>",									//注册地址
 	    "license":"<File>",															//新的营业执照上传
 	    "registerCapital":"<String>",										//注册资本（万元）
 	    "realAddress":"<String>",											//实际经营地址
@@ -689,7 +705,6 @@ token 保存时间待定
 	    "mainBusiness":"<String>",										//主营业务
 	    "way":"<String>",														//入园方式
 	    "business":"<String>",												//入园业务
-	    
 	    "oldDemand":[{
 	        "leaseArea":"<String>",											//租赁面积（平方米）
 	        "position":"<String>",											//位置需求
@@ -800,7 +815,9 @@ token 保存时间待定
 	    "suggestion":"<String>",								//科技园意见
 	    "note":"<String>",    								//备注
 	    "state":"<String>"									//授权状态
-	    }],
+	    }
+        ......   
+      ],
 	  "code":0,
 	  "msg":"success"
 }   
@@ -810,37 +827,55 @@ token 保存时间待定
 
 ## 众创空间申请
 
-**简要描述：**
+**简要描述：**众创空间场地申请
 
 **请求URL：**
 
+- `/api/old/space`
+
 **请求方式：**
 
+- POST（带token）
+
 **参数：**
+
+
 
 **返回值：**
 
 ## 众创空间退出
 
-**简要描述：**
+**简要描述：**撤销所申请的众创空间场地
 
 **请求URL：**
 
+- `/api/old/space`
+
 **请求方式：**
 
+- DELETE（带token）
+
 **参数：**
+
+
 
 **返回值：**
 
 ## 租赁缴费
 
-**简要描述：**
+**简要描述：**众创空间场地缴费
 
 **请求URL：**
 
+- `/api/old/fee`
+
 **请求方式：**
 
+- POST（带token）
+
 **参数：**
+
+
 
 **返回值：**
 

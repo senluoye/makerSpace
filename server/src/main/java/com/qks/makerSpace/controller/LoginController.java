@@ -24,37 +24,37 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "leader", method = RequestMethod.POST)
-    private Map<String, Object> Leader(@RequestBody Map<String, Object> map) {
-        return loginService.leader(map);
+    private Map<String, Object> leaderLogin(@RequestBody Map<String, Object> map) {
+        return loginService.leaderLogin(map);
     }
 
     /**
-     * 领导登陆
+     * 管理员登陆
      * @param map
      * @return
      */
     @RequestMapping(value = "admin", method = RequestMethod.POST)
-    private Map<String, Object> Admin(@RequestBody Map<String, Object> map) {
-        return loginService.admin(map);
+    private Map<String, Object> adminLogin(@RequestBody Map<String, Object> map) {
+        return loginService.adminLogin(map);
     }
 
     /**
-     * 领导登陆
+     * 迁入或独立注册企业登陆
      * @param map
      * @return
      */
     @RequestMapping(value = "old", method = RequestMethod.POST)
-    private Map<String, Object> Old(@RequestBody Map<String, Object> map) {
-        return loginService.old(map);
+    private Map<String, Object> oldLogin(@RequestBody Map<String, Object> map) {
+        return loginService.oldLogin(map);
     }
 
     /**
-     * 领导登陆
+     * 新成立或非独立注册企业登陆
      * @param map
      * @return
      */
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    private Map<String, Object> New(@RequestBody Map<String, Object> map) {
-        return loginService.new(map);
+    private Map<String, Object> newLogin(@RequestBody Map<String, Object> map) {
+        return loginService.newLogin(map);
     }
 }
