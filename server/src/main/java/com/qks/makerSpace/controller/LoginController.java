@@ -19,23 +19,13 @@ public class LoginController {
     }
 
     /**
-     * 领导登陆
+     * 领导和管理员登陆
      * @param map
      * @return
      */
-    @RequestMapping(value = "leader", method = RequestMethod.POST)
-    private Map<String, Object> leaderLogin(@RequestBody Map<String, Object> map) {
-        return loginService.leaderLogin(map);
-    }
-
-    /**
-     * 管理员登陆
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "admin", method = RequestMethod.POST)
-    private Map<String, Object> adminLogin(@RequestBody Map<String, Object> map) {
-        return loginService.adminLogin(map);
+    @RequestMapping(value = "header", method = RequestMethod.POST)
+    private Map<String, Object> AdminOrLeaderLogin(@RequestBody Map<String, Object> map) {
+        return loginService.AdminOrLeaderLogin(map);
     }
 
     /**

@@ -7,6 +7,7 @@ import com.qks.makerSpace.service.LoginService;
 import com.qks.makerSpace.service.UserService;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
+import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
@@ -26,27 +27,45 @@ public class LoginServiceImpl implements LoginService, Serializable {
         this.jwtUtils = jwtUtils;
     }
 
+    @Override
+    public Map<String, Object> getAllUser() {
+        List<User> userList= loginDao.getAllUser("admin");
+
+        if (userList != null)
+            return MyResponseUtil.getResultMap(userList, 0, "success");
+
+        return MyResponseUtil.getResultMap(null, -1, "返回用户数据失败");
+    }
 
     @Override
-    public Map<String, Object> leaderLogin(Map<String, Object> map) {
+    public Map<String, Object> AdminOrLeaderLogin(Map<String, Object> map) {
+
         Map<String, Object> result = new HashMap<>();
-        User user = new User();
 
         String name = map.get("name").toString();
         String password = map.get("password").toString();
 
-        user.setName(name);
-        user.setPassword(password);
+        Map<String, Object> data = new HashMap<>();
 
-        loginDao.leaderLogin();
+        //领导唯一账号 leader
+        //
+        if (loginDao.AdminOrLeaderLogin(name,password) != null) {
 
-        return result;
+            Map<String, Object> userMap = new HashMap<>();
+            String token = jwtUtils.createToken(userMap);
+            data.put("token",token);
+            if (name == "leader") {
+                data.put("role","leader");
+            } else {
+                data.put("role","admin");
+            }
+            return MyResponseUtil.getResultMap(data,0,"success");
+        } else {
+            return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
+        }
+
     }
 
-    @Override
-    public Map<String, Object> adminLogin(Map<String, Object> map) {
-        return null;
-    }
 
     @Override
     public Map<String, Object> oldLogin(Map<String, Object> map) {
@@ -57,5 +76,6 @@ public class LoginServiceImpl implements LoginService, Serializable {
     public Map<String, Object> newLogin(Map<String, Object> map) {
         return null;
     }
+
 }
 

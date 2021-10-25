@@ -16,7 +16,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
-public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializable {
+public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializable {
 
     private final OldEnterpriseDao oldEnterpriseDao;
     private final JWTUtils jwtUtils;
