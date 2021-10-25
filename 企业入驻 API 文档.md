@@ -262,7 +262,7 @@ token 保存时间待定
 |  old_mainperson_id  |   String   |          主要人员介绍  -->到 oldMainPerson表的外键           |
 |   old_project_id    |   String   |       入园项目简要介绍和分析  -->到 oldProject表的外键       |
 | old_intellectual_id |   String   |         知识产权情况  -->到 oldIntellectual表的外键          |
-|     funding_id      |   String   |    承担财政资金资助项目及获奖情况  -->到 funding表的外键     |
+|   old_funding_id    |   String   |    承担财政资金资助项目及获奖情况  -->到 funding表的外键     |
 |     cooperation     |   String   |                     以往与桂电的合作情况                     |
 |     suggestion      |   String   |                          科技园意见                          |
 |        note         |   String   |                             备注                             |
@@ -337,7 +337,7 @@ token 保存时间待定
 |    approval_time    |   String   |        批准时间        |
 |  intellectual_file  | MediumBolb | 知识产权证书等扫描文件 |
 
-#### 表名：funding（承担财政资金资助项目及获奖情况）
+#### 表名：old_funding（承担财政资金资助项目及获奖情况）
 
 |   字段名   |  类型  |       说明       |
 | :--------: | :----: | :--------------: |
@@ -507,27 +507,7 @@ token 保存时间待定
     "way":"<String>",									//入园方式
     "business":"<String>",									//入园业务
     
-    "oldDemand":[{
-        "leaseArea":"<String>",									//租赁面积（平方米）
-        "position":"<String>",									//位置需求
-        "lease":"<String>",									//租期（年）
-        "floor":"<String>",									//楼层需求
-        "electric":"<String>",									//电力需求
-        "water":"<String>",									//给排水需求
-        "web":"<String>",									//网络需求
-        "others":"<String>",									//其他需求
-    },{
-        "leaseArea":"<String>",
-        "position":"<String>",
-        "lease":"<String>",
-        "floor":"<String>",
-        "electric":"<String>",
-        "water":"<String>",
-        "web":"<String>",
-        "others":"<String>",
-    }
-    	 ......
-    ],
+    "oldDemand":[],											//注意，这部分信息应当在申请场地之后再进行更新，所以直接传一个空数组即可
     
     "oldShareholder":[{
         "name":"<String>",									//股东姓名或名称

@@ -10,13 +10,14 @@ public static class OldParserUtils {
 
     public static Old parser(Map<String, Object> map) {
         Old old = new Old();
-        List<OldDemand> oldDemands = new ArrayList<>();
-        List<OldShareholder> oldShareholders = new ArrayList<>();
-        List<OldMainPerson> oldMainPeople = new ArrayList<>();
-        List<OldProject> oldProjects = new ArrayList<>();
-        List<OldIntellectual> oldIntellectuals = new ArrayList<>();
-        List<OldFunding> oldFundings = new ArrayList<>();
-        
+        List<Map<String, Object>> oldDemands = new ArrayList<>();
+        List<Map<String, Object>> oldShareholders = new ArrayList<>();
+        List<Map<String, Object>> oldMainPeople = new ArrayList<>();
+        List<Map<String, Object>> oldProjects = new ArrayList<>();
+        List<Map<String, Object>> oldIntellectuals = new ArrayList<>();
+        List<Map<String, Object>> oldFundings = new ArrayList<>();
+
+
 
 
         old.setOldId(map.get("id").toString());
