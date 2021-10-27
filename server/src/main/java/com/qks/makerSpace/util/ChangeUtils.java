@@ -8,7 +8,12 @@ import java.util.Map;
 
 public class ChangeUtils {
 
-    //Object转Map
+    /**
+     * Object转Map
+     * @param obj
+     * @return
+     * @throws IllegalAccessException
+     */
     public static Map<String, Object> getObjectToMap(Object obj) throws IllegalAccessException {
         Map<String, Object> map = new HashMap<>();
         Class<?> cla = obj.getClass();
@@ -26,6 +31,13 @@ public class ChangeUtils {
         return map;
     }
 
+    /**
+     * Object转List
+     * @param obj
+     * @param clazz
+     * @param <T>
+     * @return
+     */
     public static <T> List<T> castList(Object obj, Class<T> clazz)
     {
         List<T> result = new ArrayList<>();

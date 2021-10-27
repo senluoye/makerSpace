@@ -2,6 +2,7 @@ package com.qks.makerSpace.controller;
 
 import com.qks.makerSpace.service.OldEnterpriseService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
 
@@ -71,8 +72,10 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
-    private Map<String, Object> updateOldEnterprise(@RequestHeader String token, @RequestBody Map<String, Object> map) throws IllegalAccessException {
-        return oldEnterpriseService.updateOldEnterprise(token, map);
+    private Map<String, Object> updateOldEnterprise(@RequestHeader String token,
+                                                    @RequestPart("map") Map<String, Object> map,
+                                                    @RequestPart("file") MultipartFile[] file) throws IllegalAccessException {
+        return oldEnterpriseService.updateOldEnterprise(token, map, file);
     }
 
     /**

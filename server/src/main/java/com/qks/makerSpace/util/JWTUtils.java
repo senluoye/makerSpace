@@ -1,5 +1,7 @@
 package com.qks.makerSpace.util;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.stereotype.Component;
@@ -10,7 +12,6 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-@Component
 public class JWTUtils {
 
     // 生成密钥
@@ -38,10 +39,13 @@ public class JWTUtils {
      * @return
      */
     public static Boolean verify(String token) {
-        Map<String, Object> map = parser(token);
-//        System.out.println(map);
-        return Objects.equals(map.get("name").toString(), "admin")
-                && Objects.equals(map.get("password").toString(), "123456");
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        } catch (JwtException e) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -49,8 +53,7 @@ public class JWTUtils {
      * @param token
      * @return
      */
-    public static Map<String, Object> parser(String token){
-        // 3. 解析token
+    public static Claims parser(String token){
         return Jwts.parser()                // 创建解析对象
                 .setSigningKey(secretKey)   // 设置安全密钥（生成签名所需的密钥和算法）
                 .parseClaimsJws(token)      // 解析token

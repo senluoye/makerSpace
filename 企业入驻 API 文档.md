@@ -500,7 +500,7 @@ token 保存时间待定
     "employees":"<String>",									//员工人数
     "originNumber":"<String>",									//初始入园人数
     "setDate":"<String>",									//成立日期
-    "natrue":"<String>",									//企业性质
+    "nature":"<String>",									//企业性质
     "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
     "involved":"<String>",									//企业性质
     "mainBusiness":"<String>",									//主营业务

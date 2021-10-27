@@ -35,10 +35,10 @@ public class Old {
     private String business;
     private String oldDemand_id;
     private String oldShareholderId;
-    private String oldMaipersonId;
+    private String oldMainpersonId;
     private String oldProjectId;
     private String oldIntellectualId;
-    private String fundingId;
+    private String oldFundingId;
     private String cooperation;
     private String suggestion;
     private String note;

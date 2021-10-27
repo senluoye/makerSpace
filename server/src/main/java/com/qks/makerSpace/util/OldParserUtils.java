@@ -2,10 +2,8 @@ package com.qks.makerSpace.util;
 
 import com.qks.makerSpace.entity.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.sql.Timestamp;
+import java.util.*;
 
 public class OldParserUtils {
 
@@ -13,18 +11,27 @@ public class OldParserUtils {
      * 获取某个对象
      * @param map
      * @return
-     * @throws IllegalAccessException
      */
-    public static Old parser(Map<String, Object> map) throws IllegalAccessException {
+    public static Old parser(Map<String, Object> map) {
         Old old = new Old();
-        List<OldMainPerson> oldMainPeople = OldMainPersonParser(map.get("oldMainPerson"));
-        List<OldProject> oldProjects = OldProjectsParser(map.get("oldProject"));
-        List<OldIntellectual> oldIntellectuals = OldIntellectualParser(map.get("oldIntellectual"));
-        List<OldFunding> oldFundings = OldFundingParser(map.get("oldFunding"));
-        List<OldShareholder> oldShareholders = OldShareholderParser(map.get("oldShareholder"));
-
 
         old.setOldId(map.get("id").toString());
+        old.setRegisterAddress(map.get("registerAddress").toString());
+        old.setRegisterCapital(map.get("registerCapital").toString());
+        old.setRealAddress(map.get("realAddress").toString());
+        old.setRealCapital(map.get("realCapital").toString());
+        old.setLastIncome(map.get("lastIncome").toString());
+        old.setLastTax(map.get("lastTax").toString());
+        old.setEmployees(map.get("employees").toString());
+        old.setOriginNumber(map.get("originNumber").toString());
+        old.setSetDate((Timestamp) map.get("setDate"));
+        old.setNature(map.get("nature").toString());
+        old.setInvolved(map.get("involved").toString());
+        old.setMainBusiness(map.get("mainBusiness").toString());
+        old.setWay(map.get("way").toString());
+        old.setCooperation(map.get("cooperation").toString());
+        old.setSuggestion(map.get("suggestion").toString());
+        old.setNote(map.get("note").toString());
 
         return old;
     }
@@ -115,7 +122,6 @@ public class OldParserUtils {
             oldIntellectual.setKind(map.get("kind").toString());
             oldIntellectual.setApplyTime(map.get("applyTime").toString());
             oldIntellectual.setApplyTime(map.get("approvalTime").toString());
-            oldIntellectual.setIntellectualFile(map.get("intellectualFile").toString());
 
             resultList.add(oldIntellectual);
         }

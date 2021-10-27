@@ -1,6 +1,8 @@
 package com.qks.makerSpace.dao;
 
+import com.qks.makerSpace.entity.Old;
 import com.qks.makerSpace.entity.User;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
@@ -10,18 +12,12 @@ import java.util.List;
 @Repository
 public interface OldEnterpriseDao {
 
-    @Select("select * " +
-            "from user " +
-            "where name != #{admin}")
-    List<User> getAllUser(String admin);
+    @Select("insert into old(old_id, credit_code, organization_code, name, password, " +
+            "represent, represent_phone, register_address, represent_email, agent, agent_phone, agent_email )" +
+            "VALUES (#{oldId}, #{creditCode}, #{organizationCode}, #{name}, #{password}, #{represent}, " +
+            "#{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")
+    Integer oldRegister(Old old);
 
-    @Select("select * " +
-            "from user " +
-            "where name = #{name} and password = #{password}")
-    User getUserByNameAndPassword(String name, String password);
 
-    @Insert("insert into user(name, password, user_id) " +
-            "VALUES (#{name}, #{password}, #{id})")
-    Integer addUser(String id, String name, String password);
 
 }
