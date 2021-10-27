@@ -11,6 +11,6 @@ public class OldMainPerson {
     private String job;
     private String school;
     private String title;
-    private String brackground;
+    private String background;
     private String professional;
 }

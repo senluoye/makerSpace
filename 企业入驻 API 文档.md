@@ -466,7 +466,9 @@ token 保存时间待定
 
 ~~~json
 {
-    "data":null,
+    "data":{
+        "id":"<String>"
+    },
     "code":0,
     "msg":"success"
 }

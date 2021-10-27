@@ -9,4 +9,20 @@
         VALUES (#{oldId}, #{creditCode}, #{organizationCode}, #{name}, #{password}, #{represent}, #{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})
     </insert>
 
+    <update id="updateOldEnterprise">
+        update old
+        set register_address = #{registerAddress}, license = #{license}, register_capital = #{registerCapital},
+            real_address = #{realAddress}, real_capital = #{realCapital}, last_income = #{lastIncome},
+            last_tax = #{lastTax}, employees = #{employees}, origin_number = #{originNumber},
+            set_date = #{setDate}, nature = #{nature}, certificate = #{certificate}, involved = #{involved},
+            main_business = #{mainBusiness}, way = #{way}, business = #{business}, old_shareholder_id = #{oldShareholderId},
+            old_mainperson_id = #{oldMainpersonId}, old_project_id = #{oldProjectId}, old_intellectual_id = #{oldIntellectualId},
+            old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, suggestion = #{suggestion}, note = #{note}
+        where old_id = #{oldId}
+    </update>
+
+    <insert id="">
+        insert into old_shareholder(id, name, stake, nature, old_shareholder_id) VALUES (#{id}, #{name}, #{stake}, #{nature}, #{oldShareholderId})
+    </insert>
+
 </mapper>

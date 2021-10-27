@@ -69,12 +69,12 @@ public class OldParserUtils {
             oldMainPerson.setId(UUID.randomUUID().toString());
             oldMainPerson.setOldMainpersonId(OldMainPersonId);
             oldMainPerson.setName(map.get("name").toString());
-            oldMainPerson.setName(map.get("born").toString());
-            oldMainPerson.setName(map.get("job").toString());
-            oldMainPerson.setName(map.get("school").toString());
-            oldMainPerson.setName(map.get("title").toString());
-            oldMainPerson.setName(map.get("background").toString());
-            oldMainPerson.setName(map.get("professional").toString());
+            oldMainPerson.setBorn(map.get("born").toString());
+            oldMainPerson.setJob(map.get("job").toString());
+            oldMainPerson.setSchool(map.get("school").toString());
+            oldMainPerson.setTitle(map.get("title").toString());
+            oldMainPerson.setBackground(map.get("background").toString());
+            oldMainPerson.setProfessional(map.get("professional").toString());
 
             resultList.add(oldMainPerson);
         }

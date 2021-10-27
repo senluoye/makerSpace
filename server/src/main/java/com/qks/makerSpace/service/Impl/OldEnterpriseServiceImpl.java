@@ -9,11 +9,9 @@ import com.qks.makerSpace.util.OldParserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializable {
@@ -47,9 +45,9 @@ public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializa
         old.setCreditCode(map.get("agentEmail").toString());
 
         if (oldEnterpriseDao.oldRegister(old) > 0)
-            return MyResponseUtil.getResultMap(oldId, 1, "注册成功");
+            return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id", oldId), 0, "success");
 
-        return MyResponseUtil.getResultMap(null, 0, "注册失败");
+        return MyResponseUtil.getResultMap(null, -1, "fail");
     }
 
     /**
@@ -59,19 +57,19 @@ public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializa
     @Override
     public Map<String, Object> getOldEnterprise() {
         List<Map<String, Object>> data = new ArrayList<>();
-        List<Old> oldList = oldEnterpriseDao.getAllOldEnterprise();
+        List<Old> oldList = oldEnterpriseDao.getAllOld();
 
         if (oldList != null) {
             for (Old old : oldList) {
                 List<OldDemand> oldDemands = oldEnterpriseDao.getOldDemandById(old.getOldDemand_id());
-
+                
 
             }
             oldList.add();
         }
 
 
-        return MyResponseUtil.getResultMap(data, 1, "获取成功");
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     /**
@@ -102,29 +100,43 @@ public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializa
     @Override
     public Map<String, Object> updateOldEnterprise(String token,
                                                    Map<String, Object> map,
-                                                   MultipartFile[] files) throws IllegalAccessException {
+                                                   MultipartFile[] files) throws IllegalAccessException, IOException {
         String id = JWTUtils.parser(token).get("id").toString();
         map.put("id", id);
 
         Old old = OldParserUtils.parser(map);
-        List<OldMainPerson> oldMainPeople =  OldParserUtils.OldMainPersonParser(map.get("oldMainPerson"));
+        List<OldMainPerson> oldMainPeoples =  OldParserUtils.OldMainPersonParser(map.get("oldMainPerson"));
         List<OldProject> oldProjects = OldParserUtils.OldProjectsParser(map.get("oldProject"));
         List<OldIntellectual> oldIntellectuals = OldParserUtils.OldIntellectualParser(map.get("oldIntellectual"));
         List<OldFunding> oldFundings = OldParserUtils.OldFundingParser(map.get("oldFunding"));
         List<OldShareholder> oldShareholders = OldParserUtils.OldShareholderParser(map.get("oldShareholder"));
 
         old.setOldShareholderId(oldShareholders.get(0).getOldShareholderId());
-        old.setOldMainpersonId(oldMainPeople.get(0).getOldMainpersonId());
+        old.setOldMainpersonId(oldMainPeoples.get(0).getOldMainpersonId());
         old.setOldProjectId(oldProjects.get(0).getOldProjectId());
         old.setOldInapplyId(oldIntellectuals.get(0).getOldIntellectualId());
         old.setOldFundingId(oldFundings.get(0).getFundingId());
+        old.setLicense(files[0].getBytes());
+        old.setCertificate(files[1].getBytes());
 
-        if (oldEnterpriseDao.updateOldEnterprise(old) > 0) {
-            
+        for (int i = 1; i < files.length; i++) {
+            oldIntellectuals.get(i).setIntellectualFile(files[i].getBytes());
         }
 
+        if (oldEnterpriseDao.updateOld(old) > 0) {
+            for (OldMainPerson temp : oldMainPeoples)
+                oldEnterpriseDao.insertOldMainPeople(temp);
+            for (OldProject temp : oldProjects)
+                oldEnterpriseDao.insertOldProjects(temp);
+            for (OldIntellectual temp : oldIntellectuals)
+                oldEnterpriseDao.insertOldIntellects(temp);
+            for (OldFunding temp : oldFundings)
+                oldEnterpriseDao.insertOldFundings(temp);
+            for (OldShareholder temp : oldShareholders)
+                oldEnterpriseDao.insertOldShareholder(temp);
+        }
 
-        return null;
+        return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id", id), 1, "success");
     }
 
     /**
