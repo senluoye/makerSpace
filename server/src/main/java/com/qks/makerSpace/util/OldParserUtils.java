@@ -14,7 +14,9 @@ public class OldParserUtils {
      */
     public static Old parser(Map<String, Object> map) {
         Old old = new Old();
-
+//        map.forEach((key, value) -> {
+//
+//        });
         old.setOldId(map.get("id").toString());
         old.setRegisterAddress(map.get("registerAddress").toString());
         old.setRegisterCapital(map.get("registerCapital").toString());

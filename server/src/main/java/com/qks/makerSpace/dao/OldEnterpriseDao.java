@@ -53,4 +53,6 @@ public interface OldEnterpriseDao {
     @Insert("insert into old_shareholder(id, name, stake, nature, old_shareholder_id) " +
             "VALUES (#{id}, #{name}, #{stake}, #{nature}, #{oldShareholderId})")
     void insertOldShareholder(OldShareholder oldShareholder);
+
+    List<OldDemand> getOldDemandById(String id);
 }
