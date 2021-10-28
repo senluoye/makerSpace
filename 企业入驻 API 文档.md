@@ -875,40 +875,41 @@ token 保存时间待定
 
 ### 表名：new（主表）
 
-|          字段名           |     类型     |                    说明                    |
-| :-----------------------: | :----------: | :----------------------------------------: |
-|        credit_code        |    String    |        同一社会信用代码（18位字符）        |
-| organization_codepassword | StringString |          组织机构代码企业注册密码          |
-|           name            |    String    |               新设立企业名称               |
-|          picture          |     File     |            提供名称预核准通知书            |
-|         represent         |    String    |                 企业负责人                 |
-|      represent_card       |     File     |              提供身份证复印件              |
-|      represent_phone      |    String    |             企业负责人联系电话             |
-|      represent_email      |    String    |             企业负责人邮箱地址             |
-|           agent           |    String    |                   经办人                   |
-|        agent_phone        |    String    |               经办人联系电话               |
-|        agent_email        |    String    |               经办人邮箱地址               |
-|     register_capital      |    String    |                 拟注册资本                 |
-|       real_capital        |    String    |                实际募集资本                |
-|       origin_number       |    String    |                初始员工人数                |
-|       register_time       |    String    |                预计注册日期                |
-|          nature           |    String    |               拟注册企业性质               |
-|        certificate        |     File     | 教室需要上传教师资格证/学生需要上传学生证  |
-|         involved          |    String    |                  所属行业                  |
-|       main_business       |    String    |                  主营业务                  |
-|         business          |    String    |                  入园业务                  |
-|        new_demand         |    String    |    园区场地租赁需求  -->到 newDemand 表    |
-|      new_shareholder      |    String    |      股东构成  -->到 newShareholder表      |
-|      new_mainperson       |    String    |    主要人员介绍  -->到 newMainPerson表     |
-|        new_project        |    String    | 入园项目简要介绍和分析  -->到 newProject表 |
-|     new_intellectual      |    String    |   知识产权情况  -->到 newIntellectual表    |
-|        suggestion         |    String    |                 科技园意见                 |
-|           note            |    String    |                    备注                    |
-|        submit_time        |    String    |                  提交时间                  |
-|           room            |    String    |                   房间号                   |
-|                           |              |                                            |
-|        old_inapply        |    String    |   众创空间入驻申请书 -->到 oldInApply 表   |
-|       old_outapply        |    String    |     科技园退租申请书 -->到 oldOutApply     |
+|      字段名       |  类型  |                    说明                    |
+| :---------------: | :----: | :----------------------------------------: |
+|    credit_code    | String |        同一社会信用代码（18位字符）        |
+| organization_code | String |          组织机构代码企业注册密码          |
+|     password      | String |                    密码                    |
+|       name        | String |               新设立企业名称               |
+|      picture      |  File  |            提供名称预核准通知书            |
+|     represent     | String |                 企业负责人                 |
+|  represent_card   |  File  |              提供身份证复印件              |
+|  represent_phone  | String |             企业负责人联系电话             |
+|  represent_email  | String |             企业负责人邮箱地址             |
+|       agent       | String |                   经办人                   |
+|    agent_phone    | String |               经办人联系电话               |
+|    agent_email    | String |               经办人邮箱地址               |
+| register_capital  | String |                 拟注册资本                 |
+|   real_capital    | String |                实际募集资本                |
+|   origin_number   | String |                初始员工人数                |
+|   register_time   | String |                预计注册日期                |
+|      nature       | String |               拟注册企业性质               |
+|    certificate    |  File  | 教室需要上传教师资格证/学生需要上传学生证  |
+|     involved      | String |                  所属行业                  |
+|   main_business   | String |                  主营业务                  |
+|     business      | String |                  入园业务                  |
+|    new_demand     | String |    园区场地租赁需求  -->到 newDemand 表    |
+|  new_shareholder  | String |      股东构成  -->到 newShareholder表      |
+|  new_mainperson   | String |    主要人员介绍  -->到 newMainPerson表     |
+|    new_project    | String | 入园项目简要介绍和分析  -->到 newProject表 |
+| new_intellectual  | String |   知识产权情况  -->到 newIntellectual表    |
+|    suggestion     | String |                 科技园意见                 |
+|       note        | String |                    备注                    |
+|    submit_time    | String |                  提交时间                  |
+|       room        | String |                   房间号                   |
+|                   |        |                                            |
+|    old_inapply    | String |   众创空间入驻申请书 -->到 oldInApply 表   |
+|   old_outapply    | String |     科技园退租申请书 -->到 oldOutApply     |
 
 
 

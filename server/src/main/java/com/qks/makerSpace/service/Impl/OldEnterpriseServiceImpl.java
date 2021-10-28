@@ -16,7 +16,7 @@ import java.io.Serializable;
 import java.util.*;
 
 @Service
-public class OldEnterpriseServiceImpl implements OldEnterpriseService, Serializable {
+public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializable {
 
     private final OldEnterpriseDao oldEnterpriseDao;
 
