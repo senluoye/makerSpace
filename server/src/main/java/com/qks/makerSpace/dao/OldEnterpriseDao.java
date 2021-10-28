@@ -12,7 +12,7 @@ import java.util.List;
 @Repository
 public interface OldEnterpriseDao {
 
-    @Select("insert into old(old_id, credit_code, organization_code, name, password, " +
+    @Insert("insert into old(old_id, credit_code, organization_code, name, password, " +
             "represent, represent_phone, register_address, represent_email, agent, agent_phone, agent_email )" +
             "VALUES (#{oldId}, #{creditCode}, #{organizationCode}, #{name}, #{password}, #{represent}, " +
             "#{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")

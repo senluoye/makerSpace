@@ -6,8 +6,12 @@ import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -15,11 +19,9 @@ import java.util.UUID;
 public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializable {
 
     private final NewEnterpriseDao newEnterpriseDao;
-    private final JWTUtils jwtUtils;
 
-    public NewEnterpriseServiceImpl(NewEnterpriseDao newEnterpriseDao, JWTUtils jwtUtils) {
+    public NewEnterpriseServiceImpl(NewEnterpriseDao newEnterpriseDao) {
         this.newEnterpriseDao = newEnterpriseDao;
-        this.jwtUtils = jwtUtils;
     }
 
     /**
@@ -37,16 +39,25 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @return
      */
     @Override
-    public Map<String, Object> newRegister(Map<String, Object> map) {
+    public Map<String, Object> newRegister(Map<String, Object> map, MultipartFile file) {
+        byte[] pic = new byte[0];
+        try {
+            InputStream is = file.getInputStream();
+            pic = new byte[(int)file.getSize()];
+            is.read(pic);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         News news = new News();
 
-        String id = UUID.randomUUID().toString();
-        news.setNewId(id);
+        String newId = UUID.randomUUID().toString();
+        news.setNewId(newId);
         news.setCreditCode(map.get("creditCode").toString());
         news.setOrganizationCode(map.get("organizationCode").toString());
         news.setPassword(map.get("password").toString());
         news.setName(map.get("name").toString());
-        news.setPicture(map.get("picture"));
+        news.setPicture(pic);
         news.setRepresent(map.get("represent").toString());
         news.setRepresentCard(map.get("representCard").toString());
         news.setRepresentPhone(map.get("representPhone").toString());
@@ -56,14 +67,14 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setAgentEmail(map.get("agentEmail").toString());
 
         if (newEnterpriseDao.newRegister(news) > 0) {
-            return MyResponseUtil.getResultMap(id,1,"注册成功");
+            return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id",newId),1,"注册成功");
         } else {
             return MyResponseUtil.getResultMap(null,0,"注册失败");
         }
     }
 
     @Override
-    public Map<String, Object> applyForNewMakerSpace(Map<String, Object> map) {
+    public Map<String, Object> NewApplyForMakerSpace(Map<String, Object> map) {
         return null;
     }
 

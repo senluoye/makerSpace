@@ -40,8 +40,6 @@ public class LoginServiceImpl implements LoginService, Serializable {
     @Override
     public Map<String, Object> AdminOrLeaderLogin(Map<String, Object> map) {
 
-        Map<String, Object> result = new HashMap<>();
-
         String name = map.get("name").toString();
         String password = map.get("password").toString();
 
@@ -52,6 +50,9 @@ public class LoginServiceImpl implements LoginService, Serializable {
         if (loginDao.AdminOrLeaderLogin(name,password) != null) {
 
             Map<String, Object> userMap = new HashMap<>();
+            userMap.put("name",name);
+            userMap.put("password",password);
+
             String token = jwtUtils.createToken(userMap);
             data.put("token",token);
             if (name == "leader") {
@@ -69,12 +70,46 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
     @Override
     public Map<String, Object> oldLogin(Map<String, Object> map) {
-        return null;
+
+        String username = map.get("username").toString();
+        String password = map.get("password").toString();
+
+        Map<String, Object> data = new HashMap<>();
+
+        if (loginDao.oldLogin(username,password) != null) {
+
+            Map<String, Object> oldMap = new HashMap<>();
+            oldMap.put("username",username);
+            oldMap.put("password",password);
+
+            String token = jwtUtils.createToken(oldMap);
+            data.put("token",token);
+            return MyResponseUtil.getResultMap(data,0,"success");
+        } else {
+            return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
+        }
     }
 
     @Override
     public Map<String, Object> newLogin(Map<String, Object> map) {
-        return null;
+
+        String username = map.get("username").toString();
+        String password = map.get("password").toString();
+
+        Map<String, Object> data = new HashMap<>();
+
+        if (loginDao.newLogin(username,password) != null) {
+
+            Map<String, Object> newMap = new HashMap<>();
+            newMap.put("username",username);
+            newMap.put("password",password);
+
+            String token = jwtUtils.createToken(newMap);
+            data.put("token",token);
+            return MyResponseUtil.getResultMap(data,0,"success");
+        } else {
+            return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
+        }
     }
 
 }
