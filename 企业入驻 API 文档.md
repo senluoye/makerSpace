@@ -683,7 +683,7 @@ token 保存时间待定
 	    "employees":"<String>",												//员工人数
 	    "originNumber":"<String>",										//初始入园人数
 	    "setDate":"<String>",												//成立日期
-	    "natrue":"<String>",													//企业性质
+	    "nature":"<String>",													//企业性质
 	    "certificate":"<File>",													//教师需要上传教师资格证/学生需要上传学生证
 	    "involved":"<String>",												//企业性质
 	    "mainBusiness":"<String>",										//主营业务
@@ -1039,13 +1039,12 @@ token 保存时间待定
     "realCapital":"<String>",									//实际募集资本（万元）
     "originNumber":"<String>",								//初始入园人数
     "registerTime":"<String>",									//预计注册日期
-    "natrue":"<String>",									//企业性质
+    "nature":"<String>",									//企业性质
     "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
     "involved":"<String>",									//企业性质
     "mainBusiness":"<String>",									//主营业务
     "way":"<String>",									//入园方式
     "business":"<String>",									//入园业务
-    
     "newDemand":[{
         "leaseArea":"<String>",									//租赁面积（平方米）
         "position":"<String>",									//位置需求
@@ -1182,7 +1181,7 @@ token 保存时间待定
 		    "realCapital":"<String>",									//实际募集资本（万元）
 		    "originNumber":"<String>",								//初始入园人数
 		    "registerTime":"<String>",									//预计注册日期
-		    "natrue":"<String>",									//企业性质
+		    "nature":"<String>",									//企业性质
 		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
 		    "involved":"<String>",									//企业性质
 		    "mainBusiness":"<String>",									//主营业务
@@ -1420,7 +1419,7 @@ token 保存时间待定
 	    "employees":"<String>",												//员工人数
 	    "originNumber":"<String>",										//初始入园人数
 	    "setDate":"<String>",												//成立日期
-	    "natrue":"<String>",													//企业性质
+	    "nature":"<String>",													//企业性质
 	    "certificate":"<File>",													//教师需要上传教师资格证/学生需要上传学生证
 	    "involved":"<String>",												//企业性质
 	    "mainBusiness":"<String>",										//主营业务
@@ -1663,7 +1662,7 @@ token 保存时间待定
 		    "realCapital":"<String>",									//实际募集资本（万元）
 		    "originNumber":"<String>",								//初始入园人数
 		    "registerTime":"<String>",									//预计注册日期
-		    "natrue":"<String>",									//企业性质
+		    "nature":"<String>",									//企业性质
 		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
 		    "involved":"<String>",									//企业性质
 		    "mainBusiness":"<String>",									//主营业务
@@ -1997,7 +1996,7 @@ token 保存时间待定
 	    "employees":"<String>",												//员工人数
 	    "originNumber":"<String>",										//初始入园人数
 	    "setDate":"<String>",												//成立日期
-	    "natrue":"<String>",													//企业性质
+	    "nature":"<String>",													//企业性质
 	    "certificate":"<File>",													//教师需要上传教师资格证/学生需要上传学生证
 	    "involved":"<String>",												//企业性质
 	    "mainBusiness":"<String>",										//主营业务
@@ -2190,7 +2189,7 @@ token 保存时间待定
 		    "realCapital":"<String>",									//实际募集资本（万元）
 		    "originNumber":"<String>",								//初始入园人数
 		    "registerTime":"<String>",									//预计注册日期
-		    "natrue":"<String>",									//企业性质
+		    "nature":"<String>",									//企业性质
 		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
 		    "involved":"<String>",									//企业性质
 		    "mainBusiness":"<String>",									//主营业务

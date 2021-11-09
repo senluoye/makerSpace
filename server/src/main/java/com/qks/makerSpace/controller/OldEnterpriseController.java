@@ -4,6 +4,7 @@ import com.qks.makerSpace.service.OldEnterpriseService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -74,7 +75,7 @@ public class OldEnterpriseController {
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
     private Map<String, Object> updateOldEnterprise(@RequestHeader String token,
                                                     @RequestPart("map") Map<String, Object> map,
-                                                    @RequestPart("file") MultipartFile[] file) throws IllegalAccessException {
+                                                    @RequestPart("file") MultipartFile[] file) throws IllegalAccessException, IOException {
         return oldEnterpriseService.updateOldEnterprise(token, map, file);
     }
 

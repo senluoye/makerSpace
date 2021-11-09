@@ -55,4 +55,10 @@ public interface OldEnterpriseDao {
     void insertOldShareholder(OldShareholder oldShareholder);
 
     List<OldDemand> getOldDemandById(String id);
+
+    List<OldMainPerson>  getOldMainPeopleById(String id);
+    List<OldProject> getOldProjectById(String id);
+    List<OldFunding> getOldFundingById(String id);
+    List<OldShareholder> getOldShareholderById(String id);
+    List<OldIntellectual> getOldIntellectualById(String id);
 }
