@@ -71,17 +71,21 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         oldList.forEach(x -> {
             List<OldDemand> oldDemands = oldEnterpriseDao.getOldDemandById(x.getOldDemand_id());
-            List<OldMainPerson> oldMainPeople = oldEnterpriseDao.getOldMainPeopleById(x.getOldMainpersonId());
+            List<OldMainPerson> oldMainPeoson = oldEnterpriseDao.getOldMainPeopleById(x.getOldMainpersonId());
             List<OldProject> oldProjects = oldEnterpriseDao.getOldProjectById(x.getOldProjectId());
             List<OldFunding> oldFundings = oldEnterpriseDao.getOldFundingById(x.getOldFundingId());
             List<OldShareholder> oldShareholders = oldEnterpriseDao.getOldShareholderById(x.getOldShareholderId());
             List<OldIntellectual> oldIntellectuals = oldEnterpriseDao.getOldIntellectualById(x.getOldIntellectualId());
 
-
-            oldList.add(oldDemands);
-
+            Map<String, Object> temp = OldParserUtils.OldGetResponse(x);
+            temp.put("oldDemand", oldDemands);
+            temp.put("oldMainPerson", oldMainPeoson);
+            temp.put("oldProject", oldProjects);
+            temp.put("oldFunding", oldFundings);
+            temp.put("oldShareholder", oldShareholders);
+            temp.put("oldIntellectual", oldIntellectuals);
+            data.add(temp);
         });
-
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -133,7 +137,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setLicense(files[0].getBytes());
         old.setCertificate(files[1].getBytes());
 
-        for (int i = 1; i < files.length; i++) {
+        for (int i = 2; i < files.length; i++) {
             oldIntellectuals.get(i).setIntellectualFile(files[i].getBytes());
         }
 

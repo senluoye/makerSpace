@@ -153,4 +153,26 @@ public class OldParserUtils {
 
         return resultList;
     }
+
+    public static Map<String, Object> OldGetResponse(Old old){
+        Map<String, Object> result = new HashMap<>();
+        result.put("registerAddress", old.getRegisterAddress());
+        result.put("license", old.getLicense());
+        result.put("registerCapital", old.getRegisterCapital());
+        result.put("realAddress", old.getRealAddress());
+        result.put("realCapital", old.getRealCapital());
+        result.put("lastIncome", old.getLastIncome());
+        result.put("lastTax", old.getLastTax());
+        result.put("employees", old.getEmployees());
+        result.put("originNumber", old.getOriginNumber());
+        result.put("setDate", old.getSetDate());
+        result.put("nature", old.getNature());
+        result.put("certificate", old.getCertificate());
+        result.put("involved", old.getInvolved());
+        result.put("mainBusiness", old.getMainBusiness());
+        result.put("way", old.getWay());
+        result.put("business", old.getBusiness());
+
+        return result;
+    }
 }
