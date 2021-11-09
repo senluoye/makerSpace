@@ -2301,3 +2301,29 @@ token 保存时间待定
 
 ## 数据表
 
+### 表名：inapply（众创空间入驻申请）
+
+|     字段名     |  类型  |                         说明                         |
+| :------------: | :----: | :--------------------------------------------------: |
+|       id       | String |                                                      |
+| new_inapply_id | String |                         UUID                         |
+|  create_name   | String |                        创意名                        |
+|   apply_time   | String |                 申请日期（由前端给）                 |
+|  team_number   | String |                       团队人数                       |
+| new_person_id  | String |               UUID -> 到person_list 表               |
+|     brief      | String |                    项目/创意概括                     |
+|      help      | String | 您想获得的帮助（如创业辅导、投融资服务、市场推广等） |
+
+
+
+### 表名：person
+
+|    字段名     |  类型  |     说明      |
+| :-----------: | :----: | :-----------: |
+|  person_name  | String |     姓名      |
+|  department   | String | 所在院校/部门 |
+|     major     | String |   专业方向    |
+| person_phone  | String |   电话号码    |
+|   person_qq   | String |     QQ号      |
+| person_wechat | String |    微信号     |
+|     note      | String |     备注      |
