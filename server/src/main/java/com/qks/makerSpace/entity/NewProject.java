@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class NewProject {
     private String id;
+    private String newProjectId;
     private String projectBrief;
     private String advantage;
     private String market;

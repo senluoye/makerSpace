@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class NewMainPerson {
     private String id;
+    private String newMainpersonId;
     private String name;
     private String born;
     private String job;

@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class NewIntellectual {
     private String id;
+    private String newIntellectualId;
     private String name;
     private String kind;
     private String applyTime;

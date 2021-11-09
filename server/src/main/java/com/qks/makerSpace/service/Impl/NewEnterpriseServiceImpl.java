@@ -1,19 +1,21 @@
 package com.qks.makerSpace.service.Impl;
 
 import com.qks.makerSpace.dao.NewEnterpriseDao;
-import com.qks.makerSpace.entity.News;
+import com.qks.makerSpace.entity.*;
 import com.qks.makerSpace.service.NewEnterpriseService;
+import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
+import com.qks.makerSpace.util.NewParserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializable {
@@ -30,7 +32,32 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      */
     @Override
     public Map<String, Object> getNewEnterprise() {
-        return null;
+        List<Map<String, Object>> data = new ArrayList<>();
+        List<News> newsList = newEnterpriseDao.getAllNew();
+
+        newsList.forEach(x ->{
+            try {
+                data.add(ChangeUtils.getObjectToMap(x));
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        });
+
+        newsList.forEach(x->{
+            List<NewDemand> newDemands = newEnterpriseDao.getNewDemandById(x.getNewDemandId());
+            List<NewMainPerson> newMainPeople = newEnterpriseDao.getNewMainPerson(x.getNewMainpersonId());
+            List<NewIntellectual> newIntellectuals = newEnterpriseDao.getNewIntellectual(x.getNewIntellectualId());
+            List<NewProject> newProjects = newEnterpriseDao.getNewProject(x.getNewProjectId());
+            List<NewShareholder> newShareholders = newEnterpriseDao.getNewShareholder(x.getNewShareholderId());
+
+            newsList.add(newDemands);
+            newsList.add(newMainPeople);
+            newsList.add(newIntellectuals);
+            newsList.add(newProjects);
+            newsList.add(newShareholders);
+        });
+
+        return MyResponseUtil.getResultMap(data,0,"success");
     }
 
     /**
@@ -39,15 +66,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @return
      */
     @Override
-    public Map<String, Object> newRegister(Map<String, Object> map, MultipartFile file) {
-        byte[] pic = new byte[0];
-        try {
-            InputStream is = file.getInputStream();
-            pic = new byte[(int)file.getSize()];
-            is.read(pic);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public Map<String, Object> newRegister(Map<String, Object> map, MultipartFile[] file) throws IOException{
 
         News news = new News();
 
@@ -57,7 +76,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setOrganizationCode(map.get("organizationCode").toString());
         news.setPassword(map.get("password").toString());
         news.setName(map.get("name").toString());
-        news.setPicture(pic);
+        news.setPicture(file[0].getBytes());
         news.setRepresent(map.get("represent").toString());
         news.setRepresentCard(map.get("representCard").toString());
         news.setRepresentPhone(map.get("representPhone").toString());
@@ -73,21 +92,72 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         }
     }
 
+    /**
+     * 众创空间场地申请
+     * @param map
+     * @return
+     */
     @Override
-    public Map<String, Object> NewApplyForMakerSpace(Map<String, Object> map) {
-        return null;
+    public Map<String, Object> NewMakerSpace(Map<String, Object> map) {
+        InApply inApply = new InApply();
+
+
     }
 
+    /**
+     * 租赁缴费
+     * @param map
+     * @return
+     */
     @Override
     public Map<String, Object> newEnterprisePay(Map<String, Object> map) {
         return null;
     }
 
+    /**
+     * 入园申请表填写
+     * @param map
+     * @return
+     */
     @Override
-    public Map<String, Object> updateNewEnterprise(Map<String, Object> map) {
-        return null;
+    public Map<String, Object> updateNewEnterprise(String token,
+                                                   Map<String, Object> map,
+                                                   MultipartFile[] files) throws IllegalAccessException, IOException {
+        String id = JWTUtils.parser(token).get("id").toString();
+        map.put("id",id);
+
+        News news = NewParserUtils.newsParser(map);
+        List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.get("newMainPerson"));
+        List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.get("newProject"));
+        List<NewIntellectual> newIntellectuals = NewParserUtils.NewIntellectualParser(map.get("newIntellectual"));
+        List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.get("newShareholder"));
+
+        news.setNewShareholderId(newShareholders.get(0).getNewShareholderId());
+        news.setNewMainpersonId(newMainPeople.get(0).getNewMainpersonId());
+        news.setNewProjectId(newProjects.get(0).getNewProjectId());
+        news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
+        news.setCertificate(files[0].getBytes());
+        news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").toString());
+
+        for (int i = 1; i <files.length; i++) {
+            newIntellectuals.get(i).setIntellectualFile(files[i].getBytes());
+        }
+
+        if (newEnterpriseDao.updateNew(news) > 0) {
+            newMainPeople.forEach(newEnterpriseDao::insertNewMainPerson);
+            newProjects.forEach(newEnterpriseDao::insertNewProject);
+            newIntellectuals.forEach(newEnterpriseDao::insertNewIntellectual);
+            newShareholders.forEach(newEnterpriseDao::insertNewShareholder);
+        }
+
+        return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id",id),1,"success");
     }
 
+    /**
+     * 众创空间退出
+     * @param map
+     * @return
+     */
     @Override
     public Map<String, Object> quitNewMakerSpace(Map<String, Object> map) {
         return null;

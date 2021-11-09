@@ -5,6 +5,7 @@ import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -43,8 +44,8 @@ public class NewEnterpriseController {
      * @return
      */
     @RequestMapping(value = "newRegister", method = RequestMethod.POST)
-    private Map<String, Object> newRegister(@RequestPart MultipartFile file, @RequestPart Map<String, Object> map) {
-        if (file.isEmpty()) {
+    private Map<String, Object> newRegister(@RequestPart MultipartFile[] file, @RequestPart Map<String, Object> map) throws IOException {
+        if (file.length == 0) {
             return MyResponseUtil.getResultMap(null,-1,"文件上传失败");
         } else {
             return newEnterpriseService.newRegister(map,file);
@@ -58,7 +59,7 @@ public class NewEnterpriseController {
      */
     @RequestMapping(value = "newSpace", method = RequestMethod.POST)
     private Map<String, Object> newApplyForMakerSpace(@RequestBody Map<String, Object> map) {
-        return newEnterpriseService.NewApplyForMakerSpace(map);
+        return newEnterpriseService.NewMakerSpace(map);
     }
 
     /**
@@ -79,9 +80,8 @@ public class NewEnterpriseController {
     @RequestMapping(value = "newEnterprise", method = RequestMethod.PUT)
     private Map<String, Object> updateNewEnterprise(@RequestHeader String token,
                                                     @RequestPart("map") Map<String, Object> map,
-                                                    @RequestPart("file") MultipartFile[] file) throws IllegalAccessException {
-//        return newEnterpriseService.updateNewEnterprise(token, map, file);
-        return null;
+                                                    @RequestPart("file") MultipartFile[] file) throws IllegalAccessException,IOException {
+        return newEnterpriseService.updateNewEnterprise(token, map, file);
     }
 
     /**
