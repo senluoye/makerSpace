@@ -16,10 +16,10 @@ public interface NewEnterpriseDao {
     @Insert("insert into " +
             "new(new_id, credit_code,organization_code,password,name,picture,represent,represent_card,represent_phone," +
             "represent_email,agent,agent_phone,agent_email)" +
-            "VALUES (#{credit_code},#{organization_code},#{password}," +
-            "#{name},#{picture},#{represent},#{represent_card}," +
-            "#{represent_phone},#{represent_email},#{agent}," +
-            "#{agent_phone},#{agent_email})")
+            "VALUES (#{newId},#{creditCode},#{organizationCode},#{password}," +
+            "#{name},#{picture},#{represent},#{representCard}," +
+            "#{representPhone},#{representEmail},#{agent}," +
+            "#{agentPhone},#{agentEmail})")
     int newRegister(News news);
 
 //  更新提交更多数据
@@ -42,7 +42,7 @@ public interface NewEnterpriseDao {
     int insertNewMainPerson(NewMainPerson newMainPerson);
 
     @Insert("insert into new_project (id, new_project_id, project_brief, advantage, market, energy, pollution, noise, others)" +
-            "VALUES (#{id}, #{newProjectId}, #{project_brief}, #{advantage}, #{market}, #{energy}, #{pollution}, #{noise}, #{others})")
+            "VALUES (#{id}, #{newProjectId}, #{projectBrief}, #{advantage}, #{market}, #{energy}, #{pollution}, #{noise}, #{others})")
     int insertNewProject(NewProject newProject);
 
     @Insert(" insert into new_intellectual (id, new_intellectual_id, name, kind, apply_time, approval_time, intellectual_file) " +

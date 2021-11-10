@@ -50,11 +50,13 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             List<NewProject> newProjects = newEnterpriseDao.getNewProject(x.getNewProjectId());
             List<NewShareholder> newShareholders = newEnterpriseDao.getNewShareholder(x.getNewShareholderId());
 
-            newsList.add(newDemands);
-            newsList.add(newMainPeople);
-            newsList.add(newIntellectuals);
-            newsList.add(newProjects);
-            newsList.add(newShareholders);
+            Map<String, Object> temp = NewParserUtils.NewGetReponse(x);
+            temp.put("newDemand",newDemands);
+            temp.put("newShareholder",newShareholders);
+            temp.put("newMainPerson",newMainPeople);
+            temp.put("newProject",newProjects);
+            temp.put("newIntellectual",newIntellectuals);
+            data.add(temp);
         });
 
         return MyResponseUtil.getResultMap(data,0,"success");
@@ -98,10 +100,13 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @return
      */
     @Override
-    public Map<String, Object> NewMakerSpace(Map<String, Object> map) {
+    public Map<String, Object> NewMakerSpace(String token, Map<String, Object> map) {
+        String id = JWTUtils.parser(token).get("id").toString();
+        map.put("id",id);
+
         InApply inApply = new InApply();
 
-
+        return null;
     }
 
     /**

@@ -2,10 +2,7 @@ package com.qks.makerSpace.util;
 
 import com.qks.makerSpace.entity.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class NewParserUtils {
 
@@ -113,8 +110,22 @@ public class NewParserUtils {
 
             resultList.add(newIntellectual);
         }
-
         return resultList;
+    }
+
+    public static Map<String, Object> NewGetReponse(News news) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("registerCapital",news.getRegisterCapital());
+        result.put("realCapital",news.getRealCapital());
+        result.put("originNumber",news.getOriginNumber());
+        result.put("registerTime",news.getRegisterTime());
+        result.put("nature",news.getNature());
+        result.put("certificate",news.getCertificate());
+        result.put("involved",news.getInvolved());
+        result.put("mainBusiness",news.getMainBusiness());
+        result.put("business",news.getBusiness());
+
+        return result;
     }
 
 }
