@@ -1,10 +1,7 @@
 package com.qks.makerSpace.controller;
 
 import com.qks.makerSpace.service.LoginService;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -24,7 +21,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "header", method = RequestMethod.POST)
-    private Map<String, Object> AdminOrLeaderLogin(@RequestBody Map<String, Object> map) {
+    private Map<String, Object> AdminOrLeaderLogin(@RequestParam Map<String, Object> map) {
         return loginService.AdminOrLeaderLogin(map);
     }
 
@@ -34,7 +31,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "old", method = RequestMethod.POST)
-    private Map<String, Object> oldLogin(@RequestBody Map<String, Object> map) {
+    private Map<String, Object> oldLogin(@RequestParam Map<String, Object> map) {
         return loginService.oldLogin(map);
     }
 
@@ -44,7 +41,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "new", method = RequestMethod.POST)
-    private Map<String, Object> newLogin(@RequestBody Map<String, Object> map) {
+    private Map<String, Object> newLogin(@RequestParam Map<String, Object> map) {
         return loginService.newLogin(map);
     }
 }

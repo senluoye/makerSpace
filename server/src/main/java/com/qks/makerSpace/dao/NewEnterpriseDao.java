@@ -14,7 +14,7 @@ public interface NewEnterpriseDao {
 
 //  注册
     @Insert("insert into " +
-            "new(new_id, credit_code,organization_code,password,name,picture,represent,represent_card,represent_phone," +
+            "new(new_id,credit_code,organization_code,password,name,picture,represent,represent_card,represent_phone," +
             "represent_email,agent,agent_phone,agent_email)" +
             "VALUES (#{newId},#{creditCode},#{organizationCode},#{password}," +
             "#{name},#{picture},#{represent},#{representCard}," +
