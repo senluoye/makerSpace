@@ -23,7 +23,7 @@ public interface NewEnterpriseDao {
     int newRegister(News news);
 
 //  更新提交更多数据
-    @Update("update news" +
+    @Update("update news " +
             "set register_capital = #{registerCapital}, real_capital = #{realCapital}, origin_number = #{originNumber}," +
             "register_time = #{registerTime}, nature = #{nature}, certificate = #{certificate}, involved = #{involved}," +
             "main_business = #{mainBusiness}, business = #{business}, new_shareholder_id = #{newShareholderId}," +
@@ -32,7 +32,7 @@ public interface NewEnterpriseDao {
             "where new_id = #{newId}")
     Integer updateNew(News news);
 
-    @Insert("insert into" +
+    @Insert("insert into " +
             "new_shareholder(id, new_shareholder_id, name, stake, nature)" +
             "VALUES (#{id}, #{newShareholderId}, #{name}, #{stake}, #{nature})")
     int insertNewShareholder(NewShareholder newShareholder);
@@ -50,22 +50,22 @@ public interface NewEnterpriseDao {
     int insertNewIntellectual(NewIntellectual newIntellectual);
 
 //  查询数据
-    @Select(" select *from news")
+    @Select(" select * from news")
     List<News> getAllNew();
 
-    @Select(" select *from new_demand where new_demand_id = #{newDemandId}")
+    @Select(" select * from new_demand where new_demand_id = #{newDemandId}")
     List<NewDemand> getNewDemandById(String newDemandId);
 
-    @Select("select *form new_mainperson where new_mainperson_id = #{newMainPersonId}")
+    @Select("select * form new_mainperson where new_mainperson_id = #{newMainPersonId}")
     List<NewMainPerson> getNewMainPerson(String newMainpersonId);
 
-    @Select("select *form new_intellectual where new_intellectual_id = #{newIntellectualId}")
+    @Select("select * form new_intellectual where new_intellectual_id = #{newIntellectualId}")
     List<NewIntellectual> getNewIntellectual(String newIntellectualId);
 
-    @Select("select *form new_project where new_project_id = #{newProjectId}")
+    @Select("select * form new_project where new_project_id = #{newProjectId}")
     List<NewProject> getNewProject(String newProjectId);
 
-    @Select("select *form new_shareholder where new_shareholder_id = #{newShareholderId}")
+    @Select("select * form new_shareholder where new_shareholder_id = #{newShareholderId}")
     List<NewShareholder> getNewShareholder(String newShareholderId);
 
 //  众创空间申请Dao

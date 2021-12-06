@@ -1,3 +1,21 @@
 {
-
+  "InApplyId": "<String>",
+  "describe": "<String>",
+  "createName": "<String>",
+  "applyTime": "<String>",
+  "teamNumber": "<String>",
+  "Person": [
+    {
+      "personName": "<String>",
+      "department": "<String>",
+      "major": "<String>",
+      "personPhone": "<String>",
+      "personQq": "<String>",
+      "personWechat": "<String>",
+      "note": "<String>"
+    },
+    ......
+  ],
+  "brief": "<String>",
+  "help": "<String>"
 }

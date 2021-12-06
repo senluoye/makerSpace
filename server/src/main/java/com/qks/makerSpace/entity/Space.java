@@ -4,16 +4,16 @@ import lombok.Data;
 
 
 /**
- * 众创空间申请，此为企业公用模板
+ * 众创空间申请，此为所有企业公用模板
  */
 @Data
-public class InApply {
+public class Space {
     private String InApplyId;
     private String describe; // 值表示新/旧企业
     private String createName;
     private String applyTime;
     private String teamNumber;
-    private String newPersonId;
+    private String spacePersonId;
     private String brief;
     private String help;
 

@@ -1264,7 +1264,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/old/space`
+- `/api/space`
 
 **请求方式：**
 
@@ -1273,12 +1273,41 @@ token 保存时间待定
 **参数：**
 
 ```json
+{          
+  "describe": "<String>",             // 注明这是新/旧企业
+  "createName": "<String>",			  // 项目/创意名称
+  "applyTime": "<String>",            // 申请日期
+  "teamNumber": "<String>",			  // 成员数量，这部分需要前端做好统计
+  "Person": [                         // 主要成员信息
+    {
+      "personName": "<String>",
+      "department": "<String>",
+      "major": "<String>",
+      "personPhone": "<String>",
+      "personQq": "<String>",
+      "personWechat": "<String>",
+      "note": "<String>"
+    },
+    ......
+  ],
+  "brief": "<String>",                // 项目/创意概况
+  "help": "<String>"                  // 想获得的帮助
+}
+```
 
+**返回值：**
+
+```json
+{
+    "data":{
+        "InApplyId":"<String>",					//众创空间企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
 ```
 
 
-
-**返回值：**
 
 ## 众创空间退出
 
@@ -1286,7 +1315,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/old/space`
+- `/api/space`
 
 **请求方式：**
 
@@ -1294,9 +1323,25 @@ token 保存时间待定
 
 **参数：**
 
-
+```json
+{
+    "InApplyId":"<String>"                  //众创空间企业唯一ID
+}
+```
 
 **返回值：**
+
+```json
+{
+    "data":{
+        "InApplyId":"<String>",					//众创空间企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+
 
 
 
@@ -1323,7 +1368,13 @@ token 保存时间待定
 **返回值：**
 
 ~~~json
-一个文件
+{
+    "data":{
+        "file":"<byte[]>",					// 返回一个byte数组
+    },
+    "code":0,
+    "msg":"success"
+}
 ~~~
 
 
@@ -1345,7 +1396,13 @@ token 保存时间待定
 **返回值：**
 
 ~~~json
-一个文件
+{
+    "data":{
+        "file":"<byte[]>",					// 返回一个byte数组
+    },
+    "code":0,
+    "msg":"success"
+}
 ~~~
 
 

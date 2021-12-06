@@ -22,16 +22,6 @@ public class NewEnterpriseController {
     }
 
     /**
-     * 导出信息表
-     * @param
-     * @return
-     */
-    @RequestMapping(value = "newForm", method = RequestMethod.GET)
-    private void getNewForm() {
-//        return newEnterpriseService.getOldForm();
-    }
-
-    /**
      * 信息状态展示
      * @param
      * @return
@@ -56,17 +46,6 @@ public class NewEnterpriseController {
     }
 
     /**
-     * 众创空间场地申请
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "newSpace", method = RequestMethod.POST)
-    private Map<String, Object> newApplyForMakerSpace(@RequestHeader String token,
-                                                      @RequestBody Map<String, Object> map) {
-        return newEnterpriseService.NewMakerSpace(token,map);
-    }
-
-    /**
      * 租赁缴费
      * @param map
      * @return
@@ -86,15 +65,5 @@ public class NewEnterpriseController {
                                                     @RequestParam("map") Map<String, Object> map,
                                                     @RequestPart("file") MultipartFile[] file) throws IllegalAccessException,IOException {
         return newEnterpriseService.updateNewEnterprise(token, map, file);
-    }
-
-    /**
-     * 众创空间退出
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "space", method = RequestMethod.DELETE)
-    private Map<String, Object> quitMakerSpace(@RequestBody Map<String, Object> map) {
-        return newEnterpriseService.quitNewMakerSpace(map);
     }
 }

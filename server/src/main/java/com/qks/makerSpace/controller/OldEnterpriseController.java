@@ -17,15 +17,6 @@ public class OldEnterpriseController {
         this.oldEnterpriseService = oldEnterpriseService;
     }
 
-    /**
-     * 导出信息表
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "form", method = RequestMethod.GET)
-    private void getOldForm() {
-//        return oldRegisterService.getOldForm();
-    }
 
     /**
      * 信息状态展示
@@ -45,16 +36,6 @@ public class OldEnterpriseController {
     @RequestMapping(value = "oldRegister", method = RequestMethod.POST)
     private Map<String, Object> oldRegister(@RequestParam Map<String, Object> map) {
         return oldEnterpriseService.oldRegister(map);
-    }
-
-    /**
-     * 众创空间场地申请
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "space", method = RequestMethod.POST)
-    private Map<String, Object> applyForMakerSpace(@RequestBody Map<String, Object> map) {
-        return oldEnterpriseService.applyForMakerSpace(map);
     }
 
     /**
@@ -79,13 +60,4 @@ public class OldEnterpriseController {
         return oldEnterpriseService.updateOldEnterprise(token, map, file);
     }
 
-    /**
-     * 众创空间退出
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "space", method = RequestMethod.DELETE)
-    private Map<String, Object> quitMakerSpace(@RequestBody Map<String, Object> map) {
-        return oldEnterpriseService.quitMakerSpace(map);
-    }
 }
