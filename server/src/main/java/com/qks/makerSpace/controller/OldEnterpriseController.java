@@ -38,7 +38,7 @@ public class OldEnterpriseController {
     }
 
     /**
-     * 注册
+     * 迁入企业注册
      * @param map
      * @return
      */

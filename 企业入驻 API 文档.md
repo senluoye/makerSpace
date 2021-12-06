@@ -226,14 +226,16 @@ token 保存时间待定
 
 ## **数据表：**
 
-### 入园申请填报表
+### 入园申请表
 
-#### 表名：old （主表）
+表名：old （主表）
+
+> 根据入园申请表填写
 
 |       字段名        |    类型    |                             说名                             |
 | :-----------------: | :--------: | :----------------------------------------------------------: |
 |       old_id        |   String   |                          old表主键                           |
-|     credit_code     |   String   |                 同一社会信用代码（18位字符）                 |
+|     credit_code     |   String   |                 统一社会信用代码（18位字符）                 |
 |  organization_code  |   String   |                         组织机构代码                         |
 |      password       |   String   |                         企业注册密码                         |
 |        name         |   String   |                       申请入驻企业名称                       |
@@ -271,10 +273,10 @@ token 保存时间待定
 |        state        |   String   | 授权状态（初始为 null，待审核为 0，审核不通过为 1，审核通过为 2） |
 |     submit_time     |   String   |                           提交时间                           |
 |        room         |   String   |                            房间号                            |
-|   old_inapply_id    |   String   |         众创空间入驻申请书 -->到 oldInApply 表的外键         |
-|   old_outapply_id   |   String   |         科技园退租申请书 -->到 oldOutApply 表的外键          |
+|      inApplyId      |   String   |          众创空间入驻申请书 -->到 InApply 表的外键           |
+|     outApplyId      |   String   |           科技园退租申请书 -->到 OutApply 表的外键           |
 
-#### 表名：old_demand （园区场地租赁需求）
+表名：old_demand （园区场地租赁需求）
 
 |    字段名     |  类型  |        说明        |
 | :-----------: | :----: | :----------------: |
@@ -289,7 +291,7 @@ token 保存时间待定
 |      web      | String |      网络需求      |
 |    others     | String |      其他需求      |
 
-#### 表名：old_shareholder（股东构成）
+表名：old_shareholder（股东构成）
 
 |       字段名       |  类型  |      说明      |
 | :----------------: | :----: | :------------: |
@@ -299,7 +301,7 @@ token 保存时间待定
 |       stake        | String |    股份比例    |
 |       nature       | String |    股东性质    |
 
-#### 表名：old_mainperson（主要人员介绍）
+表名：old_mainperson（主要人员介绍）
 
 |      字段名       |  类型  |   说明   |
 | :---------------: | :----: | :------: |
@@ -313,7 +315,7 @@ token 保存时间待定
 |    background     | String |   学历   |
 |   professional    | String |   专业   |
 
-#### 表名：old_project（入园项目简要介绍和分析）
+表名：old_project（入园项目简要介绍和分析）
 
 |     字段名     |  类型  |     说明     |
 | :------------: | :----: | :----------: |
@@ -327,7 +329,7 @@ token 保存时间待定
 |     noise      | String |   噪音情况   |
 |     others     | String |   其他情况   |
 
-#### 表名：old_intellectual（知识产权情况）
+表名：old_intellectual（知识产权情况）
 
 |       字段名        |    类型    |          说明          |
 | :-----------------: | :--------: | :--------------------: |
@@ -339,7 +341,7 @@ token 保存时间待定
 |    approval_time    |   String   |        批准时间        |
 |  intellectual_file  | MediumBolb | 知识产权证书等扫描文件 |
 
-#### 表名：old_funding（承担财政资金资助项目及获奖情况）
+表名：old_funding（承担财政资金资助项目及获奖情况）
 
 |   字段名   |  类型  |       说明       |
 | :--------: | :----: | :--------------: |
@@ -350,6 +352,8 @@ token 保存时间待定
 |    time    | String |       时间       |
 |   grants   | String | 获得政府资助金额 |
 |   award    | String |  颁奖部门/时间   |
+
+
 
 ### 导出信息表
 
@@ -480,7 +484,7 @@ token 保存时间待定
 
 **简要描述：**
 
-部分字段在注册是已经填写，所以只需要更新表中数据
+这是科技园入园的api，部分字段在注册是已经填写，所以只需要更新表中数据
 
 **请求URL：**
 
@@ -616,41 +620,6 @@ token 保存时间待定
     },
     "code":0,
     "msg":"success"
-}
-~~~
-
-## 导出信息表填写
-
-**简要描述：**
-
-导出企业信息表格
-
-**请求URL：**
-
-- `/api/old/form`
-
-**请求方式：**
-
-- GET（带token）
-
-**返回值：**
-
-~~~json
-{
-    "teamName":"<String>",													//企业名
-    "creditCode":"<String>",												  //同一信用代码
-    "organizationCode":"<String>",										//组织代码
-    "join_time":"<String>",														//入驻科技园时间
-    "registerCapital":"<String>",											//注册基金（千元）
-    "registerKind":"<String>",												//企业登记注册类型
-    "industryKind":"<String>",												//行业类型
-    "field":"<String>",															 //企业所属科技领域
-    "graduatedEnterprise":"<String>",								//是否是毕业企业
-    "graduatedTime":"<String>",										//毕业时间
-    "highEnterprise":"<String>",										//是否为高新技术企业
-    
-    
-    ---- 待续 ----
 }
 ~~~
 
@@ -807,44 +776,6 @@ token 保存时间待定
 }   
 ~~~
 
-
-
-## 众创空间申请
-
-**简要描述：**众创空间场地申请
-
-**请求URL：**
-
-- `/api/old/space`
-
-**请求方式：**
-
-- POST（带token）
-
-**参数：**
-
-
-
-**返回值：**
-
-## 众创空间退出
-
-**简要描述：**撤销所申请的众创空间场地
-
-**请求URL：**
-
-- `/api/old/space`
-
-**请求方式：**
-
-- DELETE（带token）
-
-**参数：**
-
-
-
-**返回值：**
-
 ## 租赁缴费
 
 **简要描述：**众创空间场地缴费
@@ -873,7 +804,9 @@ token 保存时间待定
 
 ## 数据表
 
-### 表名：new（主表）
+### 入园申请表
+
+表名：new（主表）
 
 |      字段名       |  类型  |                    说明                    |
 | :---------------: | :----: | :----------------------------------------: |
@@ -907,13 +840,13 @@ token 保存时间待定
 |       note        | String |                    备注                    |
 |    submit_time    | String |                  提交时间                  |
 |       room        | String |                   房间号                   |
+|     inApplyId     | String |    众创空间入驻申请书 -->到 InApply 表     |
+|    outApplyId     | String |     科技园退租申请书 -->到 OutApply 表     |
 |                   |        |                                            |
-|    old_inapply    | String |   众创空间入驻申请书 -->到 oldInApply 表   |
-|   old_outapply    | String |     科技园退租申请书 -->到 oldOutApply     |
 
 
 
-### 表名：new_demand （园区场地租赁需求）
+表名：new_demand （园区场地租赁需求）
 
 |    字段名     |  类型  |        说明        |
 | :-----------: | :----: | :----------------: |
@@ -927,7 +860,7 @@ token 保存时间待定
 |      web      | String |      网络需求      |
 |    others     | String |      其他需求      |
 
-### 表名：new_shareholder（股东构成）
+表名：new_shareholder（股东构成）
 
 | 字段名 |  类型  |      说明      |
 | :----: | :----: | :------------: |
@@ -936,7 +869,7 @@ token 保存时间待定
 | stake  | String |    股份比例    |
 | nature | String |    股东性质    |
 
-### 表名：new_mainperson（主要人员介绍）
+表名：new_mainperson（主要人员介绍）
 
 |       字段名       |  类型  |   说明   |
 | :----------------: | :----: | :------: |
@@ -949,7 +882,7 @@ token 保存时间待定
 |     background     | String |   学历   |
 |    professional    | String |   专业   |
 
-### 表名：new_project（入园项目简要介绍和分析）
+表名：new_project（入园项目简要介绍和分析）
 
 |     字段名     |  类型  |     说明     |
 | :------------: | :----: | :----------: |
@@ -962,7 +895,7 @@ token 保存时间待定
 |     noise      | String |   噪音情况   |
 |     others     | String |   其他情况   |
 
-### 表名：new_intellectual（知识产权情况）
+表名：new_intellectual（知识产权情况）
 
 |       字段名        |  类型  |          说明          |
 | :-----------------: | :----: | :--------------------: |
@@ -1025,7 +958,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/oldEnterprise`
+- `/api/newEnterprise`
 
 **请求方式：**
 
@@ -1166,7 +1099,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/oldEnterprise`
+- `/api/newEnterprise`
 
 **请求方式：**
 
@@ -1287,32 +1220,6 @@ token 保存时间待定
 }   
 ~~~
 
-
-
-## 众创空间申请
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
-## 众创空间退出
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
 ## 租赁缴费
 
 **简要描述：**
@@ -1331,18 +1238,125 @@ token 保存时间待定
 
 
 
-# 管理员（admin）
+# 众创空间
+
+> 由于众创空间申请和退租不分新旧企业，所以此部分独立
 
 ## 数据表
 
-### 表名：room
+### 众创空间申请表
 
-| 字段名  |  类型  |    说明    |
-| :-----: | :----: | :--------: |
-| room_no | String |   房间号   |
-|  user   | String | 使用的企业 |
+|    字段名    |  类型  |       说明       |
+| :----------: | :----: | :--------------: |
+|      id      | String |        id        |
+| newInApplyId | String |  项目/创意名称   |
+|              | String |     申请日期     |
+|              | String |     团队人数     |
+|              | String | 主要成员信息表id |
+|              |        |                  |
+|              |        |                  |
+|              |        |                  |
+|              |        |                  |
 
-## 企业类操作
+## 众创空间申请
+
+**简要描述：**众创空间场地申请
+
+**请求URL：**
+
+- `/api/old/space`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+```json
+
+```
+
+
+
+**返回值：**
+
+## 众创空间退出
+
+**简要描述：**撤销所申请的众创空间场地
+
+**请求URL：**
+
+- `/api/old/space`
+
+**请求方式：**
+
+- DELETE（带token）
+
+**参数：**
+
+
+
+**返回值：**
+
+
+
+------
+
+# 导出报表
+
+> 报表不分新旧企业，所以此部分独立
+
+## 导出科技园在孵企业统计表
+
+**简要描述：**
+
+导出科技园在孵企业统计表
+
+**请求URL：**
+
+- `/api/form/statistical`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+一个文件
+~~~
+
+
+
+## 导出科技园在孵企业情况表
+
+**简要描述：**
+
+导出科技园在孵企业情况表
+
+**请求URL：**
+
+- `/api/form/situation`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+一个文件
+~~~
+
+
+
+
+
+------
+
+
+
+# 管理员（admin）
 
 ### 获取全部迁入和独立注册企业
 
@@ -2309,7 +2323,7 @@ token 保存时间待定
 |  create_name   | String |                        创意名                        |
 |   apply_time   | String |                 申请日期（由前端给）                 |
 |  team_number   | String |                       团队人数                       |
-| new_person_id  | String |               UUID -> 到person_list 表               |
+| new_person_id  | String |                 UUID -> 到person 表                  |
 |     brief      | String |                    项目/创意概括                     |
 |      help      | String | 您想获得的帮助（如创业辅导、投融资服务、市场推广等） |
 

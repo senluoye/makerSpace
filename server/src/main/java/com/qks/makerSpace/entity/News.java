@@ -35,6 +35,6 @@ public class News {
     private String note;
     private String submitTime;
     private String room;
-    private String newInapplyId;
-    private String newOutapplyId;
+    private String inApplyId;
+    private String outApplyId;
 }

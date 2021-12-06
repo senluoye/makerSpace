@@ -7,7 +7,6 @@ import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.OldParserUtils;
-import com.sun.org.apache.xalan.internal.xsltc.dom.SimpleResultTreeImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,7 +47,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setAgentEmail(map.get("agentEmail").toString());
 
         if (oldEnterpriseDao.oldRegister(old) > 0)
-            return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id", oldId), 0, "success");
+            return MyResponseUtil.getResultMap(
+                    new HashMap<String, Object>().put("id", oldId), 0, "success");
 
         return MyResponseUtil.getResultMap(null, -1, "fail");
     }
