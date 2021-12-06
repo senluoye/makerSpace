@@ -445,7 +445,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/old/oldregister`
+- `/api/oldregister`
 
 **请求方式：**
 
@@ -484,11 +484,11 @@ token 保存时间待定
 
 **简要描述：**
 
-这是科技园入园的api，部分字段在注册是已经填写，所以只需要更新表中数据
+部分字段在注册时已经填写
 
 **请求URL：**
 
-- `/api/old/oldEnterprise`
+- `/api/oldEnterprise`
 
 **请求方式：**
 
@@ -631,7 +631,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/old/oldEnterprise`
+- `/api/oldEnterprise`
 
 **请求方式：**
 
@@ -782,7 +782,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/old/fee`
+- `/api/fee`
 
 **请求方式：**
 

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/old")
+@RequestMapping("/api")
 public class OldEnterpriseController {
 
     private final OldEnterpriseService oldEnterpriseService;
