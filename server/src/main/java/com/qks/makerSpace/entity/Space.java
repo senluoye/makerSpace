@@ -13,7 +13,6 @@ public class Space {
     private String createName;
     private String applyTime;
     private String teamNumber;
-    private String spacePersonId;
     private String brief;
     private String help;
 
