@@ -104,7 +104,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         String id = JWTUtils.parser(token).get("id").toString();
         map.put("id",id);
 
-        InApply inApply = new InApply();
+//        InApply inApply = new InApply();
 
         return null;
     }

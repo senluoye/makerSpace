@@ -18,7 +18,8 @@ public interface SpaceDao {
     Integer addPerson(SpacePerson spacePerson);
 
     @Delete("delete space.*, space_person.* " +
-            "from space, space_person " +
-            "where ")
+            "from space left join space_person " +
+            "on space.in_apply_id = space_person.in_apply_id " +
+            "where space.in_apply_id = #{id}")
     Integer quitSpace(String id);
 }
