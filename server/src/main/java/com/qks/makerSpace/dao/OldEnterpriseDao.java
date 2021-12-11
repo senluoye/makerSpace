@@ -22,42 +22,56 @@ public interface OldEnterpriseDao {
 
     @Update("update old " +
             "set register_address = #{registerAddress}, license = #{license}, register_capital = #{registerCapital}," +
-            "   real_address = #{realAddress}, real_capital = #{realCapital}, last_income = #{lastIncome}," +
-            "   last_tax = #{lastTax}, employees = #{employees}, origin_number = #{originNumber}," +
-            "   set_date = #{setDate}, nature = #{nature}, certificate = #{certificate}, involved = #{involved}," +
-            "   main_business = #{mainBusiness}, way = #{way}, business = #{business}, " +
-            "   old_shareholder_id = #{oldShareholderId}, old_mainperson_id = #{oldMainpersonId}, " +
-            "   old_project_id = #{oldProjectId}, old_intellectual_id = #{oldIntellectualId}," +
-            "   old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, suggestion = #{suggestion}, note = #{note}" +
+            "  real_address = #{realAddress}, real_capital = #{realCapital}, last_income = #{lastIncome}," +
+            "  last_tax = #{lastTax}, employees = #{employees}, origin_number = #{originNumber}," +
+            "  set_date = #{setDate}, nature = #{nature}, certificate = #{certificate}, involved = #{involved}," +
+            "  main_business = #{mainBusiness}, way = #{way}, business = #{business}, " +
+            "  old_shareholder_id = #{oldShareholderId}, old_mainperson_id = #{oldMainpersonId}, " +
+            "  old_project_id = #{oldProjectId}, old_intellectual_id = #{oldIntellectualId}," +
+            "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, suggestion = #{suggestion}, note = #{note} " +
             "where old_id = #{oldId}")
     Integer updateOld(Old old);
 
     @Insert("insert into old_mainperson (id, name, born, job, school, title, background, professional, old_mainperson_id)" +
             "values (#{id}, #{oldMainpersonId}, #{name}, #{born}, #{job}, #{school}, #{title}, #{background}, #{professional})")
-    void insertOldMainPeople(OldMainPerson oldMainPerson);
+    Integer insertOldMainPeople(OldMainPerson oldMainPerson);
 
 
     @Insert("insert into old_project (id, project_brief, advantage, market, energy, pollution, noise, others, old_project_id) " +
             "values (#{id}, #{project_brief}, #{advantage}, #{market}, #{energy}, #{pollution}, #{noise}, #{others}, #{oldProjectId});")
-    void insertOldProjects(OldProject oldProject);
+    Integer insertOldProjects(OldProject oldProject);
 
-    @Insert(" insert into old_intellectual (id, name, kind, apply_time, approval_time, intellectual_file, old_intellectual_id) " +
+    @Insert("insert into old_intellectual (id, name, kind, apply_time, approval_time, intellectual_file, old_intellectual_id) " +
             "values (#{id}, #{name}, #{kind}, #{applyTime}, #{approvalTime}, #{intellectualFile}, #{oldIntellectualId});")
-    void insertOldIntellects(OldIntellectual oldIntellectual);
+    Integer insertOldIntellects(OldIntellectual oldIntellectual);
 
     @Insert("insert into old_funding(id, name, level, time, grants, award, funding_id) " +
             "VALUES (#{id}, #{name}, #{level}, #{time}, #{grants}, #{award}, #{fundingId})")
-    void insertOldFundings(OldFunding oldFunding);
+    Integer insertOldFundings(OldFunding oldFunding);
 
     @Insert("insert into old_shareholder(id, name, stake, nature, old_shareholder_id) " +
             "VALUES (#{id}, #{name}, #{stake}, #{nature}, #{oldShareholderId})")
-    void insertOldShareholder(OldShareholder oldShareholder);
+    Integer insertOldShareholder(OldShareholder oldShareholder);
 
+    @Insert("insert into audit(id, administrator_audit, leadership_audit) " +
+            "values (#{id}, #{administratorAudit}, #{leadershipAudit})")
+    Integer insertAudit(Audit audit);
+
+    @Select("select * from old_demand where old_demand_id = #{id}")
     List<OldDemand> getOldDemandById(String id);
 
+    @Select("select * from old_mainperson where old_mainperson_id = #{id}")
     List<OldMainPerson>  getOldMainPeopleById(String id);
+
+    @Select("select * from old_project where old_project_id = #{id}")
     List<OldProject> getOldProjectById(String id);
+
+    @Select("select * from old_funding where old_funding.= #{id}")
     List<OldFunding> getOldFundingById(String id);
+
+    @Select("select * from old_shareholder where old_shareholder_id = #{id}")
     List<OldShareholder> getOldShareholderById(String id);
+
+    @Select("select * from old_intellectual where old_intellectual_id = #{id}")
     List<OldIntellectual> getOldIntellectualById(String id);
 }

@@ -1,7 +1,9 @@
 package com.qks.makerSpace.service.Impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.*;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
 import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
@@ -10,7 +12,6 @@ import com.qks.makerSpace.util.OldParserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -72,7 +73,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         oldList.forEach(x -> {
             List<OldDemand> oldDemands = oldEnterpriseDao.getOldDemandById(x.getOldDemand_id());
-            List<OldMainPerson> oldMainPeoson = oldEnterpriseDao.getOldMainPeopleById(x.getOldMainpersonId());
+            List<OldMainPerson> oldMainPeosons = oldEnterpriseDao.getOldMainPeopleById(x.getOldMainpersonId());
             List<OldProject> oldProjects = oldEnterpriseDao.getOldProjectById(x.getOldProjectId());
             List<OldFunding> oldFundings = oldEnterpriseDao.getOldFundingById(x.getOldFundingId());
             List<OldShareholder> oldShareholders = oldEnterpriseDao.getOldShareholderById(x.getOldShareholderId());
@@ -80,7 +81,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
             Map<String, Object> temp = OldParserUtils.OldGetResponse(x);
             temp.put("oldDemand", oldDemands);
-            temp.put("oldMainPerson", oldMainPeoson);
+            temp.put("oldMainPerson", oldMainPeosons);
             temp.put("oldProject", oldProjects);
             temp.put("oldFunding", oldFundings);
             temp.put("oldShareholder", oldShareholders);
@@ -89,16 +90,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         });
 
         return MyResponseUtil.getResultMap(data, 0, "success");
-    }
-
-    /**
-     * 众创空间场地申请
-     * @param map
-     * @return
-     */
-    @Override
-    public Map<String, Object> applyForMakerSpace(Map<String, Object> map) {
-        return null;
     }
 
     /**
@@ -118,17 +109,17 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      */
     @Override
     public Map<String, Object> updateOldEnterprise(String token,
-                                                   Map<String, Object> map,
-                                                   MultipartFile[] files) throws IllegalAccessException, IOException {
+                                                   JSONObject map,
+                                                   MultipartFile[] files) throws Exception {
         String id = JWTUtils.parser(token).get("id").toString();
         map.put("id", id);
 
         Old old = OldParserUtils.parser(map);
-        List<OldMainPerson> oldMainPeoples =  OldParserUtils.OldMainPersonParser(map.get("oldMainPerson"));
-        List<OldProject> oldProjects = OldParserUtils.OldProjectsParser(map.get("oldProject"));
-        List<OldIntellectual> oldIntellectuals = OldParserUtils.OldIntellectualParser(map.get("oldIntellectual"));
-        List<OldFunding> oldFundings = OldParserUtils.OldFundingParser(map.get("oldFunding"));
-        List<OldShareholder> oldShareholders = OldParserUtils.OldShareholderParser(map.get("oldShareholder"));
+        List<OldShareholder> oldShareholders = OldParserUtils.OldShareholderParser(map.getJSONArray("oldShareholder"));
+        List<OldMainPerson> oldMainPeoples =  OldParserUtils.OldMainPersonParser(map.getJSONArray("oldMainPerson"));
+        List<OldProject> oldProjects = OldParserUtils.OldProjectsParser(map.getJSONArray("oldProject"));
+        List<OldIntellectual> oldIntellectuals = OldParserUtils.OldIntellectualParser(map.getJSONArray("oldIntellectual"));
+        List<OldFunding> oldFundings = OldParserUtils.OldFundingParser(map.getJSONArray("oldFunding"));
 
         old.setOldShareholderId(oldShareholders.get(0).getOldShareholderId());
         old.setOldMainpersonId(oldMainPeoples.get(0).getOldMainpersonId());
@@ -139,28 +130,49 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setCertificate(files[1].getBytes());
 
         for (int i = 2; i < files.length; i++) {
-            oldIntellectuals.get(i).setIntellectualFile(files[i].getBytes());
+            oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
         }
 
         if (oldEnterpriseDao.updateOld(old) > 0) {
-            oldMainPeoples.forEach(oldEnterpriseDao::insertOldMainPeople);
-            oldProjects.forEach(oldEnterpriseDao::insertOldProjects);
-            oldIntellectuals.forEach(oldEnterpriseDao::insertOldIntellects);
-            oldFundings.forEach(oldEnterpriseDao::insertOldFundings);
-            oldShareholders.forEach(oldEnterpriseDao::insertOldShareholder);
+            for (OldMainPerson oldMainPeople : oldMainPeoples) {
+                if (oldEnterpriseDao.insertOldMainPeople(oldMainPeople) <= 0) {
+                    throw new ServiceException("信息插入失败:oldMainPeople");
+                }
+            }
+            for (OldProject oldProject : oldProjects) {
+                if (oldEnterpriseDao.insertOldProjects(oldProject) <= 0) {
+                    throw new ServiceException("信息插入失败:oldProject");
+                }
+            }
+            for (OldIntellectual oldIntellectual : oldIntellectuals) {
+                if (oldEnterpriseDao.insertOldIntellects(oldIntellectual) <= 0) {
+                    throw new ServiceException("信息插入失败:oldIntellectual");
+                }
+            }
+            for (OldFunding oldFunding : oldFundings) {
+                if (oldEnterpriseDao.insertOldFundings(oldFunding) <= 0) {
+                    throw new ServiceException("信息插入失败:oldFunding");
+                }
+            }
+            for (OldShareholder oldShareholder : oldShareholders) {
+                if (oldEnterpriseDao.insertOldShareholder(oldShareholder) <= 0) {
+                    throw new ServiceException("信息插入失败:oldShareholder");
+                }
+            }
+
+            Audit audit = new Audit();
+            audit.setAuditId(id);
+            audit.setAdministratorAudit(false);
+            audit.setLeadershipAudit(false);
+
+            if (oldEnterpriseDao.insertAudit(audit) <= 0)
+                throw new ServiceException("信息插入失败:audit");
+        } else {
+            throw new ServiceException("信息插入失败:old");
         }
 
-        return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id", id), 1, "success");
+        return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id", id), 0, "success");
     }
 
-    /**
-     * 众创空间退出
-     * @param map
-     * @return
-     */
-    @Override
-    public Map<String, Object> quitMakerSpace(Map<String, Object> map) {
-        return null;
-    }
 }
 

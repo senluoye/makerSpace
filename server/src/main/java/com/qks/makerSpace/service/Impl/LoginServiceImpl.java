@@ -11,20 +11,15 @@ import org.apache.logging.log4j.message.ReusableMessage;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class LoginServiceImpl implements LoginService, Serializable {
 
     private final LoginDao loginDao;
-    private final JWTUtils jwtUtils;
 
-    public LoginServiceImpl(LoginDao loginDao, JWTUtils jwtUtils) {
+    public LoginServiceImpl(LoginDao loginDao) {
         this.loginDao = loginDao;
-        this.jwtUtils = jwtUtils;
     }
 
     @Override
@@ -37,6 +32,11 @@ public class LoginServiceImpl implements LoginService, Serializable {
         return MyResponseUtil.getResultMap(null, -1, "返回用户数据失败");
     }
 
+    /**
+     * 领导或管理员登陆
+     * @param map
+     * @return
+     */
     @Override
     public Map<String, Object> AdminOrLeaderLogin(Map<String, Object> map) {
 
@@ -45,17 +45,15 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
         Map<String, Object> data = new HashMap<>();
 
-        //领导唯一账号 leader
-        //
         if (loginDao.AdminOrLeaderLogin(name,password) != null) {
 
             Map<String, Object> userMap = new HashMap<>();
             userMap.put("name",name);
             userMap.put("password",password);
 
-            String token = jwtUtils.createToken(userMap);
+            String token = JWTUtils.createToken(userMap);
             data.put("token",token);
-            if (name == "leader") {
+            if (Objects.equals(name, "leader")) {
                 data.put("role","leader");
             } else {
                 data.put("role","admin");
@@ -67,7 +65,11 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
     }
 
-
+    /**
+     * 旧企业登陆
+     * @param map
+     * @return
+     */
     @Override
     public Map<String, Object> oldLogin(Map<String, Object> map) {
 
@@ -82,7 +84,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
             oldMap.put("username",username);
             oldMap.put("password",password);
 
-            String token = jwtUtils.createToken(oldMap);
+            String token = JWTUtils.createToken(oldMap);
             data.put("token",token);
             return MyResponseUtil.getResultMap(data,0,"success");
         } else {
@@ -90,6 +92,11 @@ public class LoginServiceImpl implements LoginService, Serializable {
         }
     }
 
+    /**
+     * 新企业登陆
+     * @param map
+     * @return
+     */
     @Override
     public Map<String, Object> newLogin(Map<String, Object> map) {
 
@@ -104,7 +111,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
             newMap.put("username",username);
             newMap.put("password",password);
 
-            String token = jwtUtils.createToken(newMap);
+            String token = JWTUtils.createToken(newMap);
             data.put("token",token);
             return MyResponseUtil.getResultMap(data,0,"success");
         } else {

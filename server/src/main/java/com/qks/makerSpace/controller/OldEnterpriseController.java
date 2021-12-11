@@ -1,5 +1,7 @@
 package com.qks.makerSpace.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,8 +57,9 @@ public class OldEnterpriseController {
      */
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
     private Map<String, Object> updateOldEnterprise(@RequestHeader String token,
-                                                    @RequestPart("map") Map<String, Object> map,
-                                                    @RequestPart("file") MultipartFile[] file) throws IllegalAccessException, IOException {
+                                                    @RequestPart("map") JSONObject map,
+                                                    @RequestParam("file") MultipartFile[] file) throws Exception {
+
         return oldEnterpriseService.updateOldEnterprise(token, map, file);
     }
 

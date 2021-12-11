@@ -95,21 +95,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     }
 
     /**
-     * 众创空间场地申请
-     * @param map
-     * @return
-     */
-    @Override
-    public Map<String, Object> NewMakerSpace(String token, Map<String, Object> map) {
-        String id = JWTUtils.parser(token).get("id").toString();
-        map.put("id",id);
-
-//        InApply inApply = new InApply();
-
-        return null;
-    }
-
-    /**
      * 租赁缴费
      * @param map
      * @return
@@ -158,13 +143,4 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id",id),1,"success");
     }
 
-    /**
-     * 众创空间退出
-     * @param map
-     * @return
-     */
-    @Override
-    public Map<String, Object> quitNewMakerSpace(Map<String, Object> map) {
-        return null;
-    }
 }

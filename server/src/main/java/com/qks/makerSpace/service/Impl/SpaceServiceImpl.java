@@ -23,23 +23,30 @@ public class SpaceServiceImpl implements SpaceService {
         this.spaceDao = spaceDao;
     }
 
+    /**
+     * 加入众创空间
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public Map<String, Object> joinMakerSpace(JSONObject map) throws ServiceException {
-
-        Space space = new Space();
         String inApplyId = UUID.randomUUID().toString();
+        JSONArray persons = map.getJSONArray("Person");
 
-        space.setInApplyId(inApplyId);
-        space.setDescribe(map.getString("describe"));
-        space.setCreateName(map.getString("createName"));
-        space.setApplyTime(map.getString("applyTime"));
-        space.setTeamNumber(map.getString("teamNumber"));
-        space.setBrief(map.getString("brief"));
-        space.setHelp(map.getString("help"));
+        Space space = new Space(
+                inApplyId,
+                map.getString("describe"),
+                map.getString("createName"),
+                map.getString("applyTime"),
+                map.getString("teamNumber"),
+                map.getString("brief"),
+                map.getString("help")
+        );
+
         if (spaceDao.addProject(space) < 1)
             throw new ServiceException("信息插入失败");
 
-        JSONArray persons = map.getJSONArray("Person");
         for (int i = 0; i < persons.size(); i++) {
             SpacePerson spacePerson = new SpacePerson(
                     inApplyId,
@@ -49,7 +56,8 @@ public class SpaceServiceImpl implements SpaceService {
                     persons.getJSONObject(i).getString("personPhone"),
                     persons.getJSONObject(i).getString("personQq"),
                     persons.getJSONObject(i).getString("personWechat"),
-                    persons.getJSONObject(i).getString("note"));
+                    persons.getJSONObject(i).getString("note")
+            );
 
             if (spaceDao.addPerson(spacePerson) < 1)
                 throw new ServiceException("信息插入失败");
@@ -58,6 +66,12 @@ public class SpaceServiceImpl implements SpaceService {
         return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }
 
+    /**
+     * 退出众创空间
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public Map<String, Object> quitMakerSpace(JSONObject map) throws ServiceException {
 

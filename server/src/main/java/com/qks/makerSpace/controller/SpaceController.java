@@ -1,6 +1,7 @@
 package com.qks.makerSpace.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.SpaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,7 +27,7 @@ public class SpaceController {
      * @return
      */
     @RequestMapping(value = "space", method = RequestMethod.POST)
-    private Map<String, Object> joinMakerSpace(@RequestBody JSONObject map) {
+    private Map<String, Object> joinMakerSpace(@RequestBody JSONObject map) throws ServiceException {
         return spaceService.joinMakerSpace(map);
     }
 
@@ -37,7 +38,7 @@ public class SpaceController {
      * @return
      */
     @RequestMapping(value = "space", method = RequestMethod.DELETE)
-    private Map<String, Object> quitMakerSpace(@RequestBody JSONObject map) {
+    private Map<String, Object> quitMakerSpace(@RequestBody JSONObject map) throws ServiceException {
         return spaceService.quitMakerSpace(map);
     }
 }

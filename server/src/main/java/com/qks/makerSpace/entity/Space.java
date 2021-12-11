@@ -1,5 +1,6 @@
 package com.qks.makerSpace.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 
@@ -7,6 +8,7 @@ import lombok.Data;
  * 众创空间申请，此为所有企业公用模板
  */
 @Data
+@AllArgsConstructor
 public class Space {
     private String InApplyId;
     private String describe; // 值表示新/旧企业
