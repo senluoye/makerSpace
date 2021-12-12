@@ -23,6 +23,12 @@ public class RegisterServiceImpl implements RegisterService {
         this.registerDao = registerDao;
     }
 
+    /**
+     * 用户注册
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public Map<String, Object> addNewUser(JSONObject map) throws ServiceException {
         User user = new User();
