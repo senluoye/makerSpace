@@ -94,6 +94,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         }
     }
 
+
+
     /**
      * 租赁缴费
      * @param map

@@ -402,7 +402,7 @@ token 保存时间待定
 |       college        | String |                 大专学历（人）                 |
 |    tec_secondary     | String |                 中专学历（人）                 |
 |    tec_activists     | String |               科技活动人员（人）               |
-|      rad_umber       | String |         研究与试验发展(R&D)人员（人）          |
+|      rad_number      | String |         研究与试验发展(R&D)人员（人）          |
 |      returnees       | String |               留学回国人员（人）               |
 |       talents        | String |               千人计划人数（人）               |
 |       trainee        | String |      接纳大学生、研究生实习人员（人/天）       |

@@ -1,5 +1,6 @@
 package com.qks.makerSpace.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +43,7 @@ public class NewEnterpriseController {
         if (file.length == 0) {
             return MyResponseUtil.getResultMap(null,-1,"文件上传失败");
         } else {
-            return newEnterpriseService.newRegister(map,file);
+            return newEnterpriseService.newRegister((JSONObject) map,file);
         }
     }
 
