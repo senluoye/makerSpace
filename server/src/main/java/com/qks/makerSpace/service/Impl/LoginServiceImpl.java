@@ -40,7 +40,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
     @Override
     public Map<String, Object> AdminOrLeaderLogin(Map<String, Object> map) {
 
-        String name = map.get("name").toString();
+        String name = map.get("username").toString();
         String password = map.get("password").toString();
 
         Map<String, Object> data = new HashMap<>();
@@ -53,11 +53,11 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
             String token = JWTUtils.createToken(userMap);
             data.put("token",token);
-            if (Objects.equals(name, "leader")) {
-                data.put("role","leader");
-            } else {
-                data.put("role","admin");
-            }
+//            if (Objects.equals(name, "leader")) {
+//                data.put("role","leader");
+//            } else {
+//                data.put("role","admin");
+//            }
             return MyResponseUtil.getResultMap(data,0,"success");
         } else {
             return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
@@ -73,7 +73,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
     @Override
     public Map<String, Object> oldLogin(Map<String, Object> map) {
 
-        String username = map.get("loginCode").toString();
+        String username = map.get("username").toString();
         String password = map.get("password").toString();
 
         Map<String, Object> data = new HashMap<>();
@@ -100,7 +100,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
     @Override
     public Map<String, Object> newLogin(Map<String, Object> map) {
 
-        String username = map.get("loginCode").toString();
+        String username = map.get("username").toString();
         String password = map.get("password").toString();
 
         Map<String, Object> data = new HashMap<>();

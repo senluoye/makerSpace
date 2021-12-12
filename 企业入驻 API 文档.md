@@ -134,7 +134,7 @@ token 保存时间待定
 
 ~~~json
 {
-    "loginCode":"<String>",                                                //统一社会信用代码（18位字符）或 组织机构代码
+    "username":"<String>",                                                //统一社会信用代码（18位字符）或 组织机构代码
     "password":"<String>"
 }
 ~~~
@@ -183,7 +183,7 @@ token 保存时间待定
 
 ~~~json
 {
-    "loginCode":"<String>",                                                //统一社会信用代码（18位字符）或 组织机构代码
+    "username":"<String>",                                                //统一社会信用代码（18位字符）或 组织机构代码
     "password":"<String>"
 }
 ~~~

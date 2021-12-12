@@ -46,7 +46,8 @@ public interface NewEnterpriseDao {
     int insertNewProject(NewProject newProject);
 
     @Insert(" insert into new_intellectual (id, new_intellectual_id, name, kind, apply_time, approval_time, intellectual_file) " +
-            "values (#{id}, #{newIntellectualId}, #{name}, #{kind}, #{applyTime}, #{approvalTime}, #{intellectualFile})")
+            "values (#{id}, #{newIntellectualId}, #{name}, #{kind}, #{applyTime}, #{approvalTime}, #{inte" +
+            "llectualFile})")
     int insertNewIntellectual(NewIntellectual newIntellectual);
 
 //  查询数据
