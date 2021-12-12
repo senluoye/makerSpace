@@ -2,7 +2,7 @@ package com.qks.makerSpace.util;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qks.makerSpace.entity.*;
+import com.qks.makerSpace.entity.database.*;
 
 import java.sql.Timestamp;
 import java.util.*;

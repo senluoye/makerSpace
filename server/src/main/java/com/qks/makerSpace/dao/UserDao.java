@@ -1,10 +1,8 @@
 package com.qks.makerSpace.dao;
 
-import com.qks.makerSpace.entity.User;
+import com.qks.makerSpace.entity.database.User;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

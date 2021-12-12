@@ -1,4 +1,4 @@
-package com.qks.makerSpace.entity;
+package com.qks.makerSpace.entity.database;
 
 import lombok.Data;
 

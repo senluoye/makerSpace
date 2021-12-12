@@ -1,6 +1,6 @@
 package com.qks.makerSpace.dao;
 
-import com.qks.makerSpace.entity.*;
+import com.qks.makerSpace.entity.database.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -51,22 +51,22 @@ public interface NewEnterpriseDao {
     int insertNewIntellectual(NewIntellectual newIntellectual);
 
 //  查询数据
-    @Select(" select * from news")
+    @Select(" select * from new")
     List<News> getAllNew();
 
     @Select(" select * from new_demand where new_demand_id = #{newDemandId}")
     List<NewDemand> getNewDemandById(String newDemandId);
 
-    @Select("select * form new_mainperson where new_mainperson_id = #{newMainPersonId}")
+    @Select("select * from new_mainperson where new_mainperson_id = #{newMainPersonId}")
     List<NewMainPerson> getNewMainPerson(String newMainpersonId);
 
-    @Select("select * form new_intellectual where new_intellectual_id = #{newIntellectualId}")
+    @Select("select * from new_intellectual where new_intellectual_id = #{newIntellectualId}")
     List<NewIntellectual> getNewIntellectual(String newIntellectualId);
 
-    @Select("select * form new_project where new_project_id = #{newProjectId}")
+    @Select("select * from new_project where new_project_id = #{newProjectId}")
     List<NewProject> getNewProject(String newProjectId);
 
-    @Select("select * form new_shareholder where new_shareholder_id = #{newShareholderId}")
+    @Select("select * from new_shareholder where new_shareholder_id = #{newShareholderId}")
     List<NewShareholder> getNewShareholder(String newShareholderId);
 
     @Update("update user_company set credit_code = #{id} where user_id = #{userId}")

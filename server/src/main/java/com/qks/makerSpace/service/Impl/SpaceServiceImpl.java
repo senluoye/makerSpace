@@ -2,11 +2,10 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.SpaceDao;
-import com.qks.makerSpace.entity.Space;
+import com.qks.makerSpace.entity.database.Space;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.SpaceService;
 import com.qks.makerSpace.util.MyResponseUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;

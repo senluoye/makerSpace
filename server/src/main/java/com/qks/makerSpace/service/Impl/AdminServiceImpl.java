@@ -2,15 +2,19 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
+import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.All;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
+import com.qks.makerSpace.util.ChangeUtils;
+import com.qks.makerSpace.util.MyResponseUtil;
+import com.qks.makerSpace.util.NewParserUtils;
 import com.qks.makerSpace.util.WordChangeUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class AdminServiceImpl implements AdminService {
@@ -22,19 +26,62 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map<String, Object> getAllOldDetails() {
+    public Map<String, Object> getAllDetails() {
+
+        List<All> dataOne = adminDao.getAllOldDetails();
+        List<All> dataTwo = adminDao.getAllNewDetails();
+
+        List<All> data = new ArrayList<>(dataOne);
+        data.addAll(dataTwo);
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    @Override
+    public Map<String, Object> gettechnologyById(String id) {
+        Map<String, Object> data;
+        Map<String, Object> temp = adminDao.getOld(id);
+
+        if (temp != null){
+            data = temp;
+
+            data.put("Demand", adminDao.getOldDemandById(id));
+            data.put("Shareholder", adminDao.getOldShareholderById(id));
+            data.put("MainPerson", adminDao.getOldMainPeopleById(id));
+            data.put("Project", adminDao.getOldProjectById(id));
+            data.put("Intellectual", adminDao.getOldIntellectualById(id));
+            data.put("Funding", adminDao.getOldFundingById(id));
+        } else {
+            data = adminDao.getNew(id);
+
+            data.put("Demand", adminDao.getNewDemandById(id));
+            data.put("Shareholder", adminDao.getNewShareholder(id));
+            data.put("MainPerson", adminDao.getNewMainPerson(id));
+            data.put("Project", adminDao.getNewProject(id));
+            data.put("Intellectual", adminDao.getNewIntellectual(id));
+        }
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    @Override
+    public Map<String, Object> getSpaceById(String id) {
         return null;
     }
 
     @Override
-    public Map<String, Object> getOldById(String id) {
-        return null;
+    public Map<String, Object> deletetechnologyById(String id) {
+
+
+
+        return MyResponseUtil.getResultMap(id, 0, "success");
     }
 
     @Override
-    public Map<String, Object> deleteOldById(JSONObject map) {
+    public Map<String, Object> deleteSpaceById(String id) {
         return null;
     }
+
 
     /**
      * 获取导出表的信息
@@ -44,6 +91,14 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getDownLoadForm () {
         return null;
+    }
+
+    @Override
+    public Map<String, Object> agreeById(JSONObject map) {
+
+        adminDao.updateAuditById(map.getString("creditCode"));
+
+        return MyResponseUtil.getResultMap(map.getString("creditCode"), 0, "success");
     }
 
     /**
