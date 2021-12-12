@@ -14,6 +14,9 @@ public interface RegisterDao {
             "values (#{userId}, #{name}, #{password}, #{email}, #{userDescribe})")
     Integer addNewUser(User user);
 
+    @Select("select * from user where name = #{name}")
+    List<User> getUserByName(String name);
+
     @Insert("insert into user_company(user_id) values (#{id})")
     Integer updateUserCompany(String id);
 }

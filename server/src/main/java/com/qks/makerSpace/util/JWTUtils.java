@@ -28,10 +28,9 @@ public class JWTUtils {
         return Jwts.builder()                                                        // 创建 JWT 对象
                 .setClaims(user)                                                     // 放入用户参数
                 .setExpiration(new Date(System.currentTimeMillis() + 24*60*60*1000)) // 过期时间：一天
-                .setIssuedAt(new Date(System.currentTimeMillis()))// 当前时间
+                .setIssuedAt(new Date(System.currentTimeMillis()))                   // 当前时间
                 .signWith(secretKey)                                                 // 设置安全密钥（生成签名所需的密钥和算法）
                 .compact();
-
     }
 
     /**

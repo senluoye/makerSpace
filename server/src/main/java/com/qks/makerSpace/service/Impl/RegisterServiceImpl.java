@@ -11,6 +11,7 @@ import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -23,10 +24,15 @@ public class RegisterServiceImpl implements RegisterService {
         this.registerDao = registerDao;
     }
 
+    /**
+     * 用户注册
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public Map<String, Object> addNewUser(JSONObject map) throws ServiceException {
         User user = new User();
-
         String userId = UUID.randomUUID().toString();
 
         user.setUserId(userId);
@@ -34,10 +40,15 @@ public class RegisterServiceImpl implements RegisterService {
         user.setName(map.getString("name"));
         user.setEmail(map.getString("email"));
 
+        List<User> users = registerDao.getUserByName(map.getString("name"));
+
+        if (users != null)
+            throw new ServiceException("用户已存在");
+
         if (registerDao.addNewUser(user) < 1 && registerDao.updateUserCompany(userId) < 1)
             throw new ServiceException("注册失败");
 
-        return MyResponseUtil.getResultMap(new HashMap<>().put("userId", userId), 0, "success");
+        return MyResponseUtil.getResultMap(userId, 0, "success");
 
     }
 }
