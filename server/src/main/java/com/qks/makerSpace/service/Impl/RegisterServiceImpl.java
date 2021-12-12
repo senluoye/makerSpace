@@ -31,6 +31,8 @@ public class RegisterServiceImpl implements RegisterService {
      */
     @Override
     public Map<String, Object> addNewUser(JSONObject map) throws ServiceException {
+
+
         User user = new User();
 
         String userId = UUID.randomUUID().toString();
@@ -40,10 +42,13 @@ public class RegisterServiceImpl implements RegisterService {
         user.setName(map.getString("name"));
         user.setEmail(map.getString("email"));
 
+        if (registerDao.getUserByName(map.getString("name")) != null)
+            throw new ServiceException("用户已存在");
+
         if (registerDao.addNewUser(user) < 1 && registerDao.updateUserCompany(userId) < 1)
             throw new ServiceException("注册失败");
 
-        return MyResponseUtil.getResultMap(new HashMap<>().put("userId", userId), 0, "success");
+        return MyResponseUtil.getResultMap(userId, 0, "success");
 
     }
 }
