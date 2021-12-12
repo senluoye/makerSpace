@@ -25,7 +25,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "header", method = RequestMethod.POST)
-    private Map<String, Object> AdminOrLeaderLogin(@RequestParam Map<String, Object> map) {
+    private Map<String, Object> AdminOrLeaderLogin(@RequestBody Map<String, Object> map) {
         return loginService.AdminOrLeaderLogin(map);
     }
 

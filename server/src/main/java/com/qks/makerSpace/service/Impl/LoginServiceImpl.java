@@ -24,8 +24,6 @@ public class LoginServiceImpl implements LoginService, Serializable {
         this.loginDao = loginDao;
     }
 
-
-
     /**
      * 领导或管理员登陆
      * @param map
@@ -66,7 +64,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
         String username = map.get("name").toString();
         String password = map.get("password").toString();
-        String userId = loginDao.commonLogin(username,password);
+        String userId = loginDao.commonLogin(username, password);
 
 
         Map<String, Object> data = new HashMap<>();
@@ -80,6 +78,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
             String token = JWTUtils.createToken(user);
             data.put("token",token);
+
         } else throw new ServiceException("用户不存在或密码错误");
 
         return MyResponseUtil.getResultMap(data,0,"success");
