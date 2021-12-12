@@ -15,8 +15,12 @@ public interface LoginDao {
     List<User> getAllUser(String admin);
 
     @Select("select * from user " +
-            "where name = #{name} and password = #{password}")
-    User AdminOrLeaderLogin(String name, String password);
+            "where name = #{name} and password = #{password} and user_describe = #{role}")
+    User LeaderLogin(String name, String password,int role);
+
+    @Select("select * from user " +
+            "where name = #{name} and password = #{password} and user_describe = #{role}")
+    User AdminLogin(String name, String password, int role);
 
     @Select("select user_id from user " +
             "where name = #{username} " +

@@ -27,19 +27,19 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
 
     /**
-     * 领导或管理员登陆
+     * 领导登陆
      * @param map
      * @return
      */
     @Override
-    public Map<String, Object> AdminOrLeaderLogin(Map<String, Object> map) {
+    public Map<String, Object> LeaderLogin(Map<String, Object> map) {
 
         String name = map.get("name").toString();
         String password = map.get("password").toString();
 
         Map<String, Object> data = new HashMap<>();
 
-        if (loginDao.AdminOrLeaderLogin(name,password) != null) {
+        if (loginDao.LeaderLogin(name,password,0) != null) {
 
             Map<String, Object> userMap = new HashMap<>();
             userMap.put("name",name);
@@ -52,7 +52,34 @@ public class LoginServiceImpl implements LoginService, Serializable {
         } else {
             return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
         }
+    }
 
+    /**
+     * 管理员登陆
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> AdminLogin(Map<String, Object> map) {
+
+        String name = map.get("name").toString();
+        String password = map.get("password").toString();
+
+        Map<String, Object> data = new HashMap<>();
+
+        if (loginDao.AdminLogin(name,password,1) != null) {
+
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("name",name);
+            userMap.put("password",password);
+
+            String token = JWTUtils.createToken(userMap);
+            data.put("token",token);
+
+            return MyResponseUtil.getResultMap(data,0,"success");
+        } else {
+            return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
+        }
     }
 
     /**

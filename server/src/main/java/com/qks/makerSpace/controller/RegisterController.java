@@ -22,7 +22,6 @@ public class RegisterController {
 
     /**
      * 普通成员注册
-     * @param map
      * @return
      */
     @RequestMapping(value = "", method = RequestMethod.POST)
