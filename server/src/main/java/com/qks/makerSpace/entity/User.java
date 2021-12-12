@@ -1,16 +1,11 @@
 package com.qks.makerSpace.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.Setter;
+import lombok.*;
 
 @Data
 public class User {
-    @NonNull
+    private String userId;
     private String name;
-
-    @NonNull
     private String password;
-
+    private String email;
 }

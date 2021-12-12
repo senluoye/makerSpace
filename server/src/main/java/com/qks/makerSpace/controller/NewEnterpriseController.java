@@ -65,7 +65,7 @@ public class NewEnterpriseController {
     @RequestMapping(value = "newEnterprise", method = RequestMethod.PUT)
     private Map<String, Object> updateNewEnterprise(@RequestHeader String token,
                                                     @RequestPart("map") Map<String, Object> map,
-                                                    @RequestParam("file") MultipartFile[] file) throws IllegalAccessException,IOException {
+                                                    @RequestParam("file") MultipartFile[] file) throws Exception {
         return newEnterpriseService.updateNewEnterprise(token, map, file);
     }
 }

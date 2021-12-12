@@ -1,8 +1,10 @@
 package com.qks.makerSpace.service.Impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.LoginDao;
 import com.qks.makerSpace.dao.UserDao;
 import com.qks.makerSpace.entity.User;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.LoginService;
 import com.qks.makerSpace.service.UserService;
 import com.qks.makerSpace.util.JWTUtils;
@@ -22,15 +24,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
         this.loginDao = loginDao;
     }
 
-    @Override
-    public Map<String, Object> getAllUser() {
-        List<User> userList= loginDao.getAllUser("admin");
 
-        if (userList != null)
-            return MyResponseUtil.getResultMap(userList, 0, "success");
-
-        return MyResponseUtil.getResultMap(null, -1, "返回用户数据失败");
-    }
 
     /**
      * 领导或管理员登陆
@@ -40,7 +34,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
     @Override
     public Map<String, Object> AdminOrLeaderLogin(Map<String, Object> map) {
 
-        String name = map.get("username").toString();
+        String name = map.get("name").toString();
         String password = map.get("password").toString();
 
         Map<String, Object> data = new HashMap<>();
@@ -48,16 +42,12 @@ public class LoginServiceImpl implements LoginService, Serializable {
         if (loginDao.AdminOrLeaderLogin(name,password) != null) {
 
             Map<String, Object> userMap = new HashMap<>();
-            userMap.put("username",name);
+            userMap.put("name",name);
             userMap.put("password",password);
 
             String token = JWTUtils.createToken(userMap);
             data.put("token",token);
-//            if (Objects.equals(name, "leader")) {
-//                data.put("role","leader");
-//            } else {
-//                data.put("role","admin");
-//            }
+
             return MyResponseUtil.getResultMap(data,0,"success");
         } else {
             return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
@@ -66,57 +56,34 @@ public class LoginServiceImpl implements LoginService, Serializable {
     }
 
     /**
-     * 旧企业登陆
+     * 普通用户登陆
      * @param map
      * @return
+     * @throws ServiceException
      */
     @Override
-    public Map<String, Object> oldLogin(Map<String, Object> map) {
+    public Map<String, Object> CommonLogin(JSONObject map) throws ServiceException {
 
-        String username = map.get("username").toString();
+        String username = map.get("name").toString();
         String password = map.get("password").toString();
+        String userId = loginDao.commonLogin(username,password);
+
 
         Map<String, Object> data = new HashMap<>();
 
-        if (loginDao.oldLogin(username,password) != null) {
-            Map<String, Object> oldMap = new HashMap<>();
+        if (userId != null) {
+            Map<String, Object> user = new HashMap<>();
 
-            oldMap.put("username",username);
-            oldMap.put("password",password);
+            user.put("name",username);
+            user.put("password",password);
+            user.put("userId", userId);
 
-            String token = JWTUtils.createToken(oldMap);
+            String token = JWTUtils.createToken(user);
             data.put("token",token);
-            return MyResponseUtil.getResultMap(data,0,"success");
-        } else {
-            return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
-        }
-    }
+        } else throw new ServiceException("用户不存在或密码错误");
 
-    /**
-     * 新企业登陆
-     * @param map
-     * @return
-     */
-    @Override
-    public Map<String, Object> newLogin(Map<String, Object> map) {
+        return MyResponseUtil.getResultMap(data,0,"success");
 
-        String username = map.get("username").toString();
-        String password = map.get("password").toString();
-
-        Map<String, Object> data = new HashMap<>();
-
-        if (loginDao.newLogin(username,password) != null) {
-            Map<String, Object> newMap = new HashMap<>();
-
-            newMap.put("username",username);
-            newMap.put("password",password);
-
-            String token = JWTUtils.createToken(newMap);
-            data.put("token",token);
-            return MyResponseUtil.getResultMap(data,0,"success");
-        } else {
-            return MyResponseUtil.getResultMap(null,-1,"用户不存在或密码错误");
-        }
     }
 
 }

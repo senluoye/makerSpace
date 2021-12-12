@@ -498,6 +498,7 @@ token 保存时间待定
 
 ```json
 {
+    "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     "registerAddress":"<String>",									//注册地址
     "license":"<File>",														//新的营业执照上传
     "registerCapital":"<String>",									//注册资本（万元）

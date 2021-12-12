@@ -111,8 +111,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> updateOldEnterprise(String token,
                                                    JSONObject map,
                                                    MultipartFile[] files) throws Exception {
-        String id = JWTUtils.parser(token).get("username").toString();
-        map.put("id", id);
+        String userId = JWTUtils.parser(token).get("userId").toString();
+
+        String id = map.get("id").toString();
 
         Old old = OldParserUtils.parser(map);
         List<OldShareholder> oldShareholders = OldParserUtils.OldShareholderParser(map.getJSONArray("oldShareholder"));
@@ -167,9 +168,10 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
             if (oldEnterpriseDao.insertAudit(audit) <= 0)
                 throw new ServiceException("信息插入失败:audit");
-        } else {
-            throw new ServiceException("信息插入失败:old");
-        }
+        } else throw new ServiceException("信息插入失败:old");
+
+        if (oldEnterpriseDao.updateUserCompany(userId, id) < 1)
+            throw new ServiceException("公司绑定失败");
 
         return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id", id), 0, "success");
     }

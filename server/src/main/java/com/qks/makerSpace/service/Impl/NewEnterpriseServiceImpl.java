@@ -2,6 +2,7 @@ package com.qks.makerSpace.service.Impl;
 
 import com.qks.makerSpace.dao.NewEnterpriseDao;
 import com.qks.makerSpace.entity.*;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
@@ -94,8 +95,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         }
     }
 
-
-
     /**
      * 租赁缴费
      * @param map
@@ -114,9 +113,10 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     @Override
     public Map<String, Object> updateNewEnterprise(String token,
                                                    Map<String, Object> map,
-                                                   MultipartFile[] files) throws IllegalAccessException, IOException {
-        String id = JWTUtils.parser(token).get("username").toString();
-        map.put("id",id);
+                                                   MultipartFile[] files) throws Exception {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+
+        String id = map.get("id").toString();
 
         News news = NewParserUtils.newsParser(map);
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.get("newMainPerson"));
@@ -141,6 +141,9 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             newIntellectuals.forEach(newEnterpriseDao::insertNewIntellectual);
             newShareholders.forEach(newEnterpriseDao::insertNewShareholder);
         }
+
+        if (newEnterpriseDao.updateUserCompany(userId, id) < 1)
+            throw new ServiceException("公司绑定失败");
 
         return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id",id),1,"success");
     }

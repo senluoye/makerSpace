@@ -18,19 +18,9 @@ public interface LoginDao {
             "where name = #{name} and password = #{password}")
     User AdminOrLeaderLogin(String name, String password);
 
-    @Insert("insert into user(name, password, user_id) " +
-            "VALUES (#{name}, #{password}, #{id})")
-    Integer addAdmin(String id, String name, String password);
+    @Select("select user_id from user " +
+            "where name = #{username} " +
+            "and password = #{password}")
+    String commonLogin(String username, String password);
 
-//    迁入和独立注册企业登录
-//    使用统一社会信用代码（18字符串）或者 组织机构代码
-    @Select("select old_id from old " +
-            "where (credit_code = #{username} and password = #{password}) or (organization_code = #{username} and password = #{password})")
-    String oldLogin(String username, String password);
-
-//    新成立企业或非独立注册企业
-//    使用统一社会信用代码（18字符串）或者 组织机构代码
-    @Select("select new_id from new " +
-            "where (credit_code = #{username} and password = #{password}) or (organization_code = #{username} and password = #{password})")
-    String  newLogin(String username, String password);
 }

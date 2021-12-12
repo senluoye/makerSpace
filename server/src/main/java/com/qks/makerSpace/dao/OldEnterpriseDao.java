@@ -74,4 +74,7 @@ public interface OldEnterpriseDao {
 
     @Select("select * from old_intellectual where old_intellectual_id = #{id}")
     List<OldIntellectual> getOldIntellectualById(String id);
+
+    @Update("update user_company set credit_code = #{id} where user_id = #{userId}")
+    Integer updateUserCompany(String userId, String id);
 }

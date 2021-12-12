@@ -1,6 +1,7 @@
 package com.qks.makerSpace.interceptor;
 
 import com.qks.makerSpace.util.JWTUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,8 +17,6 @@ import java.util.Date;
 @Component
 public class TokenInterceptor implements HandlerInterceptor {
 
-//    private final Logger logger = LoggerFactory.getLogger(TokenInterceptor.class);
-
     /**
      * 进入controller层之前拦截请求
      * @param httpServletRequest
@@ -27,7 +26,7 @@ public class TokenInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest,
-                             HttpServletResponse httpServletResponse,
+                             @NotNull HttpServletResponse httpServletResponse,
                              Object o) {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

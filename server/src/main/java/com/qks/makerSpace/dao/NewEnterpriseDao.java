@@ -69,7 +69,8 @@ public interface NewEnterpriseDao {
     @Select("select * form new_shareholder where new_shareholder_id = #{newShareholderId}")
     List<NewShareholder> getNewShareholder(String newShareholderId);
 
-//  众创空间申请Dao
+    @Update("update user_company set credit_code = #{id} where user_id = #{userId}")
+    Integer updateUserCompany(String userId, String id);
 
 
 }

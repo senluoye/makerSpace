@@ -1,8 +1,12 @@
 package com.qks.makerSpace.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.LoginService;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 @RestController
@@ -26,23 +30,13 @@ public class LoginController {
     }
 
     /**
-     * 迁入或独立注册企业登陆
+     * 普通成员登陆
      * @param map
      * @return
      */
-    @RequestMapping(value = "old", method = RequestMethod.POST)
-    private Map<String, Object> oldLogin(@RequestParam Map<String, Object> map) {
-        return loginService.oldLogin(map);
-    }
-
-    /**
-     * 新成立或非独立注册企业登陆
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "new", method = RequestMethod.POST)
-    private Map<String, Object> newLogin(@RequestParam Map<String, Object> map) {
-        return loginService.newLogin(map);
+    @RequestMapping(value = "common", method = RequestMethod.POST)
+    private Map<String, Object> CommonLogin(@RequestBody JSONObject map) throws ServiceException {
+        return loginService.CommonLogin(map);
     }
 
 }
