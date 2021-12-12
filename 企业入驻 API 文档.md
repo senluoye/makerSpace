@@ -12,58 +12,6 @@
 
 
 
-# 注册
-
-**请求URL：**
-
-- `/api/register`
-
-**请求方式：**
-
-- POST
-
-**参数：**
-
-领导账户
-
-~~~json
-{
-    "name":"<String>",						//用户名
-    "password":"<String>",				//密码
-    "email":"<String>"						//邮箱
-}
-~~~
-
-**返回值：**
-
-请求成功会返回一个唯一的授权凭证（Bearer Token）
-
-```json
-{
-    "data":{
-        "userId":"<String>",
-    },
-    "code":0,
-    "msg":"success"
-}
-```
-
-token 保存时间待定
-
-**请求失败：**
-
-~~~json
-{
-    "data":null,
-    "code":-1,
-    "msg":"注册失败"
-}
-~~~
-
-
-
-
-
 # 登录（login）
 
 **简要描述：**
@@ -170,11 +118,11 @@ token 保存时间待定
 
 
 
-## 普通用户登录
+## 迁入和独立注册企业登录
 
 **请求URL：**
 
-- `/api/login/common`
+- `/api/login/old`
 
 **请求方式：**
 
@@ -182,12 +130,12 @@ token 保存时间待定
 
 **参数：**
 
-管理员唯一账号
+**账户由管理员发放**
 
 ~~~json
 {
-    "name":"<String>",						//用户名
-    "password":"<String>"				//密码
+    "username":"<String>",                                                //统一社会信用代码（18位字符）或 组织机构代码
+    "password":"<String>"
 }
 ~~~
 
@@ -205,7 +153,7 @@ token 保存时间待定
 }
 ```
 
-> token 保存时间一天
+token 保存时间待定
 
 **请求失败：**
 
@@ -216,6 +164,57 @@ token 保存时间待定
     "msg":"用户不存在或密码错误"
 }
 ~~~
+
+
+
+## 新成立企业或非独立注册企业登录
+
+**请求URL：**
+
+- `/api/login/new`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+**账户由管理员发放**
+
+~~~json
+{
+    "username":"<String>",                                                //统一社会信用代码（18位字符）或 组织机构代码
+    "password":"<String>"
+}
+~~~
+
+**返回值：**
+
+请求成功会返回一个唯一的授权凭证（Bearer Token）
+
+```json
+{
+    "data":{
+        "token":"<String>",
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+token 保存时间待定
+
+**请求失败：**
+
+~~~json
+{
+    "data":null,
+    "code":-1,
+    "msg":"用户不存在或密码错误"
+}
+~~~
+
+
 
 
 
@@ -437,6 +436,49 @@ token 保存时间待定
 |     self_raised      | String |                    企业自筹                    |
 
 
+
+## 注册
+
+**简要描述：**
+
+注册**迁入和独立注册企业**账号，其中填写部分信息
+
+**请求URL：**
+
+- `/api/oldregister`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
+    "organizationCode":"<String>",									//组织机构代码
+    "password":"<String>",												  //企业注册密码
+    "name":"<String>",														//申请入驻企业名称
+    "represent":"<String>",												  //法人代表
+    "representPhone":"<String>",									 //法人代表联系电话
+    "representEmail":"<String",											//法人代表邮箱地址
+    "agent":"<String>",														//经办人
+    "agentPhone":"<String>",										  //经办人联系电话
+    "agentEmail":"<String>"											   //经办人邮箱地址
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":{
+        "id":"<String>"
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
 
 ## 入园申请表填写
 
@@ -864,6 +906,48 @@ token 保存时间待定
 |     apply_time      | String |        申请时间        |
 |    approval_time    | String |        批准时间        |
 |  intellectual_file  |  File  | 知识产权证书等扫描文件 |
+
+## 注册
+
+**简要描述：**
+
+注册 迁入和独立注册企业 账号，其中填写部分信息
+
+**请求URL：**
+
+- `/api/newregister`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
+    "organizationCode":"<String>",									//组织机构代码
+    "name":"<String>",														//新设立企业名称
+    "picture":"<File>",															//提供名称预审核准通知书
+    "represent":"<String>",												  //企业负责人
+    "representCard":"File",											//提供身份证复印件
+    "representPhone":"<String>",									 //企业负责人联系电话
+    "representEmail":"<String",											//企业负责人邮箱地址
+    "agent":"<String>",														//经办人
+    "agentPhone":"<String>",										  //经办人联系电话
+    "agentEmail":"<String>"											   //经办人邮箱地址
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
 
 
 
