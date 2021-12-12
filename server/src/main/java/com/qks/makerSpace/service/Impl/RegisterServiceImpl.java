@@ -1,16 +1,13 @@
 package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.qks.makerSpace.dao.LoginDao;
 import com.qks.makerSpace.dao.RegisterDao;
-import com.qks.makerSpace.entity.User;
+import com.qks.makerSpace.entity.database.User;
 import com.qks.makerSpace.exception.ServiceException;
-import com.qks.makerSpace.service.LoginService;
 import com.qks.makerSpace.service.RegisterService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;

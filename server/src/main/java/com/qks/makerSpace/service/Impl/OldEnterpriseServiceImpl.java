@@ -2,7 +2,7 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
-import com.qks.makerSpace.entity.*;
+import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
 import com.qks.makerSpace.util.ChangeUtils;

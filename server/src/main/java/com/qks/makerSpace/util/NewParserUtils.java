@@ -1,6 +1,6 @@
 package com.qks.makerSpace.util;
 
-import com.qks.makerSpace.entity.*;
+import com.qks.makerSpace.entity.database.*;
 
 import java.util.*;
 

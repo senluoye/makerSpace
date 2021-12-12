@@ -1,7 +1,7 @@
 package com.qks.makerSpace.dao;
 
-import com.qks.makerSpace.entity.Space;
-import com.qks.makerSpace.entity.SpacePerson;
+import com.qks.makerSpace.entity.database.Space;
+import com.qks.makerSpace.entity.database.SpacePerson;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.springframework.stereotype.Repository;

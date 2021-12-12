@@ -1,14 +1,9 @@
 package com.qks.makerSpace.controller;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
-import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,31 +21,65 @@ public class AdminController {
     }
 
     /**
-     * 获取全部迁入和独立注册企业的基本信息
+     * 获取全部企业的申请信息
      */
-    @RequestMapping(value = "old", method = RequestMethod.GET)
-    private Map<String, Object> getStatisticalForm() {
-        return adminService.getAllOldDetails();
+    @RequestMapping(value = "all", method = RequestMethod.GET)
+    private Map<String, Object> getAllDetails() {
+        return adminService.getAllDetails();
     }
 
     /**
-     * 获取某一个迁入和独立注册企业入园申请
+     * 获取某一个企业入园申请
      * @return
      */
-    @RequestMapping(value = "old/{id}", method = RequestMethod.GET)
-    private Map<String, Object> getOldById(@PathVariable String id) {
-        return adminService.getOldById(id);
+    @RequestMapping(value = "technology/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getCompanyById(@PathVariable String id) {
+        return adminService.gettechnologyById(id);
     }
 
     /**
-     * 删除某一个迁入和独立注册企业入园申请
+     * 获取某一个企业众创空间申请
      * @return
      */
-    @RequestMapping(value = "old", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteOldById(@RequestBody JSONObject map) {
-        return adminService.deleteOldById(map);
+    @RequestMapping(value = "space/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getSpaceById(@PathVariable String id) {
+        return adminService.getSpaceById(id);
+    }
+
+<<<<<<< HEAD
+=======
+    /**
+     * 删除某一个企业入园申请
+     * @return
+     */
+    @RequestMapping(value = "technology/{id}", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteOldById(@PathVariable String id) {
+        return adminService.deletetechnologyById(id);
+    }
+
+    /**
+     * 删除某一个企业众创空间申请
+     * @return
+     */
+    @RequestMapping(value = "space/{id}", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteSpaceById(@PathVariable String id) {
+        return adminService.deleteSpaceById(id);
+    }
+
+    /**
+     * 删除某一个企业众创空间申请
+     * @return
+     */
+    @RequestMapping(value = "technology", method = RequestMethod.POST)
+    private Map<String, Object> agreeById(@RequestBody JSONObject map) {
+        return adminService.agreeById(map);
     }
 
 
+    @RequestMapping(value = "/form/situation", method = RequestMethod.GET)
+    private void getStatisticalForm(HttpServletResponse response) throws Exception {
+        adminService.downLoadWord(response, adminService.getDownLoadForm());
+    }
+>>>>>>> bef245fdc77bbd206b518da86908ca94fef5e2d7
 
 }

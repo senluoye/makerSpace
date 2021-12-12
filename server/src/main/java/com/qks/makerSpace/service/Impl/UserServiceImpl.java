@@ -1,13 +1,10 @@
 package com.qks.makerSpace.service.Impl;
 
 import com.qks.makerSpace.dao.UserDao;
-import com.qks.makerSpace.entity.User;
+import com.qks.makerSpace.entity.database.User;
 import com.qks.makerSpace.service.UserService;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
