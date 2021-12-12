@@ -77,4 +77,10 @@ public class TestController {
 
     }
 
+    @RequestMapping(value = "aaa", method = RequestMethod.GET)
+    private String test() {
+
+        return "宁已经连上了";
+
+    }
 }

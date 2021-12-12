@@ -1246,17 +1246,30 @@ token 保存时间待定
 
 ### 众创空间申请表
 
+##### space（主表）
+
 |    字段名    |  类型  |       说明       |
 | :----------: | :----: | :--------------: |
-|      id      | String |        id        |
+|  InApplyId   | String | 众创空间申请表id |
 | newInApplyId | String |  项目/创意名称   |
-|              | String |     申请日期     |
-|              | String |     团队人数     |
-|              | String | 主要成员信息表id |
-|              |        |                  |
-|              |        |                  |
-|              |        |                  |
-|              |        |                  |
+|  applyTime   | String |     申请日期     |
+|  teamNumber  | String |     团队人数     |
+|   describe   | String |  项目/创意概况   |
+|     help     | String |   想获得的帮助   |
+|    brief     | String |     项目概括     |
+
+##### space_person（人员表）
+
+|    字段名    |  类型  |       说明       |
+| :----------: | :----: | :--------------: |
+|  InApplyId   | String | 众创空间申请表id |
+|  personName  | String |       姓名       |
+|  department  | String |  所在院校/部门   |
+|    major     | String |     专业方向     |
+| personPhone  | String |     手机号码     |
+|   personQq   | String |       QQ号       |
+| personWechat | String |      微信号      |
+|     note     | String |       备注       |
 
 ## 众创空间申请
 
@@ -1277,9 +1290,8 @@ token 保存时间待定
   "describe": "<String>",             // 注明新/旧企业
   "createName": "<String>",			  // 项目/创意名称
   "applyTime": "<String>",            // 申请日期
-  "teamNumber": "<String>",			  // 成员数量，这部分需要前端做好统计
-  "Person": [                         // 主要成员信息
-    {
+  "teamNumber": "<String>",			  // 成员数量
+  "Person": [{                         // 主要成员信息
       "personName": "<String>",
       "department": "<String>",
       "major": "<String>",

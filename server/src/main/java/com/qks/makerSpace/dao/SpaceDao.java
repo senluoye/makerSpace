@@ -13,8 +13,8 @@ public interface SpaceDao {
             "values (#{inApplyId}, #{describe}, #{createName}, #{applyTime}, #{teamNumber}, #{brief}, #{help})")
     Integer addProject(Space space);
 
-    @Insert("insert into space_person(person_name, department, major, person_phone, person_qq, person_wechat, note, in_apply_id) " +
-            "VALUES (#{personName}, #{department}, #{personName}, #{major}, #{personPhone}, #{personQq}, #{personWechat}, #{note})")
+    @Insert("insert into space_person(in_apply_id, person_name, department, major, person_phone, person_qq, person_wechat, note, in_apply_id) " +
+            "VALUES (#{inApplyId}, #{personName}, #{department}, #{personName}, #{major}, #{personPhone}, #{personQq}, #{personWechat}, #{note})")
     Integer addPerson(SpacePerson spacePerson);
 
     @Delete("delete space.*, space_person.* " +
