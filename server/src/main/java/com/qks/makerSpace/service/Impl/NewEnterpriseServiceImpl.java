@@ -113,7 +113,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     public Map<String, Object> updateNewEnterprise(String token,
                                                    Map<String, Object> map,
                                                    MultipartFile[] files) throws IllegalAccessException, IOException {
-        String id = JWTUtils.parser(token).get("id").toString();
+        String id = JWTUtils.parser(token).get("username").toString();
         map.put("id",id);
 
         News news = NewParserUtils.newsParser(map);

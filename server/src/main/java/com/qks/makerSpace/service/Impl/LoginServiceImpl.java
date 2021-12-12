@@ -48,7 +48,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
         if (loginDao.AdminOrLeaderLogin(name,password) != null) {
 
             Map<String, Object> userMap = new HashMap<>();
-            userMap.put("name",name);
+            userMap.put("username",name);
             userMap.put("password",password);
 
             String token = JWTUtils.createToken(userMap);
@@ -73,14 +73,14 @@ public class LoginServiceImpl implements LoginService, Serializable {
     @Override
     public Map<String, Object> oldLogin(Map<String, Object> map) {
 
-        String username = map.get("username").toString();
+        String username = map.get("loginCode").toString();
         String password = map.get("password").toString();
 
         Map<String, Object> data = new HashMap<>();
 
         if (loginDao.oldLogin(username,password) != null) {
-
             Map<String, Object> oldMap = new HashMap<>();
+
             oldMap.put("username",username);
             oldMap.put("password",password);
 
@@ -100,14 +100,14 @@ public class LoginServiceImpl implements LoginService, Serializable {
     @Override
     public Map<String, Object> newLogin(Map<String, Object> map) {
 
-        String username = map.get("username").toString();
+        String username = map.get("loginCode").toString();
         String password = map.get("password").toString();
 
         Map<String, Object> data = new HashMap<>();
 
         if (loginDao.newLogin(username,password) != null) {
-
             Map<String, Object> newMap = new HashMap<>();
+
             newMap.put("username",username);
             newMap.put("password",password);
 

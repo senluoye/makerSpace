@@ -1425,7 +1425,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/getold`
+- `/api/admin/old`
 
 **请求方式：**
 
@@ -1461,8 +1461,6 @@ token 保存时间待定
 }
 ~~~
 
-
-
 ### 获取某一个迁入和独立注册企业入园申请
 
 **简要描述：**
@@ -1471,7 +1469,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/getold/{id}`
+- `/api/admin/old/{id}`
 
 **请求方式：**
 
@@ -1481,8 +1479,8 @@ token 保存时间待定
 
 ~~~json
 {
-	    "data":[{
-	        "registerAddress":"<String>",									//注册地址
+	"data":{
+	    "registerAddress":"<String>",									//注册地址
 	    "license":"<File>",															//新的营业执照上传
 	    "registerCapital":"<String>",										//注册资本（万元）
 	    "realAddress":"<String>",											//实际经营地址
@@ -1610,9 +1608,9 @@ token 保存时间待定
 	    "note":"<String>",    								//备注
 	    "state":"<String>"										//状态
         "room":"<String>"									//房间号
-	    }],
-	  "code":0,
-	  "msg":"success"
+	},
+	"code":0,
+	"msg":"success"
 }
 ~~~
 
@@ -1626,7 +1624,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/deleteold`
+- `/api/admin/old`
 
 **请求方式：**
 
@@ -1674,7 +1672,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/getnew`
+- `/api/admin/new`
 
 **请求方式：**
 
@@ -1720,7 +1718,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/getold/{id}`
+- `/api/admin/old/{id}`
 
 **请求方式：**
 
@@ -1852,7 +1850,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/deletenew`
+- `/api/admin/new`
 
 **请求方式：**
 

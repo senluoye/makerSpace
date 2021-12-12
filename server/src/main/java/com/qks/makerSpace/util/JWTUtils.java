@@ -29,7 +29,6 @@ public class JWTUtils {
                 .setClaims(user)                                                     // 放入用户参数
                 .setExpiration(new Date(System.currentTimeMillis() + 24*60*60*1000)) // 过期时间：一天
                 .setIssuedAt(new Date(System.currentTimeMillis()))// 当前时间
-//                .setClaims("id", )
                 .signWith(secretKey)                                                 // 设置安全密钥（生成签名所需的密钥和算法）
                 .compact();
 

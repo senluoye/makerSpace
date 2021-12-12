@@ -111,7 +111,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> updateOldEnterprise(String token,
                                                    JSONObject map,
                                                    MultipartFile[] files) throws Exception {
-        String id = JWTUtils.parser(token).get("id").toString();
+        String id = JWTUtils.parser(token).get("username").toString();
         map.put("id", id);
 
         Old old = OldParserUtils.parser(map);
