@@ -10,12 +10,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@Component
 public class WordChangeUtils {
 
 
 
-    public void searchAndReplace(OutputStream outStream , Map<String, Object> map) {
+    public static void searchAndReplace(OutputStream outStream , Map<String, Object> map) {
         try {
 //            XWPFDocument document = new XWPFDocument(POIXMLDocument.openPackage(srcPath));
             File file = ResourceUtils.getFile("classpath:template/output_document.docx");
@@ -53,7 +52,7 @@ public class WordChangeUtils {
                  */
             Iterator<XWPFTable> itTable = document.getTablesIterator();
             while (itTable.hasNext()) {
-                XWPFTable table = (XWPFTable) itTable.next();
+                XWPFTable table = itTable.next();
                 int count = table.getNumberOfRows();
                 for (int i = 0; i < count; i++) {
                     XWPFTableRow row = table.getRow(i);

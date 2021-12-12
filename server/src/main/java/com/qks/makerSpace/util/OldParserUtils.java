@@ -128,7 +128,7 @@ public class OldParserUtils {
         List<OldFunding> resultList = new ArrayList<>();
         String OldFundingId = UUID.randomUUID().toString();
 
-        for (int i = 0; i < obj.size(); i++) {
+        for (int i = 0; i < map.size(); i++) {
             OldFunding oldFunding = new OldFunding();
 
             oldFunding.setId(UUID.randomUUID().toString());

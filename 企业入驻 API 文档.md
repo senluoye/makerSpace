@@ -63,7 +63,7 @@ token 保存时间待定
 {
     "data":null,
     "code":-1,
-    "msg":"The user name or password is incorrect"
+    "msg":"用户不存在或密码错误"
 }
 ~~~
 
@@ -104,7 +104,7 @@ token 保存时间待定
 }
 ```
 
-token 保存时间待定
+> token 保存时间一天
 
 **请求失败：**
 
@@ -112,7 +112,7 @@ token 保存时间待定
 {
     "data":null,
     "code":-1,
-    "msg":"The user name or password is incorrect"
+    "msg":"用户不存在或密码错误"
 }
 ~~~
 
@@ -134,7 +134,7 @@ token 保存时间待定
 
 ~~~json
 {
-    "loginCode":"<String>",                                                //同一社会信用代码（18位字符）或 组织机构代码
+    "loginCode":"<String>",                                                //统一社会信用代码（18位字符）或 组织机构代码
     "password":"<String>"
 }
 ~~~
@@ -161,7 +161,7 @@ token 保存时间待定
 {
     "data":null,
     "code":-1,
-    "msg":"The user name or password is incorrect"
+    "msg":"用户不存在或密码错误"
 }
 ~~~
 
@@ -210,7 +210,7 @@ token 保存时间待定
 {
     "data":null,
     "code":-1,
-    "msg":"The user name or password is incorrect"
+    "msg":"用户不存在或密码错误"
 }
 ~~~
 
@@ -360,7 +360,7 @@ token 保存时间待定
 |        字段名        |  类型  |                      说明                      |
 | :------------------: | :----: | :--------------------------------------------: |
 |      team_name       | String |                    企业名称                    |
-|     credit_code      | String |                同一社会信用代码                |
+|     credit_code      | String |                统一社会信用代码                |
 |  organization_code   | String |                  组织机构代码                  |
 |    register_time     | String |                    注册时间                    |
 |      join_time       | String |                 入驻科技园时间                 |
@@ -455,7 +455,7 @@ token 保存时间待定
 
 ~~~json
 {
-    "creditCode":"<String>",                                                //同一社会信用代码（18位字符）
+    "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     "organizationCode":"<String>",									//组织机构代码
     "password":"<String>",												  //企业注册密码
     "name":"<String>",														//申请入驻企业名称
@@ -810,7 +810,7 @@ token 保存时间待定
 
 |      字段名       |  类型  |                    说明                    |
 | :---------------: | :----: | :----------------------------------------: |
-|    credit_code    | String |        同一社会信用代码（18位字符）        |
+|    credit_code    | String |        统一社会信用代码（18位字符）        |
 | organization_code | String |          组织机构代码企业注册密码          |
 |     password      | String |                    密码                    |
 |       name        | String |               新设立企业名称               |
@@ -924,7 +924,7 @@ token 保存时间待定
 
 ~~~json
 {
-    "creditCode":"<String>",                                                //同一社会信用代码（18位字符）
+    "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     "organizationCode":"<String>",									//组织机构代码
     "name":"<String>",														//新设立企业名称
     "picture":"<File>",															//提供名称预审核准通知书
@@ -1365,6 +1365,16 @@ token 保存时间待定
 
 - GET（带token）
 
+**参数**：
+
+```json
+{
+    "data":{
+    	"Code":"<String>",						//这里传统一社会信用代码或组织机构代码企业注册密码
+	}
+}
+```
+
 **返回值：**
 
 ~~~json
@@ -1436,7 +1446,7 @@ token 保存时间待定
 ~~~json
 {
     "data":[{
-        "creditCode":"<String>",                                                //同一社会信用代码（18位字符）
+        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -1445,7 +1455,7 @@ token 保存时间待定
         "state":"<String>",															//授权状态
         "room":"<String>",														//房间号
     },{
-        "creditCode":"<String>",                                                //同一社会信用代码（18位字符）
+        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -1634,7 +1644,7 @@ token 保存时间待定
 
 ```json
 {
-    "code":"<String>",											//同一社会信用代码（18位字符）或 组织机构代码
+    "code":"<String>",											//统一社会信用代码（18位字符）或 组织机构代码
 }
 ```
 
@@ -1683,7 +1693,7 @@ token 保存时间待定
 ~~~json
 {
     "data":[{
-       "creditCode":"<String>",                                                //同一社会信用代码（18位字符）
+       "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -1692,7 +1702,7 @@ token 保存时间待定
         "state":"<String>",															//授权状态
         "room":"<String>",														//房间号
     },{
-        "creditCode":"<String>",                                                //同一社会信用代码（18位字符）
+        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -1860,7 +1870,7 @@ token 保存时间待定
 
 ```json
 {
-    "code":"<String>",											//同一社会信用代码（18位字符）或 组织机构代码
+    "code":"<String>",											//统一社会信用代码（18位字符）或 组织机构代码
 }
 ```
 
@@ -2006,6 +2016,16 @@ token 保存时间待定
 
 - POST(带token)
 
+**参数**：
+
+```json
+"data"：{
+    ""
+}
+```
+
+
+
 **返回值：**
 
 
@@ -2031,7 +2051,7 @@ token 保存时间待定
 ~~~json
 {
     "data":[{
-        "creditCode":"<String>",                                                //同一社会信用代码（18位字符）
+        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -2040,7 +2060,7 @@ token 保存时间待定
         "state":"<String>",															//授权状态
         "room":"<String>",														//房间号
     },{
-        "creditCode":"<String>",                                                //同一社会信用代码（18位字符）
+        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表

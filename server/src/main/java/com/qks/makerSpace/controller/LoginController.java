@@ -44,4 +44,5 @@ public class LoginController {
     private Map<String, Object> newLogin(@RequestParam Map<String, Object> map) {
         return loginService.newLogin(map);
     }
+
 }
