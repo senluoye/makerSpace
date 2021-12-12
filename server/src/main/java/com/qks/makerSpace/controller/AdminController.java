@@ -51,10 +51,6 @@ public class AdminController {
         return adminService.deleteOldById(map);
     }
 
-    @RequestMapping(value = "/form/situation", method = RequestMethod.GET)
-    private void getStatisticalForm(HttpServletResponse response) throws Exception {
-        adminService.downLoadWord(response, adminService.getDownLoadForm());
-    }
 
 
 }

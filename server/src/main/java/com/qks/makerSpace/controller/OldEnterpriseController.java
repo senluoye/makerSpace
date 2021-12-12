@@ -22,7 +22,7 @@ public class OldEnterpriseController {
 
     /**
      * 信息状态展示
-     * @param map
+     * @param
      * @return
      */
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.GET)

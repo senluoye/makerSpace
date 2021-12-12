@@ -14,10 +14,15 @@ public class WordChangeUtils {
 
 
 
-    public static void searchAndReplace(OutputStream outStream , Map<String, Object> map) {
+    public static void searchAndReplace(OutputStream outStream , Map<String, Object> map,int kind) {
         try {
-//            XWPFDocument document = new XWPFDocument(POIXMLDocument.openPackage(srcPath));
-            File file = ResourceUtils.getFile("classpath:template/output_document.docx");
+            File file = null;
+            if (kind == 1) {
+                file = ResourceUtils.getFile("classpath:template/output_document.docx");
+            } else {
+                file = ResourceUtils.getFile("classpath:template/station.docx");
+            }
+
             InputStream inputStream = new FileInputStream(file);
             XWPFDocument document = new XWPFDocument(inputStream);
 
@@ -45,8 +50,6 @@ public class WordChangeUtils {
                     }
                 }
             }
-
-
                 /**
                  * 替换表格中的指定文字
                  */
@@ -72,7 +75,6 @@ public class WordChangeUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 }
