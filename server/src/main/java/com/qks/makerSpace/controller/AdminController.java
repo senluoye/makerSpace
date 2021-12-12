@@ -30,7 +30,7 @@ public class AdminController {
      */
     @RequestMapping(value = "old", method = RequestMethod.GET)
     private Map<String, Object> getStatisticalForm() {
-        return MyResponseUtil.getResultMap(adminService.getAllOldDetails(), 0, "success");
+        return adminService.getAllOldDetails();
     }
 
     /**
@@ -38,8 +38,8 @@ public class AdminController {
      * @return
      */
     @RequestMapping(value = "old/{id}", method = RequestMethod.GET)
-    private Map<String, Object> getOldById(@RequestParam("id") String id) {
-        return MyResponseUtil.getResultMap(adminService.getOldById(id), 0, "success");
+    private Map<String, Object> getOldById(@PathVariable String id) {
+        return adminService.getOldById(id);
     }
 
     /**
@@ -48,7 +48,7 @@ public class AdminController {
      */
     @RequestMapping(value = "old", method = RequestMethod.DELETE)
     private Map<String, Object> deleteOldById(@RequestBody JSONObject map) {
-        return MyResponseUtil.getResultMap(adminService.deleteOldById(map), 0, "success");
+        return adminService.deleteOldById(map);
     }
 
     @RequestMapping(value = "/form/situation", method = RequestMethod.GET)

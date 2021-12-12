@@ -1440,7 +1440,7 @@ token 保存时间待定
 
 ## 基础操作
 
-### 获取全部迁入和独立注册企业
+### 获取全部企业的申请
 
 **简要描述：**
 
@@ -1459,7 +1459,7 @@ token 保存时间待定
 ~~~json
 {
     "data":[{
-        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
+        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -1467,8 +1467,9 @@ token 保存时间待定
     	"representEmail":"<String>",										//法人代表邮箱地址
         "state":"<String>",															//授权状态
         "room":"<String>",														//房间号
+        "describe":"<String>"											//表示众创空间/科技园的申请
     },{
-        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
+        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -1476,6 +1477,7 @@ token 保存时间待定
     	"representEmail":"<String>",											//法人代表邮箱地址
         "state":"<String>",															//授权状态
         "room":"<String>",														//房间号
+        "describe":"<String>"											//表示众创空间/科技园的申请
     },
            ......
     ],
@@ -1484,7 +1486,7 @@ token 保存时间待定
 }
 ~~~
 
-### 获取某一个迁入和独立注册企业入园申请
+### 获取某一个企业入园申请
 
 **简要描述：**
 
@@ -1492,7 +1494,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/admin/old/{id}`
+- `/api/admin/technology/{id}`
 
 **请求方式：**
 
@@ -1637,17 +1639,15 @@ token 保存时间待定
 }
 ~~~
 
-
-
-### 删除某一个迁入和独立注册企业入园申请
+### 获取某一个企业众创空间申请
 
 **简要描述：**
 
-删除某个企业的详细内容（包括账号）
+获取某一个企业众创空间申请
 
 **请求URL：**
 
-- `/api/admin/old`
+- `/api/admin/space/{id}`
 
 **请求方式：**
 
@@ -1685,187 +1685,7 @@ token 保存时间待定
 }
 ~~~
 
-
-
-### 获取全部新成立企业或非独立注册企业
-
-**简要描述：**
-
-返回部分参数
-
-**请求URL：**
-
-- `/api/admin/new`
-
-**请求方式：**
-
-- GET
-
-**返回值：**
-
-~~~json
-{
-    "data":[{
-       "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
-    	"organizationCode":"<String>",									//组织机构代码
-        "name":"<String>",														//申请入驻企业名称
-    	"represent":"<String>",												  //法人代表
-    	"representPhone":"<String>",									 //法人代表联系电话
-    	"representEmail":"<String>",										//法人代表邮箱地址
-        "state":"<String>",															//授权状态
-        "room":"<String>",														//房间号
-    },{
-        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
-    	"organizationCode":"<String>",									//组织机构代码
-        "name":"<String>",														//申请入驻企业名称
-    	"represent":"<String>",												  //法人代表
-    	"representPhone":"<String>",									 //法人代表联系电话
-    	"representEmail":"<String>",											//法人代表邮箱地址
-        "state":"<String>",															//授权状态
-        "room":"<String>",														//房间号
-    },
-           ......
-    ],
-    "code":0,
-    "msg":"success"
-}
-~~~
-
-
-
-### 获取某一个新成立企业或非独立注册企业入园申请
-
-**简要描述：**
-
-获取一个企业的全部信息
-
-**请求URL：**
-
-- `/api/admin/old/{id}`
-
-**请求方式：**
-
-- GET（带token）
-
-**返回值：**
-
-~~~json
-{
-	    "data":[{
-	        "registerCapital":"<String>",							//拟注册资本（万元）
-		    "realCapital":"<String>",									//实际募集资本（万元）
-		    "originNumber":"<String>",								//初始入园人数
-		    "registerTime":"<String>",									//预计注册日期
-		    "nature":"<String>",									//企业性质
-		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
-		    "involved":"<String>",									//企业性质
-		    "mainBusiness":"<String>",									//主营业务
-		    "way":"<String>",									//入园方式
-		    "business":"<String>",									//入园业务
-		    
-		    "newDemand":[{
-		        "leaseArea":"<String>",									//租赁面积（平方米）
-		        "position":"<String>",									//位置需求
-		        "lease":"<String>",									//租期（年）
-		        "floor":"<String>",									//楼层需求
-		        "electric":"<String>",									//电力需求
-		        "water":"<String>",									//给排水需求
-		        "web":"<String>",									//网络需求
-		        "others":"<String>",									//其他需求
-		    },{
-		        "leaseArea":"<String>",
-		        "position":"<String>",
-		        "lease":"<String>",
-		        "floor":"<String>",
-		        "electric":"<String>",
-		        "water":"<String>",
-		        "web":"<String>",
-		        "others":"<String>",
-		    }
-		    	 ......
-		    ],
-		    
-		    "newShareholder":[{
-		        "name":"<String>",									//股东姓名或名称
-		        "stake":"<String>",									//股份比例
-		        "nature":"<String>",									//股东性质
-			},{
-		        "name":"<String>",
-		        "stake":"<String>",
-		        "nature":"<String>",
-			}
-		    	......
-		    ],
-		     
-		    "newMainPerson":[{
-		        "name":"<String>",									//姓名
-		        "born":"<String>",									//出生年月
-		        "job":"<String>",									//职务
-		        "school":"<String>",									//毕业学校
-		        "title":"<String>",									//职称
-		        "background":"<String>",									//学历
-		        "professional":"<String>",									//专业
-		    },{
-		        "name":"<String>",
-		        "born":"<String>",
-		        "job":"<String>",
-		        "school":"<String>",
-		        "title":"<String>",
-		        "background":"<String>",
-		        "professional":"<String>",
-		    }
-		    	......              
-		    ],
-		
-		   "newProject":[{
-		        "projectBrief":"<String>",									//项目简介
-		        "advantage":"<String>",									//竞争优势分析
-		        "market":"<String>",									//市场前景分析
-		        "energy":"<String>",									//能耗分析
-		        "pollution":"<String>",									//污染分析
-		        "noise":"<String>",									//噪音分析
-       	 "others":"<String>",									//其他分析
-		    },{
-		        "projectBrief":"<String>",
-		        "advantage":"<String>",
-		        "market":"<String>",
-		        "energy":"<String>",
-		        "pollution":"<String>",
-		        "noise":"<String>",
-		        "others":"<String>",
-		    }
-		         ......     
-		    ],
-		       
-			"newIntellectual":[{
-		        "name":"<String>",									//名称
-		        "kind":"<String>",									//类别
-		        "applyTime":"<String>",									//申请时间
-		        "approvalTime":"<String>",									//批准时间
-		        "intellectualFile":"<File>",								//知识产权证书等扫描文件
-		    },{
-		        "name":"<String>",
-		        "kind":"<String>",
-		        "applyTime":"<String>",
-		        "approvalTime":"<String>",
-		        "intellectualFile":"<File>",
-		    }
-				......
-			],
-		    
-		    "suggestion":"<String>",								//科技园意见
-		    "note":"<String>"    								//备注
-	    	"state":"<String>"										//状态
-        	"room":"<String>"									//房间号                
-	    }],
-	  "code":0,
-	  "msg":"success"
-}   
-~~~
-
-
-
-### 删除某一个新成立企业或非独立注册企业入园申请
+### 删除某一个企业入园申请
 
 **简要描述：**
 
@@ -1873,7 +1693,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/admin/new`
+- `/api/admin/technology/{id}`
 
 **请求方式：**
 
@@ -1911,7 +1731,53 @@ token 保存时间待定
 }
 ~~~
 
+### 删除某一个企业众创空间申请
 
+**简要描述：**
+
+删除某个企业的详细内容（包括账号）
+
+**请求URL：**
+
+- `/api/admin/space/{id}`
+
+**请求方式：**
+
+- DELETE
+
+**参数：**
+
+```json
+{
+    "code":"<String>",											//统一社会信用代码（18位字符）或 组织机构代码
+}
+```
+
+**返回值：**
+
+请求成功：
+
+```json
+{
+    "data":{
+        "id":"<String>",							//企业唯一ID
+    },
+    "code":0,
+    "msg":"suceess"
+}
+```
+
+请求失败：
+
+~~~json
+{
+    "data":null,
+    "code":-1,
+    "msg":"id not exist"
+}
+~~~
+
+### 
 
 ### 缴费设置
 
@@ -1953,91 +1819,35 @@ token 保存时间待定
 
 
 
-## 房间类操作
-
-### 获取所有房间状况
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
-### 新增房间
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
-### 删除已有房间
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
-### 众创空间分配
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
-
-
-------
-
-
-
 # 领导（leader）
 
 ## **数据表：**
 
 
 
-## 审核授权
+## 授权类操作
+
+### 入园申请审核授权
 
 **简要描述：**
 
-审核授权
-
 **请求URL：**
-
-- `/api/authorization`
 
 **请求方式：**
 
-- POST(带token)
+**参数：**
 
-**参数**：
+**返回值：**
 
-```json
-"data"：{
-    ""
-}
-```
+### 企业信息审核
 
+**简要描述：**
 
+**请求URL：**
+
+**请求方式：**
+
+**参数：**
 
 **返回值：**
 
@@ -2448,3 +2258,51 @@ token 保存时间待定
 |   person_qq   | String |     QQ号      |
 | person_wechat | String |    微信号     |
 |     note      | String |     备注      |
+
+## 众创空间分配
+
+**简要描述：**
+
+**请求URL：**
+
+**请求方式：**
+
+**参数：**
+
+**返回值：**
+
+## 获取所有房间状况
+
+**简要描述：**
+
+**请求URL：**
+
+**请求方式：**
+
+**参数：**
+
+**返回值：**
+
+## 新增房间
+
+**简要描述：**
+
+**请求URL：**
+
+**请求方式：**
+
+**参数：**
+
+**返回值：**
+
+## 删除已有房间
+
+**简要描述：**
+
+**请求URL：**
+
+**请求方式：**
+
+**参数：**
+
+**返回值：**
