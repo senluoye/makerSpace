@@ -46,8 +46,6 @@ public class AdminController {
         return adminService.getSpaceById(id);
     }
 
-<<<<<<< HEAD
-=======
     /**
      * 删除某一个企业入园申请
      * @return
@@ -80,6 +78,5 @@ public class AdminController {
     private void getStatisticalForm(HttpServletResponse response) throws Exception {
         adminService.downLoadWord(response, adminService.getDownLoadForm());
     }
->>>>>>> bef245fdc77bbd206b518da86908ca94fef5e2d7
 
 }

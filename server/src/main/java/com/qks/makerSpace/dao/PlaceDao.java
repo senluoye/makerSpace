@@ -1,6 +1,6 @@
 package com.qks.makerSpace.dao;
 
-import com.qks.makerSpace.entity.Place;
+import com.qks.makerSpace.entity.database.Place;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;

@@ -26,6 +26,21 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
+    public Map<String, Object> getAllOldDetails() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getOldById(String id) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> deleteOldById(JSONObject map) {
+        return null;
+    }
+
+    @Override
     public Map<String, Object> getAllDetails() {
 
         List<All> dataOne = adminDao.getAllOldDetails();
@@ -82,8 +97,6 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
-<<<<<<< HEAD
-=======
 
     /**
      * 获取导出表的信息
@@ -120,5 +133,4 @@ public class AdminServiceImpl implements AdminService {
             throw new ServiceException("导出信息表失败");
         }
     }
->>>>>>> bef245fdc77bbd206b518da86908ca94fef5e2d7
 }
