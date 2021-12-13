@@ -37,8 +37,8 @@ public class TokenInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest httpServletRequest,
-                           HttpServletResponse httpServletResponse,
+    public void postHandle(@NotNull HttpServletRequest httpServletRequest,
+                           @NotNull HttpServletResponse httpServletResponse,
                            Object o, ModelAndView modelAndView) {
         System.out.println("请求方法: " + o.toString());
     }
