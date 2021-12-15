@@ -70,5 +70,5 @@ public interface AdminDao {
     Map<String, Object> deleteSpaceById(String id);
 
     @Update("update audit set administrator_audit = true where audit_id = #{id}")
-    void updateAuditById(String id);
+    Integer updateAuditById(String id);
 }

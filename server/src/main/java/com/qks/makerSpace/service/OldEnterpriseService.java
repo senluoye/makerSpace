@@ -15,5 +15,6 @@ public interface OldEnterpriseService {
     Map<String, Object> updateOldEnterprise(String token,
                                             JSONObject map,
                                             MultipartFile[] files) throws Exception;
+    Map<String, Object> oldEnterpriseDemand(JSONObject map) throws ServiceException;
 
 }

@@ -32,10 +32,17 @@ public interface OldEnterpriseDao {
             "where old_id = #{oldId}")
     Integer updateOld(Old old);
 
+    @Update("update old set state = #{state}, submit_time = #{submitTime}, " +
+            "room = #{room}, inapply_id = #{inapply_id} " +
+            "where old_id = #{oldId}")
+    Integer updateOldForDemand(String oldId, String state, String submitTime, String room, String inapplyId);
+
+    /**
+     * 以下是关于插入Old相关子表的操作
+     */
     @Insert("insert into old_mainperson (id, name, born, job, school, title, background, professional, old_mainperson_id)" +
             "values (#{id}, #{oldMainpersonId}, #{name}, #{born}, #{job}, #{school}, #{title}, #{background}, #{professional})")
     Integer insertOldMainPeople(OldMainPerson oldMainPerson);
-
 
     @Insert("insert into old_project (id, project_brief, advantage, market, energy, pollution, noise, others, old_project_id) " +
             "values (#{id}, #{project_brief}, #{advantage}, #{market}, #{energy}, #{pollution}, #{noise}, #{others}, #{oldProjectId});")
@@ -53,10 +60,13 @@ public interface OldEnterpriseDao {
             "VALUES (#{id}, #{name}, #{stake}, #{nature}, #{oldShareholderId})")
     Integer insertOldShareholder(OldShareholder oldShareholder);
 
-    @Insert("insert into audit(id, administrator_audit, leadership_audit) " +
-            "values (#{id}, #{administratorAudit}, #{leadershipAudit})")
-    Integer insertAudit(Audit audit);
+    @Insert("insert into old_demand(id, lease_area, position, lease, floor, electric, water, web, others, old_demand_id) " +
+            "VALUES (#{id}, #{leaseArea}, #{position}, #{lease}, #{floor}, #{electric}, #{water}, #{web}, #{others}, #{oldDemandId}) ")
+    Integer addOldDemand(OldDemand oldDemand);
 
+    /**
+     * 以下是关于查询Old相关子表的操作
+     */
     @Select("select * from old_demand where old_demand_id = #{id}")
     List<OldDemand> getOldDemandById(String id);
 
@@ -77,4 +87,8 @@ public interface OldEnterpriseDao {
 
     @Update("update user_company set credit_code = #{id} where user_id = #{userId}")
     Integer updateUserCompany(String userId, String id);
+
+    @Insert("insert into audit(audit_id, administrator_audit, leadership_audit) " +
+            "values (#{id}, #{administratorAudit}, #{leadershipAudit})")
+    Integer insertAudit(Audit audit);
 }

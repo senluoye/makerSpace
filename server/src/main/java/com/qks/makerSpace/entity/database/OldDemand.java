@@ -6,7 +6,7 @@ import lombok.Data;
 public class OldDemand {
     private String id;
     private String oldDemandId;
-    private String lease_area;
+    private String leaseArea;
     private String position;
     private String lease;
     private String floor;

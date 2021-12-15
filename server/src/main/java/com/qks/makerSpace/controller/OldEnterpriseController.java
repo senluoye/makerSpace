@@ -41,13 +41,23 @@ public class OldEnterpriseController {
     }
 
     /**
-     * 租赁缴费
+     * 缴费
      * @param map
      * @return
      */
     @RequestMapping(value = "fee", method = RequestMethod.POST)
     private Map<String, Object> oldEnterprisePay(@RequestBody Map<String, Object> map) {
         return oldEnterpriseService.oldEnterprisePay(map);
+    }
+
+    /**
+     * 科技园场地申请
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/old/demand", method = RequestMethod.POST)
+    private Map<String, Object> oldEnterpriseDemand(@RequestBody JSONObject map) throws ServiceException {
+        return oldEnterpriseService.oldEnterpriseDemand(map);
     }
 
     /**

@@ -11,7 +11,7 @@ public interface AdminService {
     Map<String, Object> getOldById(String id);
     Map<String, Object> deleteOldById(JSONObject map);
     Map<String, Object> getAllDetails();
-    Map<String, Object> gettechnologyById(String id);
+    Map<String, Object> getTechnologyById(String id);
     Map<String, Object> getSpaceById(String id);
     Map<String, Object> deletetechnologyById(String id);
     Map<String, Object> deleteSpaceById(String id);
