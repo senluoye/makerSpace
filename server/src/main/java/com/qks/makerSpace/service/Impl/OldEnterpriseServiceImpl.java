@@ -46,7 +46,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setName(map.get("name").toString());
         old.setRepresent(map.get("represent").toString());
         old.setRepresentPhone(map.get("representPhone").toString());
-        old.setRegisterAddress(map.get("registerAddress").toString());
         old.setRepresentEmail(map.get("representEmail").toString());
         old.setAgent(map.get("agent").toString());
         old.setAgentPhone(map.get("agentPhone").toString());

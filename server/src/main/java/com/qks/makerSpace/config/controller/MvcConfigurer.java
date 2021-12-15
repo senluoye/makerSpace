@@ -14,7 +14,7 @@ public class MvcConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //将加一个拦截器，检查会话，设置的请求都经过此拦截器
         registry.addInterceptor(new TokenInterceptor())
-                .excludePathPatterns("/api/register/**","/api/new/**","/api/old/**","/api/login/**","/api/**")
+                .excludePathPatterns("/api/**")
                 .addPathPatterns("/api/**");
     }
 
