@@ -10,6 +10,9 @@ import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.OldParserUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -95,13 +98,42 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
-     * 租赁缴费
+     * 缴费
      * @param map
      * @return
      */
     @Override
     public Map<String, Object> oldEnterprisePay(Map<String, Object> map) {
         return null;
+    }
+
+    /**
+     * 科技园场地申请
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/old/demand", method = RequestMethod.POST)
+    public Map<String, Object> oldEnterpriseDemand(@RequestBody JSONObject map) throws ServiceException {
+        String id = UUID.randomUUID().toString();
+        String creditCode = map.getString("creditCode");
+
+        OldDemand oldDemand = new OldDemand();
+
+        oldDemand.setLeaseArea(map.getString("leaseArea"));
+        oldDemand.setPosition(map.getString("position"));
+        oldDemand.setLease(map.getString("lease"));
+        oldDemand.setFloor(map.getString("floor"));
+        oldDemand.setElectric(map.getString("electric"));
+        oldDemand.setWater(map.getString("water"));
+        oldDemand.setWeb(map.getString("web"));
+        oldDemand.setOthers(map.getString("others"));
+
+//        if (oldEnterpriseDao.addOldDemand(oldDemand) > 0
+//                && oldEnterpriseDao.updateOldForDemand(oldId, state, submitTime, room, inapplyId) > 0) {
+//            return MyResponseUtil.getResultMap(new HashMap<>().put("", creditCode), 0, "success");
+//        }
+
+        throw new ServiceException("插入数据失败");
     }
 
     /**

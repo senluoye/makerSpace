@@ -474,7 +474,7 @@ token 保存时间待定
     "way":"<String>",									//入园方式
     "business":"<String>",									//入园业务
     
-    "oldDemand":[],											//注意，这部分信息应当在申请场地之后再进行更新，所以直接传一个空数组即可
+    "oldDemand":[],										//另外填写					
     
     "oldShareholder":[{
         "name":"<String>",									//股东姓名或名称
@@ -749,9 +749,63 @@ token 保存时间待定
 
 **参数：**
 
-
+```json
+{
+    "creditCode":"<String>",					//表示迁入和独立企业唯一ID
+    ......
+}
+```
 
 **返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+## 申请房间
+
+**简要描述：**科技园场地申请
+
+**请求URL：**
+
+- `/api/old/demand`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+```json
+{
+    "leaseArea":"<String>",							//租赁面积(平方米)
+    "position":"<String>",							//位置需求
+    "lease":"<String>",								//租期(年)
+    "floor":"<String>",								//楼层需求
+    "electric":"<String>",							//电力需求
+    "water":"<String>",								//给排水需求
+    "web":"<String>",								//网络需求
+    "others":"<String>"								//其他需求
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
+```
 
 
 
@@ -1357,14 +1411,12 @@ token 保存时间待定
     "data":[{
         "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
-<<<<<<< HEAD
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",										//法人代表邮箱地址
         "state":"<String>",															//授权状态
         "room":"<String>",														//房间号
-=======
         "name":"<String>",												//申请入驻企业名称
     	"represent":"<String>",											//法人代表
     	"representPhone":"<String>",									//法人代表联系电话
@@ -1373,7 +1425,6 @@ token 保存时间待定
         "position":"<String>",											//位置需求
         "floor":"<String>"												//楼层需求
         "describe":"<String>"											//表示众创空间/科技园的申请
->>>>>>> bef245fdc77bbd206b518da86908ca94fef5e2d7
     },{
         "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
@@ -1391,164 +1442,7 @@ token 保存时间待定
 }
 ~~~
 
-### 获取某一个迁入和独立注册企业入园申请
 
-**简要描述：**
-
-获取一个企业的全部信息
-
-**请求URL：**
-
-<<<<<<< HEAD
-- `/api/admin/old/{id}`
-=======
-- `/api/admin/technology/{creditCode}`
->>>>>>> bef245fdc77bbd206b518da86908ca94fef5e2d7
-
-**请求方式：**
-
-- GET（带token）
-
-**返回值：**
-
-~~~json
-{
-	"data":{
-	    "registerAddress":"<String>",									//注册地址
-	    "license":"<File>",															//新的营业执照上传
-	    "registerCapital":"<String>",										//注册资本（万元）
-	    "realAddress":"<String>",											//实际经营地址
-	    "realCapital":"<String>",											//实收资本（万元）
-	    "lastIncome":"<String>",											//上年度经营收入
-	    "lastTax":"<String>",													//上年度税收
-	    "employees":"<String>",												//员工人数
-	    "originNumber":"<String>",										//初始入园人数
-	    "setDate":"<String>",												//成立日期
-	    "nature":"<String>",													//企业性质
-	    "certificate":"<File>",													//教师需要上传教师资格证/学生需要上传学生证
-	    "involved":"<String>",												//企业性质
-	    "mainBusiness":"<String>",										//主营业务
-	    "way":"<String>",														//入园方式
-	    "business":"<String>",												//入园业务
-	    "Demand":[{
-	        "leaseArea":"<String>",											//租赁面积（平方米）
-	        "position":"<String>",											//位置需求
-	        "lease":"<String>",												//租期（年）
-	        "floor":"<String>",												//楼层需求
-	        "electric":"<String>",											//电力需求
-	        "water":"<String>",												//给排水需求
-	        "web":"<String>",												//网络需求
-	        "others":"<String>",											//其他需求
-	    },{
-	        "leaseArea":"<String>",
-	        "position":"<String>",
-	        "lease":"<String>",
-	        "floor":"<String>",
-	        "electric":"<String>",
-	        "water":"<String>",
-	        "web":"<String>",
-	        "others":"<String>",
-	    }
-	    	 ......
-	    ],
-	    "Shareholder":[{
-	        "name":"<String>",												//股东姓名或名称
-	        "stake":"<String>",												//股份比例
-	        "nature":"<String>",											//股东性质
-		},{
-	        "name":"<String>",
-	        "stake":"<String>",
-	        "nature":"<String>",
-		}
-	    	......
-	    ],
-	     
-	    "MainPerson":[{
-	        "name":"<String>",												//姓名
-	        "born":"<String>",												//出生年月
-	        "job":"<String>",												//职务
-	        "school":"<String>",										//毕业学校
-	        "title":"<String>",												//职称
-	        "background":"<String>",									//学历
-	        "professional":"<String>",									//专业
-	    },{
-	        "name":"<String>",
-	        "born":"<String>",
-	        "job":"<String>",
-	        "school":"<String>",
-	        "title":"<String>",
-	        "background":"<String>",
-	        "professional":"<String>",
-	    }
-	    	......              
-	    ],
-	
-	   "Project":[{
-	        "projectBrief":"<String>",									//项目简介
-	        "advantage":"<String>",									//竞争优势分析
-	        "market":"<String>",										//市场前景分析
-	        "energy":"<String>",									//能耗分析
-	        "pollution":"<String>",									//污染分析
-	        "noise":"<String>",											//噪音分析
-	        "others":"<String>",									//其他分析
-	    },{
-	        "projectBrief":"<String>",
-	        "advantage":"<String>",
-	        "market":"<String>",
-	        "energy":"<String>",
-	        "pollution":"<String>",
-	        "noise":"<String>",
-	        "others":"<String>",
-	    }
-	         ......     
-	    ],
-	       
-		"Intellectual":[{
-	        "name":"<String>",												//名称
-	        "kind":"<String>",												//类别
-	        "applyTime":"<String>",										//申请时间
-	        "approvalTime":"<String>",									//批准时间
-	        "intellectualFile":"<File>",									//知识产权证书等扫描文件
-	    },{
-	        "name":"<String>",
-	        "kind":"<String>",
-	        "applyTime":"<String>",
-	        "approvalTime":"<String>",
-	        "intellectualFile":"<File>",
-	    }
-			......
-		],
-	
-	    "Funding":[{
-	    	"name":"<String>",								//项目奖项名称
-	        "level":"<String>",								//级别
-	        "time":"<String>",								//时间
-	        "grants":"<String>",								//获得政府资助金额
-	        "award":"<String>",								//颁奖部门/时间
-	    },{
-	    	"name":"<String>",
-	        "level":"<String>",
-	        "time":"<String>",
-	        "grants":"<String>",
-	        "award":"<String>",
-	    }
-	        ......
-	    ],
-            
-	    "cooperation":"<String>",								//以往和桂电的合作情况
-	    "suggestion":"<String>",								//科技园意见
-	    "note":"<String>",    								//备注
-	    "state":"<String>"										//状态
-        "room":"<String>"									//房间号
-	},
-	"code":0,
-	"msg":"success"
-}
-~~~
-
-
-
-<<<<<<< HEAD
 ### 删除某一个迁入和独立注册企业入园申请
 =======
 获取某一个企业众创空间申请
@@ -1814,7 +1708,6 @@ token 保存时间待定
 
 **请求URL：**
 
-<<<<<<< HEAD
 - `/api/admin/new`
 =======
 - `/api/admin/space/{creditCode}`

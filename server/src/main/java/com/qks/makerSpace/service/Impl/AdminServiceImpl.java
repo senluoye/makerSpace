@@ -2,13 +2,10 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
-import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.All;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
-import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
-import com.qks.makerSpace.util.NewParserUtils;
 import com.qks.makerSpace.util.WordChangeUtils;
 import org.springframework.stereotype.Service;
 
@@ -45,7 +42,6 @@ public class AdminServiceImpl implements AdminService {
 
         List<All> dataOne = adminDao.getAllOldDetails();
         List<All> dataTwo = adminDao.getAllNewDetails();
-
         List<All> data = new ArrayList<>(dataOne);
         data.addAll(dataTwo);
 
@@ -53,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map<String, Object> gettechnologyById(String id) {
+    public Map<String, Object> getTechnologyById(String id) {
         Map<String, Object> data;
         Map<String, Object> temp = adminDao.getOld(id);
 
@@ -110,10 +106,13 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Map<String, Object> agreeById(JSONObject map) {
+        String creditCode = map.getString("creditCode");
 
-        adminDao.updateAuditById(map.getString("creditCode"));
+        if (adminDao.updateAuditById(creditCode) > 0) {
 
-        return MyResponseUtil.getResultMap(map.getString("creditCode"), 0, "success");
+        }
+
+        return MyResponseUtil.getResultMap(new HashMap<>().put("creditCode", creditCode), 0, "success");
     }
 
     /**

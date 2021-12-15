@@ -7,8 +7,6 @@ import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.RegisterService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -29,17 +27,21 @@ public class RegisterServiceImpl implements RegisterService {
      */
     @Override
     public Map<String, Object> addNewUser(JSONObject map) throws ServiceException {
-        User user = new User();
+        String name = map.getString("name");
+        String password = map.getString("password");
         String userId = UUID.randomUUID().toString();
+        String email = map.getString("email");
 
+        if (name.equals("admin"))
+            throw new ServiceException("用户名违法");
+
+        User user = new User();
         user.setUserId(userId);
-        user.setPassword(map.getString("password"));
-        user.setName(map.getString("name"));
-        user.setEmail(map.getString("email"));
+        user.setName(name);
+        user.setPassword(password);
+        user.setEmail(email);
 
-        List<User> users = registerDao.getUserByName(map.getString("name"));
-
-        if (users != null)
+        if (registerDao.getUserByName(map.getString("name")) != null)
             throw new ServiceException("用户已存在");
 
         if (registerDao.addNewUser(user) < 1 && registerDao.updateUserCompany(userId) < 1)

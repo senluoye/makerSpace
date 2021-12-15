@@ -34,7 +34,7 @@ public class AdminController {
      */
     @RequestMapping(value = "technology/{id}", method = RequestMethod.GET)
     private Map<String, Object> getCompanyById(@PathVariable String id) {
-        return adminService.gettechnologyById(id);
+        return adminService.getTechnologyById(id);
     }
 
     /**
@@ -65,7 +65,7 @@ public class AdminController {
     }
 
     /**
-     * 删除某一个企业众创空间申请
+     * 同意某一个企业众创空间申请
      * @return
      */
     @RequestMapping(value = "technology", method = RequestMethod.POST)
