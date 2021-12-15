@@ -28,6 +28,8 @@ public class LoginServiceImpl implements LoginService, Serializable {
     @Override
     public Map<String, Object> LeaderLogin(Map<String, Object> map) {
 
+        System.out.println(map.toString());
+
         String name = map.get("name").toString();
         String password = map.get("password").toString();
 
@@ -55,7 +57,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
      */
     @Override
     public Map<String, Object> AdminLogin(Map<String, Object> map) {
-
+        System.out.println(map.toString());
         String name = map.get("name").toString();
         String password = map.get("password").toString();
 

@@ -58,4 +58,10 @@ public class PlaceServiceImpl implements PlaceService {
         } else throw new ServiceException("删除房间失败");
     }
 
+    @Override
+    public Map<String, Object> applyPlace(JSONObject map) {
+        return null;
+    }
+
+
 }

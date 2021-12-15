@@ -25,7 +25,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "leader", method = RequestMethod.POST)
-    private Map<String, Object> LeaderLogin(@RequestParam Map<String, Object> map) {
+    private Map<String, Object> LeaderLogin(@RequestBody Map<String, Object> map) {
         return loginService.LeaderLogin(map);
     }
 
@@ -35,7 +35,7 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "admin", method = RequestMethod.POST)
-    private Map<String, Object> AdminLogin(@RequestParam Map<String, Object> map) {
+    private Map<String, Object> AdminLogin(@RequestBody Map<String, Object> map) {
         return loginService.AdminLogin(map);
     }
 

@@ -33,6 +33,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> oldRegister(Map<String, Object> map) {
         Old old = new Old();
 
+        System.out.println(map.toString());
+
         String oldId = UUID.randomUUID().toString();
         old.setOldId(oldId);
         old.setCreditCode(map.get("creditCode").toString());
