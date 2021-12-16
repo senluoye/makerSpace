@@ -12,9 +12,9 @@ import java.util.List;
 public interface OldEnterpriseDao {
 
     @Insert("insert into old(old_id, credit_code, organization_code, name, password, " +
-            "represent, represent_phone, register_address, represent_email, agent, agent_phone, agent_email)" +
+            "represent, represent_phone, represent_email, agent, agent_phone, agent_email)" +
             "VALUES (#{oldId}, #{creditCode}, #{organizationCode}, #{name}, #{password}, #{represent}, " +
-            "#{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")
+            "#{representPhone}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")
     Integer oldRegister(Old old);
 
     @Select("")

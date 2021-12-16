@@ -29,13 +29,15 @@ public class PlaceController {
         return placeService.getDescribePlace(map);
     }
 
-    @RequestMapping(value = "add",method = RequestMethod.POST)
+    @RequestMapping(value = "room",method = RequestMethod.POST)
     private Map<String, Object> addPlace(@RequestBody JSONObject map) throws ServiceException {
         return placeService.addPlace(map);
     }
 
-    @RequestMapping(value = "delete",method = RequestMethod.DELETE)
+    @RequestMapping(value = "room",method = RequestMethod.DELETE)
     private Map<String, Object> deletePlace(@RequestBody JSONObject map) throws ServiceException {
-        return placeService.addPlace(map);
+        return placeService.deletePlace(map);
     }
+
+
 }

@@ -2302,3 +2302,144 @@ token 保存时间待定
 |   person_qq   | String |     QQ号      |
 | person_wechat | String |    微信号     |
 |     note      | String |     备注      |
+
+## 获取全部房间
+
+**简要描述：**
+
+获取全部众创空间信息
+
+**请求URL：**
+
+- `/api/place/total`
+
+**请求方式：**
+
+- GET
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "room":"<String>",
+        "describe":"<String>"
+    },{
+        "room":"<String>",
+        "describe":"<String>"
+    }
+         ……
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+## 获取指定的房间
+
+**描述：**
+
+获取指定（空或者满）的房间
+
+**请求方式：**
+
+- `/api/place/describe`
+
+**请求方式：**
+
+- GET
+
+**参数：**
+
+~~~json
+{
+    "describe":"<String>"                                            // 1代表已满，0 代表没有
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "room":"<String>",
+        "describe":"<String>"
+    },{
+        "room":"<String>",
+        "describe":"<String>"
+    }
+         ……
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+## 添加房间
+
+**描述：**
+
+**请求方式：**
+
+- `/api/place/room`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "room":"<String>"                                           //房间号
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 删除房间
+
+**描述：**
+
+**请求方式：**
+
+- `/api/place/room`
+
+**请求方式：**
+
+- DELETE
+
+**参数：**
+
+~~~json
+{
+    "room":"<String>"                                           //房间号
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+## 分配房间
+
