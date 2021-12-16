@@ -3,9 +3,11 @@ package com.qks.makerSpace.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.MyResponseUtil;
+import com.sun.net.httpserver.spi.HttpServerProvider;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
@@ -63,9 +65,9 @@ public class NewEnterpriseController {
      * @return
      */
     @RequestMapping(value = "newEnterprise", method = RequestMethod.PUT)
-    private Map<String, Object> updateNewEnterprise(@RequestHeader String token,
+    private Map<String, Object> updateNewEnterprise(HttpServletRequest httpServletRequest,
                                                     @RequestPart("map") Map<String, Object> map,
                                                     @RequestParam("file") MultipartFile[] file) throws Exception {
-        return newEnterpriseService.updateNewEnterprise(token, map, file);
+        return newEnterpriseService.updateNewEnterprise(httpServletRequest.getHeader("token"), map, file);
     }
 }

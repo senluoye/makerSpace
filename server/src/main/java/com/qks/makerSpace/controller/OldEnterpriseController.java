@@ -6,6 +6,7 @@ import com.qks.makerSpace.service.OldEnterpriseService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.Map;
 
@@ -66,11 +67,11 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
-    private Map<String, Object> updateOldEnterprise(@RequestHeader String token,
+    private Map<String, Object> updateOldEnterprise(HttpServletRequest httpServletRequest,
                                                     @RequestPart("map") JSONObject map,
                                                     @RequestParam("file") MultipartFile[] file) throws Exception {
 
-        return oldEnterpriseService.updateOldEnterprise(token, map, file);
+        return oldEnterpriseService.updateOldEnterprise(httpServletRequest.getHeader("token"), map, file);
     }
 
 }
