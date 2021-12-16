@@ -54,6 +54,9 @@ public interface NewEnterpriseDao {
     @Select(" select * from new")
     List<News> getAllNew();
 
+    @Select("select * from new where credit_code = #{creditCode}")
+    List<News> getNewsByCreditCode(String creditCode);
+
     @Select(" select * from new_demand where new_demand_id = #{newDemandId}")
     List<NewDemand> getNewDemandById(String newDemandId);
 

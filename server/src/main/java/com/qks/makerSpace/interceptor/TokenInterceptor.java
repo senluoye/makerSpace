@@ -47,7 +47,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest,
                                 HttpServletResponse httpServletResponse,
-                                Object o, Exception e) {
+                                @NotNull Object o, Exception e) {
     }
 }
 

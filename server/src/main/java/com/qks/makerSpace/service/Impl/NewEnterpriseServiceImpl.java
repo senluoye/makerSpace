@@ -8,6 +8,7 @@ import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.NewParserUtils;
+import org.springframework.jdbc.datasource.init.CannotReadScriptException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,12 +70,16 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      */
     @Override
     public Map<String, Object> newRegister(Map<String, Object> map, MultipartFile[] file) throws IOException{
+        String creditCode = map.get("creditCode").toString();
+
+        if (newEnterpriseDao.getNewsByCreditCode(creditCode) != null)
+            throw new ServerException("该用户已经递交公司入驻申请表");
 
         News news = new News();
-
         String newId = UUID.randomUUID().toString();
+
         news.setNewId(newId);
-        news.setCreditCode(map.get("creditCode").toString());
+        news.setCreditCode(creditCode);
         news.setOrganizationCode(map.get("organizationCode").toString());
         news.setPassword(map.get("password").toString());
         news.setName(map.get("name").toString());
@@ -88,7 +93,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setAgentEmail(map.get("agentEmail").toString());
 
         if (newEnterpriseDao.newRegister(news) > 0) {
-            return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id",newId),1,"注册成功");
+            return MyResponseUtil.getResultMap(creditCode, 0, "注册成功");
         } else throw new ServerException("注册失败");
     }
 
@@ -113,6 +118,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
         String id = map.get("id").toString();
+
         News news = NewParserUtils.newsParser(map);
 
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.get("newMainPerson"));

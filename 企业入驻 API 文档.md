@@ -436,6 +436,45 @@ token 保存时间待定
 |   government_grant   | String |                 其中：政府拨款                 |
 |     self_raised      | String |                    企业自筹                    |
 
+## 注册
+
+**简要描述：**
+
+旧企业“注册”，这部分api跟下面的详细信息填写的api一起调。
+
+**请求URL：**
+
+- `/api/old/oldRegister`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+```json
+{
+    "map":{
+    	
+	},
+    "picture":"File[]"											//这部分上传一个文件数组，包括名称预核准通知书、身份证复印件
+}
+```
+
+**返回值：**
+
+请求成功：
+
+~~~json
+{
+    "data":{
+        "creditCode":"<String>",					//表示新成立企业或非独立注册企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
+
 
 
 ## 入园申请表填写
@@ -918,6 +957,56 @@ token 保存时间待定
 |     apply_time      | String |        申请时间        |
 |    approval_time    | String |        批准时间        |
 |  intellectual_file  |  File  | 知识产权证书等扫描文件 |
+
+
+
+## 注册
+
+**简要描述：**
+
+新企业“注册”，这部分api跟下面的详细信息填写的api一起调。
+
+**请求URL：**
+
+- `/api/new/newRegister`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+```json
+{
+    "map":{
+    	"creditCode":"<String>",
+    	"organizationCode":"<String>",
+    	"password":"<String>",
+    	"name":"<String>",
+    	"represent":"<String>",
+    	"representPhone":"<String>",
+    	"representEmail":"<String>",
+    	"agent":"<String>",
+    	"agentPhone":"<String>1",
+    	"agentEmail":"<String>"
+	},
+    "picture":"File[]"											//这部分上传一个文件数组，包括名称预核准通知书、身份证复印件
+}
+```
+
+**返回值：**
+
+请求成功：
+
+~~~json
+{
+    "data":{
+        "creditCode":"<String>",					//表示新成立企业或非独立注册企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
 
 
 
