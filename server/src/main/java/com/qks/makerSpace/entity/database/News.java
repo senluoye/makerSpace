@@ -11,7 +11,7 @@ public class News {
     private String name;
     private byte[] picture;
     private String represent;
-    private String representCard;
+    private byte[] representCard;
     private String representPhone;
     private String representEmail;
     private String agent;

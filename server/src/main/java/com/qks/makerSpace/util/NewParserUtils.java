@@ -9,7 +9,7 @@ public class NewParserUtils {
     public static News newsParser(Map<String, Object> map) {
         News news = new News();
 
-        news.setNewId(map.get("id").toString());
+        news.setNewId(map.get("creditCode").toString());
         news.setRegisterCapital(map.get("registerCapital").toString());
         news.setRealCapital(map.get("realCapital").toString());
         news.setOriginNumber(map.get("originNumber").toString());

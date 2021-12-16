@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.rmi.ServerException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -79,7 +80,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setName(map.get("name").toString());
         news.setPicture(file[0].getBytes());
         news.setRepresent(map.get("represent").toString());
-        news.setRepresentCard(map.get("representCard").toString());
+        news.setRepresentCard(file[1].getBytes());
         news.setRepresentPhone(map.get("representPhone").toString());
         news.setRepresentEmail(map.get("representEmail").toString());
         news.setAgent(map.get("agent").toString());
@@ -88,9 +89,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
         if (newEnterpriseDao.newRegister(news) > 0) {
             return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id",newId),1,"注册成功");
-        } else {
-            return MyResponseUtil.getResultMap(null,0,"注册失败");
-        }
+        } else throw new ServerException("注册失败");
     }
 
     /**
@@ -113,10 +112,9 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                                                    Map<String, Object> map,
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
-
         String id = map.get("id").toString();
-
         News news = NewParserUtils.newsParser(map);
+
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.get("newMainPerson"));
         List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.get("newProject"));
         List<NewIntellectual> newIntellectuals = NewParserUtils.NewIntellectualParser(map.get("newIntellectual"));
@@ -140,7 +138,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             newShareholders.forEach(newEnterpriseDao::insertNewShareholder);
         }
 
-        if (newEnterpriseDao.updateUserCompany(userId, id) < 1)
+        if (newEnterpriseDao.updateUserCompany(userId, news.getCreditCode()) < 1)
             throw new ServiceException("公司绑定失败");
 
         return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id",id),1,"success");

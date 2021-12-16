@@ -23,7 +23,7 @@ public interface NewEnterpriseDao {
     int newRegister(News news);
 
 //  更新提交更多数据
-    @Update("update news " +
+    @Update("update new " +
             "set register_capital = #{registerCapital}, real_capital = #{realCapital}, origin_number = #{originNumber}," +
             "register_time = #{registerTime}, nature = #{nature}, certificate = #{certificate}, involved = #{involved}," +
             "main_business = #{mainBusiness}, business = #{business}, new_shareholder_id = #{newShareholderId}," +
@@ -37,7 +37,7 @@ public interface NewEnterpriseDao {
             "VALUES (#{id}, #{newShareholderId}, #{name}, #{stake}, #{nature})")
     int insertNewShareholder(NewShareholder newShareholder);
 
-    @Insert("insert into old_mainperson (id, new_mainperson_id, name, born, job, school, title, background, professional)" +
+    @Insert("insert into new_mainperson (id, new_mainperson_id, name, born, job, school, title, background, professional)" +
             "VALUES (#{id}, #{newMainpersonId}, #{name}, #{born}, #{job}, #{school}, #{title}, #{background}, #{professional})")
     int insertNewMainPerson(NewMainPerson newMainPerson);
 

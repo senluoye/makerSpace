@@ -1,14 +1,11 @@
 package com.qks.makerSpace.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.MyResponseUtil;
-import com.sun.net.httpserver.spi.HttpServerProvider;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -41,11 +38,11 @@ public class NewEnterpriseController {
      */
     @RequestMapping(value = "newRegister", method = RequestMethod.POST)
     private Map<String, Object> newRegister(@RequestPart("picture") MultipartFile[] file,
-                                            @RequestParam Map<String, Object> map) throws IOException {
+                                            @RequestPart("map") Map<String, Object> map) throws Exception {
         if (file.length == 0) {
             return MyResponseUtil.getResultMap(null,-1,"文件上传失败");
         } else {
-            return newEnterpriseService.newRegister((JSONObject) map,file);
+            return newEnterpriseService.newRegister(map, file);
         }
     }
 
