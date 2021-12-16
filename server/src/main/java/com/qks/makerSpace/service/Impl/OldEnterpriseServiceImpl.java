@@ -202,11 +202,16 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 throw new ServiceException("信息插入失败:audit");
         } else throw new ServiceException("信息插入失败:old");
 
-        if (oldEnterpriseDao.updateUserCompany(userId, creditCode) < 1)
-            throw new ServiceException("公司绑定失败");
+        if (oldEnterpriseDao.selectUserCompany(creditCode) != null) {
+            oldEnterpriseDao.updateUserCompany(userId,creditCode);
+        } else {
+            oldEnterpriseDao.insertUserCompany(userId, creditCode);
+        }
 
-        return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("creditCode", creditCode), 0, "success");
+        Map<String, Object> forMap = new HashMap<>();
+        forMap.put("creditCode",creditCode);
+
+        return MyResponseUtil.getResultMap(forMap, 0, "success");
     }
-
 }
 

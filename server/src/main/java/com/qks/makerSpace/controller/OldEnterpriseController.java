@@ -68,8 +68,7 @@ public class OldEnterpriseController {
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
     private Map<String, Object> updateOldEnterprise(HttpServletRequest httpServletRequest,
                                                     @RequestPart("map") JSONObject map,
-                                                    @RequestParam("file") MultipartFile[] file) throws Exception {
-
+                                                    @RequestPart("file") MultipartFile[] file) throws Exception {
         return oldEnterpriseService.updateOldEnterprise(httpServletRequest.getHeader("token"), map, file);
     }
 

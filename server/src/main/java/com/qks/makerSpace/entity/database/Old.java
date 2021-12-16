@@ -26,7 +26,7 @@ public class Old {
     private String lastTax;
     private String employees;
     private String originNumber;
-    private Timestamp setDate;
+    private String setDate;
     private String nature;
     private byte[] certificate;
     private String involved;

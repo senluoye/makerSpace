@@ -29,7 +29,7 @@ public interface OldEnterpriseDao {
             "  old_shareholder_id = #{oldShareholderId}, old_mainperson_id = #{oldMainpersonId}, " +
             "  old_project_id = #{oldProjectId}, old_intellectual_id = #{oldIntellectualId}," +
             "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, suggestion = #{suggestion}, note = #{note} " +
-            "where old_id = #{oldId}")
+            "where credit_code = #{oldId}")
     Integer updateOld(Old old);
 
     @Update("update old set state = #{state}, submit_time = #{submitTime}, " +
@@ -85,10 +85,17 @@ public interface OldEnterpriseDao {
     @Select("select * from old_intellectual where old_intellectual_id = #{id}")
     List<OldIntellectual> getOldIntellectualById(String id);
 
+    @Select("select user_id from user_company where credit_code = #{creditCode}")
+    String selectUserCompany(String userId);
+
     @Update("update user_company set credit_code = #{creditCode} where user_id = #{userId}")
     Integer updateUserCompany(String userId, String creditCode);
 
+    @Insert("insert into user_company(user_id,credit_code) " +
+            "values (#{userId},#{creditCode})")
+    Integer insertUserCompany(String userId, String creditCode);
+
     @Insert("insert into audit(audit_id, administrator_audit, leadership_audit) " +
-            "values (#{id}, #{administratorAudit}, #{leadershipAudit})")
+            "values (#{auditId}, #{administratorAudit}, #{leadershipAudit})")
     Integer insertAudit(Audit audit);
 }

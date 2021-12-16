@@ -1,6 +1,8 @@
 package com.qks.makerSpace.service.Impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.NewEnterpriseDao;
+import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NewEnterpriseService;
@@ -8,7 +10,6 @@ import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.NewParserUtils;
-import org.springframework.jdbc.datasource.init.CannotReadScriptException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,8 +24,11 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
     private final NewEnterpriseDao newEnterpriseDao;
 
-    public NewEnterpriseServiceImpl(NewEnterpriseDao newEnterpriseDao) {
+    private final OldEnterpriseDao oldEnterpriseDao;
+
+    public NewEnterpriseServiceImpl(NewEnterpriseDao newEnterpriseDao, OldEnterpriseDao oldEnterpriseDao) {
         this.newEnterpriseDao = newEnterpriseDao;
+        this.oldEnterpriseDao = oldEnterpriseDao;
     }
 
     /**
@@ -114,17 +118,16 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      */
     @Override
     public Map<String, Object> updateNewEnterprise(String token,
-                                                   Map<String, Object> map,
+                                                   JSONObject map,
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
-        String id = map.get("id").toString();
+        String creditCode = map.get("creditCode").toString();
 
         News news = NewParserUtils.newsParser(map);
-
-        List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.get("newMainPerson"));
-        List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.get("newProject"));
-        List<NewIntellectual> newIntellectuals = NewParserUtils.NewIntellectualParser(map.get("newIntellectual"));
-        List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.get("newShareholder"));
+        List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.getJSONArray("newMainPerson"));
+        List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.getJSONArray("newProject"));
+        List<NewIntellectual> newIntellectuals = NewParserUtils.NewIntellectualParser(map.getJSONArray("newIntellectual"));
+        List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.getJSONArray("newShareholder"));
 
         news.setNewShareholderId(newShareholders.get(0).getNewShareholderId());
         news.setNewMainpersonId(newMainPeople.get(0).getNewMainpersonId());
@@ -134,20 +137,50 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").toString());
 
         for (int i = 1; i <files.length; i++) {
-            newIntellectuals.get(i).setIntellectualFile(files[i].getBytes());
+            newIntellectuals.get(i - 1).setIntellectualFile(files[i].getBytes());
         }
 
-        if (newEnterpriseDao.updateNew(news) > 0) {
-            newMainPeople.forEach(newEnterpriseDao::insertNewMainPerson);
-            newProjects.forEach(newEnterpriseDao::insertNewProject);
-            newIntellectuals.forEach(newEnterpriseDao::insertNewIntellectual);
-            newShareholders.forEach(newEnterpriseDao::insertNewShareholder);
+        if(newEnterpriseDao.updateNew(news) > 0) {
+            for(NewMainPerson newMainPerson : newMainPeople) {
+                if(newEnterpriseDao.insertNewMainPerson(newMainPerson) <= 0) {
+                    throw new ServiceException("信息插入失败:newMainPeople");
+                }
+            }
+            for(NewShareholder newShareholder : newShareholders) {
+                if(newEnterpriseDao.insertNewShareholder(newShareholder) <= 0) {
+                    throw new ServiceException("信息插入失败:newShareholder");
+                }
+            }
+            for(NewProject newProject : newProjects) {
+                if(newEnterpriseDao.insertNewProject(newProject) <= 0) {
+                    throw new ServiceException("信息插入失败:newProject");
+                }
+            }
+            for(NewIntellectual newIntellectual : newIntellectuals) {
+                if(newEnterpriseDao.insertNewIntellectual(newIntellectual) <= 0) {
+                    throw new ServiceException("信息插入失败:newIntellectual");
+                }
+            }
+
+            Audit audit = new Audit();
+            audit.setAuditId(creditCode);
+            audit.setAdministratorAudit(false);
+            audit.setLeadershipAudit(false);
+
+            if (oldEnterpriseDao.insertAudit(audit) <= 0)
+                throw new ServiceException("信息插入失败:audit");
+        } else throw new ServiceException("信息插入失败:new");
+
+        if (oldEnterpriseDao.selectUserCompany(creditCode) != null) {
+            oldEnterpriseDao.updateUserCompany(userId,creditCode);
+        } else {
+            oldEnterpriseDao.insertUserCompany(userId, creditCode);
         }
 
-        if (newEnterpriseDao.updateUserCompany(userId, news.getCreditCode()) < 1)
-            throw new ServiceException("公司绑定失败");
+        Map<String, Object> forMap = new HashMap<>();
+        forMap.put("creditCode",creditCode);
 
-        return MyResponseUtil.getResultMap(new HashMap<String, Object>().put("id",id),1,"success");
+        return MyResponseUtil.getResultMap(forMap, 0, "success");
     }
 
 }

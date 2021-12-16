@@ -1,12 +1,14 @@
 package com.qks.makerSpace.util;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.entity.database.*;
 
 import java.util.*;
 
 public class NewParserUtils {
 
-    public static News newsParser(Map<String, Object> map) {
+    public static News newsParser(JSONObject map) {
         News news = new News();
 
         news.setNewId(map.get("creditCode").toString());
@@ -14,6 +16,7 @@ public class NewParserUtils {
         news.setRealCapital(map.get("realCapital").toString());
         news.setOriginNumber(map.get("originNumber").toString());
         news.setRegisterTime(map.get("registerTime").toString());
+        news.setNature(map.get("nature").toString());
         news.setInvolved(map.get("involved").toString());
         news.setMainBusiness(map.get("mainBusiness").toString());
         news.setBusiness(map.get("business").toString());
@@ -23,43 +26,40 @@ public class NewParserUtils {
         return news;
     }
 
-    public static List<NewShareholder> NewShareholdersParser(Object obj) throws IllegalAccessException {
-        List<Object> list = ChangeUtils.castList(obj,Object.class);
+    public static List<NewShareholder> NewShareholdersParser(JSONArray obj){
         List<NewShareholder> resultList = new ArrayList<>();
         String NewShareholderId = UUID.randomUUID().toString();
 
-        for (Object tempObj : list) {
-            Map<String, Object> map = ChangeUtils.getObjectToMap(tempObj);
-
+        for (int i = 0; i < obj.size(); i++) {
             NewShareholder newShareholder = new NewShareholder();
+
             newShareholder.setId(UUID.randomUUID().toString());
             newShareholder.setNewShareholderId(NewShareholderId);
-            newShareholder.setName(map.get("name").toString());
-            newShareholder.setStake(map.get("stake").toString());
-            newShareholder.setNature(map.get("nature").toString());
+            newShareholder.setName(obj.getJSONObject(i).getString("name"));
+            newShareholder.setStake(obj.getJSONObject(i).getString("stake"));
+            newShareholder.setNature(obj.getJSONObject(i).getString("nature"));
 
             resultList.add(newShareholder);
         }
         return resultList;
     }
 
-    public static List<NewMainPerson> NewMainPersonParser(Object obj) throws IllegalAccessException {
-        List<Object> list = ChangeUtils.castList(obj, Object.class);
+    public static List<NewMainPerson> NewMainPersonParser(JSONArray obj){
         List<NewMainPerson> resultList = new ArrayList<>();
         String NewMainPersonId = UUID.randomUUID().toString();
 
-        for (Object tempObj : list) {
-            Map<String, Object> map = ChangeUtils.getObjectToMap(tempObj);
-
+        for (int i = 0; i < obj.size(); i++) {
             NewMainPerson newMainPerson = new NewMainPerson();
+
             newMainPerson.setId(UUID.randomUUID().toString());
             newMainPerson.setNewMainpersonId(NewMainPersonId);
-            newMainPerson.setName(map.get("person").toString());
-            newMainPerson.setJob(map.get("job").toString());
-            newMainPerson.setSchool(map.get("school").toString());
-            newMainPerson.setTitle(map.get("title").toString());
-            newMainPerson.setBackground(map.get("background").toString());
-            newMainPerson.setProfessional(map.get("professional").toString());
+            newMainPerson.setName(obj.getJSONObject(i).getString("name"));
+            newMainPerson.setBorn(obj.getJSONObject(i).getString("born"));
+            newMainPerson.setJob(obj.getJSONObject(i).getString("job"));
+            newMainPerson.setSchool(obj.getJSONObject(i).getString("school"));
+            newMainPerson.setTitle(obj.getJSONObject(i).getString("title"));
+            newMainPerson.setBackground(obj.getJSONObject(i).getString("background"));
+            newMainPerson.setProfessional(obj.getJSONObject(i).getString("professional"));
 
             resultList.add(newMainPerson);
         }
@@ -67,24 +67,22 @@ public class NewParserUtils {
         return resultList;
     }
 
-    public static List<NewProject> NewProjectParser(Object obj) throws IllegalAccessException {
-        List<Object> list = ChangeUtils.castList(obj, Object.class);
+    public static List<NewProject> NewProjectParser(JSONArray obj) {
         List<NewProject> resultList = new ArrayList<>();
         String NewProjectId = UUID.randomUUID().toString();
 
-        for (Object tempObj : list) {
-            Map<String, Object> map = ChangeUtils.getObjectToMap(tempObj);
-
+        for (int i = 0; i < obj.size(); i++) {
             NewProject newProject = new NewProject();
+
             newProject.setId(UUID.randomUUID().toString());
             newProject.setNewProjectId(NewProjectId);
-            newProject.setProjectBrief(map.get("projectBrief").toString());
-            newProject.setAdvantage(map.get("advantage").toString());
-            newProject.setMarket(map.get("market").toString());
-            newProject.setEnergy(map.get("energy").toString());
-            newProject.setPollution(map.get("pollution").toString());
-            newProject.setNoise(map.get("noise").toString());
-            newProject.setOthers(map.get("others").toString());
+            newProject.setProjectBrief(obj.getJSONObject(i).getString("projectBrief"));
+            newProject.setAdvantage(obj.getJSONObject(i).getString("advantage"));
+            newProject.setMarket(obj.getJSONObject(i).getString("market"));
+            newProject.setEnergy(obj.getJSONObject(i).getString("energy"));
+            newProject.setPollution(obj.getJSONObject(i).getString("pollution"));
+            newProject.setNoise(obj.getJSONObject(i).getString("noise"));
+            newProject.setOthers(obj.getJSONObject(i).getString("others"));
 
             resultList.add(newProject);
         }
@@ -92,21 +90,19 @@ public class NewParserUtils {
         return resultList;
     }
 
-    public static List<NewIntellectual> NewIntellectualParser(Object obj) throws IllegalAccessException {
-        List<Object> list = ChangeUtils.castList(obj, Object.class);
+    public static List<NewIntellectual> NewIntellectualParser(JSONArray obj){
         List<NewIntellectual> resultList = new ArrayList<>();
         String NewIntellectualId = UUID.randomUUID().toString();
 
-        for (Object tempObj : list) {
-            Map<String, Object> map = ChangeUtils.getObjectToMap(tempObj);
-
+        for (int i = 0; i < obj.size(); i++) {
             NewIntellectual newIntellectual = new NewIntellectual();
+
             newIntellectual.setId(UUID.randomUUID().toString());
             newIntellectual.setNewIntellectualId(NewIntellectualId);
-            newIntellectual.setName(map.get("name").toString());
-            newIntellectual.setKind(map.get("kind").toString());
-            newIntellectual.setApplyTime(map.get("applyTime").toString());
-            newIntellectual.setApplyTime(map.get("approvalTime").toString());
+            newIntellectual.setName(obj.getJSONObject(i).getString("name"));
+            newIntellectual.setKind(obj.getJSONObject(i).getString("kind"));
+            newIntellectual.setApplyTime(obj.getJSONObject(i).getString("applyTime"));
+            newIntellectual.setApplyTime(obj.getJSONObject(i).getString("approvalTime"));
 
             resultList.add(newIntellectual);
         }
