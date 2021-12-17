@@ -865,41 +865,40 @@ token 保存时间待定
 
 ##### 表名：new（主表）
 
-|      字段名       |  类型  |                    说明                    |
-| :---------------: | :----: | :----------------------------------------: |
-|    credit_code    | String |        统一社会信用代码（18位字符）        |
-| organization_code | String |          组织机构代码企业注册密码          |
-|     password      | String |                    密码                    |
-|       name        | String |               新设立企业名称               |
-|      picture      |  File  |            提供名称预核准通知书            |
-|     represent     | String |                 企业负责人                 |
-|  represent_card   |  File  |              提供身份证复印件              |
-|  represent_phone  | String |             企业负责人联系电话             |
-|  represent_email  | String |             企业负责人邮箱地址             |
-|       agent       | String |                   经办人                   |
-|    agent_phone    | String |               经办人联系电话               |
-|    agent_email    | String |               经办人邮箱地址               |
-| register_capital  | String |                 拟注册资本                 |
-|   real_capital    | String |                实际募集资本                |
-|   origin_number   | String |                初始员工人数                |
-|   register_time   | String |                预计注册日期                |
-|      nature       | String |               拟注册企业性质               |
-|    certificate    |  File  | 教室需要上传教师资格证/学生需要上传学生证  |
-|     involved      | String |                  所属行业                  |
-|   main_business   | String |                  主营业务                  |
-|     business      | String |                  入园业务                  |
-|    new_demand     | String |    园区场地租赁需求  -->到 newDemand 表    |
-|  new_shareholder  | String |      股东构成  -->到 newShareholder表      |
-|  new_mainperson   | String |    主要人员介绍  -->到 newMainPerson表     |
-|    new_project    | String | 入园项目简要介绍和分析  -->到 newProject表 |
-| new_intellectual  | String |   知识产权情况  -->到 newIntellectual表    |
-|    suggestion     | String |                 科技园意见                 |
-|       note        | String |                    备注                    |
-|    submit_time    | String |                  提交时间                  |
-|       room        | String |                   房间号                   |
-|     inApplyId     | String |    众创空间入驻申请书 -->到 InApply 表     |
-|    outApplyId     | String |     科技园退租申请书 -->到 OutApply 表     |
-|                   |        |                                            |
+|      字段名       |  类型  |                             说明                             |
+| :---------------: | :----: | :----------------------------------------------------------: |
+|    credit_code    | String |                 统一社会信用代码（18位字符）                 |
+| organization_code | String |                   组织机构代码企业注册密码                   |
+|     password      | String |                             密码                             |
+|       name        | String |                        新设立企业名称                        |
+|      picture      |  File  |                     提供名称预核准通知书                     |
+|     represent     | String |                          企业负责人                          |
+|  represent_card   |  File  |                       提供身份证复印件                       |
+|  represent_phone  | String |                      企业负责人联系电话                      |
+|  represent_email  | String |                      企业负责人邮箱地址                      |
+|       agent       | String |                            经办人                            |
+|    agent_phone    | String |                        经办人联系电话                        |
+|    agent_email    | String |                        经办人邮箱地址                        |
+| register_capital  | String |                          拟注册资本                          |
+|   real_capital    | String |                         实际募集资本                         |
+|   origin_number   | String |                         初始员工人数                         |
+|   register_time   | String |                         预计注册日期                         |
+|      nature       | String |                        拟注册企业性质                        |
+|    certificate    |  File  |          教室需要上传教师资格证/学生需要上传学生证           |
+|     involved      | String |                           所属行业                           |
+|   main_business   | String |                           主营业务                           |
+|     business      | String |                           入园业务                           |
+|    new_demand     | String |             园区场地租赁需求  -->到 newDemand 表             |
+|  new_shareholder  | String |               股东构成  -->到 newShareholder表               |
+|  new_mainperson   | String |             主要人员介绍  -->到 newMainPerson表              |
+|    new_project    | String |          入园项目简要介绍和分析  -->到 newProject表          |
+| new_intellectual  | String |            知识产权情况  -->到 newIntellectual表             |
+|    suggestion     | String |                          科技园意见                          |
+|       note        | String |                             备注                             |
+|       state       | String | 授权状态（初始为 null，待审核为 0，审核不通过为 1，审核通过为 2） |
+|    submit_time    | String |                           提交时间                           |
+|       room        | String |                            房间号                            |
+|    outApplyId     | String |              科技园退租申请书 -->到 OutApply 表              |
 
 
 
@@ -1488,11 +1487,11 @@ token 保存时间待定
 
 **简要描述：**
 
-返回部分参数
+获取全部未审核的科技园企业部分信息
 
 **请求URL：**
 
-- `/api/admin//all`
+- `/api/admin/technology/all`
 
 **请求方式：**
 
@@ -1510,7 +1509,8 @@ token 保存时间待定
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
         "state":"<String>",															//授权状态
-        "room":"<String>",														//房间号
+        "floor":"<String>" 												//楼层需求
+        "position":"<String>" 											// 位置需求
     },{
         "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
@@ -1519,7 +1519,8 @@ token 保存时间待定
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
         "state":"<String>",															//授权状态
-        "room":"<String>",														//房间号
+        "floor":"<String>" 												//楼层需求
+        "position":"<String>" 											// 位置需求
     },
            ......
     ],
@@ -1534,11 +1535,11 @@ token 保存时间待定
 
 **简要描述：**
 
-返回部分参数
+获取全部未审核的科技园企业部分信息
 
 **请求URL：**
 
-- `/api/admin/all`
+- `/api/admin/space/all`
 
 **请求方式：**
 
@@ -1549,25 +1550,43 @@ token 保存时间待定
 ~~~json
 {
     "data":[{
-        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
-    	"organizationCode":"<String>",									//组织机构代码
-        "name":"<String>",														//申请入驻企业名称
-    	"represent":"<String>",												  //法人代表
-    	"representPhone":"<String>",									 //法人代表联系电话
-    	"representEmail":"<String>",											//法人代表邮箱地址
-        "state":"<String>",															//授权状态
-        "room":"<String>",														//房间号
-    },{
-        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
-    	"organizationCode":"<String>",									//组织机构代码
-        "name":"<String>",														//申请入驻企业名称
-    	"represent":"<String>",												  //法人代表
-    	"representPhone":"<String>",									 //法人代表联系电话
-    	"representEmail":"<String>",											//法人代表邮箱地址
-        "state":"<String>",															//授权状态
-        "room":"<String>",														//房间号
+        "describe": "<String>",             // 注明新/旧企业
+  		"createName": "<String>",			  // 项目/创意名称
+  		"applyTime": "<String>",            // 申请日期
+  		"teamNumber": "<String>",			  // 成员数量
+  		"Person": [{                         // 主要成员信息
+     		"personName": "<String>",
+      		"department": "<String>",
+      		"major": "<String>",
+      		"personPhone": "<String>",
+      		"personQq": "<String>",
+      		"personWechat": "<String>",
+      		"note": "<String>"
+    	},
+    	......
+  		],
+  		"brief": "<String>",                // 项目/创意概况
+  		"help": "<String>"                  // 想获得的帮助
+   	 },{
+        "describe": "<String>",             // 注明新/旧企业
+  		"createName": "<String>",			  // 项目/创意名称
+  		"applyTime": "<String>",            // 申请日期
+  		"teamNumber": "<String>",			  // 成员数量
+  		"Person": [{                         // 主要成员信息
+     		"personName": "<String>",
+      		"department": "<String>",
+      		"major": "<String>",
+      		"personPhone": "<String>",
+      		"personQq": "<String>",
+      		"personWechat": "<String>",
+      		"note": "<String>"
+    	},
+    	......
+  		],
+  		"brief": "<String>",                // 项目/创意概况
+  		"help": "<String>"                  // 想获得的帮助
     },
-           ......
+    ......
     ],
     "code":0,
     "msg":"success"

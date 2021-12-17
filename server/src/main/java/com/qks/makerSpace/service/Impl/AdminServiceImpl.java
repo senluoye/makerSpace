@@ -38,11 +38,10 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 获取全部企业的申请信息
+     * 获取全部科技园企业的申请信息
      */
     @Override
     public Map<String, Object> getAllDetails() {
-
         List<All> dataOne = adminDao.getAllOldDetails();
         List<All> dataTwo = adminDao.getAllNewDetails();
         List<All> data = new ArrayList<>(dataOne);
@@ -88,6 +87,14 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getSpaceById(String InApplyId) {
+        return null;
+    }
+
+    /**
+     * 获取全部众创空间企业的申请信息
+     */
+    @Override
+    public Map<String, Object> getAllSpaceDetails() {
         return null;
     }
 

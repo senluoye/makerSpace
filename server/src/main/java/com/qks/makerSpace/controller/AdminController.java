@@ -21,11 +21,19 @@ public class AdminController {
     }
 
     /**
-     * 获取全部企业的申请信息
+     * 获取全部科技园企业的申请信息
      */
-    @RequestMapping(value = "all", method = RequestMethod.GET)
-    private Map<String, Object> getAllDetails() {
+    @RequestMapping(value = "/technology/all", method = RequestMethod.GET)
+    private Map<String, Object> getTechnologyAllDetails() {
         return adminService.getAllDetails();
+    }
+
+    /**
+     * 获取全部众创空间企业的申请信息
+     */
+    @RequestMapping(value = "/space/all", method = RequestMethod.GET)
+    private Map<String, Object> getSpaceAllDetails() {
+        return adminService.getAllSpaceDetails();
     }
 
     /**
@@ -52,19 +60,18 @@ public class AdminController {
      * 删除某一个企业入园申请
      * @return
      */
-    @RequestMapping(value = "technology/", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteOldById(@PathVariable String creditCode) {
-        return adminService.deletetechnologyById(creditCode);
+    @RequestMapping(value = "technology", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteOldById(@RequestBody JSONObject map) {
+        return adminService.deletetechnologyById(map.getString("creditCode"));
     }
 
     /**
      * 删除某一个企业众创空间申请
-     * @param inApplyId
      * @return
      */
-    @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteSpaceById(@PathVariable String inApplyId) {
-        return adminService.deleteSpaceById(inApplyId);
+    @RequestMapping(value = "space", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteSpaceById(@RequestBody JSONObject map) {
+        return adminService.deleteSpaceById(map.getString("inApplyId"));
     }
 
     /**

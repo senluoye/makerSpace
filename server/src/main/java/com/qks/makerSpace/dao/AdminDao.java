@@ -16,7 +16,8 @@ public interface AdminDao {
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
             "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position " +
             "from old, old_demand " +
-            "where old.old_demand_id = old_demand.id")
+            "where old.old_demand_id = old_demand.id " +
+            "and ")
     List<All> getAllOldDetails();
 
     @Select("select new.credit_code as creditCode, new.organization_code as organizationCode, " +
