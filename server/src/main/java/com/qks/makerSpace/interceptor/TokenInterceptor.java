@@ -31,7 +31,7 @@ public class TokenInterceptor implements HandlerInterceptor {
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         System.out.println("最新的请求: " + df.format(new Date()));
-        System.out.println(httpServletRequest.getHeader("token"));
+//        System.out.println(httpServletRequest.getHeader("token"));
 
         return JWTUtils.verify(httpServletRequest.getHeader("token"));
 

@@ -32,10 +32,9 @@ public interface OldEnterpriseDao {
             "where credit_code = #{oldId}")
     Integer updateOld(Old old);
 
-    @Update("update old set state = #{state}, submit_time = #{submitTime}, " +
-            "room = #{room}, inapply_id = #{inapply_id} " +
-            "where old_id = #{oldId}")
-    Integer updateOldForDemand(String oldId, String state, String submitTime, String room, String inapplyId);
+    @Update("update old set state = #{state}, submit_time = #{submitTime}, room = #{room} " +
+            "where credit_code = #{creditCode}")
+    Integer updateOldForDemand(String creditCode, String state, String submitTime, String room);
 
     /**
      * 以下是关于插入Old相关子表的操作
@@ -60,8 +59,8 @@ public interface OldEnterpriseDao {
             "VALUES (#{id}, #{name}, #{stake}, #{nature}, #{oldShareholderId})")
     Integer insertOldShareholder(OldShareholder oldShareholder);
 
-    @Insert("insert into old_demand(id, lease_area, position, lease, floor, electric, water, web, others, old_demand_id) " +
-            "VALUES (#{id}, #{leaseArea}, #{position}, #{lease}, #{floor}, #{electric}, #{water}, #{web}, #{others}, #{oldDemandId}) ")
+    @Insert("insert into old_demand(lease_area, position, lease, floor, electric, water, web, others, old_demand_id) " +
+            "VALUES (#{leaseArea}, #{position}, #{lease}, #{floor}, #{electric}, #{water}, #{web}, #{others}, #{oldDemandId})")
     Integer addOldDemand(OldDemand oldDemand);
 
     /**

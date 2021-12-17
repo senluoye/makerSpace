@@ -17,7 +17,7 @@ public interface AdminDao {
             "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position, " +
             "audit.administrator_audit as administratorAudit " +
             "from old, old_demand, audit " +
-            "where old.old_demand_id = old_demand.id " +
+            "where old.old_demand_id = old_demand.old_demand_id " +
             "and audit.audit_id = old.credit_code")
     List<All> getAllOldDetails();
 
@@ -25,7 +25,7 @@ public interface AdminDao {
             "new.name as name, new.represent as represent, new.represent_phone as representPhone, " +
             "new.represent_email as representEmail, new_demand.floor as floor, new_demand.position as position " +
             "from new, new_demand " +
-            "where new.new_demand_id = new_demand.id")
+            "where new.new_demand_id = new_demand.new_demand_id")
     List<All> getAllNewDetails();
 
     @Select("select * from old where old_id = #{id}")

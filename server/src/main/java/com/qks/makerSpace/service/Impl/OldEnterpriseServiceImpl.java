@@ -10,12 +10,14 @@ import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.OldParserUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -107,17 +109,23 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
-     * 科技园场地申请
+     * 旧企业科技园场地申请
      * @param map
      * @return
      */
-    @RequestMapping(value = "/old/demand", method = RequestMethod.POST)
-    public Map<String, Object> oldEnterpriseDemand(@RequestBody JSONObject map) throws ServiceException {
-        String id = UUID.randomUUID().toString();
+    @Override
+    public Map<String, Object> oldEnterpriseDemand(JSONObject map) throws ServiceException {
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        String submitTime = dateFormat.format(date);
+
+
+        String room = map.getString("floor") + " - " + map.getString("position");
         String creditCode = map.getString("creditCode");
 
         OldDemand oldDemand = new OldDemand();
 
+        oldDemand.setOldDemandId(UUID.randomUUID().toString());
         oldDemand.setLeaseArea(map.getString("leaseArea"));
         oldDemand.setPosition(map.getString("position"));
         oldDemand.setLease(map.getString("lease"));
@@ -127,12 +135,16 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         oldDemand.setWeb(map.getString("web"));
         oldDemand.setOthers(map.getString("others"));
 
-//        if (oldEnterpriseDao.addOldDemand(oldDemand) > 0
-//                && oldEnterpriseDao.updateOldForDemand(oldId, state, submitTime, room, inapplyId) > 0) {
-//            return MyResponseUtil.getResultMap(new HashMap<>().put("", creditCode), 0, "success");
-//        }
+        if (oldEnterpriseDao.addOldDemand(oldDemand) < 1) {
+            throw new ServiceException("插入数据失败:addOldDemand");
+        }
+        if (oldEnterpriseDao.updateOldForDemand(creditCode, "0", submitTime, room) < 1){
+            throw new ServiceException("插入数据失败:updateOldForDemand");
+        }
 
-        throw new ServiceException("插入数据失败");
+        Map<String, Object> data = new HashMap<>();
+        data.put("creditCode", creditCode);
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     /**

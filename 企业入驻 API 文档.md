@@ -828,6 +828,7 @@ token 保存时间待定
 
 ```json
 {
+    "creditCode":"<String>",						//统一社会信用代码	
     "leaseArea":"<String>",							//租赁面积(平方米)
     "position":"<String>",							//位置需求
     "lease":"<String>",								//租期(年)
@@ -1275,6 +1276,48 @@ token 保存时间待定
 **参数：**
 
 **返回值：**
+
+## 申请房间
+
+**简要描述：**科技园场地申请
+
+**请求URL：**
+
+- `/api/new/demand`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+```json
+{
+   	"creditCode":"<String>",						//统一社会信用代码	
+    "leaseArea":"<String>",							//租赁面积(平方米)
+    "position":"<String>",							//位置需求
+    "lease":"<String>",								//租期(年)
+    "floor":"<String>",								//楼层需求
+    "electric":"<String>",							//电力需求
+    "water":"<String>",								//给排水需求
+    "web":"<String>",								//网络需求
+    "others":"<String>"								//其他需求
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+
 
 
 
