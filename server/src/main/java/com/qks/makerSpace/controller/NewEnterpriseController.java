@@ -35,16 +35,16 @@ public class NewEnterpriseController {
 
     /**
      * 注册
-     * @param map
+     * @param str
      * @return
      */
     @RequestMapping(value = "newRegister", method = RequestMethod.POST)
-    private Map<String, Object> newRegister(@RequestPart("picture") MultipartFile[] file,
-                                            @RequestPart("map") Map<String, Object> map) throws Exception {
+    private Map<String, Object> newRegister(@RequestPart("file") MultipartFile[] file,
+                                            @RequestPart("map") String str) throws Exception {
         if (file.length == 0) {
             return MyResponseUtil.getResultMap(null,-1,"文件上传失败");
         } else {
-            return newEnterpriseService.newRegister(map, file);
+            return newEnterpriseService.newRegister(str, file);
         }
     }
 
@@ -70,13 +70,13 @@ public class NewEnterpriseController {
 
     /**
      * 入园申请表填写
-     * @param map
+     * @param str
      * @return
      */
     @RequestMapping(value = "newEnterprise", method = RequestMethod.PUT)
     private Map<String, Object> updateNewEnterprise(HttpServletRequest httpServletRequest,
-                                                    @RequestPart("map") JSONObject map,
+                                                    @RequestPart("map") String  str,
                                                     @RequestParam("file") MultipartFile[] file) throws Exception {
-        return newEnterpriseService.updateNewEnterprise(httpServletRequest.getHeader("token"), map, file);
+        return newEnterpriseService.updateNewEnterprise(httpServletRequest.getHeader("token"), str, file);
     }
 }

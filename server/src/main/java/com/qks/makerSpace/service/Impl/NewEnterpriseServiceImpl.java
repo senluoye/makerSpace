@@ -69,11 +69,13 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
     /**
      * 注册
-     * @param map
+     * @param str
      * @return
      */
     @Override
-    public Map<String, Object> newRegister(Map<String, Object> map, MultipartFile[] file) throws IOException{
+    public Map<String, Object> newRegister(String str, MultipartFile[] file) throws IOException{
+        System.out.println(str);
+        JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
 
         if (newEnterpriseDao.getNewsByCreditCode(creditCode) != null)
@@ -85,7 +87,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setNewId(newId);
         news.setCreditCode(creditCode);
         news.setOrganizationCode(map.get("organizationCode").toString());
-        news.setPassword(map.get("password").toString());
+//        news.setPassword(map.get("password").toString());
         news.setName(map.get("name").toString());
         news.setPicture(file[0].getBytes());
         news.setRepresent(map.get("represent").toString());
@@ -113,14 +115,16 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
     /**
      * 入园申请表填写
-     * @param map
+     * @param str
      * @return
      */
     @Override
     public Map<String, Object> updateNewEnterprise(String token,
-                                                   JSONObject map,
+                                                   String str,
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
+        System.out.println(str);
+        JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
 
         News news = NewParserUtils.newsParser(map);

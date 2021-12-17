@@ -11,17 +11,17 @@ public class NewParserUtils {
     public static News newsParser(JSONObject map) {
         News news = new News();
 
-        news.setNewId(map.get("creditCode").toString());
-        news.setRegisterCapital(map.get("registerCapital").toString());
-        news.setRealCapital(map.get("realCapital").toString());
-        news.setOriginNumber(map.get("originNumber").toString());
-        news.setRegisterTime(map.get("registerTime").toString());
-        news.setNature(map.get("nature").toString());
-        news.setInvolved(map.get("involved").toString());
-        news.setMainBusiness(map.get("mainBusiness").toString());
-        news.setBusiness(map.get("business").toString());
-        news.setSuggestion(map.get("suggestion").toString());
-        news.setNote(map.get("note").toString());
+        news.setNewId(map.getString("creditCode"));
+        news.setRegisterCapital(map.getString("registerCapital"));
+        news.setRealCapital(map.getString("realCapital"));
+        news.setOriginNumber(map.getString("originNumber"));
+        news.setRegisterTime(map.getString("registerTime"));
+        news.setNature(map.getString("nature"));
+        news.setInvolved(map.getString("involved"));
+        news.setMainBusiness(map.getString("mainBusiness"));
+        news.setBusiness(map.getString("business"));
+        news.setSuggestion(map.getString("suggestion"));
+        news.setNote(map.getString("note"));
 
         return news;
     }

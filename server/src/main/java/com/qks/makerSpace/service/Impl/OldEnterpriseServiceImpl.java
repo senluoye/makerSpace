@@ -153,6 +153,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                                                    String str,
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
+
         System.out.println(str);
         JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
@@ -169,8 +170,13 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setOldProjectId(oldProjects.get(0).getOldProjectId());
         old.setOldInapplyId(oldIntellectuals.get(0).getOldIntellectualId());
         old.setOldFundingId(oldFundings.get(0).getFundingId());
-        old.setLicense(files[0].getBytes());
-        old.setCertificate(files[1].getBytes());
+        try {
+            old.setLicense(files[0].getBytes());
+            old.setCertificate(files[1].getBytes());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ServiceException("有文件没有上传");
+        }
+
 
         for (int i = 2; i < files.length; i++) {
             oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
