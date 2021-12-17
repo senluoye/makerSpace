@@ -183,4 +183,43 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         return MyResponseUtil.getResultMap(forMap, 0, "success");
     }
 
+    /**
+     * 房间申请
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> newEnterpriseDemand(JSONObject map) throws ServiceException {
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        String submitTime = dateFormat.format(date);
+
+
+        String room = map.getString("floor") + " - " + map.getString("position");
+        String creditCode = map.getString("creditCode");
+
+        NewDemand newDemand = new NewDemand();
+
+        newDemand.setNewDemandId(UUID.randomUUID().toString());
+        newDemand.setLeaseArea(map.getString("leaseArea"));
+        newDemand.setPosition(map.getString("position"));
+        newDemand.setLease(map.getString("lease"));
+        newDemand.setFloor(map.getString("floor"));
+        newDemand.setElectric(map.getString("electric"));
+        newDemand.setWater(map.getString("water"));
+        newDemand.setWeb(map.getString("web"));
+        newDemand.setOthers(map.getString("others"));
+
+        if (newEnterpriseDao.addNewDemand(newDemand) < 1) {
+            throw new ServiceException("插入数据失败:addNewDemand");
+        }
+        if (newEnterpriseDao.updateNewForDemand(creditCode, "0", submitTime, room) < 1){
+            throw new ServiceException("插入数据失败:updateNewForDemand");
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("creditCode", creditCode);
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
 }

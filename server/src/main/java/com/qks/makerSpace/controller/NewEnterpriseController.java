@@ -1,6 +1,7 @@
 package com.qks.makerSpace.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.web.bind.annotation.*;
@@ -48,13 +49,23 @@ public class NewEnterpriseController {
     }
 
     /**
-     * 租赁缴费
+     * 缴费
      * @param map
      * @return
      */
     @RequestMapping(value = "newFee", method = RequestMethod.POST)
     private Map<String, Object> NewEnterprisePay(@RequestBody Map<String, Object> map) {
         return newEnterpriseService.newEnterprisePay(map);
+    }
+
+    /**
+     * 房间申请
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "demand", method = RequestMethod.POST)
+    private Map<String, Object> newEnterpriseDemand(@RequestBody JSONObject map) throws ServiceException {
+        return newEnterpriseService.newEnterpriseDemand(map);
     }
 
     /**
