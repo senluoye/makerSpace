@@ -84,7 +84,7 @@ public class AdminController {
     }
 
     /**
-     * 这是啥
+     * 导出表
      * @param response
      * @throws Exception
      */
@@ -92,5 +92,4 @@ public class AdminController {
     private void getStatisticalForm(HttpServletResponse response) throws Exception {
         adminService.downLoadWord(response, adminService.getDownLoadForm());
     }
-
 }

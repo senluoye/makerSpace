@@ -62,14 +62,14 @@ public class OldEnterpriseController {
 
     /**
      * 入园申请表填写
-     * @param map
+     * @param str
      * @return
      */
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
     private Map<String, Object> updateOldEnterprise(HttpServletRequest httpServletRequest,
-                                                    @RequestPart("map") JSONObject map,
+                                                    @RequestPart("map") String str,
                                                     @RequestPart("file") MultipartFile[] file) throws Exception {
-        return oldEnterpriseService.updateOldEnterprise(httpServletRequest.getHeader("token"), map, file);
+        return oldEnterpriseService.updateOldEnterprise(httpServletRequest.getHeader("token"), str, file);
     }
 
 }

@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.exception.ServiceException;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+
 import java.util.Map;
 
 public interface OldEnterpriseService {
@@ -13,7 +13,7 @@ public interface OldEnterpriseService {
     Map<String, Object> oldRegister(Map<String, Object> map);
     Map<String, Object> oldEnterprisePay(Map<String, Object> map);
     Map<String, Object> updateOldEnterprise(String token,
-                                            JSONObject map,
+                                            String map,
                                             MultipartFile[] files) throws Exception;
     Map<String, Object> oldEnterpriseDemand(JSONObject map) throws ServiceException;
 

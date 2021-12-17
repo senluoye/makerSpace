@@ -10,10 +10,6 @@ import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.OldParserUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.Serializable;
@@ -149,14 +145,16 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
     /**
      * 入园申请表填写
-     * @param map
+     * @param str
      * @return
      */
     @Override
     public Map<String, Object> updateOldEnterprise(String token,
-                                                   JSONObject map,
+                                                   String str,
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
+        System.out.println(str);
+        JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
 
         Old old = OldParserUtils.parser(map);
