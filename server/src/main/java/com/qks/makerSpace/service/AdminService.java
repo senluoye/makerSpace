@@ -16,10 +16,10 @@ public interface AdminService {
     Map<String, Object> deleteSpaceById(String id) throws ServiceException;
 
     // 管理员审核相关服务
-    Map<String, Object> agreeTechnologyById(JSONObject map);
-    Map<String, Object> disagreeTechnologyById(JSONObject map);
-    Map<String, Object> agreeSpaceById(JSONObject map);
-    Map<String, Object> disagreeSpaceById(JSONObject map);
+    Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException;
+    Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException;
+    Map<String, Object> agreeSpaceById(JSONObject map) throws ServiceException;
+    Map<String, Object> disagreeSpaceById(JSONObject map) throws ServiceException;
 
     Map<String, Object> getDownLoadForm();
     void downLoadWord(HttpServletResponse response, Map<String , Object> map) throws Exception;

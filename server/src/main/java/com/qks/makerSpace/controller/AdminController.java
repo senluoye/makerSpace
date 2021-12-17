@@ -82,7 +82,7 @@ public class AdminController {
      * @return HashMap
      */
     @RequestMapping(value = "technology/notarize", method = RequestMethod.POST)
-    private Map<String, Object> agreeTechnologyById(@RequestBody JSONObject map) {
+    private Map<String, Object> agreeTechnologyById(@RequestBody JSONObject map) throws ServiceException {
         return adminService.agreeTechnologyById(map);
     }
 
@@ -91,7 +91,7 @@ public class AdminController {
      * @return HashMap
      */
     @RequestMapping(value = "technology/countermand", method = RequestMethod.POST)
-    private Map<String, Object> disagreeTechnologyById(@RequestBody JSONObject map) {
+    private Map<String, Object> disagreeTechnologyById(@RequestBody JSONObject map) throws ServiceException {
         return adminService.disagreeTechnologyById(map);
     }
 
@@ -100,7 +100,7 @@ public class AdminController {
      * @return HashMap
      */
     @RequestMapping(value = "space/notarize", method = RequestMethod.POST)
-    private Map<String, Object> agreeSpaceById(@RequestBody JSONObject map) {
+    private Map<String, Object> agreeSpaceById(@RequestBody JSONObject map) throws ServiceException {
         return adminService.agreeSpaceById(map);
     }
 
@@ -109,7 +109,7 @@ public class AdminController {
      * @return HashMap
      */
     @RequestMapping(value = "space/countermand", method = RequestMethod.POST)
-    private Map<String, Object> disagreeSpaceById(@RequestBody JSONObject map) {
+    private Map<String, Object> disagreeSpaceById(@RequestBody JSONObject map) throws ServiceException {
         return adminService.disagreeSpaceById(map);
     }
 
