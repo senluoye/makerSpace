@@ -121,6 +121,42 @@ public class AdminServiceImpl implements AdminService {
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
+    /**
+     * 同意某一个企业科技园申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> agreeTechnologyById(JSONObject map) {
+        return null;
+    }
+
+    /**
+     * 取消某一个企业科技园申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> disagreeTechnologyById(JSONObject map) {
+        return null;
+    }
+
+    /**
+     * 同意某一个企业众创空间申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> agreeSpaceById(JSONObject map) {
+        return null;
+    }
+
+    /**
+     * 取消某一个企业众创空间申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> disagreeSpaceById(JSONObject map) {
+        return null;
+    }
+
 
     /**
      * 获取导出表的信息

@@ -39,8 +39,8 @@ public class AdminController {
 
     /**
      * 获取某一个企业入园申请
-     * @param creditCode
-     * @return
+     * @param String
+     * @return HashMap
      */
     @RequestMapping(value = "technology/{creditCode}", method = RequestMethod.GET)
     private Map<String, Object> getCompanyById(@PathVariable String creditCode) {
@@ -60,8 +60,8 @@ public class AdminController {
 
     /**
      * 获取某一个企业众创空间申请
-     * @param inApplyId
-     * @return
+     * @param String
+     * @return HashMap
      */
     @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.GET)
     private Map<String, Object> getSpaceById(@PathVariable String inApplyId) {
@@ -70,7 +70,7 @@ public class AdminController {
 
     /**
      * 删除某一个企业众创空间申请
-     * @return
+     * @return HashMap
      */
     @RequestMapping(value = "space", method = RequestMethod.DELETE)
     private Map<String, Object> deleteSpaceById(@RequestBody JSONObject map) throws ServiceException {
@@ -78,18 +78,45 @@ public class AdminController {
     }
 
     /**
-     * 同意某一个企业众创空间申请
-     * @return
+     * 同意某一个企业科技园申请
+     * @return HashMap
      */
-    @RequestMapping(value = "technology", method = RequestMethod.POST)
-    private Map<String, Object> agreeById(@RequestBody JSONObject map) {
-        return adminService.agreeById(map);
+    @RequestMapping(value = "technology/notarize", method = RequestMethod.POST)
+    private Map<String, Object> agreeTechnologyById(@RequestBody JSONObject map) {
+        return adminService.agreeTechnologyById(map);
     }
 
     /**
-     * 这是啥
-     * @param response
-     * @throws Exception
+     * 取消某一个企业科技园申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "technology/countermand", method = RequestMethod.POST)
+    private Map<String, Object> disagreeTechnologyById(@RequestBody JSONObject map) {
+        return adminService.disagreeTechnologyById(map);
+    }
+
+    /**
+     * 同意某一个企业众创空间申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "space/notarize", method = RequestMethod.POST)
+    private Map<String, Object> agreeSpaceById(@RequestBody JSONObject map) {
+        return adminService.agreeSpaceById(map);
+    }
+
+    /**
+     * 取消某一个企业众创空间申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "space/countermand", method = RequestMethod.POST)
+    private Map<String, Object> disagreeSpaceById(@RequestBody JSONObject map) {
+        return adminService.disagreeSpaceById(map);
+    }
+
+
+    /**
+     * 获取导出表的信息
+     * @param HttpServletResponse
      */
     @RequestMapping(value = "/form/situation", method = RequestMethod.GET)
     private void getStatisticalForm(HttpServletResponse response) throws Exception {

@@ -1875,7 +1875,7 @@ Audit（审核表）
 
 **简要描述：**
 
-科技园入驻审核确认
+科技园入驻通过审核
 
 **请求URL：**
 
@@ -1909,11 +1909,11 @@ Audit（审核表）
 
 **简要描述：**
 
-科技园入驻审核确认
+科技园入驻审核不通过
 
 **请求URL：**
 
-- `/api/admin/technology/unnotarize`
+- `/api/admin/technology/countermand`
 
 **请求方式：**
 
@@ -1943,7 +1943,7 @@ Audit（审核表）
 
 **简要描述：**
 
-科技园入驻审核确认
+众创空间入驻确认
 
 **请求URL：**
 
@@ -1977,11 +1977,11 @@ Audit（审核表）
 
 **简要描述：**
 
-科技园入驻审核确认
+众创空间入驻审核不通过
 
 **请求URL：**
 
-- `/api/admin/space/unnotarize`
+- `/api/admin/space/countermand`
 
 **请求方式：**
 
