@@ -1529,8 +1529,6 @@ token 保存时间待定
 }
 ~~~
 
-
-
 ### 获取全部众创空间企业部分信息
 
 **简要描述：**
@@ -1601,7 +1599,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/admin//{creditCode}`
+- `/api/admin/technology/{creditCode}`
 
 **请求方式：**
 
@@ -1773,46 +1771,6 @@ token 保存时间待定
     "code":"<String>",											//统一社会信用代码（18位字符）或 组织机构代码
 }
 ```
-
-**返回值：**
-
-请求成功：
-
-```json
-{
-    "data":{
-        "creditCode":"<String>",							//企业唯一ID
-    },
-    "code":0,
-    "msg":"suceess"
-}
-```
-
-请求失败：
-
-~~~json
-{
-    "data":null,
-    "code":-1,
-    "msg":"id not exist"
-}
-~~~
-
-
-
-### 删除某一个新成立企业或非独立注册企业入园申请
-
-**简要描述：**
-
-删除某个企业的详细内容（包括账号）
-
-**请求URL：**
-
-- `/api/admin/new`
-
-**请求方式：**
-
-- DELETE
 
 **返回值：**
 
