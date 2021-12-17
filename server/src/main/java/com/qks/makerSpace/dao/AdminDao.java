@@ -2,6 +2,7 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.All;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
@@ -69,8 +70,26 @@ public interface AdminDao {
 
     Map<String, Object> getSpaceById(String id);
 
-    Map<String, Object> deleteSpaceById(String id);
+    @Delete("delete space, space_person " +
+            "where space.space_person_id")
+    Integer deleteSpaceByCreditCode(String creditCode);
+
+    @Delete("delete old, old_demand, old_funding, old_intellectual, " +
+            "old_mainperson, old_project, old_shareholder " +
+            "from old, old_demand, old_funding, old_intellectual, " +
+            "old_mainperson, old_project, old_shareholder " +
+            "where old.old_demand_id = old_demand.old_demand_id " +
+            "and old.old_shareholder_id = old_shareholder.old_shareholder_id " +
+            "and old.old_mainperson_id = old_mainperson.old_mainperson_id " +
+            "and old.old_project_id = old_project.old_project_id " +
+            "and old.old_intellectual_id = old_intellectual.old_intellectual_id " +
+            "and old.old_funding_id = old_funding.funding_id " +
+            "and old.credit_code = #{creditCode}")
+    Integer deleteOldByCreditCode(String creditCode);
 
     @Update("update audit set administrator_audit = true where audit_id = #{id}")
     Integer updateAuditById(String id);
+
+    @Select("select credit_code from new where credit_code = #{creditCode}")
+    String selectCreditCodeFromNewByCreditCode(String creditCode);
 }

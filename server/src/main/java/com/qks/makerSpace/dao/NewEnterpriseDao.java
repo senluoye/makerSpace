@@ -58,7 +58,7 @@ public interface NewEnterpriseDao {
             "llectualFile})")
     int insertNewIntellectual(NewIntellectual newIntellectual);
 
-//  查询数据
+    // 查询数据
     @Select(" select * from new")
     List<News> getAllNew();
 

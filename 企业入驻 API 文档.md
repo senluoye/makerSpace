@@ -1338,6 +1338,7 @@ token 保存时间待定
 |    字段名    |  类型  |       说明       |
 | :----------: | :----: | :--------------: |
 |  inApplyId   | String | 众创空间申请表id |
+|   describe   | String |                  |
 | newInApplyId | String |  项目/创意名称   |
 |  applyTime   | String |     申请日期     |
 |  teamNumber  | String |     团队人数     |
@@ -1523,6 +1524,13 @@ token 保存时间待定
 
 
 # 管理员（admin）
+
+## 数据表
+
+Audit（审核表）
+
+
+
 
 ## 基础操作
 
@@ -1774,11 +1782,19 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/admin/space/{creditCode}`
+- `/api/admin/space`
 
 **请求方式：**
 
-- GET
+- DELETE
+
+**参数**：
+
+```json
+{
+    "creditCode":"<String>",									//统一社会信用代码（18位字符）或 组织机构代码
+}
+```
 
 **返回值：**
 
@@ -1801,7 +1817,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/admin/technology/{creditCode}`
+- `/api/admin/technology/`
 
 **请求方式：**
 
@@ -1811,7 +1827,7 @@ token 保存时间待定
 
 ```json
 {
-    "code":"<String>",											//统一社会信用代码（18位字符）或 组织机构代码
+    "creditCode":"<String>",									//统一社会信用代码（18位字符）或 组织机构代码
 }
 ```
 

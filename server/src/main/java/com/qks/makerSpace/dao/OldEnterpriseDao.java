@@ -63,6 +63,15 @@ public interface OldEnterpriseDao {
             "VALUES (#{leaseArea}, #{position}, #{lease}, #{floor}, #{electric}, #{water}, #{web}, #{others}, #{oldDemandId})")
     Integer addOldDemand(OldDemand oldDemand);
 
+    @Select("select old_demand_id from old where credit_code = #{creditCode}")
+    String[] selectDemandByCreditCode(String creditCode);
+
+    @Update("update old_demand " +
+            "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
+            "   floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
+            "where old_demand.old_demand_id = #{oldDemandId}")
+    Integer updateOldDemand(OldDemand oldDemand);
+
     /**
      * 以下是关于查询Old相关子表的操作
      */

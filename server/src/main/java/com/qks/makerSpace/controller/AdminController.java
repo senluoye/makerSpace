@@ -1,6 +1,7 @@
 package com.qks.makerSpace.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class AdminController {
     }
 
     /**
-     * 获取全部科技园企业的申请信息
+     * 获取全部科技园企业的部分信息
      */
     @RequestMapping(value = "/technology/all", method = RequestMethod.GET)
     private Map<String, Object> getTechnologyAllDetails() {
@@ -47,6 +48,17 @@ public class AdminController {
     }
 
     /**
+     * 删除某一个企业入园申请
+     * @return
+     */
+    @RequestMapping(value = "technology", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteOldByCreditCode(@RequestBody JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+
+        return adminService.deleteByCreditCode(creditCode);
+    }
+
+    /**
      * 获取某一个企业众创空间申请
      * @param inApplyId
      * @return
@@ -57,20 +69,11 @@ public class AdminController {
     }
 
     /**
-     * 删除某一个企业入园申请
-     * @return
-     */
-    @RequestMapping(value = "technology", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteOldById(@RequestBody JSONObject map) {
-        return adminService.deletetechnologyById(map.getString("creditCode"));
-    }
-
-    /**
      * 删除某一个企业众创空间申请
      * @return
      */
     @RequestMapping(value = "space", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteSpaceById(@RequestBody JSONObject map) {
+    private Map<String, Object> deleteSpaceById(@RequestBody JSONObject map) throws ServiceException {
         return adminService.deleteSpaceById(map.getString("inApplyId"));
     }
 

@@ -23,11 +23,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map<String, Object> getAllOldDetails() {
-        return null;
-    }
-
-    @Override
     public Map<String, Object> getOldById(String id) {
         return null;
     }
@@ -103,15 +98,27 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Map<String, Object> deletetechnologyById(String id) {
+    public Map<String, Object> deleteByCreditCode(String creditCode) throws ServiceException {
 
+        if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null)
 
-        return MyResponseUtil.getResultMap(id, 0, "success");
+        if (adminDao.deleteOldByCreditCode(creditCode) < 1)
+            throw new ServiceException("删除失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
+    /**
+     * 删除一个众创空间的申请
+     * @param id
+     * @return
+     */
     @Override
-    public Map<String, Object> deleteSpaceById(String id) {
-        return null;
+    public Map<String, Object> deleteSpaceById(String creditCode) throws ServiceException {
+        if (adminDao.deleteSpaceByCreditCode(creditCode) < 1)
+            throw new ServiceException("删除信息失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
 
