@@ -17,7 +17,7 @@ public class OldParserUtils {
     public static Old parser(JSONObject map) {
         Old old = new Old();
 
-        old.setOldId(map.getString("id"));
+        old.setOldId(map.getString("creditCode"));
         old.setRegisterAddress(map.getString("registerAddress"));
         old.setRegisterCapital(map.getString("registerCapital"));
         old.setRealAddress(map.getString("realAddress"));
@@ -26,11 +26,12 @@ public class OldParserUtils {
         old.setLastTax(map.getString("lastTax"));
         old.setEmployees(map.getString("employees"));
         old.setOriginNumber(map.getString("originNumber"));
-        old.setSetDate((Timestamp) map.get("setDate"));
+        old.setSetDate(map.getString("setDate"));
         old.setNature(map.getString("nature"));
         old.setInvolved(map.getString("involved"));
         old.setMainBusiness(map.getString("mainBusiness"));
         old.setWay(map.getString("way"));
+        old.setBusiness(map.getString("business"));
         old.setCooperation(map.getString("cooperation"));
         old.setSuggestion(map.getString("suggestion"));
         old.setNote(map.getString("note"));

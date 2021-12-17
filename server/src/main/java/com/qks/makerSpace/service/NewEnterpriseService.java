@@ -12,5 +12,5 @@ public interface NewEnterpriseService {
     Map<String, Object> getNewEnterprise();
     Map<String, Object> newRegister(Map<String, Object> map, MultipartFile[] file) throws IOException;
     Map<String, Object> newEnterprisePay(Map<String, Object> map);
-    Map<String, Object> updateNewEnterprise(String token, Map<String, Object> map, MultipartFile[] files) throws IllegalAccessException, IOException, ServiceException, Exception;
+    Map<String, Object> updateNewEnterprise(String token, JSONObject map, MultipartFile[] files) throws IllegalAccessException, IOException, ServiceException, Exception;
 }
