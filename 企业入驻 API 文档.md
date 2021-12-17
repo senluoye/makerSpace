@@ -274,7 +274,6 @@ token 保存时间待定
 |        state        |   String   | 授权状态（初始为 null，待审核为 0，审核不通过为 1，审核通过为 2） |
 |     submit_time     |   String   |                           提交时间                           |
 |        room         |   String   |                            房间号                            |
-|      inApplyId      |   String   |          众创空间入驻申请书 -->到 InApply 表的外键           |
 |     outApplyId      |   String   |           科技园退租申请书 -->到 OutApply 表的外键           |
 
 ##### 表名：old_demand （园区场地租赁需求）
@@ -1296,7 +1295,7 @@ token 保存时间待定
 
 |    字段名    |  类型  |       说明       |
 | :----------: | :----: | :--------------: |
-|  InApplyId   | String | 众创空间申请表id |
+|  inApplyId   | String | 众创空间申请表id |
 | newInApplyId | String |  项目/创意名称   |
 |  applyTime   | String |     申请日期     |
 |  teamNumber  | String |     团队人数     |
@@ -1308,7 +1307,7 @@ token 保存时间待定
 
 |    字段名    |  类型  |       说明       |
 | :----------: | :----: | :--------------: |
-|  InApplyId   | String | 众创空间申请表id |
+|  inApplyId   | String | 众创空间申请表id |
 |  personName  | String |       姓名       |
 |  department  | String |  所在院校/部门   |
 |    major     | String |     专业方向     |
@@ -1485,7 +1484,53 @@ token 保存时间待定
 
 ## 基础操作
 
-### 获取全部迁入和独立注册企业
+### 获取全部科技园企业
+
+**简要描述：**
+
+返回部分参数
+
+**请求URL：**
+
+- `/api/admin//all`
+
+**请求方式：**
+
+- GET
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
+    	"organizationCode":"<String>",									//组织机构代码
+        "name":"<String>",														//申请入驻企业名称
+    	"represent":"<String>",												  //法人代表
+    	"representPhone":"<String>",									 //法人代表联系电话
+    	"representEmail":"<String>",											//法人代表邮箱地址
+        "state":"<String>",															//授权状态
+        "room":"<String>",														//房间号
+    },{
+        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
+    	"organizationCode":"<String>",									//组织机构代码
+        "name":"<String>",														//申请入驻企业名称
+    	"represent":"<String>",												  //法人代表
+    	"representPhone":"<String>",									 //法人代表联系电话
+    	"representEmail":"<String>",											//法人代表邮箱地址
+        "state":"<String>",															//授权状态
+        "room":"<String>",														//房间号
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+### 获取全部众创空间企业
 
 **简要描述：**
 
@@ -1504,24 +1549,16 @@ token 保存时间待定
 ~~~json
 {
     "data":[{
-        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
+        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
-    	"representEmail":"<String>",										//法人代表邮箱地址
+    	"representEmail":"<String>",											//法人代表邮箱地址
         "state":"<String>",															//授权状态
         "room":"<String>",														//房间号
-        "name":"<String>",												//申请入驻企业名称
-    	"represent":"<String>",											//法人代表
-    	"representPhone":"<String>",									//法人代表联系电话
-    	"representEmail":"<String>",									//法人代表邮箱地址
-        "administratorAudit":"<String>",								//管理员授权状态
-        "position":"<String>",											//位置需求
-        "floor":"<String>"												//楼层需求
-        "describe":"<String>"											//表示众创空间/科技园的申请
     },{
-        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
+        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -1538,8 +1575,14 @@ token 保存时间待定
 ~~~
 
 
-### 删除某一个迁入和独立注册企业入园申请
-=======
+### 
+
+
+
+### 删除某一个众创空间申请
+
+**描述**
+
 获取某一个企业众创空间申请
 
 **请求URL：**
@@ -1565,19 +1608,13 @@ token 保存时间待定
 ```
 
 ### 删除某一个企业入园申请
->>>>>>> bef245fdc77bbd206b518da86908ca94fef5e2d7
-
 **简要描述：**
 
 删除某个企业的详细内容（包括账号）
 
 **请求URL：**
 
-<<<<<<< HEAD
-- `/api/admin/old`
-=======
 - `/api/admin/technology/{creditCode}`
->>>>>>> bef245fdc77bbd206b518da86908ca94fef5e2d7
 
 **请求方式：**
 
@@ -1615,54 +1652,6 @@ token 保存时间待定
 }
 ~~~
 
-
-
-### 获取全部新成立企业或非独立注册企业
-
-**简要描述：**
-
-返回部分参数
-
-**请求URL：**
-
-- `/api/admin/new`
-
-**请求方式：**
-
-- GET
-
-**返回值：**
-
-~~~json
-{
-    "data":[{
-       "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
-    	"organizationCode":"<String>",									//组织机构代码
-        "name":"<String>",														//申请入驻企业名称
-    	"represent":"<String>",												  //法人代表
-    	"representPhone":"<String>",									 //法人代表联系电话
-    	"representEmail":"<String>",										//法人代表邮箱地址
-        "state":"<String>",															//授权状态
-        "room":"<String>",														//房间号
-    },{
-        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
-    	"organizationCode":"<String>",									//组织机构代码
-        "name":"<String>",														//申请入驻企业名称
-    	"represent":"<String>",												  //法人代表
-    	"representPhone":"<String>",									 //法人代表联系电话
-    	"representEmail":"<String>",											//法人代表邮箱地址
-        "state":"<String>",															//授权状态
-        "room":"<String>",														//房间号
-    },
-           ......
-    ],
-    "code":0,
-    "msg":"success"
-}
-~~~
-
-
-
 ### 获取某一个新成立企业或非独立注册企业入园申请
 
 **简要描述：**
@@ -1671,7 +1660,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/admin/old/{id}`
+- `/api/admin/old/{creditCode}`
 
 **请求方式：**
 
@@ -1804,9 +1793,6 @@ token 保存时间待定
 **请求URL：**
 
 - `/api/admin/new`
-=======
-- `/api/admin/space/{creditCode}`
->>>>>>> bef245fdc77bbd206b518da86908ca94fef5e2d7
 
 **请求方式：**
 
@@ -2013,7 +1999,7 @@ token 保存时间待定
 ~~~json
 {
     "data":[{
-        "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
+        "creditCode":"<String>",                                       	//统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
@@ -2368,35 +2354,6 @@ token 保存时间待定
 ~~~
 
 # 场地
-
-## 数据表
-
-### 表名：inapply（众创空间入驻申请）
-
-|     字段名     |  类型  |                         说明                         |
-| :------------: | :----: | :--------------------------------------------------: |
-|       id       | String |                                                      |
-| new_inapply_id | String |                         UUID                         |
-|  create_name   | String |                        创意名                        |
-|   apply_time   | String |                 申请日期（由前端给）                 |
-|  team_number   | String |                       团队人数                       |
-| new_person_id  | String |                 UUID -> 到person 表                  |
-|     brief      | String |                    项目/创意概括                     |
-|      help      | String | 您想获得的帮助（如创业辅导、投融资服务、市场推广等） |
-
-
-
-### 表名：person
-
-|    字段名     |  类型  |     说明      |
-| :-----------: | :----: | :-----------: |
-|  person_name  | String |     姓名      |
-|  department   | String | 所在院校/部门 |
-|     major     | String |   专业方向    |
-| person_phone  | String |   电话号码    |
-|   person_qq   | String |     QQ号      |
-| person_wechat | String |    微信号     |
-|     note      | String |     备注      |
 
 ## 获取全部房间
 

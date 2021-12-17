@@ -30,38 +30,42 @@ public class AdminController {
 
     /**
      * 获取某一个企业入园申请
+     * @param inApplyId
      * @return
      */
-    @RequestMapping(value = "technology/{id}", method = RequestMethod.GET)
-    private Map<String, Object> getCompanyById(@PathVariable String id) {
-        return adminService.getTechnologyById(id);
+    @RequestMapping(value = "technology/{inApplyId}", method = RequestMethod.GET)
+    private Map<String, Object> getCompanyById(@PathVariable String inApplyId) {
+        return adminService.getTechnologyById(inApplyId);
     }
 
     /**
      * 获取某一个企业众创空间申请
+     * @param inApplyId
      * @return
      */
-    @RequestMapping(value = "space/{id}", method = RequestMethod.GET)
-    private Map<String, Object> getSpaceById(@PathVariable String id) {
-        return adminService.getSpaceById(id);
+    @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.GET)
+    private Map<String, Object> getSpaceById(@PathVariable String inApplyId) {
+        return adminService.getSpaceById(inApplyId);
     }
 
     /**
      * 删除某一个企业入园申请
+     * @param inApplyId
      * @return
      */
-    @RequestMapping(value = "technology/{id}", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteOldById(@PathVariable String id) {
-        return adminService.deletetechnologyById(id);
+    @RequestMapping(value = "technology/{inApplyId}", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteOldById(@PathVariable String inApplyId) {
+        return adminService.deletetechnologyById(inApplyId);
     }
 
     /**
      * 删除某一个企业众创空间申请
+     * @param inApplyId
      * @return
      */
-    @RequestMapping(value = "space/{id}", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteSpaceById(@PathVariable String id) {
-        return adminService.deleteSpaceById(id);
+    @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteSpaceById(@PathVariable String inApplyId) {
+        return adminService.deleteSpaceById(inApplyId);
     }
 
     /**
@@ -73,7 +77,11 @@ public class AdminController {
         return adminService.agreeById(map);
     }
 
-
+    /**
+     * 这是啥
+     * @param response
+     * @throws Exception
+     */
     @RequestMapping(value = "/form/situation", method = RequestMethod.GET)
     private void getStatisticalForm(HttpServletResponse response) throws Exception {
         adminService.downLoadWord(response, adminService.getDownLoadForm());

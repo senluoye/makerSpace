@@ -37,6 +37,9 @@ public class AdminServiceImpl implements AdminService {
         return null;
     }
 
+    /**
+     * 获取全部企业的申请信息
+     */
     @Override
     public Map<String, Object> getAllDetails() {
 
@@ -48,6 +51,10 @@ public class AdminServiceImpl implements AdminService {
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
+    /**
+     * 获取某一个企业入园申请
+     * @return
+     */
     @Override
     public Map<String, Object> getTechnologyById(String id) {
         Map<String, Object> data;
@@ -75,11 +82,19 @@ public class AdminServiceImpl implements AdminService {
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
+    /**
+     * 获取某一个企业众创空间申请
+     * @return
+     */
     @Override
-    public Map<String, Object> getSpaceById(String id) {
+    public Map<String, Object> getSpaceById(String InApplyId) {
         return null;
     }
 
+    /**
+     * 删除某一个企业入园申请
+     * @return
+     */
     @Override
     public Map<String, Object> deletetechnologyById(String id) {
 
@@ -117,7 +132,6 @@ public class AdminServiceImpl implements AdminService {
     /**
      * 导出文件
      * @param bytes 经过处理后的word二进制模板
-     * @return
      */
     @Override
     public void downLoadWord(HttpServletResponse response, Map<String, Object> map) throws ServiceException {
