@@ -1,2 +1,0 @@
-# makerSpace
-an vegetable project

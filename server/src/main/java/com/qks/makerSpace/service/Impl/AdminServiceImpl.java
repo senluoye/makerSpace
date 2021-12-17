@@ -84,7 +84,6 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> deletetechnologyById(String id) {
 
 
-
         return MyResponseUtil.getResultMap(id, 0, "success");
     }
 
