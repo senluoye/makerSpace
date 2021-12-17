@@ -49,9 +49,14 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setAgentPhone(map.get("agentPhone").toString());
         old.setAgentEmail(map.get("agentEmail").toString());
 
+        Map<String, Object> data = new HashMap<>();
+        data.put("id", oldId);
+
+        /**
+         * 先在old表插入一部分数据
+         */
         if (oldEnterpriseDao.oldRegister(old) > 0)
-            return MyResponseUtil.getResultMap(
-                    new HashMap<String, Object>().put("id", oldId), 0, "success");
+            return MyResponseUtil.getResultMap(data, 0, "success");
 
         return MyResponseUtil.getResultMap(null, -1, "fail");
     }
@@ -111,6 +116,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      */
     @Override
     public Map<String, Object> oldEnterpriseDemand(JSONObject map) throws ServiceException {
+
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         String submitTime = dateFormat.format(date);
@@ -121,7 +127,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         OldDemand oldDemand = new OldDemand();
 
-        oldDemand.setOldDemandId(UUID.randomUUID().toString());
         oldDemand.setLeaseArea(map.getString("leaseArea"));
         oldDemand.setPosition(map.getString("position"));
         oldDemand.setLease(map.getString("lease"));
@@ -131,12 +136,28 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         oldDemand.setWeb(map.getString("web"));
         oldDemand.setOthers(map.getString("others"));
 
-        if (oldEnterpriseDao.addOldDemand(oldDemand) < 1) {
+        //下面这段代码不要删
+//        String[] oldDemandId = oldEnterpriseDao.selectDemandByCreditCode(creditCode);
+//
+//        if (oldDemandId != null){
+//            oldDemand.setOldDemandId(oldDemandId[0]);
+//            if (oldEnterpriseDao.updateOldDemand(oldDemand) < 1)
+//                throw new ServiceException("插入数据失败:updateOldDemand");
+//        }
+//        else{
+//            oldDemand.setOldDemandId(UUID.randomUUID().toString());
+//            if (oldEnterpriseDao.addOldDemand(oldDemand) < 1)
+//                throw new ServiceException("插入数据失败:addOldDemand");
+//        }
+
+        oldDemand.setOldDemandId(UUID.randomUUID().toString());
+        if (oldEnterpriseDao.addOldDemand(oldDemand) < 1)
             throw new ServiceException("插入数据失败:addOldDemand");
-        }
-        if (oldEnterpriseDao.updateOldForDemand(creditCode, "0", submitTime, room) < 1){
+
+        // 更新主表中的剩余数据
+        if (oldEnterpriseDao.updateOldForDemand(creditCode, "0", submitTime, room) < 1)
             throw new ServiceException("插入数据失败:updateOldForDemand");
-        }
+
 
         Map<String, Object> data = new HashMap<>();
         data.put("creditCode", creditCode);
@@ -182,6 +203,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
         }
 
+        /**
+         * 插入信息进一部分子表
+         */
         if (oldEnterpriseDao.updateOld(old) > 0) {
             for (OldMainPerson oldMainPeople : oldMainPeoples) {
                 if (oldEnterpriseDao.insertOldMainPeople(oldMainPeople) <= 0) {
@@ -209,6 +233,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 }
             }
 
+            /**
+             * 插入数据到审核表
+             */
             Audit audit = new Audit();
             audit.setAuditId(creditCode);
             audit.setAdministratorAudit(false);
@@ -218,11 +245,15 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 throw new ServiceException("信息插入失败:audit");
         } else throw new ServiceException("信息插入失败:old");
 
-        if (oldEnterpriseDao.selectUserCompany(creditCode) != null) {
+        /**
+         * 绑定用户和公司
+         *
+         * 如果不为空则更新，为空则插入
+         */
+        if (oldEnterpriseDao.selectUserCompany(creditCode) != null)
             oldEnterpriseDao.updateUserCompany(userId,creditCode);
-        } else {
+        else
             oldEnterpriseDao.insertUserCompany(userId, creditCode);
-        }
 
         Map<String, Object> forMap = new HashMap<>();
         forMap.put("creditCode",creditCode);

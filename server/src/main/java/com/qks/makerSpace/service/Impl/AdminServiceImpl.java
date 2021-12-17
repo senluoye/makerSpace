@@ -22,21 +22,6 @@ public class AdminServiceImpl implements AdminService {
         this.adminDao = adminDao;
     }
 
-    @Override
-    public Map<String, Object> getAllOldDetails() {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> getOldById(String id) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> deleteOldById(JSONObject map) {
-        return null;
-    }
-
     /**
      * 获取全部科技园企业的申请信息
      */
@@ -52,7 +37,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 获取某一个企业入园申请
-     * @return
+     * @return HashMap
      */
     @Override
     public Map<String, Object> getTechnologyById(String id) {
@@ -83,7 +68,7 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 获取某一个企业众创空间申请
-     * @return
+     * @return HashMap
      */
     @Override
     public Map<String, Object> getSpaceById(String InApplyId) {
@@ -100,45 +85,102 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 删除某一个企业入园申请
-     * @return
+     * @return HashMap
      */
     @Override
-    public Map<String, Object> deletetechnologyById(String id) {
+    public Map<String, Object> deleteByCreditCode(String creditCode) throws ServiceException {
 
+        if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null)
 
-        return MyResponseUtil.getResultMap(id, 0, "success");
+        if (adminDao.deleteOldByCreditCode(creditCode) < 1)
+            throw new ServiceException("删除失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
+    /**
+     * 删除一个众创空间的申请
+     * @param String
+     * @return HashMap
+     */
     @Override
-    public Map<String, Object> deleteSpaceById(String id) {
-        return null;
+    public Map<String, Object> deleteSpaceById(String creditCode) throws ServiceException {
+        if (adminDao.deleteSpaceByCreditCode(creditCode) < 1)
+            throw new ServiceException("删除信息失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+    }
+
+    /**
+     * 同意某一个企业科技园申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+
+        if (adminDao.agreeById(creditCode) < 1)
+            throw new ServiceException("管理员审核失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+    }
+
+    /**
+     * 取消某一个企业科技园申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+
+        if (adminDao.disagreeById(creditCode) < 1)
+            throw new ServiceException("管理员审核失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+    }
+
+    /**
+     * 同意某一个企业众创空间申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> agreeSpaceById(JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+
+        if (adminDao.agreeById(creditCode) < 1)
+            throw new ServiceException("管理员审核失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+    }
+
+    /**
+     * 取消某一个企业众创空间申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> disagreeSpaceById(JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+
+        if (adminDao.disagreeById(creditCode) < 1)
+            throw new ServiceException("管理员审核失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
 
     /**
      * 获取导出表的信息
-     * @param
-     * @return
+     * @return HashMap
      */
     @Override
     public Map<String, Object> getDownLoadForm () {
         return null;
     }
 
-    @Override
-    public Map<String, Object> agreeById(JSONObject map) {
-        String creditCode = map.getString("creditCode");
-
-        if (adminDao.updateAuditById(creditCode) > 0) {
-
-        }
-
-        return MyResponseUtil.getResultMap(new HashMap<>().put("creditCode", creditCode), 0, "success");
-    }
-
     /**
      * 导出文件
-     * @param bytes 经过处理后的word二进制模板
+     * @param HttpServletResponse 经过处理后的word二进制模板
+     * @param HashMap
      */
     @Override
     public void downLoadWord(HttpServletResponse response, Map<String, Object> map) throws ServiceException {

@@ -1,6 +1,7 @@
 package com.qks.makerSpace.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class AdminController {
     }
 
     /**
-     * 获取全部科技园企业的申请信息
+     * 获取全部科技园企业的部分信息
      */
     @RequestMapping(value = "/technology/all", method = RequestMethod.GET)
     private Map<String, Object> getTechnologyAllDetails() {
@@ -38,8 +39,8 @@ public class AdminController {
 
     /**
      * 获取某一个企业入园申请
-     * @param creditCode
-     * @return
+     * @param String
+     * @return HashMap
      */
     @RequestMapping(value = "technology/{creditCode}", method = RequestMethod.GET)
     private Map<String, Object> getCompanyById(@PathVariable String creditCode) {
@@ -47,9 +48,20 @@ public class AdminController {
     }
 
     /**
-     * 获取某一个企业众创空间申请
-     * @param inApplyId
+     * 删除某一个企业入园申请
      * @return
+     */
+    @RequestMapping(value = "technology", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteOldByCreditCode(@RequestBody JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+
+        return adminService.deleteByCreditCode(creditCode);
+    }
+
+    /**
+     * 获取某一个企业众创空间申请
+     * @param String
+     * @return HashMap
      */
     @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.GET)
     private Map<String, Object> getSpaceById(@PathVariable String inApplyId) {
@@ -57,36 +69,54 @@ public class AdminController {
     }
 
     /**
-     * 删除某一个企业入园申请
-     * @return
-     */
-    @RequestMapping(value = "technology", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteOldById(@RequestBody JSONObject map) {
-        return adminService.deletetechnologyById(map.getString("creditCode"));
-    }
-
-    /**
      * 删除某一个企业众创空间申请
-     * @return
+     * @return HashMap
      */
     @RequestMapping(value = "space", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteSpaceById(@RequestBody JSONObject map) {
+    private Map<String, Object> deleteSpaceById(@RequestBody JSONObject map) throws ServiceException {
         return adminService.deleteSpaceById(map.getString("inApplyId"));
     }
 
     /**
-     * 同意某一个企业众创空间申请
-     * @return
+     * 同意某一个企业科技园申请
+     * @return HashMap
      */
-    @RequestMapping(value = "technology", method = RequestMethod.POST)
-    private Map<String, Object> agreeById(@RequestBody JSONObject map) {
-        return adminService.agreeById(map);
+    @RequestMapping(value = "technology/notarize", method = RequestMethod.POST)
+    private Map<String, Object> agreeTechnologyById(@RequestBody JSONObject map) throws ServiceException {
+        return adminService.agreeTechnologyById(map);
     }
 
     /**
-     * 导出表
-     * @param response
-     * @throws Exception
+     * 取消某一个企业科技园申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "technology/countermand", method = RequestMethod.POST)
+    private Map<String, Object> disagreeTechnologyById(@RequestBody JSONObject map) throws ServiceException {
+        return adminService.disagreeTechnologyById(map);
+    }
+
+    /**
+     * 同意某一个企业众创空间申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "space/notarize", method = RequestMethod.POST)
+    private Map<String, Object> agreeSpaceById(@RequestBody JSONObject map) throws ServiceException {
+        return adminService.agreeSpaceById(map);
+    }
+
+    /**
+     * 取消某一个企业众创空间申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "space/countermand", method = RequestMethod.POST)
+    private Map<String, Object> disagreeSpaceById(@RequestBody JSONObject map) throws ServiceException {
+        return adminService.disagreeSpaceById(map);
+    }
+
+
+    /**
+     * 获取导出表的信息
+     * @param HttpServletResponse
      */
     @RequestMapping(value = "/form/situation", method = RequestMethod.GET)
     private void getStatisticalForm(HttpServletResponse response) throws Exception {
