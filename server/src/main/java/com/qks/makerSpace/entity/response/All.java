@@ -12,6 +12,7 @@ public class All {
     private String representPhone;
     private String representEmail;
     private String administratorAudit;
+    private String state;
     private String position;
     private String floor;
     private String describe;

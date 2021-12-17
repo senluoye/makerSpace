@@ -14,10 +14,11 @@ public interface AdminDao {
 
     @Select("select old.credit_code as creditCode, old.organization_code as organizationCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
-            "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position " +
-            "from old, old_demand " +
+            "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position, " +
+            "audit.administrator_audit as administratorAudit " +
+            "from old, old_demand, audit " +
             "where old.old_demand_id = old_demand.id " +
-            "and ")
+            "and audit.audit_id = old.credit_code")
     List<All> getAllOldDetails();
 
     @Select("select new.credit_code as creditCode, new.organization_code as organizationCode, " +

@@ -1508,7 +1508,7 @@ token 保存时间待定
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "state":"<String>",															//授权状态
+        "administratorAudit":"<String>",								//领导审核状态
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },{
@@ -1518,7 +1518,7 @@ token 保存时间待定
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "state":"<String>",															//授权状态
+        "administratorAudit":"<String>",								//领导审核状态
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },
@@ -1802,21 +1802,127 @@ token 保存时间待定
 
 
 
+
+
+
+
 ------
 
 
 
 ## 授权类操作
 
-### 入园申请审核授权
+### 入园申请审核通过
 
 **简要描述：**
 
-科技园入驻审核
+科技园入驻审核确认
 
 **请求URL：**
 
-- `/api/admin/technology`
+- `/api/admin/technology/notarize`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+```json
+{
+    "creditCode":"<String>"
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>"
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+### 入园申请审核不通过
+
+**简要描述：**
+
+科技园入驻审核确认
+
+**请求URL：**
+
+- `/api/admin/technology/unnotarize`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+```json
+{
+    "creditCode":"<String>"
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>"
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+### 众创空间申请审核通过
+
+**简要描述：**
+
+科技园入驻审核确认
+
+**请求URL：**
+
+- `/api/admin/space/notarize`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+```json
+{
+    "creditCode":"<String>"
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>"
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+### 众创空间申请审核不通过
+
+**简要描述：**
+
+科技园入驻审核确认
+
+**请求URL：**
+
+- `/api/admin/space/unnotarize`
 
 **请求方式：**
 
@@ -1843,18 +1949,6 @@ token 保存时间待定
 ```
 
 
-
-### 企业信息审核
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
 
 
 
