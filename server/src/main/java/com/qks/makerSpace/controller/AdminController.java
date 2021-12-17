@@ -30,12 +30,12 @@ public class AdminController {
 
     /**
      * 获取某一个企业入园申请
-     * @param inApplyId
+     * @param creditCode
      * @return
      */
-    @RequestMapping(value = "technology/{inApplyId}", method = RequestMethod.GET)
-    private Map<String, Object> getCompanyById(@PathVariable String inApplyId) {
-        return adminService.getTechnologyById(inApplyId);
+    @RequestMapping(value = "technology/{creditCode}", method = RequestMethod.GET)
+    private Map<String, Object> getCompanyById(@PathVariable String creditCode) {
+        return adminService.getTechnologyById(creditCode);
     }
 
     /**
@@ -50,12 +50,11 @@ public class AdminController {
 
     /**
      * 删除某一个企业入园申请
-     * @param inApplyId
      * @return
      */
-    @RequestMapping(value = "technology/{inApplyId}", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteOldById(@PathVariable String inApplyId) {
-        return adminService.deletetechnologyById(inApplyId);
+    @RequestMapping(value = "technology/", method = RequestMethod.DELETE)
+    private Map<String, Object> deleteOldById(@PathVariable String creditCode) {
+        return adminService.deletetechnologyById(creditCode);
     }
 
     /**

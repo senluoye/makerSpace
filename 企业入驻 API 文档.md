@@ -1484,7 +1484,7 @@ token 保存时间待定
 
 ## 基础操作
 
-### 获取全部科技园企业
+### 获取全部科技园企业部分信息
 
 **简要描述：**
 
@@ -1530,7 +1530,7 @@ token 保存时间待定
 
 
 
-### 获取全部众创空间企业
+### 获取全部众创空间企业部分信息
 
 **简要描述：**
 
@@ -1574,85 +1574,7 @@ token 保存时间待定
 }
 ~~~
 
-
-### 
-
-
-
-### 删除某一个众创空间申请
-
-**描述**
-
-获取某一个企业众创空间申请
-
-**请求URL：**
-
-- `/api/admin/space/{creditCode}`
-
-**请求方式：**
-
-- GET
-
-**返回值：**
-
-请求成功：
-
-```json
-{
-    "data":{
-        
-    },
-    "code":0,
-    "msg":"suceess"
-}
-```
-
-### 删除某一个企业入园申请
-**简要描述：**
-
-删除某个企业的详细内容（包括账号）
-
-**请求URL：**
-
-- `/api/admin/technology/{creditCode}`
-
-**请求方式：**
-
-- DELETE
-
-**参数：**
-
-```json
-{
-    "code":"<String>",											//统一社会信用代码（18位字符）或 组织机构代码
-}
-```
-
-**返回值：**
-
-请求成功：
-
-```json
-{
-    "data":{
-        "creditCode":"<String>",							//企业唯一ID
-    },
-    "code":0,
-    "msg":"suceess"
-}
-```
-
-请求失败：
-
-~~~json
-{
-    "data":null,
-    "code":-1,
-    "msg":"id not exist"
-}
-~~~
-
-### 获取某一个新成立企业或非独立注册企业入园申请
+### 获取某一个企业入园申请
 
 **简要描述：**
 
@@ -1660,7 +1582,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/admin/old/{creditCode}`
+- `/api/admin//{creditCode}`
 
 **请求方式：**
 
@@ -1671,16 +1593,16 @@ token 保存时间待定
 ~~~json
 {
 	    "data":[{
-	        "registerCapital":"<String>",							//拟注册资本（万元）
-		    "realCapital":"<String>",									//实际募集资本（万元）
-		    "originNumber":"<String>",								//初始入园人数
-		    "registerTime":"<String>",									//预计注册日期
-		    "nature":"<String>",									//企业性质
-		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
-		    "involved":"<String>",									//企业性质
-		    "mainBusiness":"<String>",									//主营业务
+	        "registerCapital":"<String>",						//拟注册资本（万元）
+		    "realCapital":"<String>",							//实际募集资本（万元）
+		    "originNumber":"<String>",							//初始入园人数
+		    "registerTime":"<String>",							//预计注册日期
+		    "nature":"<String>",								//企业性质
+		    "certificate":"<File>",								//教师需要上传教师资格证/学生需要上传学生证
+		    "involved":"<String>",								//企业性质
+		    "mainBusiness":"<String>",							//主营业务
 		    "way":"<String>",									//入园方式
-		    "business":"<String>",									//入园业务
+		    "business":"<String>",								//入园业务
 		    
 		    "newDemand":[{
 		        "leaseArea":"<String>",									//租赁面积（平方米）
@@ -1780,6 +1702,81 @@ token 保存时间待定
 	  "code":0,
 	  "msg":"success"
 }   
+~~~
+
+
+
+### 删除某一个众创空间申请
+
+**描述**
+
+获取某一个企业众创空间申请
+
+**请求URL：**
+
+- `/api/admin/space/{creditCode}`
+
+**请求方式：**
+
+- GET
+
+**返回值：**
+
+请求成功：
+
+```json
+{
+    "data":{
+        
+    },
+    "code":0,
+    "msg":"suceess"
+}
+```
+
+### 删除某一个企业入园申请
+**简要描述：**
+
+删除某个企业的详细内容（包括账号）
+
+**请求URL：**
+
+- `/api/admin/technology/{creditCode}`
+
+**请求方式：**
+
+- DELETE
+
+**参数：**
+
+```json
+{
+    "code":"<String>",											//统一社会信用代码（18位字符）或 组织机构代码
+}
+```
+
+**返回值：**
+
+请求成功：
+
+```json
+{
+    "data":{
+        "creditCode":"<String>",							//企业唯一ID
+    },
+    "code":0,
+    "msg":"suceess"
+}
+```
+
+请求失败：
+
+~~~json
+{
+    "data":null,
+    "code":-1,
+    "msg":"id not exist"
+}
 ~~~
 
 
