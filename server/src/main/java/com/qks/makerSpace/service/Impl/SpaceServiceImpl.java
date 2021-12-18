@@ -27,18 +27,21 @@ public class SpaceServiceImpl implements SpaceService {
 
         Space space = new Space(
                 inApplyId,
-                map.getString("describe"),
                 map.getString("createName"),
                 map.getString("applyTime"),
                 map.getString("teamNumber"),
-                map.getString("brief"),
-                map.getString("help")
+                map.getString("describe"),
+                map.getString("help"),
+                false,
+                false
         );
 
         if (spaceDao.addProject(space) < 1)
-            throw new ServiceException("无法加入众创空间");
+            throw new ServiceException("加入众创空间失败");
 
-        return MyResponseUtil.getResultMap(new HashMap<>().put("inApplyId", inApplyId), 0, "success");
+        Map<String, Object> data = new HashMap<>();
+        data.put("inApplyId", inApplyId);
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     @Override

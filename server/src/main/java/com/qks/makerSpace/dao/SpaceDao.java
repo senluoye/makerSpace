@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SpaceDao {
 
-    @Insert("insert into space(in_apply_id, `describe`, create_name, apply_time, team_number, brief, help) " +
-            "values (#{inApplyId}, #{describe}, #{createName}, #{applyTime}, #{teamNumber}, #{brief}, #{help})")
+    @Insert("insert into space(in_apply_id, `describe`, create_name, apply_time, " +
+            "           team_number, help, administrator_audit, leadership_audit) " +
+            "values (#{inApplyId}, #{describe}, #{createName}, #{applyTime}, " +
+            "       #{teamNumber}, #{help}, #{administratorAudit}, #{leadershipAudit})")
     Integer addProject(Space space);
 
     @Insert("insert into space_person(in_apply_id, person_name, department, major, person_phone, person_qq, person_wechat, note, in_apply_id) " +

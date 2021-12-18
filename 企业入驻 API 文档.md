@@ -1335,16 +1335,16 @@ token 保存时间待定
 
 ##### space（主表）
 
-|    字段名    |  类型  |       说明       |
-| :----------: | :----: | :--------------: |
-|  inApplyId   | String | 众创空间申请表id |
-|   describe   | String |                  |
-| newInApplyId | String |  项目/创意名称   |
-|  applyTime   | String |     申请日期     |
-|  teamNumber  | String |     团队人数     |
-|   describe   | String |  项目/创意概况   |
-|     help     | String |   想获得的帮助   |
-|    brief     | String |     项目概括     |
+|       字段名       |  类型   |        说明        |
+| :----------------: | :-----: | :----------------: |
+|     inApplyId      | String  |  众创空间申请表id  |
+|     createName     | String  |   项目/创意名称    |
+|     applyTime      | String  |      申请日期      |
+|     teamNumber     | String  |      团队人数      |
+|      describe      | String  |   项目/创意概况    |
+|        help        | String  |    想获得的帮助    |
+| administratorAudit | tinyint | 管理员是否通过审核 |
+|  leadershipAudit   | tinyint |  领导是否通过审核  |
 
 ##### space_person（人员表）
 
@@ -1760,7 +1760,7 @@ Audit（审核表）
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "administratorAudit":"<String>",								//领导审核状态
+        "administratorAudit":"<boolean>",								//领导审核状态
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },{
@@ -1770,7 +1770,7 @@ Audit（审核表）
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "administratorAudit":"<String>",								//领导审核状态
+        "administratorAudit":"<boolean>",								//领导审核状态
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },
@@ -1800,7 +1800,8 @@ Audit（审核表）
 ~~~json
 {
     "data":[{
-        "describe": "<String>",             // 注明新/旧企业
+        "inApplyId":"<String>"					// 众创空间唯一Id
+        "administratorAudit":"<boolean>"				// 管理员是否通过审核
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
@@ -1818,7 +1819,8 @@ Audit（审核表）
   		"brief": "<String>",                // 项目/创意概况
   		"help": "<String>"                  // 想获得的帮助
    	 },{
-        "describe": "<String>",             // 注明新/旧企业
+        "inApplyId":"<String>"					// 众创空间唯一Id
+        "administratorAudit":"<boolean>"				// 管理员是否通过审核
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
