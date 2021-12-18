@@ -1,7 +1,8 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.response.All;
+import com.qks.makerSpace.entity.response.AllSpace;
+import com.qks.makerSpace.entity.response.AllTechnology;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -20,14 +21,21 @@ public interface AdminDao {
             "from old, old_demand, audit " +
             "where old.old_demand_id = old_demand.old_demand_id " +
             "and audit.audit_id = old.credit_code")
-    List<All> getAllOldDetails();
+    List<AllTechnology> getAllOldDetails();
 
     @Select("select new.credit_code as creditCode, new.organization_code as organizationCode, " +
             "new.name as name, new.represent as represent, new.represent_phone as representPhone, " +
             "new.represent_email as representEmail, new_demand.floor as floor, new_demand.position as position " +
             "from new, new_demand " +
             "where new.new_demand_id = new_demand.new_demand_id")
-    List<All> getAllNewDetails();
+    List<AllTechnology> getAllNewDetails();
+
+    @Select("select in_apply_id, create_name, apply_time, team_number, `describe`, help, administrator_audit " +
+            "from space")
+    List<Space> getAllSpaceDetails();
+
+    @Select("select * from space_person where in_apply_id = #{inApplyId}")
+    List<SpacePerson> getSpacePeopleById(String inApplyId);
 
     @Select("select * from old where old_id = #{id}")
     Map<String, Object> getOld(String id);
@@ -71,8 +79,10 @@ public interface AdminDao {
     Map<String, Object> getSpaceById(String id);
 
     @Delete("delete space, space_person " +
-            "where space.space_person_id")
-    Integer deleteSpaceByCreditCode(String creditCode);
+            "from space, space_person " +
+            "where space.in_apply_id = space_person.in_apply_id " +
+            "and space.in_apply_id = #{inApplyId}")
+    Integer deleteSpaceByCreditCode(String inApplyId);
 
     @Delete("delete old, old_demand, old_funding, old_intellectual, " +
             "old_mainperson, old_project, old_shareholder " +

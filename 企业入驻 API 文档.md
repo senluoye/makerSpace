@@ -1335,29 +1335,31 @@ token 保存时间待定
 
 ##### space（主表）
 
-|    字段名    |  类型  |       说明       |
-| :----------: | :----: | :--------------: |
-|  inApplyId   | String | 众创空间申请表id |
-|   describe   | String |                  |
-| newInApplyId | String |  项目/创意名称   |
-|  applyTime   | String |     申请日期     |
-|  teamNumber  | String |     团队人数     |
-|   describe   | String |  项目/创意概况   |
-|     help     | String |   想获得的帮助   |
-|    brief     | String |     项目概括     |
+|       字段名       |  类型   |        说明        |
+| :----------------: | :-----: | :----------------: |
+|     inApplyId      | String  |  众创空间申请表id  |
+|  space_person_id   | String  |      人员表Id      |
+|     createName     | String  |   项目/创意名称    |
+|     applyTime      | String  |      申请日期      |
+|     teamNumber     | String  |      团队人数      |
+|      describe      | String  |   项目/创意概况    |
+|        help        | String  |    想获得的帮助    |
+| administratorAudit | tinyint | 管理员是否通过审核 |
+|  leadershipAudit   | tinyint |  领导是否通过审核  |
 
 ##### space_person（人员表）
 
-|    字段名    |  类型  |       说明       |
-| :----------: | :----: | :--------------: |
-|  inApplyId   | String | 众创空间申请表id |
-|  personName  | String |       姓名       |
-|  department  | String |  所在院校/部门   |
-|    major     | String |     专业方向     |
-| personPhone  | String |     手机号码     |
-|   personQq   | String |       QQ号       |
-| personWechat | String |      微信号      |
-|     note     | String |       备注       |
+|    字段名     |  类型  |       说明       |
+| :-----------: | :----: | :--------------: |
+| spacePersonId | String |     人员表Id     |
+|   inApplyId   | String | 众创空间申请表id |
+|  personName   | String |       姓名       |
+|  department   | String |  所在院校/部门   |
+|     major     | String |     专业方向     |
+|  personPhone  | String |     手机号码     |
+|   personQq    | String |       QQ号       |
+| personWechat  | String |      微信号      |
+|     note      | String |       备注       |
 
 ## 众创空间申请
 
@@ -1379,7 +1381,7 @@ token 保存时间待定
   "createName": "<String>",			  // 项目/创意名称
   "applyTime": "<String>",            // 申请日期
   "teamNumber": "<String>",			  // 成员数量
-  "Person": [{                         // 主要成员信息
+  "erson": [{                         // 主要成员信息
       "personName": "<String>",
       "department": "<String>",
       "major": "<String>",
@@ -1760,7 +1762,7 @@ Audit（审核表）
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "administratorAudit":"<String>",								//领导审核状态
+        "administratorAudit":"<boolean>",								//领导审核状态
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },{
@@ -1770,7 +1772,7 @@ Audit（审核表）
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "administratorAudit":"<String>",								//领导审核状态
+        "administratorAudit":"<boolean>",								//领导审核状态
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },
@@ -1800,25 +1802,27 @@ Audit（审核表）
 ~~~json
 {
     "data":[{
-        "describe": "<String>",             // 注明新/旧企业
+        "inApplyId":"<String>"					// 众创空间唯一Id
+        "administratorAudit":"<boolean>"				// 管理员是否通过审核
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
   		"Person": [{                         // 主要成员信息
-     		"personName": "<String>",
-      		"department": "<String>",
-      		"major": "<String>",
-      		"personPhone": "<String>",
-      		"personQq": "<String>",
-      		"personWechat": "<String>",
-      		"note": "<String>"
+     		"personName": "<String>",			// 姓名
+      		"department": "<String>",			// 部门
+      		"major": "<String>",				// 专业方向
+      		"personPhone": "<String>",			// 手机号码
+      		"personQq": "<String>",				// QQ
+      		"personWechat": "<String>",			// 微信
+      		"note": "<String>"					// 备注
     	},
     	......
   		],
-  		"brief": "<String>",                // 项目/创意概况
+  		"describe": "<String>",                // 项目/创意概况
   		"help": "<String>"                  // 想获得的帮助
    	 },{
-        "describe": "<String>",             // 注明新/旧企业
+        "inApplyId":"<String>"					// 众创空间唯一Id
+        "administratorAudit":"<boolean>"				// 管理员是否通过审核
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
@@ -1833,7 +1837,7 @@ Audit（审核表）
     	},
     	......
   		],
-  		"brief": "<String>",                // 项目/创意概况
+  		"describe": "<String>",                // 项目/创意概况
   		"help": "<String>"                  // 想获得的帮助
     },
     ......

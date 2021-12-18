@@ -2,11 +2,15 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
-import com.qks.makerSpace.entity.response.All;
+import com.qks.makerSpace.entity.database.Space;
+import com.qks.makerSpace.entity.database.SpacePerson;
+import com.qks.makerSpace.entity.response.AllSpace;
+import com.qks.makerSpace.entity.response.AllTechnology;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -27,9 +31,9 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllDetails() {
-        List<All> dataOne = adminDao.getAllOldDetails();
-        List<All> dataTwo = adminDao.getAllNewDetails();
-        List<All> data = new ArrayList<>(dataOne);
+        List<AllTechnology> dataOne = adminDao.getAllOldDetails();
+        List<AllTechnology> dataTwo = adminDao.getAllNewDetails();
+        List<AllTechnology> data = new ArrayList<>(dataOne);
         data.addAll(dataTwo);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
@@ -80,7 +84,26 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllSpaceDetails() {
-        return null;
+        List<Space> spaces = adminDao.getAllSpaceDetails();
+        List<AllSpace> allSpaces = new ArrayList<>();
+
+        for (int i = 0; i < spaces.size(); i++) {
+            AllSpace allSpace = new AllSpace();
+            String inApplyId = spaces.get(i).getInApplyId();
+            List<SpacePerson> spacePeople = adminDao.getSpacePeopleById(inApplyId);
+
+            allSpace.setInApplyId(inApplyId);
+            allSpace.setAdministratorAudit(spaces.get(i).isAdministratorAudit());
+            allSpace.setCreateName(spaces.get(i).getCreateName());
+            allSpace.setApplyTime(spaces.get(i).getApplyTime());
+            allSpace.setTeamNumber(spaces.get(i).getTeamNumber());
+            allSpace.setHelp(spaces.get(i).getHelp());
+            allSpace.setPerson(spacePeople);
+
+            allSpaces.add(allSpace);
+        }
+
+        return MyResponseUtil.getResultMap(allSpaces, 0, "success");
     }
 
     /**
