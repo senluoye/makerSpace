@@ -39,5 +39,10 @@ public class PlaceController {
         return placeService.deletePlace(map);
     }
 
+    @RequestMapping(value = "apply",method = RequestMethod.POST)
+    private Map<String, Object> applyPlace(@RequestBody JSONObject map) throws ServiceException {
+        return placeService.applyPlace(map);
+    }
+
 
 }

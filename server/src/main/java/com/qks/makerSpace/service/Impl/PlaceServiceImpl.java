@@ -31,7 +31,7 @@ public class PlaceServiceImpl implements PlaceService {
 
     @Override
     public Map<String, Object> getDescribePlace(JSONObject map) throws ServiceException {
-        String describe = map.get("describe").toString();
+        String describe = map.getString("describe");
         List<Place> placeList = placeDao.getDescribePlace(describe);
 
         if ( placeList != null) {
@@ -42,7 +42,7 @@ public class PlaceServiceImpl implements PlaceService {
     @Override
     public Map<String, Object> addPlace(JSONObject map) throws ServiceException {
         String describe = "0";
-        String room = map.get("room").toString();
+        String room = map.getString("room");
         if ( placeDao.addPlace(room,describe) > 0) {
             return MyResponseUtil.getResultMap(null,0,"success");
         } else throw new ServiceException("添加房间失败");
@@ -59,9 +59,23 @@ public class PlaceServiceImpl implements PlaceService {
     }
 
     @Override
-    public Map<String, Object> applyPlace(JSONObject map) {
+    public Map<String, Object> applyPlace(JSONObject map) throws ServiceException {
+        String room = map.getString("room");
+        String creditCode = map.getString("creditCode");
+
+        if(placeDao.getPlaceByName(room) == null) {
+            throw new ServiceException("房间不存在，请先创建");
+        }
+
+        if(placeDao.getPlaceByName(room) == "1") {
+            throw new ServiceException("该房间号已经被占用，请重新分配");
+        }
+
+//        if(placeDao.updatePlace(room,"1") > 0) {
+//
+//        }
+
+
         return null;
     }
-
-
 }

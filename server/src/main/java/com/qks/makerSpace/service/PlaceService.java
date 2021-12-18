@@ -10,5 +10,5 @@ public interface PlaceService {
     Map<String, Object> getDescribePlace(JSONObject map) throws ServiceException;
     Map<String, Object> addPlace(JSONObject map) throws ServiceException;
     Map<String, Object> deletePlace(JSONObject map) throws ServiceException;
-    Map<String, Object> applyPlace(JSONObject map);
+    Map<String, Object> applyPlace(JSONObject map) throws ServiceException;
 }
