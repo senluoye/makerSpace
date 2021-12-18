@@ -84,29 +84,26 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllSpaceDetails() {
-        Map<String, Object> data = new HashMap<>();
-
         List<Space> spaces = adminDao.getAllSpaceDetails();
         List<AllSpace> allSpaces = new ArrayList<>();
 
         for (int i = 0; i < spaces.size(); i++) {
-            AllSpace temp = new AllSpace();
+            AllSpace allSpace = new AllSpace();
             String inApplyId = spaces.get(i).getInApplyId();
             List<SpacePerson> spacePeople = adminDao.getSpacePeopleById(inApplyId);
 
-            temp.setInApplyId(spacePersonId);
-            temp.setAdministratorAudit(spaces.get(i).isAdministratorAudit());
-            temp.setCreateName(spaces.get(i).getCreateName());
-            temp.setApplyTime(spaces.get(i).getApplyTime());
-            temp.setTeamNumber(spaces.get(i).getTeamNumber());
-            temp.setBrief(spaces.get(i).getBrief());
-            temp.setHelp(spaces.get(i).getHelp());
-            temp.setPerson(spacePeople);
+            allSpace.setInApplyId(inApplyId);
+            allSpace.setAdministratorAudit(spaces.get(i).isAdministratorAudit());
+            allSpace.setCreateName(spaces.get(i).getCreateName());
+            allSpace.setApplyTime(spaces.get(i).getApplyTime());
+            allSpace.setTeamNumber(spaces.get(i).getTeamNumber());
+            allSpace.setHelp(spaces.get(i).getHelp());
+            allSpace.setPerson(spacePeople);
 
-            allSpaces.set(i, temp);
+            allSpaces.add(allSpace);
         }
 
-        return MyResponseUtil.getResultMap(data, 0, "success");
+        return MyResponseUtil.getResultMap(allSpaces, 0, "success");
     }
 
     /**

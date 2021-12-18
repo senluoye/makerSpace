@@ -30,7 +30,7 @@ public interface AdminDao {
             "where new.new_demand_id = new_demand.new_demand_id")
     List<AllTechnology> getAllNewDetails();
 
-    @Select("select in_apply_id, create_name, apply_time, team_number, brief, help, administrator_audit " +
+    @Select("select in_apply_id, create_name, apply_time, team_number, `describe`, help, administrator_audit " +
             "from space")
     List<Space> getAllSpaceDetails();
 

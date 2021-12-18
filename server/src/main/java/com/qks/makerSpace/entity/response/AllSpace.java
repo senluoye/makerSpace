@@ -11,8 +11,9 @@ public class AllSpace {
     private String createName;
     private String applyTime;
     private String teamNumber;
-    List<SpacePerson> Person;
-    private String brief;
+    private String describe;
     private String help;
     private boolean administratorAudit;
+    private boolean leadershipAudit;
+    List<SpacePerson> Person;
 }

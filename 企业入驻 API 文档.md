@@ -1337,8 +1337,8 @@ token 保存时间待定
 
 |       字段名       |  类型   |        说明        |
 | :----------------: | :-----: | :----------------: |
-|  space_person_id   | String  |      人员表Id      |
 |     inApplyId      | String  |  众创空间申请表id  |
+|  space_person_id   | String  |      人员表Id      |
 |     createName     | String  |   项目/创意名称    |
 |     applyTime      | String  |      申请日期      |
 |     teamNumber     | String  |      团队人数      |
@@ -1349,16 +1349,17 @@ token 保存时间待定
 
 ##### space_person（人员表）
 
-|    字段名    |  类型  |       说明       |
-| :----------: | :----: | :--------------: |
-|  inApplyId   | String | 众创空间申请表id |
-|  personName  | String |       姓名       |
-|  department  | String |  所在院校/部门   |
-|    major     | String |     专业方向     |
-| personPhone  | String |     手机号码     |
-|   personQq   | String |       QQ号       |
-| personWechat | String |      微信号      |
-|     note     | String |       备注       |
+|    字段名     |  类型  |       说明       |
+| :-----------: | :----: | :--------------: |
+| spacePersonId | String |     人员表Id     |
+|   inApplyId   | String | 众创空间申请表id |
+|  personName   | String |       姓名       |
+|  department   | String |  所在院校/部门   |
+|     major     | String |     专业方向     |
+|  personPhone  | String |     手机号码     |
+|   personQq    | String |       QQ号       |
+| personWechat  | String |      微信号      |
+|     note      | String |       备注       |
 
 ## 众创空间申请
 
@@ -1807,17 +1808,17 @@ Audit（审核表）
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
   		"Person": [{                         // 主要成员信息
-     		"personName": "<String>",
-      		"department": "<String>",
-      		"major": "<String>",
-      		"personPhone": "<String>",
-      		"personQq": "<String>",
-      		"personWechat": "<String>",
-      		"note": "<String>"
+     		"personName": "<String>",			// 姓名
+      		"department": "<String>",			// 部门
+      		"major": "<String>",				// 专业方向
+      		"personPhone": "<String>",			// 手机号码
+      		"personQq": "<String>",				// QQ
+      		"personWechat": "<String>",			// 微信
+      		"note": "<String>"					// 备注
     	},
     	......
   		],
-  		"brief": "<String>",                // 项目/创意概况
+  		"describe": "<String>",                // 项目/创意概况
   		"help": "<String>"                  // 想获得的帮助
    	 },{
         "inApplyId":"<String>"					// 众创空间唯一Id
@@ -1836,7 +1837,7 @@ Audit（审核表）
     	},
     	......
   		],
-  		"brief": "<String>",                // 项目/创意概况
+  		"describe": "<String>",                // 项目/创意概况
   		"help": "<String>"                  // 想获得的帮助
     },
     ......
