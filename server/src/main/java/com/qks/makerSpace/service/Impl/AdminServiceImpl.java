@@ -76,7 +76,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getSpaceById(String InApplyId) {
-        return null;
+        return AdminService.getSpaceById
     }
 
     /**
