@@ -112,11 +112,10 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> deleteByCreditCode(String creditCode) throws ServiceException {
-
-        if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null)
-
-        if (adminDao.deleteOldByCreditCode(creditCode) < 1)
-            throw new ServiceException("删除失败");
+        if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) == null)
+            throw new ServiceException("表中不存在该项数据");
+        else if (adminDao.deleteOldByCreditCode(creditCode) < 1)
+                throw new ServiceException("删除失败");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
@@ -127,11 +126,11 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> deleteSpaceById(String creditCode) throws ServiceException {
-        if (adminDao.deleteSpaceByCreditCode(creditCode) < 1)
+    public Map<String, Object> deleteSpaceById(String inApplyId) throws ServiceException {
+        if (adminDao.deleteSpaceByCreditCode(inApplyId) < 1)
             throw new ServiceException("删除信息失败");
 
-        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+        return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }
 
     /**

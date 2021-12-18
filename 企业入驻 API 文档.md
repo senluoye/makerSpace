@@ -1997,7 +1997,7 @@ Audit（审核表）
 
 ```json
 {
-    "creditCode":"<String>",									//统一社会信用代码（18位字符）或 组织机构代码
+    "inApplyId":"<String>",									//统一社会信用代码（18位字符）或 组织机构代码
 }
 ```
 
@@ -2008,7 +2008,7 @@ Audit（审核表）
 ```json
 {
     "data":{
-        
+        "inApplyId":"<String>"
     },
     "code":0,
     "msg":"suceess"
