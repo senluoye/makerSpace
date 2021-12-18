@@ -2299,8 +2299,8 @@ Audit（审核表）
 **参数**：
 
 ```json
-"data"：{
-    ""
+{
+    "creditCode":"<String>"
 }
 ```
 
@@ -2826,4 +2826,27 @@ Audit（审核表）
 
 
 ## 分配房间
+
+**请求方式：**
+
+- `/api/place/apply`
+
+**参数：**
+
+~~~json
+{
+    "room":"<String>",
+    "creditCode":"<String>"
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
 
