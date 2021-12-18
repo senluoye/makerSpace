@@ -1337,6 +1337,7 @@ token 保存时间待定
 
 |       字段名       |  类型   |        说明        |
 | :----------------: | :-----: | :----------------: |
+|  space_person_id   | String  |      人员表Id      |
 |     inApplyId      | String  |  众创空间申请表id  |
 |     createName     | String  |   项目/创意名称    |
 |     applyTime      | String  |      申请日期      |
@@ -1379,7 +1380,7 @@ token 保存时间待定
   "createName": "<String>",			  // 项目/创意名称
   "applyTime": "<String>",            // 申请日期
   "teamNumber": "<String>",			  // 成员数量
-  "Person": [{                         // 主要成员信息
+  "erson": [{                         // 主要成员信息
       "personName": "<String>",
       "department": "<String>",
       "major": "<String>",

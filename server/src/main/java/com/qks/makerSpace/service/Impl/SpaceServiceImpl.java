@@ -1,16 +1,17 @@
 package com.qks.makerSpace.service.Impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.SpaceDao;
 import com.qks.makerSpace.entity.database.Space;
+import com.qks.makerSpace.entity.database.SpacePerson;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.SpaceService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.sql.Array;
+import java.util.*;
 
 @Service
 public class SpaceServiceImpl implements SpaceService {
@@ -35,6 +36,26 @@ public class SpaceServiceImpl implements SpaceService {
                 false,
                 false
         );
+
+        JSONArray persons = map.getJSONArray("person");
+        List<SpacePerson> personList = new ArrayList<>();
+
+        for (int i = 0; i < persons.size(); i++) {
+            SpacePerson spacePerson = new SpacePerson(
+                    UUID.randomUUID().toString(),
+                    inApplyId,
+                    persons.getJSONObject(i).getString("personName"),
+                    persons.getJSONObject(i).getString("department"),
+                    persons.getJSONObject(i).getString("major"),
+                    persons.getJSONObject(i).getString("personPhone"),
+                    persons.getJSONObject(i).getString("personQq"),
+                    persons.getJSONObject(i).getString("personWechat"),
+                    persons.getJSONObject(i).getString("note")
+            );
+
+            if (spaceDao.addPerson(spacePerson) < 1)
+                throw new ServiceException("加入众创空间失败");
+        }
 
         if (spaceDao.addProject(space) < 1)
             throw new ServiceException("加入众创空间失败");

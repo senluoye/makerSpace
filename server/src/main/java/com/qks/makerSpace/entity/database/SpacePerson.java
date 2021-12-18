@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SpacePerson {
+    private String spacePersonId;
     private String inApplyId;
     private String personName;
     private String department;
