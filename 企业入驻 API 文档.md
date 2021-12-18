@@ -1443,6 +1443,207 @@ token 保存时间待定
 
 
 
+# 录入季度报表
+
+### 数据表：
+
+### 表名：form
+
+|         字段         |    类型    |                             说明                             |
+| :------------------: | :--------: | :----------------------------------------------------------: |
+|      team_name       |   String   |                           企业名称                           |
+|     credit_code      |   String   |                统一社会信用代码或组织机构代码                |
+|    register_time     |   String   |                         企业注册时间                         |
+|      join_time       |   String   |                      企业入驻科技园时间                      |
+|   register_capital   |   String   |                           注册资金                           |
+|    register_kind     |   String   |                       企业登记注册类型                       |
+|    industry_kind     |   String   |                           行业类型                           |
+|        field         |   String   |                       企业所属技术领域                       |
+| graduated_enterprise |   String   |                        是否是毕业企业                        |
+|    graduated_time    |   String   |                           毕业时间                           |
+|   high_enterprise    |   String   |                       是否高新技术企业                       |
+|  high_enterprise_id  |   String   |                   UUID-->高新技术企业信息                    |
+|     medium_sized     |   String   |                      是否是科技中小企业                      |
+|     medium_file      | MediumBolb |                   供科技型中小企业获批截屏                   |
+| mentor_relationship  |   String   |                  是否与创业导师建立辅导关系                  |
+|     header_kind      |   String   |                      企业主要负责人特性                      |
+|     header_file      | MediumBolb | 大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件 |
+| serial_entrepreneur  |   String   |                企业主要负责人是否为连续创业者                |
+|    header_gender     |   String   |                      企业主要负责人性别                      |
+|       tax_kind       |   String   |                        企业纳税人类型                        |
+|        header        |   String   |                          企业负责人                          |
+|   statistic_header   |   String   |                          统计负责人                          |
+|    submit_header     |   String   |                            填报人                            |
+|     submit_phone     |   String   |                          填报人电话                          |
+|     submit_time      |   String   |                           填报日期                           |
+|   risk_investment    |   String   |                      获天使或风险投资额                      |
+|         area         |   String   |                      占用孵化器场地面积                      |
+|     institutions     |   String   |                           研发机构                           |
+| total_transformation |   String   |                         成果转化总数                         |
+|       relying        |   String   |                         依托高效数量                         |
+|       winning        |   String   |                           获奖成果                           |
+|        result        |   String   |                           产出结果                           |
+|   incubate_income    |   String   |                        在孵企业总收入                        |
+|   incubate_product   |   String   |                      在孵企业工业总产值                      |
+|   incubate_profit    |   String   |                        在孵企业净利润                        |
+|     incubate_tax     |   String   |                       在孵企业上缴税额                       |
+|     incubate_out     |   String   |                       在孵企业出口总额                       |
+|       employee       |   String   |                       在孵企业从业人员                       |
+|        doctor        |   String   |                             博士                             |
+|        master        |   String   |                             硕士                             |
+|       graduate       |   String   |                          研究生学历                          |
+|       bachelor       |   String   |                           本科学历                           |
+|       college        |   String   |                           大专学历                           |
+|    tec_secondary     |   String   |                           中专学历                           |
+|    tec_activists     |   String   |                         科技活动人员                         |
+|      rad_number      |   String   |                   研究与试验发展(R&D)人员                    |
+|      returnees       |   String   |                         留学回国人员                         |
+|       talents        |   String   |                         千人计划人数                         |
+|       trainee        |   String   |                  接纳大学生、研究生实习人员                  |
+|      employment      |   String   |                    接纳应届毕业生就业人员                    |
+|    employment_id     |   String   |             UUID -->employment表-->存放入职合同              |
+|     applications     |   String   |                      当年知识产权申请数                      |
+| applications_patent  |   String   |                  当年知识产权申请——发明专利                  |
+|       granted        |   String   |                      当年知识产权授权数                      |
+|    granted_patent    |   String   |                  当年知识产权授权——发明专利                  |
+|        valid         |   String   |                      拥有有效知识产权数                      |
+|     valid_patent     |   String   |                  拥有有效知识产权——发明专利                  |
+|    soft_copyright    |   String   |                 拥有有效知识产权——软件著作权                 |
+|    plant_variety     |   String   |                 拥有有效知识产权——植物新品种                 |
+|      ic_layout       |   String   |                拥有有效知识产权——集成电路布图                |
+|   foreign_patents    |   String   |                       购买国外技术专利                       |
+| contract_transaction |   String   |                       技术合同交易数量                       |
+|   contract_urnover   |   String   |                        技术合同交易额                        |
+|     project_num      |   String   |                 当年承担国家级科技计划项目数                 |
+|     total_awards     |   String   |                       当年参赛获奖情况                       |
+|      awards_id       |   String   |            UUID-->awards表-->存放当年参赛获奖情况            |
+|   province_awards    |   String   |                  当年参赛获奖情况——省级以上                  |
+|    under_projects    |   String   |                       承担各类计划项目                       |
+|   national_project   |   String   |                 承担各类计划项目——国家级项目                 |
+|    school_project    |   String   |                       校企联合申报项目                       |
+|   declaration_name   |   String   |                       联合申报项目名称                       |
+|   declaration_num    |   String   |                       联合申报项目金额                       |
+|     expenditure      |   String   |                     科技活动经费支出总额                     |
+|   rad_expenditure    |   String   |     科技活动经费支出总额——研究与试验发展（R&D）经费支出      |
+| product_expenditure  |   String   |           科技活动经费支出总额——新产品开发经费支出           |
+|   government_grant   |   String   |                科技活动经费支出总额——政府拨款                |
+|     self_raised      |   String   |                科技活动经费支出总额——企业自筹                |
+
+### 表名：high_enterprise
+
+|        字段名        |    类型    |   说明   |
+| :------------------: | :--------: | :------: |
+|  high_enterprise_id  |   String   |   UUID   |
+| high_enterprise_file | MediumBolb | 高企证书 |
+|       get_time       |   String   | 获取日期 |
+|   certificate_code   |   Stirng   | 证书编号 |
+
+### 表名：employment
+
+|    字段名     |    类型    |     说明     |
+| :-----------: | :--------: | :----------: |
+|      id       |   String   | UUID用于删除 |
+| employment_id |   String   | UUID用于查询 |
+| contract_file | MediumBolb |   入职合同   |
+
+### 表名：awards
+
+|   字段名    |    类型    |     说明     |
+| :---------: | :--------: | :----------: |
+|     id      |   String   | UUID用于删除 |
+|   awards    |   String   | UUID用于查询 |
+| awards_file | MediumBolb | 参赛获奖情况 |
+
+**参数：**
+
+~~~json
+{
+    "map":{
+        "map":{
+            "teamName":"<String>",
+            "creditCode":"<String>",
+            "registerTime":"<String>",
+            "joinTime":"<String>",
+            "registerCapital":"<String>",
+            "registerKind":"<String>",
+            "industryKind":"<String>",
+            "field":"<String>",
+            "graduatedEnterprise":"<String>",
+            "graduatedTime":"<String>",
+            "highEnterprise":"<String>",
+            "highEnterpriseData":{
+                "get_time":"<String>",
+                "certificate_code":"<String>"
+            },
+            "mediumSized":"<String>",
+            "mentorRelationship":"<String>",
+            "headerKind":"<String>",
+            "serialEntrepreneur":"<String>",
+            "headerGender":"<String>",
+            "taxKind":"<String>",
+            "header":"<String>",
+            "statisticHeader":"<String>",
+            "submitHeader":"<String>",
+            "submitPhone":"<String>",
+            "submitTime":"<String>",
+            "riskInvestment":"<String>",
+            //"area":"<String>"    通过其他表导出
+            "institutions":"<String>",
+            "totalTransformation":"<String>",
+            "relying":"<String>",
+            "winning":"<String>",
+            "result":"<String>",
+            "incubateIncome":"<String>",
+            "incubateProduct":"<String>",
+            "incubateProfit":"<String>",
+            "incubateTax":"<String>",
+            "incubateOut":"<String>",
+            "employee":"<String>",
+            "doctor":"<String>",
+            "master":"<String>",
+            "graduate":"<String>",
+            "bachelor":"<String>",
+            "college":"<String>",
+            "tecSecondary":"<String>",
+            "tecActivists":"<String>",
+            "radNumber":"<String>",
+            "returnees":"<String>",
+            "talents":"<String>",
+            "trainee":"<String>",
+            "employment":"<String>",
+            "applications":"<String>",
+            "applicationsPatent":"<String>",
+            "granted":"<String>",
+            "grantedPatent":"<String>",
+            "valid":"<String>",
+            "validPatent":"<String>",
+            "softCopyright":"<String>",
+            "plantVariety":"<String>",
+            "icLayout":"<String>",
+            "foreignPatents":"<String>",
+            "contractTransaction":"<String>",
+            "contractUrnover":"<String>",
+            "projectNum":"<String>",
+            "totalAwards":"<String>",
+            "provinceAwards":"<String>",
+            "underProjects":"<String>",
+            "nationalProject":"<String>",
+            "schoolProject":"<String>",
+            "declarationName":"<String>",
+            "declarationNum":"<String>",
+            "expenditure":"<String>",
+            "radExpenditure":"<String>",
+            "productExpenditure":"<String>",
+            "governmentGrant":"<String>",
+            "selfRaised":"<String>"
+        },
+        "File":"<File>",									//供科技型中小企业获批截屏 || 高企证书 || 大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
+        "employmentFile":"<File>",					//入职合同
+        "awardsFile":"<File>"							//当年参赛获奖情况
+    }
+}
+~~~
+
 
 
 ------
