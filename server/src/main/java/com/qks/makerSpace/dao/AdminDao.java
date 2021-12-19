@@ -25,9 +25,11 @@ public interface AdminDao {
 
     @Select("select new.credit_code as creditCode, new.organization_code as organizationCode, " +
             "new.name as name, new.represent as represent, new.represent_phone as representPhone, " +
-            "new.represent_email as representEmail, new_demand.floor as floor, new_demand.position as position " +
-            "from new, new_demand " +
-            "where new.new_demand_id = new_demand.new_demand_id")
+            "new.represent_email as representEmail, new_demand.floor as floor, new_demand.position as position, " +
+            "audit.administrator_audit as administratorAudit " +
+            "from new, new_demand, audit " +
+            "where new.new_demand_id = new_demand.new_demand_id " +
+            "and audit.audit_id = new.credit_code")
     List<AllTechnology> getAllNewDetails();
 
     @Select("select in_apply_id, create_name, apply_time, team_number, `describe`, help, administrator_audit " +
