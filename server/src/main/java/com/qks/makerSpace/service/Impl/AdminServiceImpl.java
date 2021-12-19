@@ -10,7 +10,6 @@ import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,32 +39,42 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 获取某一个企业入园申请
+     * 获取某一个旧企业入园申请
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getTechnologyById(String id) {
-        Map<String, Object> data;
-        Map<String, Object> temp = adminDao.getOld(id);
+    public Map<String, Object> getOldTechnologyById(String id) throws ServiceException {
+        Map<String, Object> data = adminDao.getOld(id);
 
-        if (temp != null){
-            data = temp;
+        if (data == null)
+            throw new ServiceException("数据不存在");
 
-            data.put("Demand", adminDao.getOldDemandById(id));
-            data.put("Shareholder", adminDao.getOldShareholderById(id));
-            data.put("MainPerson", adminDao.getOldMainPeopleById(id));
-            data.put("Project", adminDao.getOldProjectById(id));
-            data.put("Intellectual", adminDao.getOldIntellectualById(id));
-            data.put("Funding", adminDao.getOldFundingById(id));
-        } else {
-            data = adminDao.getNew(id);
+        data.put("Demand", adminDao.getOldDemandById(id));
+        data.put("Shareholder", adminDao.getOldShareholderById(id));
+        data.put("MainPerson", adminDao.getOldMainPeopleById(id));
+        data.put("Project", adminDao.getOldProjectById(id));
+        data.put("Intellectual", adminDao.getOldIntellectualById(id));
+        data.put("Funding", adminDao.getOldFundingById(id));
 
-            data.put("Demand", adminDao.getNewDemandById(id));
-            data.put("Shareholder", adminDao.getNewShareholder(id));
-            data.put("MainPerson", adminDao.getNewMainPerson(id));
-            data.put("Project", adminDao.getNewProject(id));
-            data.put("Intellectual", adminDao.getNewIntellectual(id));
-        }
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 获取某一个新企业入园申请
+     * @return HashMap
+     */
+    @Override
+    public Map<String, Object> getNewTechnologyById(String id) throws ServiceException {
+        Map<String, Object> data = adminDao.getNew(id);
+
+        if (data == null)
+            throw new ServiceException("数据不存在在");
+
+        data.put("Demand", adminDao.getNewDemandById(id));
+        data.put("Shareholder", adminDao.getNewShareholder(id));
+        data.put("MainPerson", adminDao.getNewMainPerson(id));
+        data.put("Project", adminDao.getNewProject(id));
+        data.put("Intellectual", adminDao.getNewIntellectual(id));
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -87,17 +96,17 @@ public class AdminServiceImpl implements AdminService {
         List<Space> spaces = adminDao.getAllSpaceDetails();
         List<AllSpace> allSpaces = new ArrayList<>();
 
-        for (int i = 0; i < spaces.size(); i++) {
+        for (Space space : spaces) {
             AllSpace allSpace = new AllSpace();
-            String inApplyId = spaces.get(i).getInApplyId();
+            String inApplyId = space.getInApplyId();
             List<SpacePerson> spacePeople = adminDao.getSpacePeopleById(inApplyId);
 
             allSpace.setInApplyId(inApplyId);
-            allSpace.setAdministratorAudit(spaces.get(i).isAdministratorAudit());
-            allSpace.setCreateName(spaces.get(i).getCreateName());
-            allSpace.setApplyTime(spaces.get(i).getApplyTime());
-            allSpace.setTeamNumber(spaces.get(i).getTeamNumber());
-            allSpace.setHelp(spaces.get(i).getHelp());
+            allSpace.setAdministratorAudit(space.isAdministratorAudit());
+            allSpace.setCreateName(space.getCreateName());
+            allSpace.setApplyTime(space.getApplyTime());
+            allSpace.setTeamNumber(space.getTeamNumber());
+            allSpace.setHelp(space.getHelp());
             allSpace.setPerson(spacePeople);
 
             allSpaces.add(allSpace);
@@ -122,7 +131,6 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 删除一个众创空间的申请
-     * @param String
      * @return HashMap
      */
     @Override

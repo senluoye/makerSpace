@@ -38,13 +38,23 @@ public class AdminController {
     }
 
     /**
-     * 获取某一个企业入园申请
+     * 获取某一个旧企业入园申请
      * @param String
      * @return HashMap
      */
-    @RequestMapping(value = "technology/{creditCode}", method = RequestMethod.GET)
-    private Map<String, Object> getCompanyById(@PathVariable String creditCode) {
-        return adminService.getTechnologyById(creditCode);
+    @RequestMapping(value = "oldTechnology/{creditCode}", method = RequestMethod.GET)
+    private Map<String, Object> getOldTechnologyById(@PathVariable String creditCode) throws ServiceException {
+        return adminService.getOldTechnologyById(creditCode);
+    }
+
+    /**
+     * 获取某一个新企业入园申请
+     * @param String
+     * @return HashMap
+     */
+    @RequestMapping(value = "newTechnology/{creditCode}", method = RequestMethod.GET)
+    private Map<String, Object> getNewTechnologyById(@PathVariable String creditCode) throws ServiceException {
+        return adminService.getNewTechnologyById(creditCode);
     }
 
     /**

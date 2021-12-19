@@ -1847,15 +1847,15 @@ Audit（审核表）
 }
 ~~~
 
-### 获取某一个企业入园申请
+### 获取某一个旧企业入园申请
 
 **简要描述：**
 
-获取一个企业的全部信息
+获取一个旧企业的全部信息
 
 **请求URL：**
 
-- `/api/admin/technology/{creditCode}`
+- `/api/admin/oldTechnology/{creditCode}`
 
 **请求方式：**
 
@@ -1971,6 +1971,135 @@ Audit（审核表）
 		    "note":"<String>"    								//备注
 	    	"state":"<String>"										//状态
         	"room":"<String>"									//房间号                
+	    }],
+	  "code":0,
+	  "msg":"success"
+}   
+~~~
+
+### 获取某一个新企业入园申请
+
+**简要描述：**
+
+获取一个旧企业的全部信息
+
+**请求URL：**
+
+- `/api/admin/newTechnology/{creditCode}`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+	    "data":[{
+	        "registerCapital":"<String>",							//拟注册资本（万元）
+		    "realCapital":"<String>",									//实际募集资本（万元）
+		    "originNumber":"<String>",								//初始入园人数
+		    "registerTime":"<String>",									//预计注册日期
+		    "nature":"<String>",									//企业性质
+		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
+		    "involved":"<String>",									//企业性质
+		    "mainBusiness":"<String>",									//主营业务
+		    "way":"<String>",									//入园方式
+		    "business":"<String>",									//入园业务
+		    
+		    "newDemand":[{
+		        "leaseArea":"<String>",									//租赁面积（平方米）
+		        "position":"<String>",									//位置需求
+		        "lease":"<String>",									//租期（年）
+		        "floor":"<String>",									//楼层需求
+		        "electric":"<String>",									//电力需求
+		        "water":"<String>",									//给排水需求
+		        "web":"<String>",									//网络需求
+		        "others":"<String>",									//其他需求
+		    },{
+		        "leaseArea":"<String>",
+		        "position":"<String>",
+		        "lease":"<String>",
+		        "floor":"<String>",
+		        "electric":"<String>",
+		        "water":"<String>",
+		        "web":"<String>",
+		        "others":"<String>",
+		    }
+		    	 ......
+		    ],
+		    
+		    "newShareholder":[{
+		        "name":"<String>",									//股东姓名或名称
+		        "stake":"<String>",									//股份比例
+		        "nature":"<String>",									//股东性质
+			},{
+		        "name":"<String>",
+		        "stake":"<String>",
+		        "nature":"<String>",
+			}
+		    	......
+		    ],
+		     
+		    "newMainPerson":[{
+		        "name":"<String>",									//姓名
+		        "born":"<String>",									//出生年月
+		        "job":"<String>",									//职务
+		        "school":"<String>",									//毕业学校
+		        "title":"<String>",									//职称
+		        "background":"<String>",									//学历
+		        "professional":"<String>",									//专业
+		    },{
+		        "name":"<String>",
+		        "born":"<String>",
+		        "job":"<String>",
+		        "school":"<String>",
+		        "title":"<String>",
+		        "background":"<String>",
+		        "professional":"<String>",
+		    }
+		    	......              
+		    ],
+		
+		   "newProject":[{
+		        "projectBrief":"<String>",									//项目简介
+		        "advantage":"<String>",									//竞争优势分析
+		        "market":"<String>",									//市场前景分析
+		        "energy":"<String>",									//能耗分析
+		        "pollution":"<String>",									//污染分析
+		        "noise":"<String>",									//噪音分析
+       	 "others":"<String>",									//其他分析
+		    },{
+		        "projectBrief":"<String>",
+		        "advantage":"<String>",
+		        "market":"<String>",
+		        "energy":"<String>",
+		        "pollution":"<String>",
+		        "noise":"<String>",
+		        "others":"<String>",
+		    }
+		         ......     
+		    ],
+		       
+			"newIntellectual":[{
+		        "name":"<String>",									//名称
+		        "kind":"<String>",									//类别
+		        "applyTime":"<String>",									//申请时间
+		        "approvalTime":"<String>",									//批准时间
+		        "intellectualFile":"<File>",								//知识产权证书等扫描文件
+		    },{
+		        "name":"<String>",
+		        "kind":"<String>",
+		        "applyTime":"<String>",
+		        "approvalTime":"<String>",
+		        "intellectualFile":"<File>",
+		    }
+				......
+			],
+		    
+		    "suggestion":"<String>",								//科技园意见
+		    "note":"<String>"    								//备注
+	    "state":"<String>"
 	    }],
 	  "code":0,
 	  "msg":"success"
