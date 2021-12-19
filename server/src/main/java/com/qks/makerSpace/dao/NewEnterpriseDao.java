@@ -32,9 +32,9 @@ public interface NewEnterpriseDao {
             "where credit_code = #{newId}")
     Integer updateNew(News news);
 
-    @Update("update new set state = #{state}, submit_time = #{submitTime}, room = #{room} " +
+    @Update("update new set state = #{state}, submit_time = #{submitTime}, room = #{room}, new_demand_id = #{newDemandId} " +
             "where credit_code = #{creditCode}")
-    Integer updateNewForDemand(String creditCode, String state, String submitTime, String room);
+    Integer updateNewForDemand(String creditCode, String state, String submitTime, String room, String newDemandId);
 
     @Insert("insert into new_demand(lease_area, position, lease, floor, electric, water, web, others, new_demand_id) " +
             "VALUES (#{leaseArea}, #{position}, #{lease}, #{floor}, #{electric}, #{water}, #{web}, #{others}, #{newDemandId})")

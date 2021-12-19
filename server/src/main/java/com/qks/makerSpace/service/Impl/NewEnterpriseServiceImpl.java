@@ -223,7 +223,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         if (newEnterpriseDao.addNewDemand(newDemand) < 1) {
             throw new ServiceException("插入数据失败:addNewDemand");
         }
-        if (newEnterpriseDao.updateNewForDemand(creditCode, "0", submitTime, room) < 1){
+        if (newEnterpriseDao.updateNewForDemand(creditCode, "0", submitTime, room, newDemand.getNewDemandId()) < 1){
             throw new ServiceException("插入数据失败:updateNewForDemand");
         }
 

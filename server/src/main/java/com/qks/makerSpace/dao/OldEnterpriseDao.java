@@ -32,9 +32,9 @@ public interface OldEnterpriseDao {
             "where credit_code = #{oldId}")
     Integer updateOld(Old old);
 
-    @Update("update old set state = #{state}, submit_time = #{submitTime}, room = #{room} " +
+    @Update("update old set state = #{state}, submit_time = #{submitTime}, room = #{room}, old_demand_id = #{oldDemandId} " +
             "where credit_code = #{creditCode}")
-    Integer updateOldForDemand(String creditCode, String state, String submitTime, String room);
+    Integer updateOldForDemand(String creditCode, String state, String submitTime, String room, String oldDemandId);
 
     /**
      * 以下是关于插入Old相关子表的操作

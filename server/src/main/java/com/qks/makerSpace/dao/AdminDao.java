@@ -32,7 +32,7 @@ public interface AdminDao {
             "and audit.audit_id = new.credit_code")
     List<AllTechnology> getAllNewDetails();
 
-    @Select("select in_apply_id, create_name, apply_time, team_number, `describe`, help, administrator_audit " +
+    @Select("select in_apply_id, create_name, apply_time, team_number, `describe`, help, administrator_audit, leadership_audit " +
             "from space")
     List<Space> getAllSpaceDetails();
 

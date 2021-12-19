@@ -155,7 +155,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             throw new ServiceException("插入数据失败:addOldDemand");
 
         // 更新主表中的剩余数据
-        if (oldEnterpriseDao.updateOldForDemand(creditCode, "0", submitTime, room) < 1)
+        if (oldEnterpriseDao.updateOldForDemand(creditCode, "0", submitTime, room, oldDemand.getOldDemandId()) < 1)
             throw new ServiceException("插入数据失败:updateOldForDemand");
 
 

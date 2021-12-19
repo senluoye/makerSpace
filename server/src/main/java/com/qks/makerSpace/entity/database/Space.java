@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Space {
-    private String InApplyId;
+    private String inApplyId;
     private String createName;
     private String applyTime;
     private String teamNumber;

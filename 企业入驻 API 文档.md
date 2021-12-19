@@ -1758,6 +1758,7 @@ Audit（审核表）
     "data":[{
         "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
+        "companyKind":"<String>",											//代表企业类型，old/new
         "name":"<String>",														//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话

@@ -31,7 +31,21 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getAllDetails() {
         List<AllTechnology> dataOne = adminDao.getAllOldDetails();
+
+        Iterator<AllTechnology> iterator_one = dataOne.iterator();
+        while (iterator_one.hasNext()) {
+            AllTechnology allTechnology = iterator_one.next();
+            allTechnology.setCompanyKind("old");
+        }
+
         List<AllTechnology> dataTwo = adminDao.getAllNewDetails();
+
+        Iterator<AllTechnology> iterator_two = dataOne.iterator();
+        while (iterator_one.hasNext()) {
+            AllTechnology allTechnology = iterator_two.next();
+            allTechnology.setCompanyKind("new");
+        }
+
         List<AllTechnology> data = new ArrayList<>(dataOne);
         data.addAll(dataTwo);
 
@@ -118,10 +132,19 @@ public class AdminServiceImpl implements AdminService {
             allSpace.setCreateName(space.getCreateName());
             allSpace.setApplyTime(space.getApplyTime());
             allSpace.setTeamNumber(space.getTeamNumber());
+            allSpace.setDescribe(space.getDescribe());
             allSpace.setHelp(space.getHelp());
             allSpace.setPerson(spacePeople);
 
             allSpaces.add(allSpace);
+        }
+
+        Iterator<AllSpace> iterator = allSpaces.iterator();
+        while (iterator.hasNext()) {
+            AllSpace space = iterator.next();
+            if(space.isAdministratorAudit() == true) {
+                space.setAudit("审核已通过");
+            } else space.setAudit("审核未通过");
         }
 
         return MyResponseUtil.getResultMap(allSpaces, 0, "success");
