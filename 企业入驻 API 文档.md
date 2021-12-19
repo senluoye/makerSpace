@@ -1381,7 +1381,7 @@ token 保存时间待定
   "createName": "<String>",			  // 项目/创意名称
   "applyTime": "<String>",            // 申请日期
   "teamNumber": "<String>",			  // 成员数量
-  "erson": [{                         // 主要成员信息
+  "person": [{                         // 主要成员信息
       "personName": "<String>",
       "department": "<String>",
       "major": "<String>",
