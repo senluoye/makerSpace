@@ -1257,7 +1257,7 @@ token 保存时间待定
 			],
 		    
 		    "suggestion":"<String>",								//科技园意见
-		    "note":"<String>"    								//备注
+		    "note":"<String>",    								//备注
 	    "state":"<String>"
 	    }],
 	  "code":0,
@@ -1763,6 +1763,7 @@ Audit（审核表）
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
         "administratorAudit":"<boolean>",								//领导审核状态
+        "Audit":"<String>",													//由 administratorAudit 生成
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },{
@@ -1802,8 +1803,9 @@ Audit（审核表）
 ~~~json
 {
     "data":[{
-        "inApplyId":"<String>"					// 众创空间唯一Id
-        "administratorAudit":"<boolean>"				// 管理员是否通过审核
+        "inApplyId":"<String>",					// 众创空间唯一Id
+        "administratorAudit":"<boolean>",				// 管理员是否通过审核
+        "Audit":"<String>",													//由 administratorAudit 生成
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
@@ -2215,60 +2217,6 @@ Audit（审核表）
 
 
 
-
-------
-
-
-
-## 房间类操作
-
-### 获取所有房间状况
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
-### 新增房间
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
-### 删除已有房间
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
-
-### 众创空间分配
-
-**简要描述：**
-
-**请求URL：**
-
-**请求方式：**
-
-**参数：**
-
-**返回值：**
 
 
 
@@ -2691,7 +2639,7 @@ Audit（审核表）
 
 **简要描述：**
 
-获取全部众创空间信息
+获取全部众创空间房间信息
 
 **请求URL：**
 
@@ -2739,7 +2687,7 @@ Audit（审核表）
 
 ~~~json
 {
-    "describe":"<String>"                                            // 1代表已满，0 代表没有
+    "describe":"<String>"                                            // 1代表已入驻，0 代表没有入驻
 }
 ~~~
 
@@ -2766,6 +2714,8 @@ Audit（审核表）
 ## 添加房间
 
 **描述：**
+
+添加某个房间
 
 **请求方式：**
 
@@ -2797,6 +2747,8 @@ Audit（审核表）
 
 **描述：**
 
+删除指定的房间
+
 **请求方式：**
 
 - `/api/place/room`
@@ -2826,6 +2778,10 @@ Audit（审核表）
 
 
 ## 分配房间
+
+**描述：**
+
+分配房间
 
 **请求方式：**
 

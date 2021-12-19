@@ -36,6 +36,14 @@ public class AdminServiceImpl implements AdminService {
         List<AllTechnology> data = new ArrayList<>(dataOne);
         data.addAll(dataTwo);
 
+        Iterator<AllTechnology> iterator = data.iterator();
+        while (iterator.hasNext()) {
+            AllTechnology allTechnology = iterator.next();
+            if(allTechnology.isAdministratorAudit() == true) {
+                allTechnology.setAudit("审核已通过");
+            } else allTechnology.setAudit("审核未通过");
+        }
+
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
@@ -66,6 +74,10 @@ public class AdminServiceImpl implements AdminService {
             data.put("Project", adminDao.getNewProject(id));
             data.put("Intellectual", adminDao.getNewIntellectual(id));
         }
+
+        if(data.get("administratorAudit").equals(true)) {
+            data.put("Audit","审核已通过");
+        } else data.put("Audit","审核未通过");
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
