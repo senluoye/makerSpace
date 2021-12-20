@@ -195,6 +195,10 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setOldProjectId(oldProjects.get(0).getOldProjectId());
         old.setOldIntellectualId(oldIntellectuals.get(0).getOldIntellectualId());
         old.setOldFundingId(oldFundings.get(0).getFundingId());
+
+        Date date = new Date();
+        old.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd").format(date));
+
         try {
             old.setLicense(files[0].getBytes());
             old.setCertificate(files[1].getBytes());
