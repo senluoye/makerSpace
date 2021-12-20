@@ -25,6 +25,7 @@ public class News {
     private byte[] certificate;
     private String involved;
     private String mainBusiness;
+    private String way;
     private String business;
     private String newDemandId;
     private String newShareholderId;

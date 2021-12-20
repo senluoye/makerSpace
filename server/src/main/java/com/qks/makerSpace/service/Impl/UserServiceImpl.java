@@ -17,11 +17,9 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService, Serializable {
 
     private final UserDao userDao;
-    private final JWTUtils jwtUtils;
 
     public UserServiceImpl(UserDao userDao, JWTUtils jwtUtils) {
         this.userDao = userDao;
-        this.jwtUtils = jwtUtils;
     }
 
     @Override
@@ -44,7 +42,7 @@ public class UserServiceImpl implements UserService, Serializable {
 
             userMap.put("name", name);
             userMap.put("password", password);
-            String token = jwtUtils.createToken(userMap);
+            String token = JWTUtils.createToken(userMap);
             data.put("token", token);
             return MyResponseUtil.getResultMap(data, 0, "success");
         } else

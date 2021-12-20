@@ -474,15 +474,7 @@ token 保存时间待定
 }
 ~~~
 
-
-
-
-
-
-
-   
-
-## 入园申请表填写
+## 填写详细信息并提交
 
 **简要描述：**
 
@@ -1453,8 +1445,9 @@ token 保存时间待定
 
 |         字段         |    类型    |                             说明                             |
 | :------------------: | :--------: | :----------------------------------------------------------: |
+|         time         |   String   |          季度(值为年份加月，例如2021/3表示第一季度)          |
 |      team_name       |   String   |                           企业名称                           |
-|     credit_code      |   String   |                统一社会信用代码或组织机构代码                |
+|     credit_code      |   String   |            统一社会信用代码或组织机构代码（主键）            |
 |    register_time     |   String   |                         企业注册时间                         |
 |      join_time       |   String   |                      企业入驻科技园时间                      |
 |   register_capital   |   String   |                           注册资金                           |
@@ -1531,7 +1524,7 @@ token 保存时间待定
 |   government_grant   |   String   |                科技活动经费支出总额——政府拨款                |
 |     self_raised      |   String   |                科技活动经费支出总额——企业自筹                |
 
-### 表名：high_enterprise
+### 表名：form_high_enterprise
 
 |        字段名        |    类型    |   说明   |
 | :------------------: | :--------: | :------: |
@@ -1540,7 +1533,7 @@ token 保存时间待定
 |       get_time       |   String   | 获取日期 |
 |   certificate_code   |   Stirng   | 证书编号 |
 
-### 表名：employment
+### 表名：form_employment
 
 |    字段名     |    类型    |     说明     |
 | :-----------: | :--------: | :----------: |
@@ -1548,20 +1541,35 @@ token 保存时间待定
 | employment_id |   String   | UUID用于查询 |
 | contract_file | MediumBolb |   入职合同   |
 
-### 表名：awards
+### 表名：form_awards
 
 |   字段名    |    类型    |     说明     |
 | :---------: | :--------: | :----------: |
 |     id      |   String   | UUID用于删除 |
-|   awards    |   String   | UUID用于查询 |
+|  awards_id  |   String   | UUID用于查询 |
 | awards_file | MediumBolb | 参赛获奖情况 |
+
+## 季度报表填写
+
+**简要描述：**
+
+季度报表填写
+
+**请求URL：**
+
+- `/api/form/technology`
+
+**请求方式：**
+
+- POST（带token）
 
 **参数：**
 
-~~~json
+```json
 {
-    "map":{
+    "data":{
         "map":{
+            "time":"<String>"						// 季度(值为年份加月，例如2021/3表示第一季度)
             "teamName":"<String>",
             "creditCode":"<String>",
             "registerTime":"<String>",
@@ -1644,7 +1652,21 @@ token 保存时间待定
         "awardsFile":"<File>"							//当年参赛获奖情况
     }
 }
-~~~
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>",					
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+
 
 
 
@@ -1673,7 +1695,7 @@ token 保存时间待定
 ```json
 {
     "data":{
-    	"Code":"<String>",						//这里传统一社会信用代码或组织机构代码企业注册密码
+    	"Code":"<String>",						//这里传统一社会信用代码或组织机构代码
 	}
 }
 ```
@@ -1868,19 +1890,26 @@ Audit（审核表）
 
 ~~~json
 {
-	    "data":[{
-	        "registerCapital":"<String>",						//拟注册资本（万元）
-		    "realCapital":"<String>",							//实际募集资本（万元）
-		    "originNumber":"<String>",							//初始入园人数
-		    "registerTime":"<String>",							//预计注册日期
-		    "nature":"<String>",								//企业性质
-		    "certificate":"<File>",								//教师需要上传教师资格证/学生需要上传学生证
-		    "involved":"<String>",								//企业性质
-		    "mainBusiness":"<String>",							//主营业务
-		    "way":"<String>",									//入园方式
-		    "business":"<String>",								//入园业务
-		    
-		    "oldDemand":[{
+    "data":[{
+        "creditCode":"<String>",                                //统一社会信用代码（18位字符）
+    	"registerAddress":"<String>",							//注册地址
+    	"license":"<File>",										//新的营业执照上传
+    	"registerCapital":"<String>",							//注册资本（万元）
+    	"realAddress":"<String>",								//实际经营地址
+    	"realCapital":"<String>",								//实收资本（万元）
+    	"lastIncome":"<String>",								//上年度经营收入
+    	"lastTax":"<String>",									//上年度税收
+    	"employees":"<String>",									//员工人数
+    	"originNumber":"<String>",								//初始入园人数
+    	"setDate":"<String>",									//成立日期
+    	"nature":"<String>",									//企业性质
+    	"certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
+    	"involved":"<String>",									//企业性质
+    	"mainBusiness":"<String>",								//主营业务
+    	"way":"<String>",										//入园方式
+    	"business":"<String>",									//入园业务
+		
+        "oldDemand":[{
 		        "leaseArea":"<String>",									//租赁面积（平方米）
 		        "position":"<String>",									//位置需求
 		        "lease":"<String>",									//租期（年）

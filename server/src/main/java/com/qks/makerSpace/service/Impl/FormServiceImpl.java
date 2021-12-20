@@ -1,8 +1,12 @@
 package com.qks.makerSpace.service.Impl;
 
+import com.alibaba.fastjson.JSONObject;
+import com.auth0.jwt.JWT;
 import com.qks.makerSpace.dao.FormDao;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
+import com.qks.makerSpace.util.JWTUtils;
+import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +23,28 @@ public class FormServiceImpl implements FormService {
     public FormServiceImpl(FormDao formDao) {
         this.formDao = formDao;
 
+    }
+
+    /**
+     * 填写科技园季度报表
+     * @param token
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> setTechnologyForm(String token, JSONObject map) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+
+        if (formDao.getCompanyByUserId(userId) == null)
+            throw new ServiceException("请先填写入驻申请");
+
+
+
+        String creditCode = map.getString("creditCode");
+
+
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
     /**

@@ -3,11 +3,10 @@ package com.qks.makerSpace.dao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,7 +39,7 @@ public interface AdminDao {
     List<SpacePerson> getSpacePeopleById(String inApplyId);
 
     @Select("select * from old where credit_code = #{creditCode}")
-    Map<String, Object> getOld(String creditCode);
+    Old getOld(String creditCode);
 
     @Select("select old_id from old where credit_code = #{creditCode}")
     String getOldId(String creditCode);
@@ -64,7 +63,7 @@ public interface AdminDao {
     List<OldIntellectual> getOldIntellectualById(String id);
 
     @Select("select * from new where credit_code = #{id}")
-    Map<String, Object> getNew(String id);
+    News getNew(String id);
 
     @Select(" select * from new_demand where new_demand_id = #{newDemandId}")
     List<NewDemand> getNewDemandById(String newDemandId);

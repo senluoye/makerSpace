@@ -22,8 +22,8 @@ public class LoginController {
 
     /**
      * 领导登陆
-     * @param map
-     * @return
+     * @param Hashmap
+     * @return Hashmap
      */
     @RequestMapping(value = "leader", method = RequestMethod.POST)
     private Map<String, Object> LeaderLogin(@RequestBody Map<String, Object> map) throws ServiceException {

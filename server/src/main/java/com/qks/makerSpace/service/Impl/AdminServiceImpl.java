@@ -2,6 +2,8 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
+import com.qks.makerSpace.entity.database.News;
+import com.qks.makerSpace.entity.database.Old;
 import com.qks.makerSpace.entity.database.Space;
 import com.qks.makerSpace.entity.database.SpacePerson;
 import com.qks.makerSpace.entity.response.AllSpace;
@@ -66,22 +68,34 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getOldTechnologyById(String creditCode) throws ServiceException {
-        Map<String, Object> data = adminDao.getOld(creditCode);
-
-        if (data == null){
+        Old old = adminDao.getOld(creditCode);
+        if (old == null)
             throw new ServiceException("数据不存在");
-        }
 
-        String id = adminDao.getOldId(creditCode);
+        Map<String, Object> data = new HashMap<>();
 
-        System.out.println(id);
+        data.put("creditCode", old.getCreditCode());
+        data.put("registerAddress", old.getRegisterAddress());
+        data.put("registerCapital", old.getRealCapital());
+        data.put("realAddress", old.getRealAddress());
+        data.put("realCapital", old.getRealCapital());
+        data.put("lastIncome", old.getLastIncome());
+        data.put("lastTax", old.getLastTax());
+        data.put("employees", old.getEmployees());
+        data.put("originNumber", old.getOriginNumber());
+        data.put("setDate", old.getSetDate());
+        data.put("nature", old.getNature());
+        data.put("involved", old.getInvolved());
+        data.put("mainBusiness", old.getMainBusiness());
+        data.put("way", old.getWay());
+        data.put("business", old.getBusiness());
 
-        data.put("oldDemand", adminDao.getOldDemandById(id));
-        data.put("oldShareholder", adminDao.getOldShareholderById(id));
-        data.put("oldMainPerson", adminDao.getOldMainPeopleById(id));
-        data.put("oldProject", adminDao.getOldProjectById(id));
-        data.put("oldIntellectual", adminDao.getOldIntellectualById(id));
-        data.put("oldFunding", adminDao.getOldFundingById(id));
+        data.put("oldDemand", adminDao.getOldDemandById(old.getOldDemandId()));
+        data.put("oldShareholder", adminDao.getOldShareholderById(old.getOldShareholderId()));
+        data.put("oldMainPerson", adminDao.getOldMainPeopleById(old.getOldMainpersonId()));
+        data.put("oldProject", adminDao.getOldProjectById(old.getOldProjectId()));
+        data.put("oldIntellectual", adminDao.getOldIntellectualById(old.getOldIntellectualId()));
+        data.put("oldFunding", adminDao.getOldFundingById(old.getOldFundingId()));
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -91,17 +105,29 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getNewTechnologyById(String id) throws ServiceException {
-        Map<String, Object> data = adminDao.getNew(id);
+    public Map<String, Object> getNewTechnologyById(String creditCode) throws ServiceException {
+        News news = adminDao.getNew(creditCode);
+        if (news == null)
+            throw new ServiceException("数据不存在");
 
-        if (data == null)
-            throw new ServiceException("数据不存在在");
+        Map<String, Object> data = new HashMap<>();
 
-        data.put("newDemand", adminDao.getNewDemandById(id));
-        data.put("newShareholder", adminDao.getNewShareholder(id));
-        data.put("newMainPerson", adminDao.getNewMainPerson(id));
-        data.put("newProject", adminDao.getNewProject(id));
-        data.put("newIntellectual", adminDao.getNewIntellectual(id));
+        data.put("registerCapital", news.getRegisterCapital());
+        data.put("realCapital", news.getRealCapital());
+        data.put("originNumber", news.getOriginNumber());
+        data.put("registerTime", news.getRegisterTime());
+        data.put("nature", news.getNature());
+        data.put("certificate", news.getCertificate());
+        data.put("involved", news.getInvolved());
+        data.put("mainBusiness", news.getMainBusiness());
+        data.put("way", news.getWay());
+        data.put("business", news.getBusiness());
+
+        data.put("newDemand", adminDao.getNewDemandById(news.getNewDemandId()));
+        data.put("newShareholder", adminDao.getNewShareholder(news.getNewShareholderId()));
+        data.put("newMainPerson", adminDao.getNewMainPerson(news.getNewMainpersonId()));
+        data.put("newProject", adminDao.getNewProject(news.getNewProjectId()));
+        data.put("newIntellectual", adminDao.getNewIntellectual(news.getNewIntellectualId()));
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }

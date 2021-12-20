@@ -1,8 +1,10 @@
 package com.qks.makerSpace.dao;
 
+import com.qks.makerSpace.entity.database.UserCompany;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -11,5 +13,7 @@ public interface FormDao {
     @Select("select * from form where credit_code = #{creditCode}")
     Map<String , Object> getAllInformation(String creditCode);
 
+    @Select("select * from user_company where user_id = #{userId}")
+    List<UserCompany> getCompanyByUserId(String userId);
 
 }
