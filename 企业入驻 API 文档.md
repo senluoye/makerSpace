@@ -1648,11 +1648,17 @@ token 保存时间待定
             "governmentGrant":"<String>",								//科技活动经费支出总额---->政府拨款
             "selfRaised":"<String>"												//科技活动经费支出总额---->企业自筹
         },
+<<<<<<< HEAD
         "mediumFile":"<File>",													//供科技型中小企业获批截屏 
         "highEnterpriseFile":"<File>",										//高企证书
         "header_file":"<File>",														//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
         "contractFile":"<File>",													//入职合同（多个）
         "awardsFile":"<File>"														//当年参赛获奖情况（多个）
+=======
+        "File":"<File>",							//供科技型中小企业获批截屏 || 高企证书 || 大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
+        "employmentFile":"<File>",					//入职合同
+        "awardsFile":"<File>"							//当年参赛获奖情况
+>>>>>>> c9b68ddf7bddcf5a5d45cf998202cca088820222
     }
 }
 ```
@@ -1893,10 +1899,9 @@ Audit（审核表）
 
 ~~~json
 {
-    "data":[{
+    "data":{
         "creditCode":"<String>",                                //统一社会信用代码（18位字符）
     	"registerAddress":"<String>",							//注册地址
-    	"license":"<File>",										//新的营业执照上传
     	"registerCapital":"<String>",							//注册资本（万元）
     	"realAddress":"<String>",								//实际经营地址
     	"realCapital":"<String>",								//实收资本（万元）
@@ -1906,7 +1911,6 @@ Audit（审核表）
     	"originNumber":"<String>",								//初始入园人数
     	"setDate":"<String>",									//成立日期
     	"nature":"<String>",									//企业性质
-    	"certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
     	"involved":"<String>",									//企业性质
     	"mainBusiness":"<String>",								//主营业务
     	"way":"<String>",										//入园方式
@@ -2006,7 +2010,7 @@ Audit（审核表）
 		    "note":"<String>"    								//备注
 	    	"state":"<String>"										//状态
         	"room":"<String>"									//房间号                
-	    }],
+	    },
 	  "code":0,
 	  "msg":"success"
 }   
@@ -2030,7 +2034,7 @@ Audit（审核表）
 
 ~~~json
 {
-	    "data":[{
+	    "data":{
 	        "registerCapital":"<String>",							//拟注册资本（万元）
 		    "realCapital":"<String>",									//实际募集资本（万元）
 		    "originNumber":"<String>",								//初始入园人数
@@ -2039,7 +2043,6 @@ Audit（审核表）
 		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
 		    "involved":"<String>",									//企业性质
 		    "mainBusiness":"<String>",									//主营业务
-		    "way":"<String>",									//入园方式
 		    "business":"<String>",									//入园业务
 		    
 		    "newDemand":[{
@@ -2135,7 +2138,7 @@ Audit（审核表）
 		    "suggestion":"<String>",								//科技园意见
 		    "note":"<String>"    								//备注
 	    "state":"<String>"
-	    }],
+	    },
 	  "code":0,
 	  "msg":"success"
 }   

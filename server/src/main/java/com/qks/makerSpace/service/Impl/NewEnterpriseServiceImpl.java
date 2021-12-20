@@ -123,7 +123,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                                                    String str,
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
-        System.out.println(str);
         JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
 
