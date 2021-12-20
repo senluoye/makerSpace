@@ -9,6 +9,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.io.FileOutputStream;
 import java.util.*;
 
+import static com.qks.makerSpace.util.WordChangeUtils.searchAndReplace;
+
 //import static com.qks.makerSpace.util.WordChangeUtils.searchAndReplace;
 
 
@@ -34,7 +36,7 @@ class makerSpaceApplicationTests {
         map.put("${graduatedTime}","2020-1-1");
         map.put("${highEnterprise}","asdfsadfa");
 
-//        searchAndReplace("D:\\output_document.docx","D:/呵呵.docx",map);
+//        searchAndReplace(,map,1);
 
     }
 }

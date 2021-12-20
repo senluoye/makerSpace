@@ -1,5 +1,6 @@
 package com.qks.makerSpace.service.Impl;
 
+import com.qks.makerSpace.dao.FormDao;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
 import com.qks.makerSpace.util.WordChangeUtils;
@@ -12,14 +13,23 @@ import java.util.Map;
 
 @Service
 public class FormServiceImpl implements FormService {
+
+    private final FormDao formDao;
+
+    public FormServiceImpl(FormDao formDao) {
+        this.formDao = formDao;
+
+    }
+
     /**
      * 获取导出表的信息
      * @param
      * @return
      */
     @Override
-    public Map<String, Object> getDownLoadForm () {
-        return null;
+    public Map<String, Object> getDownLoadForm(String creditCode) {
+        Map<String, Object> map = formDao.getAllInformation(creditCode);
+        return map;
     }
 
     /**

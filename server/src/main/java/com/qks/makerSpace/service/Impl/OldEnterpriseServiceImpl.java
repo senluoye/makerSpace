@@ -31,13 +31,17 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return
      */
     @Override
-    public Map<String, Object> oldRegister(Map<String, Object> map) {
+    public Map<String, Object> oldRegister(Map<String, Object> map) throws ServiceException {
         Old old = new Old();
 
         System.out.println(map.toString());
 
         String oldId = UUID.randomUUID().toString();
         old.setOldId(oldId);
+
+//        if (oldEnterpriseDao.exit(map.get("creditCode").toString()) != null)
+//            throw new ServiceException("该公司已填写过该表");
+
         old.setCreditCode(map.get("creditCode").toString());
         old.setOrganizationCode(map.get("organizationCode").toString());
         old.setPassword(map.get("password").toString());
@@ -79,7 +83,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         });
 
         oldList.forEach(x -> {
-            List<OldDemand> oldDemands = oldEnterpriseDao.getOldDemandById(x.getOldDemand_id());
+            List<OldDemand> oldDemands = oldEnterpriseDao.getOldDemandById(x.getOldDemandId());
             List<OldMainPerson> oldMainPeosons = oldEnterpriseDao.getOldMainPeopleById(x.getOldMainpersonId());
             List<OldProject> oldProjects = oldEnterpriseDao.getOldProjectById(x.getOldProjectId());
             List<OldFunding> oldFundings = oldEnterpriseDao.getOldFundingById(x.getOldFundingId());
@@ -189,7 +193,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setOldShareholderId(oldShareholders.get(0).getOldShareholderId());
         old.setOldMainpersonId(oldMainPeoples.get(0).getOldMainpersonId());
         old.setOldProjectId(oldProjects.get(0).getOldProjectId());
-        old.setOldInapplyId(oldIntellectuals.get(0).getOldIntellectualId());
+        old.setOldIntellectualId(oldIntellectuals.get(0).getOldIntellectualId());
         old.setOldFundingId(oldFundings.get(0).getFundingId());
         try {
             old.setLicense(files[0].getBytes());

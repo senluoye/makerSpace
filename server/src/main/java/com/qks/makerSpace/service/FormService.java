@@ -5,6 +5,6 @@ import java.util.Map;
 
 public interface FormService {
 
-    Map<String, Object> getDownLoadForm();
+    Map<String, Object> getDownLoadForm(String creditCode);
     void downLoadWord(HttpServletResponse response, Map<String, Object> map, int i) throws Exception;
 }

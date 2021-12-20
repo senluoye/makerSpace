@@ -63,7 +63,7 @@ public interface AdminDao {
     @Select("select * from old_intellectual where old_intellectual_id = #{id}")
     List<OldIntellectual> getOldIntellectualById(String id);
 
-    @Select("select * from new where new_id = #{id}")
+    @Select("select * from new where credit_code = #{id}")
     Map<String, Object> getNew(String id);
 
     @Select(" select * from new_demand where new_demand_id = #{newDemandId}")

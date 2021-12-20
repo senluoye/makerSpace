@@ -1880,7 +1880,7 @@ Audit（审核表）
 		    "way":"<String>",									//入园方式
 		    "business":"<String>",								//入园业务
 		    
-		    "newDemand":[{
+		    "oldDemand":[{
 		        "leaseArea":"<String>",									//租赁面积（平方米）
 		        "position":"<String>",									//位置需求
 		        "lease":"<String>",									//租期（年）
@@ -1902,7 +1902,7 @@ Audit（审核表）
 		    	 ......
 		    ],
 		    
-		    "newShareholder":[{
+		    "oldShareholder":[{
 		        "name":"<String>",									//股东姓名或名称
 		        "stake":"<String>",									//股份比例
 		        "nature":"<String>",									//股东性质
@@ -1914,7 +1914,7 @@ Audit（审核表）
 		    	......
 		    ],
 		     
-		    "newMainPerson":[{
+		    "oldMainPerson":[{
 		        "name":"<String>",									//姓名
 		        "born":"<String>",									//出生年月
 		        "job":"<String>",									//职务
@@ -1934,7 +1934,7 @@ Audit（审核表）
 		    	......              
 		    ],
 		
-		   "newProject":[{
+		   "oProject":[{
 		        "projectBrief":"<String>",									//项目简介
 		        "advantage":"<String>",									//竞争优势分析
 		        "market":"<String>",									//市场前景分析

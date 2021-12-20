@@ -33,7 +33,7 @@ public class Old {
     private String mainBusiness;
     private String way;
     private String business;
-    private String oldDemand_id;
+    private String oldDemandId;
     private String oldShareholderId;
     private String oldMainpersonId;
     private String oldProjectId;
