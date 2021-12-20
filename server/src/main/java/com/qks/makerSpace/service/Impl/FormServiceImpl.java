@@ -19,10 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class FormServiceImpl implements FormService {
@@ -125,7 +122,9 @@ public class FormServiceImpl implements FormService {
                 throw new ServiceException("填报数据失败:awardsFile");
         }
 
-        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+        Map<String, Object> data = new HashMap<>();
+        data.put("creditCode", creditCode);
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     /**
