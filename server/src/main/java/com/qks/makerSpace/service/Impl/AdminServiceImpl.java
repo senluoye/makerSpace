@@ -65,11 +65,14 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getOldTechnologyById(String id) throws ServiceException {
-        Map<String, Object> data = adminDao.getOld(id);
+    public Map<String, Object> getOldTechnologyById(String creditCode) throws ServiceException {
+        Map<String, Object> data = adminDao.getOld(creditCode);
 
-        if (data == null)
+        if (data == null){
             throw new ServiceException("数据不存在");
+        }
+
+        String id = adminDao.getOldId(creditCode);
 
         data.put("Demand", adminDao.getOldDemandById(id));
         data.put("Shareholder", adminDao.getOldShareholderById(id));
@@ -99,8 +102,8 @@ public class AdminServiceImpl implements AdminService {
         data.put("Intellectual", adminDao.getNewIntellectual(id));
 
         if(data.get("administratorAudit").equals(true)) {
-            data.put("Audit","审核已通过");
-        } else data.put("Audit","审核未通过");
+            data.put("Audit","已审核");
+        } else data.put("Audit","未审核");
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -143,8 +146,8 @@ public class AdminServiceImpl implements AdminService {
         while (iterator.hasNext()) {
             AllSpace space = iterator.next();
             if(space.isAdministratorAudit() == true) {
-                space.setAudit("审核已通过");
-            } else space.setAudit("审核未通过");
+                space.setAudit("已审核");
+            } else space.setAudit("未审核");
         }
 
         return MyResponseUtil.getResultMap(allSpaces, 0, "success");

@@ -17,7 +17,7 @@ public interface OldEnterpriseDao {
             "#{representPhone}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")
     Integer oldRegister(Old old);
 
-    @Select("")
+    @Select("select * from old")
     List<Old> getAllOld();
 
     @Update("update old " +
@@ -84,7 +84,7 @@ public interface OldEnterpriseDao {
     @Select("select * from old_project where old_project_id = #{id}")
     List<OldProject> getOldProjectById(String id);
 
-    @Select("select * from old_funding where old_funding.= #{id}")
+    @Select("select * from old_funding where funding_id = #{id}")
     List<OldFunding> getOldFundingById(String id);
 
     @Select("select * from old_shareholder where old_shareholder_id = #{id}")
