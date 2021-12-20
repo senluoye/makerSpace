@@ -1648,17 +1648,11 @@ token 保存时间待定
             "governmentGrant":"<String>",								//科技活动经费支出总额---->政府拨款
             "selfRaised":"<String>"												//科技活动经费支出总额---->企业自筹
         },
-<<<<<<< HEAD
-        "mediumFile":"<File>",													//供科技型中小企业获批截屏 
-        "highEnterpriseFile":"<File>",										//高企证书
-        "header_file":"<File>",														//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
-        "contractFile":"<File>",													//入职合同（多个）
-        "awardsFile":"<File>"														//当年参赛获奖情况（多个）
-=======
-        "File":"<File>",							//供科技型中小企业获批截屏 || 高企证书 || 大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
-        "employmentFile":"<File>",					//入职合同
-        "awardsFile":"<File>"							//当年参赛获奖情况
->>>>>>> c9b68ddf7bddcf5a5d45cf998202cca088820222
+        "mediumFile":"<File>",											//供科技型中小企业获批截屏 
+        "highEnterpriseFile":"<File>",									//高企证书
+        "headerFile":"<File>",											//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
+        "contractFile":"<File>",										//入职合同（多个）
+        "awardsFile":"<File>"											//当年参赛获奖情况（多个）
     }
 }
 ```

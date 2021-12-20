@@ -25,19 +25,25 @@ public class FormController {
      * @param
      * @return
      */
-//    @RequestMapping(value = "technology", method = RequestMethod.GET)
-//    private Map<String, Object> setTechnologyForm(
-//                                HttpServletRequest httpServletRequest,
-//                                @RequestPart("map") String map,
-//                                @RequestPart("employmentFile") MultipartFile[] employmentFile,
-//                                @RequestPart("File") MultipartFile[] File,
-//                                @RequestPart("awardsFile") MultipartFile[] awardsFile
-//                                ) throws ServiceException {
-//        return formService.setTechnologyForm(httpServletRequest.getHeader("token"),
-//                                            JSONObject.parseObject(map),
-//
-//                                            );
-//    }
+    @RequestMapping(value = "technology", method = RequestMethod.GET)
+    private Map<String, Object> setTechnologyForm(
+                                HttpServletRequest httpServletRequest,
+                                @RequestPart("map") String map,
+                                @RequestPart("mediumFile") MultipartFile[] mediumFile,
+                                @RequestPart("highEnterpriseFile") MultipartFile[] highEnterpriseFile,
+                                @RequestPart("headerFile") MultipartFile[] headerFile,
+                                @RequestPart("contractFile") MultipartFile[] contractFile,
+                                @RequestPart("awardsFile") MultipartFile[] awardsFile
+                                ) throws ServiceException {
+        return formService.setTechnologyForm(
+                httpServletRequest.getHeader("token"),
+                JSONObject.parseObject(map),
+                mediumFile,
+                highEnterpriseFile,
+                headerFile,
+                contractFile,
+                awardsFile);
+    }
 
     /**
      * 导出科技园在孵企业统计表

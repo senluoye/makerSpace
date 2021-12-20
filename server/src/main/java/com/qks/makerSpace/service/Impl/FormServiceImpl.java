@@ -9,6 +9,7 @@ import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -32,7 +33,13 @@ public class FormServiceImpl implements FormService {
      * @return
      */
     @Override
-    public Map<String, Object> setTechnologyForm(String token, JSONObject map) throws ServiceException {
+    public Map<String, Object> setTechnologyForm(String token,
+                                                 JSONObject map,
+                                                 MultipartFile[] mediumFile,
+                                                 MultipartFile[] highEnterpriseFile,
+                                                 MultipartFile[] headerFile,
+                                                 MultipartFile[] contractFile,
+                                                 MultipartFile[] awardsFile) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
 
         if (formDao.getCompanyByUserId(userId) == null)
