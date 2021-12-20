@@ -32,15 +32,18 @@ public interface AdminDao {
             "and audit.audit_id = new.credit_code")
     List<AllTechnology> getAllNewDetails();
 
-    @Select("select in_apply_id, create_name, apply_time, team_number, `describe`, help, administrator_audit " +
+    @Select("select in_apply_id, create_name, apply_time, team_number, `describe`, help, administrator_audit, leadership_audit " +
             "from space")
     List<Space> getAllSpaceDetails();
 
     @Select("select * from space_person where in_apply_id = #{inApplyId}")
     List<SpacePerson> getSpacePeopleById(String inApplyId);
 
-    @Select("select * from old where old_id = #{id}")
-    Map<String, Object> getOld(String id);
+    @Select("select * from old where credit_code = #{creditCode}")
+    Map<String, Object> getOld(String creditCode);
+
+    @Select("select old_id from old where credit_code = #{creditCode}")
+    String getOldId(String creditCode);
 
     @Select("select * from old_demand where old_demand_id = #{id}")
     List<OldDemand> getOldDemandById(String id);
@@ -51,7 +54,7 @@ public interface AdminDao {
     @Select("select * from old_project where old_project_id = #{id}")
     List<OldProject> getOldProjectById(String id);
 
-    @Select("select * from old_funding where old_funding.= #{id}")
+    @Select("select * from old_funding where funding_id = #{id}")
     List<OldFunding> getOldFundingById(String id);
 
     @Select("select * from old_shareholder where old_shareholder_id = #{id}")

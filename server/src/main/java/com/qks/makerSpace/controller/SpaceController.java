@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/space")
+@RequestMapping("/api")
 public class SpaceController {
 
     private final SpaceService spaceService;

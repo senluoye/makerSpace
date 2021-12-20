@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.Place;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -41,5 +42,11 @@ public interface PlaceDao {
 
     @Update("update old set room = #{room} where credit_code = #{creditCode}")
     Integer updateOldRoom(String room, String creditCode);
+
+    @Select("select new_id from new where credit_code = #{creditCode}")
+    String selectNew(String creditCode);
+
+    @Select("select old_id from old where credit_code = #{creditCode)")
+    String selectOld(String creditCode);
 
 }

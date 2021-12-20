@@ -78,8 +78,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
 
-        if (newEnterpriseDao.getNewsByCreditCode(creditCode) != null)
-            throw new ServerException("该用户已经递交公司入驻申请表");
+//        if (newEnterpriseDao.getNewsByCreditCode(creditCode) != null)
+//            throw new ServerException("该用户已经递交公司入驻申请表");
 
         News news = new News();
         String newId = UUID.randomUUID().toString();
@@ -137,8 +137,14 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setNewMainpersonId(newMainPeople.get(0).getNewMainpersonId());
         news.setNewProjectId(newProjects.get(0).getNewProjectId());
         news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
-        news.setCertificate(files[0].getBytes());
-        news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").toString());
+        try {
+            news.setCertificate(files[0].getBytes());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ServiceException("有文件没有上传");
+        }
+
+        Date date = new Date();
+        news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd").format(date));
 
         for (int i = 1; i <files.length; i++) {
             newIntellectuals.get(i - 1).setIntellectualFile(files[i].getBytes());
@@ -217,7 +223,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         if (newEnterpriseDao.addNewDemand(newDemand) < 1) {
             throw new ServiceException("插入数据失败:addNewDemand");
         }
-        if (newEnterpriseDao.updateNewForDemand(creditCode, "0", submitTime, room) < 1){
+        if (newEnterpriseDao.updateNewForDemand(creditCode, "0", submitTime, room, newDemand.getNewDemandId()) < 1){
             throw new ServiceException("插入数据失败:updateNewForDemand");
         }
 

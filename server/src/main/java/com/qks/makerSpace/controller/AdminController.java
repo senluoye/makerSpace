@@ -25,7 +25,7 @@ public class AdminController {
      * 获取全部科技园企业的部分信息
      */
     @RequestMapping(value = "/technology/all", method = RequestMethod.GET)
-    private Map<String, Object> getTechnologyAllDetails() {
+    private Map<String, Object> getTechnologyAllDetails() throws ServiceException {
         return adminService.getAllDetails();
     }
 

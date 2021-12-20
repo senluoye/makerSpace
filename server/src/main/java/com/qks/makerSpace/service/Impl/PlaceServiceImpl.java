@@ -71,9 +71,15 @@ public class PlaceServiceImpl implements PlaceService {
             throw new ServiceException("该房间号已经被占用，请重新分配");
         }
 
-//        if(placeDao.updatePlace(room,"1") > 0) {
-//
-//        }
+        if(placeDao.updatePlace(room,"1") > 0) {
+            if(placeDao.selectOld(creditCode) == null) {
+                if(placeDao.selectNew(creditCode) != null) {
+                    placeDao.updateNewRoom(room,creditCode);
+                } else throw new ServiceException("更新New失败");
+            } else {
+                placeDao.updateOldRoom(room,creditCode);
+            }
+        } else throw new ServiceException("更新room失败");
 
 
         return null;

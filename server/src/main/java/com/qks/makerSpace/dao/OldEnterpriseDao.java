@@ -17,7 +17,7 @@ public interface OldEnterpriseDao {
             "#{representPhone}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")
     Integer oldRegister(Old old);
 
-    @Select("")
+    @Select("select * from old")
     List<Old> getAllOld();
 
     @Update("update old " +
@@ -32,9 +32,9 @@ public interface OldEnterpriseDao {
             "where credit_code = #{oldId}")
     Integer updateOld(Old old);
 
-    @Update("update old set state = #{state}, submit_time = #{submitTime}, room = #{room} " +
+    @Update("update old set state = #{state}, submit_time = #{submitTime}, room = #{room}, old_demand_id = #{oldDemandId} " +
             "where credit_code = #{creditCode}")
-    Integer updateOldForDemand(String creditCode, String state, String submitTime, String room);
+    Integer updateOldForDemand(String creditCode, String state, String submitTime, String room, String oldDemandId);
 
     /**
      * 以下是关于插入Old相关子表的操作
@@ -84,7 +84,7 @@ public interface OldEnterpriseDao {
     @Select("select * from old_project where old_project_id = #{id}")
     List<OldProject> getOldProjectById(String id);
 
-    @Select("select * from old_funding where old_funding.= #{id}")
+    @Select("select * from old_funding where funding_id = #{id}")
     List<OldFunding> getOldFundingById(String id);
 
     @Select("select * from old_shareholder where old_shareholder_id = #{id}")

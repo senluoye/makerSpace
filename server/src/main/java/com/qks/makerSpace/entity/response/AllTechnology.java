@@ -7,11 +7,13 @@ public class AllTechnology {
 
     private String creditCode;
     private String organizationCode;
+    private String companyKind;
     private String name;
     private String represent;
     private String representPhone;
     private String representEmail;
     private boolean administratorAudit;
+    private String Audit;
     private String state;
     private String position;
     private String floor;
