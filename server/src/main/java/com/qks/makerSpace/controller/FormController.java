@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,12 +25,19 @@ public class FormController {
      * @param
      * @return
      */
-    @RequestMapping(value = "technology", method = RequestMethod.GET)
-    private Map<String, Object> setTechnologyForm(
-                                HttpServletRequest httpServletRequest,
-                                @RequestBody JSONObject map) throws ServiceException {
-        return formService.setTechnologyForm(httpServletRequest.getHeader("token"), map);
-    }
+//    @RequestMapping(value = "technology", method = RequestMethod.GET)
+//    private Map<String, Object> setTechnologyForm(
+//                                HttpServletRequest httpServletRequest,
+//                                @RequestPart("map") String map,
+//                                @RequestPart("employmentFile") MultipartFile[] employmentFile,
+//                                @RequestPart("File") MultipartFile[] File,
+//                                @RequestPart("awardsFile") MultipartFile[] awardsFile
+//                                ) throws ServiceException {
+//        return formService.setTechnologyForm(httpServletRequest.getHeader("token"),
+//                                            JSONObject.parseObject(map),
+//
+//                                            );
+//    }
 
     /**
      * 导出科技园在孵企业统计表

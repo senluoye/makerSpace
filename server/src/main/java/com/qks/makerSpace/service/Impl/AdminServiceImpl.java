@@ -72,22 +72,23 @@ public class AdminServiceImpl implements AdminService {
 
         Map<String, Object> data = new HashMap<>();
 
-        data.put("creditCode", old.getCreditCode());
-        data.put("registerAddress", old.getRegisterAddress());
-        data.put("registerCapital", old.getRealCapital());
-        data.put("realAddress", old.getRealAddress());
-        data.put("realCapital", old.getRealCapital());
-        data.put("lastIncome", old.getLastIncome());
-        data.put("lastTax", old.getLastTax());
-        data.put("employees", old.getEmployees());
-        data.put("originNumber", old.getOriginNumber());
-        data.put("setDate", old.getSetDate());
-        data.put("nature", old.getNature());
-        data.put("involved", old.getInvolved());
-        data.put("mainBusiness", old.getMainBusiness());
-        data.put("way", old.getWay());
-        data.put("business", old.getBusiness());
+//        data.put("creditCode", old.getCreditCode());
+//        data.put("registerAddress", old.getRegisterAddress());
+//        data.put("registerCapital", old.getRealCapital());
+//        data.put("realAddress", old.getRealAddress());
+//        data.put("realCapital", old.getRealCapital());
+//        data.put("lastIncome", old.getLastIncome());
+//        data.put("lastTax", old.getLastTax());
+//        data.put("employees", old.getEmployees());
+//        data.put("originNumber", old.getOriginNumber());
+//        data.put("setDate", old.getSetDate());
+//        data.put("nature", old.getNature());
+//        data.put("involved", old.getInvolved());
+//        data.put("mainBusiness", old.getMainBusiness());
+//        data.put("way", old.getWay());
+//        data.put("business", old.getBusiness());
 
+        data.put("old", old);
         data.put("oldDemand", adminDao.getOldDemandById(old.getOldDemandId()));
         data.put("oldShareholder", adminDao.getOldShareholderById(old.getOldShareholderId()));
         data.put("oldMainPerson", adminDao.getOldMainPeopleById(old.getOldMainpersonId()));
@@ -110,16 +111,17 @@ public class AdminServiceImpl implements AdminService {
 
         Map<String, Object> data = new HashMap<>();
 
-        data.put("registerCapital", news.getRegisterCapital());
-        data.put("realCapital", news.getRealCapital());
-        data.put("originNumber", news.getOriginNumber());
-        data.put("registerTime", news.getRegisterTime());
-        data.put("nature", news.getNature());
-        data.put("certificate", news.getCertificate());
-        data.put("involved", news.getInvolved());
-        data.put("mainBusiness", news.getMainBusiness());
-        data.put("business", news.getBusiness());
+//        data.put("registerCapital", news.getRegisterCapital());
+//        data.put("realCapital", news.getRealCapital());
+//        data.put("originNumber", news.getOriginNumber());
+//        data.put("registerTime", news.getRegisterTime());
+//        data.put("nature", news.getNature());
+//        data.put("certificate", news.getCertificate());
+//        data.put("involved", news.getInvolved());
+//        data.put("mainBusiness", news.getMainBusiness());
+//        data.put("business", news.getBusiness());
 
+        data.put("news", news);
         data.put("newDemand", adminDao.getNewDemandById(news.getNewDemandId()));
         data.put("newShareholder", adminDao.getNewShareholder(news.getNewShareholderId()));
         data.put("newMainPerson", adminDao.getNewMainPerson(news.getNewMainpersonId()));

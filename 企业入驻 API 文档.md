@@ -1647,7 +1647,7 @@ token 保存时间待定
             "governmentGrant":"<String>",
             "selfRaised":"<String>"
         },
-        "File":"<File>",									//供科技型中小企业获批截屏 || 高企证书 || 大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
+        "File":"<File>",							//供科技型中小企业获批截屏 || 高企证书 || 大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
         "employmentFile":"<File>",					//入职合同
         "awardsFile":"<File>"							//当年参赛获奖情况
     }
@@ -1890,7 +1890,7 @@ Audit（审核表）
 
 ~~~json
 {
-    "data":[{
+    "data":{
         "creditCode":"<String>",                                //统一社会信用代码（18位字符）
     	"registerAddress":"<String>",							//注册地址
     	"registerCapital":"<String>",							//注册资本（万元）
@@ -2001,7 +2001,7 @@ Audit（审核表）
 		    "note":"<String>"    								//备注
 	    	"state":"<String>"										//状态
         	"room":"<String>"									//房间号                
-	    }],
+	    },
 	  "code":0,
 	  "msg":"success"
 }   
@@ -2025,7 +2025,7 @@ Audit（审核表）
 
 ~~~json
 {
-	    "data":[{
+	    "data":{
 	        "registerCapital":"<String>",							//拟注册资本（万元）
 		    "realCapital":"<String>",									//实际募集资本（万元）
 		    "originNumber":"<String>",								//初始入园人数
@@ -2129,7 +2129,7 @@ Audit（审核表）
 		    "suggestion":"<String>",								//科技园意见
 		    "note":"<String>"    								//备注
 	    "state":"<String>"
-	    }],
+	    },
 	  "code":0,
 	  "msg":"success"
 }   
