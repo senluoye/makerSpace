@@ -1536,19 +1536,19 @@ token 保存时间待定
 
 ### 表名：form_employment
 
-|    字段名     |    类型    |     说明     |
-| :-----------: | :--------: | :----------: |
-|      id       |   String   | UUID用于删除 |
-| employment_id |   String   | UUID用于查询 |
-| contract_file | MediumBolb |   入职合同   |
+|       字段名       |    类型    |     说明     |
+| :----------------: | :--------: | :----------: |
+| form_employment_id |   String   | UUID用于删除 |
+|   employment_id    |   String   | UUID用于查询 |
+|   contract_file    | MediumBolb |   入职合同   |
 
 ### 表名：form_awards
 
-|   字段名    |    类型    |     说明     |
-| :---------: | :--------: | :----------: |
-|     id      |   String   | UUID用于删除 |
-|  awards_id  |   String   | UUID用于查询 |
-| awards_file | MediumBolb | 参赛获奖情况 |
+|     字段名     |    类型    |     说明     |
+| :------------: | :--------: | :----------: |
+| form_awards_id |   String   | UUID用于删除 |
+|   awards_id    |   String   | UUID用于查询 |
+|  awards_file   | MediumBolb | 参赛获奖情况 |
 
 ## 季度报表填写
 
@@ -1574,7 +1574,6 @@ token 保存时间待定
             "teamName":"<String>",            //企业名称
             "creditCode":"<String>",					//统一社会信用代码或组织机构代码
             "registerTime":"<String>",					//企业注册时间
-            "joinTime":"<String>",						//企业入驻科技园时间                                          
             "registerCapital":"<String>",				//注册资金			
             "registerKind":"<String>",						//企业登记注册类型
             "industryKind":"<String>",						//行业类别
@@ -1582,7 +1581,7 @@ token 保存时间待定
             "graduatedEnterprise":"<String>",		//是否是毕业企业
             "graduatedTime":"<String>",					//毕业时间
             "highEnterprise":"<String>",					//是否高新技术企业
-            "highEnterpriseData":{									//是->填数据
+            "highEnterpriseData":{								//是->填数据
                 "getTime":"<String>",								//高企证书获取时间
                 "certificateCode":"<String>"					//高企证书编号
             },
@@ -1598,12 +1597,12 @@ token 保存时间待定
             "submitPhone":"<String>",								//填报人电话
             "submitTime":"<String>",								//填报日期
             "riskInvestment":"<String>",							//获天使或风险投资额
-            "area":"<String>",    											//占用孵化器场地面积（通过其他表导出）
-            "institutions":"<String>",										//研发机构
+            "area":"<String>",    									//占用孵化器场地面积（通过其他表导出）
+            "institutions":"<String>",								//研发机构
             "totalTransformation":"<String>",						//成果转化总数
-            "relying":"<String>",											//成果转化总数 --->依托高校数量
-            "winning":"<String>",											//成果转化总数 --->获奖成果
-            "result":"<String>",											//成果转化总数 --->产出成果
+            "relying":"<String>",									//成果转化总数 --->依托高校数量
+            "winning":"<String>",									//成果转化总数 --->获奖成果
+            "result":"<String>",									//成果转化总数 --->产出成果
             "incubateIncome":"<String>",							//在孵企业总收入
             "incubateProduct":"<String>",							//在孵企业工业总产值
             "incubateProfit":"<String>",								//在孵企业净利润
@@ -1617,9 +1616,9 @@ token 保存时间待定
             "college":"<String>",										//在孵企业从业人员--->大专学历
             "tecSecondary":"<String>",								//在孵企业从业人员--->中专学历
             "tecActivists":"<String>",									//在孵企业从业人员--->科技活动人员
-            "radNumber":"<String>",									//在孵企业从业人员--->研究与试验发展(R&D)人员
+            "radNumber":"<String>",							//在孵企业从业人员--->研究与试验发展(R&D)人员
             "returnees":"<String>",										//在孵企业从业人员--->留学回国人员
-            "talents":"<String>",											//在孵企业从业人员--->千人计划人数
+            "talents":"<String>",										//在孵企业从业人员--->千人计划人数
             "trainee":"<String>",											//接纳大学生、研究生实习人员
             "employment":"<String>",									//接纳应届毕业生就业人员
             "applications":"<String>",									//当年知识产权申请数
@@ -1628,9 +1627,9 @@ token 保存时间待定
             "grantedPatent":"<String>",									//当年知识产权授权数---->发明专利
             "valid":"<String>",													//拥有有效知识产权数
             "validPatent":"<String>",									//拥有有效知识产权数----->发明专利
-            "softCopyright":"<String>",									//拥有有效知识产权数----->软件著作权
-            "plantVariety":"<String>",									//拥有有效知识产权数----->植物新品种
-            "icLayout":"<String>",											//拥有有效知识产权数----->集成电路布图
+            "softCopyright":"<String>",								//拥有有效知识产权数----->软件著作权
+            "plantVariety":"<String>",								//拥有有效知识产权数----->植物新品种
+            "icLayout":"<String>",									//拥有有效知识产权数----->集成电路布图
             "foreignPatents":"<String>",								//购买国外技术专利
             "contractTransaction":"<String>",						//技术合同交易数量
             "contractUrnover":"<String>",								//技术合同交易额
@@ -1638,21 +1637,21 @@ token 保存时间待定
             "totalAwards":"<String>",										//当年参赛获奖情况
             "provinceAwards":"<String>",								//当年参赛获奖情况--->省级以上
             "underProjects":"<String>",										//承担各类计划项目
-            "nationalProject":"<String>",									//承担各类计划项目---->国家级项目
+            "nationalProject":"<String>",								//承担各类计划项目---->国家级项目
             "schoolProject":"<String>",										//校企联合申报项目
             "declarationName":"<String>",								//联合申报项目名称
             "declarationNum":"<String>",								//联合申报项目金额
-            "expenditure":"<String>",										//科技活动经费支出总额
-            "radExpenditure":"<String>",									//科技活动经费支出总额---->研究与试验发展（R&D）经费支出
-            "productExpenditure":"<String>",							//科技活动经费支出总额---->新产品开发经费支出
+            "expenditure":"<String>",								//科技活动经费支出总额
+            "radExpenditure":"<String>",			//科技活动经费支出总额---->研究与试验发展（R&D）经费支出
+            "productExpenditure":"<String>",					//科技活动经费支出总额---->新产品开发经费支出
             "governmentGrant":"<String>",								//科技活动经费支出总额---->政府拨款
-            "selfRaised":"<String>"												//科技活动经费支出总额---->企业自筹
+            "selfRaised":"<String>"										//科技活动经费支出总额---->企业自筹
         },
-        "mediumFile":"<File>",													//供科技型中小企业获批截屏 
-        "highEnterpriseFile":"<File>",										//高企证书
-        "header_file":"<File>",														//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
-        "contractFile":"<File>",													//入职合同（多个）
-        "awardsFile":"<File>"														//当年参赛获奖情况（多个）
+        "mediumFile":"<File>",											//供科技型中小企业获批截屏 
+        "highEnterpriseFile":"<File>",									//高企证书
+        "headerFile":"<File>",				//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
+        "contractFile":"<File>",										//入职合同（多个）
+        "awardsFile":"<File>"											//当年参赛获奖情况（多个）
     }
 }
 ```

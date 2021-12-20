@@ -47,7 +47,7 @@ public interface OldEnterpriseDao {
     Integer insertOldMainPeople(OldMainPerson oldMainPerson);
 
     @Insert("insert into old_project (id, project_brief, advantage, market, energy, pollution, noise, others, old_project_id) " +
-            "values (#{id}, #{project_brief}, #{advantage}, #{market}, #{energy}, #{pollution}, #{noise}, #{others}, #{oldProjectId});")
+            "values (#{id}, #{projectBrief}, #{advantage}, #{market}, #{energy}, #{pollution}, #{noise}, #{others}, #{oldProjectId});")
     Integer insertOldProjects(OldProject oldProject);
 
     @Insert("insert into old_intellectual (id, name, kind, apply_time, approval_time, intellectual_file, old_intellectual_id) " +

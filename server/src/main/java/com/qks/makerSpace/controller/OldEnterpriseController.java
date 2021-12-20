@@ -55,7 +55,7 @@ public class OldEnterpriseController {
      * @param map
      * @return
      */
-    @RequestMapping(value = "/old/demand", method = RequestMethod.POST)
+    @RequestMapping(value = "old/demand", method = RequestMethod.POST)
     private Map<String, Object> oldEnterpriseDemand(@RequestBody JSONObject map) throws ServiceException {
         return oldEnterpriseService.oldEnterpriseDemand(map);
     }

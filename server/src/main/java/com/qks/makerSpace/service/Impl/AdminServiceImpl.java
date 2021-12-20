@@ -51,10 +51,12 @@ public class AdminServiceImpl implements AdminService {
         List<AllTechnology> data = new ArrayList<>(dataOne);
         data.addAll(dataTwo);
 
-        for (AllTechnology allTechnology : data) {
-            if (allTechnology.isAdministratorAudit()) {
-                allTechnology.setAudit("审核已通过");
-            } else allTechnology.setAudit("审核未通过");
+        Iterator<AllTechnology> iterator = data.iterator();
+        while (iterator.hasNext()) {
+            AllTechnology allTechnology = iterator.next();
+            if(allTechnology.isAdministratorAudit() == true) {
+                allTechnology.setAudit("已审核");
+            } else allTechnology.setAudit("未审核");
         }
 
         return MyResponseUtil.getResultMap(data, 0, "success");
