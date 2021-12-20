@@ -68,7 +68,6 @@ public class FormServiceImpl implements FormService {
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
 
-
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         String time = dateFormat.format(date);
@@ -77,6 +76,7 @@ public class FormServiceImpl implements FormService {
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
 
+        System.out.println(form);
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
 
@@ -92,12 +92,16 @@ public class FormServiceImpl implements FormService {
             throw new ServiceException("填报数据失败:headerFile");
 
         FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
-        JSONObject jsonObject = json.getJSONObject("highEnterpriseData");
+
 
         formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
-        formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
-        formHighEnterprise.setCertificateCode(jsonObject.getString("certificateCode"));
-        formHighEnterprise.setGetTime(jsonObject.getString("getTime"));
+
+        if (form.getHighEnterprise().equals("是")) {
+            formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
+            JSONObject jsonObject = json.getJSONObject("highEnterpriseData");
+            formHighEnterprise.setCertificateCode(jsonObject.getString("certificateCode"));
+            formHighEnterprise.setGetTime(jsonObject.getString("getTime"));
+        }
 
         if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
             throw new ServiceException("填报数据失败:highEnterpriseFile");
@@ -115,14 +119,11 @@ public class FormServiceImpl implements FormService {
         for (int i = 0 ; i < awardsFile.length; i++) {
             FormAwards formAwards = new FormAwards();
             formAwards.setFormAwardsId(awardsId);
-            formAwards.setFormAwardsId(UUID.randomUUID().toString());
+            formAwards.setAwardsId(UUID.randomUUID().toString());
             formAwards.setAwardsFile(awardsFile[i].getBytes());
             if (formDao.addAwardsFile(formAwards) < 1)
                 throw new ServiceException("填报数据失败:awardsFile");
         }
-
-
-
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
