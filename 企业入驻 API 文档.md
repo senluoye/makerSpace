@@ -1893,7 +1893,6 @@ Audit（审核表）
     "data":[{
         "creditCode":"<String>",                                //统一社会信用代码（18位字符）
     	"registerAddress":"<String>",							//注册地址
-    	"license":"<File>",										//新的营业执照上传
     	"registerCapital":"<String>",							//注册资本（万元）
     	"realAddress":"<String>",								//实际经营地址
     	"realCapital":"<String>",								//实收资本（万元）
@@ -1903,7 +1902,6 @@ Audit（审核表）
     	"originNumber":"<String>",								//初始入园人数
     	"setDate":"<String>",									//成立日期
     	"nature":"<String>",									//企业性质
-    	"certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
     	"involved":"<String>",									//企业性质
     	"mainBusiness":"<String>",								//主营业务
     	"way":"<String>",										//入园方式
@@ -2036,7 +2034,6 @@ Audit（审核表）
 		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
 		    "involved":"<String>",									//企业性质
 		    "mainBusiness":"<String>",									//主营业务
-		    "way":"<String>",									//入园方式
 		    "business":"<String>",									//入园业务
 		    
 		    "newDemand":[{
