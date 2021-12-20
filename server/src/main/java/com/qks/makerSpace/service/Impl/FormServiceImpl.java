@@ -1,8 +1,8 @@
 package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.auth0.jwt.JWT;
 import com.qks.makerSpace.dao.FormDao;
+import com.qks.makerSpace.entity.database.Form;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
 import com.qks.makerSpace.util.JWTUtils;
@@ -30,25 +30,35 @@ public class FormServiceImpl implements FormService {
      * 填写科技园季度报表
      * @param token
      * @param map
+     * @param mediumFile
+     * @param highEnterpriseFile
+     * @param headerFile
+     * @param contractFile
+     * @param awardsFile
      * @return
+     * @throws ServiceException
      */
     @Override
     public Map<String, Object> setTechnologyForm(String token,
-                                                 JSONObject map,
-                                                 MultipartFile[] mediumFile,
-                                                 MultipartFile[] highEnterpriseFile,
-                                                 MultipartFile[] headerFile,
+                                                 String map,
+                                                 MultipartFile mediumFile,
+                                                 MultipartFile highEnterpriseFile,
+                                                 MultipartFile headerFile,
                                                  MultipartFile[] contractFile,
                                                  MultipartFile[] awardsFile) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
 
-        if (formDao.getCompanyByUserId(userId) == null)
-            throw new ServiceException("请先填写入驻申请");
+//        if (mediumFile == null || highEnterpriseFile == null || headerFile == null || contractFile == null || awardsFile == null)
+//            throw new ServiceException("文件缺失");
 
+//        if (formDao.getCompanyByUserId(userId) == null)
+//            throw new ServiceException("请先填写入驻申请");
 
+        Form form = JSONObject.parseObject(map, Form.class);
 
-        String creditCode = map.getString("creditCode");
+        System.out.println(form);
 
+        String creditCode = form.getCreditCode();
 
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");

@@ -10,10 +10,11 @@ import java.util.Map;
 public interface FormService {
 
     Map<String, Object> setTechnologyForm(
-            String token, JSONObject map,
-            MultipartFile[] mediumFile,
-            MultipartFile[] highEnterpriseFile,
-            MultipartFile[] headerFile,
+            String token,
+            String map,
+            MultipartFile mediumFile,
+            MultipartFile highEnterpriseFile,
+            MultipartFile headerFile,
             MultipartFile[] contractFile,
             MultipartFile[] awardsFile) throws ServiceException;
     Map<String, Object> getDownLoadForm(String creditCode);

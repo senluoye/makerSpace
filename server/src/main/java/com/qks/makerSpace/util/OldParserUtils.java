@@ -91,7 +91,7 @@ public class OldParserUtils {
 
             oldProject.setId(UUID.randomUUID().toString());
             oldProject.setOldProjectId(OldProjectsId);
-            oldProject.setProject_brief(obj.getJSONObject(i).getString("projectBrief"));
+            oldProject.setProjectBrief(obj.getJSONObject(i).getString("projectBrief"));
             oldProject.setAdvantage(obj.getJSONObject(i).getString("advantage"));
             oldProject.setMarket(obj.getJSONObject(i).getString("market"));
             oldProject.setEnergy(obj.getJSONObject(i).getString("energy"));

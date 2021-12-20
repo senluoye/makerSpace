@@ -6,7 +6,7 @@ import lombok.Data;
 public class OldProject {
     private String id;
     private String oldProjectId;
-    private String project_brief;
+    private String projectBrief;
     private String advantage;
     private String market;
     private String energy;
