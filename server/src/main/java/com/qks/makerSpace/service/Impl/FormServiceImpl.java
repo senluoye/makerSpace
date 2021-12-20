@@ -2,6 +2,7 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.qks.makerSpace.dao.FormDao;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.Form;
@@ -10,16 +11,21 @@ import com.qks.makerSpace.entity.database.FormEmployment;
 import com.qks.makerSpace.entity.database.FormHighEnterprise;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
+import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class FormServiceImpl implements FormService {
@@ -65,6 +71,7 @@ public class FormServiceImpl implements FormService {
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
 
+
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         String time = dateFormat.format(date);
@@ -73,7 +80,6 @@ public class FormServiceImpl implements FormService {
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
 
-        System.out.println(form);
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
 
@@ -89,16 +95,12 @@ public class FormServiceImpl implements FormService {
             throw new ServiceException("填报数据失败:headerFile");
 
         FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
-
+        JSONObject jsonObject = json.getJSONObject("highEnterpriseData");
 
         formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
-
-        if (form.getHighEnterprise().equals("是")) {
-            formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
-            JSONObject jsonObject = json.getJSONObject("highEnterpriseData");
-            formHighEnterprise.setCertificateCode(jsonObject.getString("certificateCode"));
-            formHighEnterprise.setGetTime(jsonObject.getString("getTime"));
-        }
+        formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
+        formHighEnterprise.setCertificateCode(jsonObject.getString("certificateCode"));
+        formHighEnterprise.setGetTime(jsonObject.getString("getTime"));
 
         if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
             throw new ServiceException("填报数据失败:highEnterpriseFile");
@@ -116,15 +118,16 @@ public class FormServiceImpl implements FormService {
         for (int i = 0 ; i < awardsFile.length; i++) {
             FormAwards formAwards = new FormAwards();
             formAwards.setFormAwardsId(awardsId);
-            formAwards.setAwardsId(UUID.randomUUID().toString());
+            formAwards.setFormAwardsId(UUID.randomUUID().toString());
             formAwards.setAwardsFile(awardsFile[i].getBytes());
             if (formDao.addAwardsFile(formAwards) < 1)
                 throw new ServiceException("填报数据失败:awardsFile");
         }
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("creditCode", creditCode);
-        return MyResponseUtil.getResultMap(data, 0, "success");
+
+
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
     /**
@@ -133,8 +136,9 @@ public class FormServiceImpl implements FormService {
      * @return
      */
     @Override
-    public Map<String, Object> getDownLoadForm(String creditCode) {
-        Map<String, Object> map = formDao.getAllInformation(creditCode);
+    public Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException {
+        Form form = formDao.getAllInformation(creditCode);
+        Map<String, Object> map = ChangeUtils.getObjectToMap(form);
         return map;
     }
 
