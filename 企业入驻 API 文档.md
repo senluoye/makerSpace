@@ -1649,7 +1649,7 @@ token 保存时间待定
         },
         "mediumFile":"<File>",											//供科技型中小企业获批截屏 
         "highEnterpriseFile":"<File>",									//高企证书
-        "headerFile":"<File>",				//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
+        "headerFile":"<File>",					//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
         "contractFile":"<File>",										//入职合同（多个）
         "awardsFile":"<File>"											//当年参赛获奖情况（多个）
     }
@@ -1686,7 +1686,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/form/statistical`
+- `/api/form/statistical/{creditCode}`
 
 **请求方式：**
 
@@ -1724,7 +1724,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/form/situation`
+- `/api/form/situation{creditCode}`
 
 **请求方式：**
 

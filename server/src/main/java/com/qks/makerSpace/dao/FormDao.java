@@ -56,15 +56,15 @@ public interface FormDao {
     @Update("update form set medium_file = #{mediumFile} where credit_code = #{creditCode}")
     Integer addMediumFile(byte[] mediumFile, String creditCode);
 
-
-
     @Insert("update form set header_file = #{headerFile} where credit_code = #{creditCode}")
     Integer addHeaderFile(byte[] headerFile, String creditCode);
 
-    @Insert("insert into ")
+    @Insert("insert into form_high_enterprise(high_enterprise_id, high_enterprise_file, get_time) VALUES (#{highEnterpriseId}, #{highEnterpriseFile},#{getTime},#{certificateCode})")
     Integer addHighEnterpriseFile(FormHighEnterprise formHighEnterprise);
 
+    @Insert("insert into form_employment(form_employment_id, employment_id, contract_file) VALUES (#{formEmploymentId}, #{employmentId}, #{contractFile})")
     Integer addContractFile(FormEmployment formEmployment);
 
+    @Insert("insert into form_awards(form_awards_id, awards_id, awards_file) VALUES (#{formAwardId}, #{awardsId}, #{awardsFile})")
     Integer addAwardsFile(FormAwards formAwards);
 }
