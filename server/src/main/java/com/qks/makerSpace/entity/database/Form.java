@@ -17,10 +17,10 @@ public class Form {
     private String	highEnterprise;
     private String	highEnterpriseId;
     private String	mediumSized;
-    private String	mediumFile;
+    private byte[]	mediumFile;
     private String	mentorRelationship;
     private String	headerKind;
-    private String	headerFile;
+    private byte[]	headerFile;
     private String	serialEntrepreneur;
     private String	headerGender;
     private String	taxKind;
