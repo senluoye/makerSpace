@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -34,7 +35,7 @@ public class FormController {
                                 @RequestPart("headerFile") MultipartFile headerFile,
                                 @RequestPart("contractFile") MultipartFile[] contractFile,
                                 @RequestPart("awardsFile") MultipartFile[] awardsFile
-                                ) throws ServiceException {
+                                ) throws ServiceException, IOException {
         return formService.setTechnologyForm(
                 httpServletRequest.getHeader("token"),
                 map,

@@ -1,8 +1,12 @@
 package com.qks.makerSpace.dao;
 
-import com.qks.makerSpace.entity.database.UserCompany;
+import com.qks.makerSpace.entity.database.*;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -16,4 +20,51 @@ public interface FormDao {
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> getCompanyByUserId(String userId);
 
+    @Insert("insert into form(team_name, credit_code, register_time, " +
+            "join_time, register_capital, register_kind, industry_kind, " +
+            "field, graduated_enterprise, graduated_time, high_enterprise, " +
+            "high_enterprise_id, medium_sized, mentor_relationship, " +
+            "header_kind, serial_entrepreneur, header_gender, " +
+            "tax_kind, header, statistic_header, submit_header, submit_phone, " +
+            "submit_time, risk_investment, area, institutions, total_transformation, " +
+            "relying, winning, result, incubate_income, incubate_product, " +
+            "incubate_profit, incubate_tax, incubate_out, employee, doctor, " +
+            "master, graduate, bachelor, college, tec_secondary, tec_activists, " +
+            "rad_number, returnees, talents, trainee, employment, employment_id, " +
+            "applications, applications_patent, granted, granted_patent, valid, " +
+            "valid_patent, soft_copyright, plant_variety, ic_layout, foreign_patents, " +
+            "contract_transaction, contract_urnover, project_num, total_awards, " +
+            "awards_id, province_awards, under_projects, national_project, " +
+            "school_project, declaration_name, declaration_num, expenditure, " +
+            "rad_expenditure, product_expenditure, government_grant, self_raised, time) " +
+            "VALUES (#{teamName}, #{creditCode}, #{registerTime}, #{joinTime}, #{registerCapital}, " +
+            "#{registerKind}, #{industryKind}, #{field}, #{graduatedEnterprise}, #{graduatedTime}, #{highEnterprise}, " +
+            "#{highEnterpriseId}, #{mediumSized}, #{mentorRelationship}, #{headerKind}, " +
+            "#{serialEntrepreneur}, #{headerGender}, #{taxKind}, #{header}, #{statisticHeader}, #{submitHeader}, " +
+            "#{submitPhone}, #{submitTime}, #{riskInvestment}, #{area}, #{institutions}, #{totalTransformation}, " +
+            "#{relying}, #{winning}, #{result}, #{incubateIncome}, #{incubateProduct}, #{incubateProfit}, " +
+            "#{incubateTax}, #{incubateOut}, #{employee}, #{doctor}, #{master}, #{graduate}, " +
+            "#{bachelor}, #{college}, #{tecSecondary}, #{tecActivists}, #{radNumber}, #{returnees}, " +
+            "#{talents}, #{trainee}, #{employment}, #{employmentId}, #{applications}, #{applicationsPatent}, " +
+            "#{granted}, #{grantedPatent}, #{valid}, #{validPatent}, #{softCopyright}, #{plantVariety}, " +
+            "#{icLayout}, #{foreignPatents}, #{contractTransaction}, #{contractUrnover}, #{projectNum}, #{totalAwards}, " +
+            "#{awardsId}, #{provinceAwards}, #{underProjects}, #{nationalProject}, #{schoolProject}, #{declarationName}, " +
+            "#{declarationNum}, #{expenditure}, #{radExpenditure}, #{productExpenditure}, #{governmentGrant}, #{selfRaised}, " +
+            "#{time})")
+    Integer addForm(Form form);
+
+    @Update("update form set medium_file = #{mediumFile} where credit_code = #{creditCode}")
+    Integer addMediumFile(byte[] mediumFile, String creditCode);
+
+
+
+    @Insert("update form set header_file = #{headerFile} where credit_code = #{creditCode}")
+    Integer addHeaderFile(byte[] headerFile, String creditCode);
+
+    @Insert("insert into ")
+    Integer addHighEnterpriseFile(FormHighEnterprise formHighEnterprise);
+
+    Integer addContractFile(FormEmployment formEmployment);
+
+    Integer addAwardsFile(FormAwards formAwards);
 }

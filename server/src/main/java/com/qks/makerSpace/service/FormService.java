@@ -5,6 +5,7 @@ import com.qks.makerSpace.exception.ServiceException;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 public interface FormService {
@@ -16,7 +17,7 @@ public interface FormService {
             MultipartFile highEnterpriseFile,
             MultipartFile headerFile,
             MultipartFile[] contractFile,
-            MultipartFile[] awardsFile) throws ServiceException;
+            MultipartFile[] awardsFile) throws ServiceException, IOException;
     Map<String, Object> getDownLoadForm(String creditCode);
     void downLoadWord(HttpServletResponse response, Map<String, Object> map, int i) throws Exception;
 }

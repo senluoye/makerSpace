@@ -1581,9 +1581,9 @@ token 保存时间待定
             "graduatedEnterprise":"<String>",		//是否是毕业企业
             "graduatedTime":"<String>",					//毕业时间
             "highEnterprise":"<String>",					//是否高新技术企业
-            "highEnterpriseData":{								//是->填数据
-                "getTime":"<String>",								//高企证书获取时间
-                "certificateCode":"<String>"					//高企证书编号
+            "highEnterpriseData":{					//关于这部分对像，是高新技术企业就填具体数据，不是就填null
+                "getTime":"<String>",					//高企证书获取时间
+                "certificateCode":"<String>"			//高企证书编号
             },
             "mediumSized":"<String>",						//是否是科技型中小企业
             "mentorRelationship":"<String>",				//是否与创业导师建立辅导关系

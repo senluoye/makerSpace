@@ -15,7 +15,7 @@ public interface NewEnterpriseDao {
 //  注册
     @Insert("insert into " +
             "new(new_id,credit_code,organization_code,name,picture,represent,represent_card,represent_phone," +
-            "represent_email,agent,agent_phone,agent_email)" +
+            "represent_email,agent,agent_phone,agent_email) " +
             "VALUES (#{newId},#{creditCode},#{organizationCode}," +
             "#{name},#{picture},#{represent},#{representCard}," +
             "#{representPhone},#{representEmail},#{agent}," +
@@ -41,7 +41,7 @@ public interface NewEnterpriseDao {
     Integer addNewDemand(NewDemand newDemand);
 
     @Insert("insert into " +
-            "new_shareholder(id, new_shareholder_id, name, stake, nature)" +
+            "new_shareholder(id, new_shareholder_id, name, stake, nature) " +
             "VALUES (#{id}, #{newShareholderId}, #{name}, #{stake}, #{nature})")
     int insertNewShareholder(NewShareholder newShareholder);
 
