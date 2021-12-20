@@ -2,8 +2,6 @@ package com.qks.makerSpace.entity.database;
 
 import lombok.Data;
 
-import java.sql.Timestamp;
-
 @Data
 public class Old {
     private String oldId;

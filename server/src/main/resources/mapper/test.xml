@@ -21,8 +21,4 @@
         where old_id = #{oldId}
     </update>
 
-    <insert id="">
-        insert into old_shareholder(id, name, stake, nature, old_shareholder_id) VALUES (#{id}, #{name}, #{stake}, #{nature}, #{oldShareholderId})
-    </insert>
-
 </mapper>
