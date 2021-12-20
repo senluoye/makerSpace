@@ -22,8 +22,8 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
     /**
      * 领导登陆
-     * @param map
-     * @return
+     * @param Hashmap
+     * @return Hashmap
      */
     @Override
     public Map<String, Object> LeaderLogin(Map<String, Object> map) throws ServiceException {

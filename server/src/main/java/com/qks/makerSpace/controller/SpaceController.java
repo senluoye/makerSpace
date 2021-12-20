@@ -3,7 +3,6 @@ package com.qks.makerSpace.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.SpaceService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
