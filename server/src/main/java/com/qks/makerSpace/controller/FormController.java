@@ -1,11 +1,13 @@
 package com.qks.makerSpace.controller;
 
 import com.qks.makerSpace.service.FormService;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/form")
@@ -23,9 +25,9 @@ public class FormController {
      * @param
      * @return
      */
-    @RequestMapping(value = "statistical", method = RequestMethod.GET)
-    private void getStatisticalForm(HttpServletResponse response) throws Exception {
-        formService.downLoadWord(response, formService.getDownLoadForm(),1);
+    @RequestMapping(value = "statistical/{creditCode}", method = RequestMethod.GET)
+    private void getStatisticalForm(HttpServletResponse response,@PathVariable String creditCode) throws Exception {
+        formService.downLoadWord(response, formService.getDownLoadForm(creditCode),1);
     }
 
     /**
@@ -33,9 +35,9 @@ public class FormController {
      * @param
      * @return
      */
-    @RequestMapping(value = "situation", method = RequestMethod.GET)
-    private void getSituationForm(HttpServletResponse response) throws Exception {
-        formService.downLoadWord(response, formService.getDownLoadForm(),2);
+    @RequestMapping(value = "situation/{creditCode}", method = RequestMethod.GET)
+    private void getSituationForm(HttpServletResponse response,@PathVariable String creditCode) throws Exception {
+        formService.downLoadWord(response, formService.getDownLoadForm(creditCode),2);
     }
 
 }

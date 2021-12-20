@@ -17,6 +17,9 @@ public interface OldEnterpriseDao {
             "#{representPhone}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")
     Integer oldRegister(Old old);
 
+    @Select("select * from old where credit_code = #{creditCode}")
+    List<Old> exit(String creditCode);
+
     @Select("select * from old")
     List<Old> getAllOld();
 

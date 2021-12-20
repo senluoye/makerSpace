@@ -74,12 +74,14 @@ public class AdminServiceImpl implements AdminService {
 
         String id = adminDao.getOldId(creditCode);
 
-        data.put("Demand", adminDao.getOldDemandById(id));
-        data.put("Shareholder", adminDao.getOldShareholderById(id));
-        data.put("MainPerson", adminDao.getOldMainPeopleById(id));
-        data.put("Project", adminDao.getOldProjectById(id));
-        data.put("Intellectual", adminDao.getOldIntellectualById(id));
-        data.put("Funding", adminDao.getOldFundingById(id));
+        System.out.println(id);
+
+        data.put("oldDemand", adminDao.getOldDemandById(id));
+        data.put("oldShareholder", adminDao.getOldShareholderById(id));
+        data.put("oldMainPerson", adminDao.getOldMainPeopleById(id));
+        data.put("oldProject", adminDao.getOldProjectById(id));
+        data.put("oldIntellectual", adminDao.getOldIntellectualById(id));
+        data.put("oldFunding", adminDao.getOldFundingById(id));
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -95,15 +97,11 @@ public class AdminServiceImpl implements AdminService {
         if (data == null)
             throw new ServiceException("数据不存在在");
 
-        data.put("Demand", adminDao.getNewDemandById(id));
-        data.put("Shareholder", adminDao.getNewShareholder(id));
-        data.put("MainPerson", adminDao.getNewMainPerson(id));
-        data.put("Project", adminDao.getNewProject(id));
-        data.put("Intellectual", adminDao.getNewIntellectual(id));
-
-        if(data.get("administratorAudit").equals(true)) {
-            data.put("Audit","已审核");
-        } else data.put("Audit","未审核");
+        data.put("newDemand", adminDao.getNewDemandById(id));
+        data.put("newShareholder", adminDao.getNewShareholder(id));
+        data.put("newMainPerson", adminDao.getNewMainPerson(id));
+        data.put("newProject", adminDao.getNewProject(id));
+        data.put("newIntellectual", adminDao.getNewIntellectual(id));
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }

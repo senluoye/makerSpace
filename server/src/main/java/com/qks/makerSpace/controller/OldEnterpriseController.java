@@ -36,7 +36,7 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "oldRegister", method = RequestMethod.POST)
-    private Map<String, Object> oldRegister(@RequestBody Map<String, Object> map) {
+    private Map<String, Object> oldRegister(@RequestBody Map<String, Object> map) throws ServiceException {
         return oldEnterpriseService.oldRegister(map);
     }
 

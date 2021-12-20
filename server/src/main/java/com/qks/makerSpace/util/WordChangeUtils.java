@@ -1,7 +1,6 @@
 package com.qks.makerSpace.util;
 
 import org.apache.poi.xwpf.usermodel.*;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
