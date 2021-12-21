@@ -142,6 +142,15 @@ public class FormServiceImpl implements FormService {
     public Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException {
         Form form = formDao.getAllInformation(creditCode);
         Map<String, Object> map = ChangeUtils.getObjectToMap(form);
+        Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
+        Map.Entry<String, Object> entry;
+        while (iterator.hasNext()){
+            entry = iterator.next();
+            // 放入新的Entry
+            map.put(entry.getKey(), entry.getValue());
+            // 删除老的Entry
+            iterator.remove();
+        }
         return map;
     }
 

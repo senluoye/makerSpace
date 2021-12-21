@@ -53,7 +53,7 @@ public class FormController {
      */
     @RequestMapping(value = "statistical/{creditCode}", method = RequestMethod.GET)
     private void getStatisticalForm(HttpServletResponse response, @PathVariable String creditCode) throws Exception {
-        formService.downLoadWord(response, formService.getDownLoadForm(creditCode),1);
+        formService.downLoadWord(response, formService.getDownLoadForm(creditCode) ,1);
     }
 
     /**

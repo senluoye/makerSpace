@@ -123,16 +123,16 @@ public class AdminController {
         return adminService.disagreeSpaceById(map);
     }
 
-    /**
-     * 获取某个企业的所有季度报表
-     * @param map
-     * @return
-     * @throws ServiceException
-     */
-    @RequestMapping(value = "form/technology", method = RequestMethod.POST)
-    private Map<String, Object> getTechnologyForm(@RequestBody JSONObject map) throws ServiceException {
-        return adminService.getTechnologyForm(map);
-    }
+//    /**
+//     * 获取某个企业的所有季度报表
+//     * @param map
+//     * @return
+//     * @throws ServiceException
+//     */
+//    @RequestMapping(value = "form/technology", method = RequestMethod.POST)
+//    private Map<String, Object> getTechnologyForm(@RequestBody JSONObject map) throws ServiceException {
+//        return adminService.getTechnologyForm(map);
+//    }
 
     /**
      * 获取导出表的信息
