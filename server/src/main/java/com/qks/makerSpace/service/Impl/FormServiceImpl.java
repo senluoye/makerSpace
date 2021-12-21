@@ -143,7 +143,7 @@ public class FormServiceImpl implements FormService {
         Form form = formDao.getAllInformation(creditCode);
         Map<String, Object> map = ChangeUtils.getObjectToMap(form);
         Map<String, Object> hashMap = new HashMap<>();
-        hashMap.put("${year}",String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
+        hashMap.put("${year}",String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + "年度");
         Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
         Map.Entry<String, Object> entry;
         while (iterator.hasNext()){

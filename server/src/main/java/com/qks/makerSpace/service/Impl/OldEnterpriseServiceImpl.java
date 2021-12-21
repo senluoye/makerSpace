@@ -3,7 +3,6 @@ package com.qks.makerSpace.service.Impl;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
@@ -35,16 +34,15 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     @Override
     public Map<String, Object> oldRegister(JSONObject map) throws ServiceException {
         Old old = JSONObject.parseObject(String.valueOf(map), Old.class);
-
-        if (oldEnterpriseDao.exit(old.getCreditCode()) != null){
+        System.out.println(old);
+        if (oldEnterpriseDao.exit(old.getCreditCode()).size() != 0){
             // 之前已经申请
-            if (oldEnterpriseDao.oldRegister(old) < 1)
-                throw new ServiceException("录入信息失败");
+            oldEnterpriseDao.updateOldRegister(old);
         } else {
+
             // 之前没有申请
             old.setOldId(UUID.randomUUID().toString());
-            if (oldEnterpriseDao.updateOldRegister(old) < 1)
-                throw new ServiceException("更新信息失败");
+            oldEnterpriseDao.oldRegister(old);
         }
 
         Map<String, Object> data = new HashMap<>();
@@ -118,7 +116,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         if (oldEnterpriseDao.demandExit(creditCode) != null) {
             // 已经存在
             String oldDemandId = oldEnterpriseDao.selectOldDemandIdByCreditCode(creditCode);
-            if (oldEnterpriseDao.updateOldDemand(oldDemand) < 1)
+            if (oldEnterpriseDao.updateOldDemand(oldDemand,oldDemandId) < 1)
                 throw new ServiceException("插入数据失败:addOldDemand");
         } else {
             // 不存在
@@ -153,8 +151,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         List<Audit> auditList = oldEnterpriseDao.getAudit(creditCode);
 
-        if (auditList.get(0).isAdministratorAudit() && auditList.get(0).isLeadershipAudit())
-            throw new ServiceException("领导和管理员均已审核通过，无法重新填报申请表");
+        if (auditList.size() != 0)
+            if (auditList.get(0).isAdministratorAudit() && auditList.get(0).isLeadershipAudit())
+                throw new ServiceException("领导和管理员均已审核通过，无法重新填报申请表");
 
         // 数据初步处理
         Old old = OldParserUtils.parser(map);
@@ -181,57 +180,43 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         for (int i = 2; i < files.length; i++)
             oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
 
-        if (oldEnterpriseDao.exit(creditCode) != null) {
-            // 如果之前已经有信息存在
-            if (oldEnterpriseDao.updateOld(old) < 0)
-                throw new ServiceException("信息更新失败:old");
+        if (oldEnterpriseDao.exit(creditCode).size() != 0) {
+            // 如果之前已经有信息存在 --->删除对应信息
+            if (oldEnterpriseDao.deleteOldMainPerson(oldEnterpriseDao.selectOldMainPerson(creditCode)) <= 0)
+                throw new ServiceException("删除MainPerson错误");
+            if (oldEnterpriseDao.deleteOldProject(oldEnterpriseDao.selectOldProject(creditCode)) <= 0)
+                throw new ServiceException("删除Project失败");
+            if (oldEnterpriseDao.deleteOldFunding(oldEnterpriseDao.selectOldFunding(creditCode)) <= 0)
+                throw new ServiceException("删除Funding失败");
+            if (oldEnterpriseDao.deleteOldShareholder(oldEnterpriseDao.selectOldShareholder(creditCode)) <= 0)
+                throw new ServiceException("删除Shareholder失败");
+            if (oldEnterpriseDao.deleteOldIntellectual(oldEnterpriseDao.selectOldIntellectual(creditCode)) <= 0)
+                throw new ServiceException("删除Intellectual失败");
 
-            for (OldMainPerson oldMainPeople : oldMainPeoples) {
-                if (oldEnterpriseDao.updateOldMainPeople(oldMainPeople) <= 0)
-                    throw new ServiceException("信息更新失败:oldMainPeople");
-            }
-            for (OldProject oldProject : oldProjects) {
-                if (oldEnterpriseDao.updateOldProjects(oldProject) <= 0)
-                    throw new ServiceException("信息更新失败:oldProject");
-            }
-            for (OldIntellectual oldIntellectual : oldIntellectuals) {
-                if (oldEnterpriseDao.updateOldIntellects(oldIntellectual) <= 0)
-                    throw new ServiceException("信息更新失败:oldIntellectual");
-            }
-            for (OldFunding oldFunding : oldFundings) {
-                if (oldEnterpriseDao.updateOldFundings(oldFunding) <= 0)
-                    throw new ServiceException("信息更新失败:oldFunding");
-            }
-            for (OldShareholder oldShareholder : oldShareholders) {
-                if (oldEnterpriseDao.updateOldShareholder(oldShareholder) <= 0)
-                    throw new ServiceException("信息更新失败:oldShareholder");
-            }
+        }
 
-        } else {
-            // 之前没有信息存在
-            if (oldEnterpriseDao.updateOld(old) <= 0)
-                throw new ServiceException("信息插入失败:old");
-
-            for (OldMainPerson oldMainPeople : oldMainPeoples) {
-                if (oldEnterpriseDao.insertOldMainPeople(oldMainPeople) <= 0)
-                    throw new ServiceException("信息插入失败:oldMainPeople");
-            }
-            for (OldProject oldProject : oldProjects) {
-                if (oldEnterpriseDao.insertOldProjects(oldProject) <= 0)
-                    throw new ServiceException("信息插入失败:oldProject");
-            }
-            for (OldIntellectual oldIntellectual : oldIntellectuals) {
-                if (oldEnterpriseDao.insertOldIntellects(oldIntellectual) <= 0)
-                    throw new ServiceException("信息插入失败:oldIntellectual");
-            }
-            for (OldFunding oldFunding : oldFundings) {
-                if (oldEnterpriseDao.insertOldFundings(oldFunding) <= 0)
-                    throw new ServiceException("信息插入失败:oldFunding");
-            }
-            for (OldShareholder oldShareholder : oldShareholders) {
-                if (oldEnterpriseDao.insertOldShareholder(oldShareholder) <= 0)
-                    throw new ServiceException("信息插入失败:oldShareholder");
-            }
+        //更新主表
+        if (oldEnterpriseDao.updateOld(old) <= 0)
+            throw new ServiceException("信息插入失败:old");
+        for (OldMainPerson oldMainPeople : oldMainPeoples) {
+            if (oldEnterpriseDao.insertOldMainPeople(oldMainPeople) <= 0)
+                throw new ServiceException("信息插入失败:oldMainPeople");
+        }
+        for (OldProject oldProject : oldProjects) {
+            if (oldEnterpriseDao.insertOldProjects(oldProject) <= 0)
+                throw new ServiceException("信息插入失败:oldProject");
+        }
+        for (OldIntellectual oldIntellectual : oldIntellectuals) {
+            if (oldEnterpriseDao.insertOldIntellects(oldIntellectual) <= 0)
+                throw new ServiceException("信息插入失败:oldIntellectual");
+        }
+        for (OldFunding oldFunding : oldFundings) {
+            if (oldEnterpriseDao.insertOldFundings(oldFunding) <= 0)
+                throw new ServiceException("信息插入失败:oldFunding");
+        }
+        for (OldShareholder oldShareholder : oldShareholders) {
+            if (oldEnterpriseDao.insertOldShareholder(oldShareholder) <= 0)
+                throw new ServiceException("信息插入失败:oldShareholder");
         }
 
         // 插入数据到审核表
@@ -256,7 +241,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
     /**
      * 获取某个企业的所有季度报表
-     * @param str
+     * @param
      * @return
      */
     @Override

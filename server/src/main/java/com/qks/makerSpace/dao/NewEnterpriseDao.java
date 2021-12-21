@@ -2,6 +2,8 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
+import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -22,6 +24,9 @@ public interface NewEnterpriseDao {
             "#{representPhone},#{representEmail},#{agent}," +
             "#{agentPhone},#{agentEmail})")
     int newRegister(News news);
+
+    @Select("select new_demand_id from new where credit_code = #{creditCode}")
+    String selectNewDemandByCreditCode(String creditCode);
 
 //  更新提交更多数据
     @Update("update new " +
@@ -89,4 +94,49 @@ public interface NewEnterpriseDao {
 
     @Select("select * from form where credit_code = #{creditCode}")
     List<FormDetails> getAllFormDetails(String creditCode);
+
+    @Select("select * from new where credit_Code = #{creditCode}")
+    News exit(String creditCode);
+
+    @Update("update new set organization_code = #{organizationCode}, name = #{name}, picture = #{picture}, " +
+            "represent = #{represent}, represent_card = #{representCard}, represent_phone =#{representPhone}, represent_email = #{representEmail}, " +
+            "agent = #{agent}, agent_phone = #{agentPhone}, agent_email = #{agentEmail} where credit_code = #{creditCode}")
+    int updateNewRegister(News news);
+
+    @Select("select * from new_demand where credit_code = #{creditCode}")
+    List<NewDemand> demandExit(String creditCode);
+
+    // 下面是已经填过表的
+    @Delete("delete * from new_mainperson where new_mainperson_id = #{id}")
+    Integer deleteNewMainPerson(String id);
+
+    @Delete("delete * from new_project where new_project_id = #{id}")
+    Integer deleteNewProject(String id);
+
+    @Delete("delete * from new_intellectual where new_intellectual_id = #{id}")
+    Integer deleteNewIntellectual(String id);
+
+    @Delete("delete * from new_shareholder where new_shareholder_id = #{id}")
+    Integer deleteNewShareholder(String id);
+
+    @Select("select new_mainperson_id from new where credit_code = #{creditCode}")
+    String selectNewMainPersonId(String creditCode);
+
+    @Select("select new_shareholder_id from new where credit_code = #{creditCode}")
+    String  selectNewShareholder(String creditCode);
+
+    @Select("select new_project_id from new where credit_code = #{creditCode}")
+    String selectNewProject(String creditCode);
+
+    @Select("select new_intellectual_id from new where credit_code = #{creditCode}")
+    String selectNewIntellectual(String creditCode);
+
+    @Select("select * from audit where audit_id = #{creditCode}")
+    List<Audit> getAudit(String creditCode);
+
+    @Update("update new_demand " +
+            "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
+            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
+            "where new_demand.new_demand_id = #{newDemandId}")
+    Integer updateNewDemand(NewDemand newDemand, String newDemandId);
 }

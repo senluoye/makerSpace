@@ -2,6 +2,7 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -80,12 +81,12 @@ public interface OldEnterpriseDao {
             "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
             "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
             "where old_demand.old_demand_id = #{oldDemandId}")
-    Integer updateOldDemand(OldDemand oldDemand);
-]
+    Integer updateOldDemand(OldDemand oldDemand, String oldDemandId);
+
     @Select("select old_demand_id from old where credit_code = #{creditCode}")
     String selectOldDemandIdByCreditCode(String creditCode);
 
-    @Update("update old set old_demand_id = #{oldDemand} where credit_code = #{creditCode}")
+    @Update("update old set old_demand_id = #{oldDemandId} where credit_code = #{creditCode}")
     Integer updateOldDemandId(String creditCode, String oldDemand);
 
     /**
@@ -115,7 +116,7 @@ public interface OldEnterpriseDao {
     @Select("select credit_code from user_company where user_id = #{userId}")
     String selectCreditCodeByUserId(String userId);
 
-    @Select("select * from old_demand where  ")
+    @Select("select * from old_demand where credit_code = #{creditCode}")
     List<OldDemand> demandExit(String creditCode);
 
     // 其他子表的相关操作
@@ -137,36 +138,37 @@ public interface OldEnterpriseDao {
     List<Audit> getAudit(String creditCode);
 
     // 下面是已经填过表的
-    @Update("update old_mainperson " +
-            "set name = #{name}, born = #{born}, job = #{job}, school = #{school}, old_mainperson_id = #{oldMainpersonId}, " +
-            "title = #{title}, background = #{background}, professional = #{professional}, name = #{name} " +
-            "where id = #{id}")
-    Integer updateOldMainPeople(OldMainPerson oldMainPerson);
+    @Delete("delete * from old_mainperson where old_mainperson_id = #{id}")
+    Integer deleteOldMainPerson(String id);
 
-    @Update("update old_mainperson " +
-            "set name = #{name}, born = #{born}, job = #{job}, school = #{school}, old_mainperson_id = #{oldMainpersonId}, " +
-            "title = #{title}, background = #{background}, professional = #{professional}, name = #{name} " +
-            "where id = #{id}")
-    Integer updateOldProjects(OldProject oldProject);
+    @Delete("delete * from old_project where old_project_id = #{id}")
+    Integer deleteOldProject(String id);
 
-    @Update("update old_intellectual " +
-            "set old_project_id = #{oldIntellectualId}, name = #{name}, kind = #{kind}, " +
-            "apply_time = #{applyTime}, approval_time = #{approvalTime}, intellectual_file = #{intellectualFile} " +
-            "where id = #{id}")
-    Integer updateOldIntellects(OldIntellectual oldIntellectual);
+    @Delete("delete * from old_intellectual where old_intellectual_id = #{id}")
+    Integer deleteOldIntellectual(String id);
 
-    @Update("update old_funding " +
-            "set funding_id = #{fundingId}, name = #{name}, level = #{level}, " +
-            "time = #{time}, grants = #{grants}, award = #{award} " +
-            "where id = #{id}")
-    Integer updateOldFundings(OldFunding oldFunding);
+    @Delete("delete * from old_funding where funding_id = #{id}")
+    Integer deleteOldFunding(String id);
 
-    @Update("update old_shareholder " +
-            "set old_shareholder_id = #{oldShareholderId}, name = #{name}, stake = #{stake}, nature = #{nature} " +
-            "where id = #{id}")
-    Integer updateOldShareholder(OldShareholder oldShareholder);
+    @Delete("delete * from old_shareholder where old_shareholder_id = #{id}")
+    Integer deleteOldShareholder(String id);
 
     @Update("update audit set administrator_audit = #{administratorAudit}, leadership_audit = #{leadershipAudit} " +
             "where audit_id = #{auditId}")
     Integer updateAudit(Audit audit);
+
+    @Select("select old_mainperson_id from old where credit_code = #{creditCode}")
+    String selectOldMainPerson(String creditCode);
+
+    @Select("select old_project_id from old where credit_code = #{creditCode}")
+    String selectOldProject(String creditCode);
+
+    @Select("select old_intellectual_id from old where credit_code = #{creditCode}")
+    String selectOldIntellectual(String creditCode);
+
+    @Select("select funding_id from old where credit_code = #{creditCode}")
+    String selectOldFunding(String creditCode);
+
+    @Select("select old_shareholder_id from old where credit_code = #{creditCode}")
+    String selectOldShareholder(String creditCode);
 }

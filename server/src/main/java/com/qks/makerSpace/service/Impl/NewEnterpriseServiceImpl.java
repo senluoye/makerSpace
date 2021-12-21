@@ -85,7 +85,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         News news = new News();
         String newId = UUID.randomUUID().toString();
 
-        news.setNewId(newId);
         news.setCreditCode(creditCode);
         news.setOrganizationCode(map.get("organizationCode").toString());
 //        news.setPassword(map.get("password").toString());
@@ -99,9 +98,22 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setAgentPhone(map.get("agentPhone").toString());
         news.setAgentEmail(map.get("agentEmail").toString());
 
-        if (newEnterpriseDao.newRegister(news) > 0) {
-            return MyResponseUtil.getResultMap(creditCode, 0, "注册成功");
-        } else throw new ServerException("注册失败");
+        if (newEnterpriseDao.exit(creditCode) != null) {
+            //之前没有申请过
+            news.setNewId(newId);
+            if (newEnterpriseDao.newRegister(news) < 1)
+                throw new ServerException("录入信息失败");
+        } else {
+            //之前申请过
+            if(newEnterpriseDao.updateNewRegister(news) < 1){
+                throw new ServerException("更新信息失败");
+            }
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("id",creditCode);
+        return MyResponseUtil.getResultMap(data,0,"success");
+
     }
 
     /**
@@ -127,6 +139,13 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
 
+        List<Audit> auditList = newEnterpriseDao.getAudit(creditCode);
+
+        if (auditList.size() != 0)
+            if (auditList.get(0).isAdministratorAudit() && auditList.get(0).isLeadershipAudit())
+                throw new ServiceException("领导和管理员均已审核通过，无法重新填报申请表");
+
+
         News news = NewParserUtils.newsParser(map);
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.getJSONArray("newMainPerson"));
         List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.getJSONArray("newProject"));
@@ -150,36 +169,49 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             newIntellectuals.get(i - 1).setIntellectualFile(files[i].getBytes());
         }
 
-        if(newEnterpriseDao.updateNew(news) > 0) {
-            for(NewMainPerson newMainPerson : newMainPeople) {
-                if(newEnterpriseDao.insertNewMainPerson(newMainPerson) <= 0) {
-                    throw new ServiceException("信息插入失败:newMainPeople");
-                }
-            }
-            for(NewShareholder newShareholder : newShareholders) {
-                if(newEnterpriseDao.insertNewShareholder(newShareholder) <= 0) {
-                    throw new ServiceException("信息插入失败:newShareholder");
-                }
-            }
-            for(NewProject newProject : newProjects) {
-                if(newEnterpriseDao.insertNewProject(newProject) <= 0) {
-                    throw new ServiceException("信息插入失败:newProject");
-                }
-            }
-            for(NewIntellectual newIntellectual : newIntellectuals) {
-                if(newEnterpriseDao.insertNewIntellectual(newIntellectual) <= 0) {
-                    throw new ServiceException("信息插入失败:newIntellectual");
-                }
-            }
+        if(newEnterpriseDao.exit(creditCode) != null) {
+            // 如果之前已经有信息存在 --->删除对应信息
+            if (newEnterpriseDao.deleteNewMainPerson(newEnterpriseDao.selectNewMainPersonId(creditCode)) <= 0)
+                throw new ServiceException("删除MainPerson错误");
+            if (newEnterpriseDao.deleteNewProject(newEnterpriseDao.selectNewProject(creditCode)) <= 0)
+                throw new ServiceException("删除Project失败");
+            if (newEnterpriseDao.deleteNewShareholder(newEnterpriseDao.selectNewShareholder(creditCode)) <=0)
+                throw new ServiceException("删除Shareholder失败");
+            if (newEnterpriseDao.deleteNewIntellectual(newEnterpriseDao.selectNewIntellectual(creditCode)) <= 0)
+                throw new ServiceException("删除Intellectual失败");
+        }
 
-            Audit audit = new Audit();
-            audit.setAuditId(creditCode);
-            audit.setAdministratorAudit(false);
-            audit.setLeadershipAudit(false);
+        //更新主表
+        if(newEnterpriseDao.updateNew(news) <= 0)
+            throw new ServiceException("信息插入失败:new");
+        for (NewMainPerson newMainPerson : newMainPeople) {
+            if (newEnterpriseDao.insertNewMainPerson(newMainPerson) <= 0) {
+                throw new ServiceException("信息插入失败:newMainPeople");
+            }
+        }
+        for (NewShareholder newShareholder : newShareholders) {
+            if (newEnterpriseDao.insertNewShareholder(newShareholder) <= 0) {
+                throw new ServiceException("信息插入失败:newShareholder");
+            }
+        }
+        for (NewProject newProject : newProjects) {
+            if (newEnterpriseDao.insertNewProject(newProject) <= 0) {
+                throw new ServiceException("信息插入失败:newProject");
+            }
+        }
+        for (NewIntellectual newIntellectual : newIntellectuals) {
+            if (newEnterpriseDao.insertNewIntellectual(newIntellectual) <= 0) {
+                throw new ServiceException("信息插入失败:newIntellectual");
+            }
+        }
 
-            if (oldEnterpriseDao.insertAudit(audit) <= 0)
-                throw new ServiceException("信息插入失败:audit");
-        } else throw new ServiceException("信息插入失败:new");
+        Audit audit = new Audit();
+        audit.setAuditId(creditCode);
+        audit.setAdministratorAudit(false);
+        audit.setLeadershipAudit(false);
+
+        if (oldEnterpriseDao.insertAudit(audit) <= 0)
+            throw new ServiceException("信息插入失败:audit");
 
         if (oldEnterpriseDao.selectUserCompany(creditCode) != null) {
             oldEnterpriseDao.updateUserCompany(userId,creditCode);
@@ -194,7 +226,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     }
 
     /**
-     * 房间申请
+     * 场地申请
      * @param map
      * @return
      */
@@ -220,12 +252,22 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         newDemand.setWeb(map.getString("web"));
         newDemand.setOthers(map.getString("others"));
 
-        if (newEnterpriseDao.addNewDemand(newDemand) < 1) {
-            throw new ServiceException("插入数据失败:addNewDemand");
+        if(newEnterpriseDao.demandExit(creditCode) != null) {
+            //已经存在
+            String newDemandId = newEnterpriseDao.selectNewDemandByCreditCode(creditCode);
+            if(newEnterpriseDao.updateNewDemand(newDemand,newDemandId) < 1) {
+                throw new ServiceException("插入数据失败:addNewDemand");
+            } else {
+                newDemand.setNewDemandId(UUID.randomUUID().toString());
+                if(newEnterpriseDao.addNewDemand(newDemand) < 1
+                    || newEnterpriseDao.updateNewForDemand(creditCode,"0",submitTime,room,newDemand.getNewDemandId()) < 1) {
+                    throw new ServiceException("插入数据失败:addNewDemand");
+                }
+            }
         }
-        if (newEnterpriseDao.updateNewForDemand(creditCode, "0", submitTime, room, newDemand.getNewDemandId()) < 1){
+
+        if(newEnterpriseDao.updateNewForDemand(creditCode,"0",submitTime,room,newDemand.getNewDemandId()) < 1)
             throw new ServiceException("插入数据失败:updateNewForDemand");
-        }
 
         Map<String, Object> data = new HashMap<>();
         data.put("creditCode", creditCode);
