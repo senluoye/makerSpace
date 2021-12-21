@@ -844,6 +844,106 @@ token 保存时间待定
 }
 ```
 
+## 获取科技园某个企业的所有季度报表
+
+**简要描述：**
+
+季度报表填写
+
+**请求URL：**
+
+- `/api/old/form/technology`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+```json
+{
+    "data":[{
+          "time":"<String>",
+          "teamName":"<String>",
+          "creditCode":"<String>",
+          "registerTime":"<String>",
+          "joinTime":"<String>"
+          "registerCapital":"<String>",
+          "registerKind":"<String>",
+          "industryKind":"<String>",
+          "field":"<String>",
+          "graduatedEnterprise":"<String>",
+          "graduatedTime":"<String>",
+          "highEnterprise":"是",
+          "mediumSized":"<String>",
+          "mentorRelationship":"<String>",
+          "headerKind":"<String>",
+          "serialEntrepreneur":"<String>",
+          "headerGender":"<String>",
+          "taxKind":"<String>",
+          "header":"<String>",
+          "statisticHeader":"<String>",
+          "submitHeader":"<String>",
+          "submitPhone":"<String>",
+          "submitTime":"<String>",
+          "riskInvestment":"<String>",
+          "area":"<String>",
+          "institutions":"<String>",
+          "totalTransformation":"<String>",
+          "relying":"<String>",
+          "winning":"<String>",
+          "result":"<String>",
+          "incubateIncome":"<String>",
+          "incubateProduct":"<String>",
+          "incubateProfit":"<String>",
+          "incubateTax":"<String>",
+          "incubateOut":"<String>",
+          "employee":"<String>",
+          "doctor":"<String>",
+          "master":"<String>",
+          "graduate":"<String>",
+          "bachelor":"<String>",
+          "college":"<String>",
+          "tecSecondary":"<String>",
+          "tecActivists":"<String>",
+          "radNumber":"<String>",
+          "returnees":"<String>",
+          "talents":"<String>",
+          "trainee":"<String>",
+          "employment":"<String>",
+          "applications":"<String>",
+          "applicationsPatent":"<String>",
+          "granted":"<String>",
+          "grantedPatent":"<String>",
+          "valid":"<String>",
+          "validPatent":"<String>",
+          "softCopyright":"<String>",
+          "plantVariety":"<String>",
+          "icLayout":"<String>",
+          "foreignPatents":"<String>",
+          "contractTransaction":"<String>",
+          "contractUrnover":"<String>",
+          "projectNum":"<String>",
+          "totalAwards":"<String>",
+          "provinceAwards":"<String>",
+          "underProjects":"<String>",
+          "nationalProject":"<String>",
+          "schoolProject":"<String>",
+          "declarationName":"<String>",
+          "declarationNum":"<String>",
+          "expenditure":"<String>",
+          "radExpenditure":"<String>",
+          "productExpenditure":"<String>",
+          "governmentGrant":"<String>",
+          "selfRaised":"<String>"
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+```
+
 
 
 ------
@@ -1310,6 +1410,106 @@ token 保存时间待定
 ```
 
 
+
+## 获取科技园某个企业的所有季度报表
+
+**简要描述：**
+
+季度报表填写
+
+**请求URL：**
+
+- `/api/new/form/technology`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+```json
+{
+    "data":[{
+          "time":"<String>",
+          "teamName":"<String>",
+          "creditCode":"<String>",
+          "registerTime":"<String>",
+          "joinTime":"<String>"
+          "registerCapital":"<String>",
+          "registerKind":"<String>",
+          "industryKind":"<String>",
+          "field":"<String>",
+          "graduatedEnterprise":"<String>",
+          "graduatedTime":"<String>",
+          "highEnterprise":"是",
+          "mediumSized":"<String>",
+          "mentorRelationship":"<String>",
+          "headerKind":"<String>",
+          "serialEntrepreneur":"<String>",
+          "headerGender":"<String>",
+          "taxKind":"<String>",
+          "header":"<String>",
+          "statisticHeader":"<String>",
+          "submitHeader":"<String>",
+          "submitPhone":"<String>",
+          "submitTime":"<String>",
+          "riskInvestment":"<String>",
+          "area":"<String>",
+          "institutions":"<String>",
+          "totalTransformation":"<String>",
+          "relying":"<String>",
+          "winning":"<String>",
+          "result":"<String>",
+          "incubateIncome":"<String>",
+          "incubateProduct":"<String>",
+          "incubateProfit":"<String>",
+          "incubateTax":"<String>",
+          "incubateOut":"<String>",
+          "employee":"<String>",
+          "doctor":"<String>",
+          "master":"<String>",
+          "graduate":"<String>",
+          "bachelor":"<String>",
+          "college":"<String>",
+          "tecSecondary":"<String>",
+          "tecActivists":"<String>",
+          "radNumber":"<String>",
+          "returnees":"<String>",
+          "talents":"<String>",
+          "trainee":"<String>",
+          "employment":"<String>",
+          "applications":"<String>",
+          "applicationsPatent":"<String>",
+          "granted":"<String>",
+          "grantedPatent":"<String>",
+          "valid":"<String>",
+          "validPatent":"<String>",
+          "softCopyright":"<String>",
+          "plantVariety":"<String>",
+          "icLayout":"<String>",
+          "foreignPatents":"<String>",
+          "contractTransaction":"<String>",
+          "contractUrnover":"<String>",
+          "projectNum":"<String>",
+          "totalAwards":"<String>",
+          "provinceAwards":"<String>",
+          "underProjects":"<String>",
+          "nationalProject":"<String>",
+          "schoolProject":"<String>",
+          "declarationName":"<String>",
+          "declarationNum":"<String>",
+          "expenditure":"<String>",
+          "radExpenditure":"<String>",
+          "productExpenditure":"<String>",
+          "governmentGrant":"<String>",
+          "selfRaised":"<String>"
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+```
 
 
 
