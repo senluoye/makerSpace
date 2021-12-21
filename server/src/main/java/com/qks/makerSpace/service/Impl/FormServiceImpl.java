@@ -64,39 +64,28 @@ public class FormServiceImpl implements FormService {
 
         Form form  = JSONObject.parseObject(map, Form.class);
         JSONObject json = JSONObject.parseObject(map);
-
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
         String formId = UUID.randomUUID().toString();
 
+//        Date date = new Date();
+//        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+//        String time = dateFormat.format(date);
 
-        Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-        String time = dateFormat.format(date);
-
-        form.setHighEnterpriseId(highEnterpriseId);
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
         form.setFormId(formId);
-
-        if (formDao.addForm(form) < 1)
-            throw new ServiceException("填报数据失败");
-
         String creditCode = form.getCreditCode();
 
         /**
-         * 下面是填写文件
+         * 下面是填报数据
          */
-        if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
-            throw new ServiceException("填报数据失败:mediumFile");
-
-        if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
-            throw new ServiceException("填报数据失败:headerFile");
-
         FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
 
         if (form.getHighEnterprise().equals("是")) {
+            form.setHighEnterpriseId(highEnterpriseId);
+
             JSONObject jsonObject = json.getJSONObject("highEnterpriseData");
 
             formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
@@ -107,6 +96,15 @@ public class FormServiceImpl implements FormService {
             if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
                 throw new ServiceException("填报数据失败:highEnterpriseFile");
         }
+
+        if (formDao.addForm(form) < 1)
+            throw new ServiceException("填报数据失败");
+
+        if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
+            throw new ServiceException("填报数据失败:mediumFile");
+
+        if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
+            throw new ServiceException("填报数据失败:headerFile");
 
         for (MultipartFile multipartFile : contractFile) {
             FormEmployment formEmployment = new FormEmployment();
@@ -126,6 +124,8 @@ public class FormServiceImpl implements FormService {
             if (formDao.addAwardsFile(formAwards) < 1)
                 throw new ServiceException("填报数据失败:awardsFile");
         }
+
+
 
         Map<String, Object> data = new HashMap<>();
         data.put("creditCode", creditCode);
