@@ -1574,6 +1574,7 @@ token 保存时间待定
             "teamName":"<String>",            //企业名称
             "creditCode":"<String>",					//统一社会信用代码或组织机构代码
             "registerTime":"<String>",					//企业注册时间
+            "joinTime":"<String>"					//企业入驻科技园时间
             "registerCapital":"<String>",				//注册资金			
             "registerKind":"<String>",						//企业登记注册类型
             "industryKind":"<String>",						//行业类别
