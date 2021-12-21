@@ -113,12 +113,14 @@ public interface AdminDao {
 
     @Select("select old.credit_code, old.name, old.represent, old.represent_phone, old.represent_email, form.submit_time " +
             "from form, old " +
-            "where form.credit_code = old.credit_code")
+            "where form.credit_code = old.credit_code " +
+            "order by old.name")
     List<AllForm> getOldFormByCreditCode();
 
     @Select("select new.credit_code, new.name, new.represent, new.represent_phone, new.represent_email, form.submit_time " +
             "from form, new " +
-            "where form.credit_code = new.credit_code")
+            "where form.credit_code = new.credit_code " +
+            "order by new.name")
     List<AllForm> getNewFormByCreditCode();
 
     @Select("select credit_code from old where credit_code = #{creditCode}")
