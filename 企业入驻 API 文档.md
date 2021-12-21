@@ -2252,94 +2252,15 @@ Audit（审核表）
 
 ```json
 {
-    "data":{
-        "map":[{
-            "time":"<String>",						// 季度(值为年份加月，例如2021/3表示第一季度)
-            "teamName":"<String>",            //企业名称
-            "creditCode":"<String>",					//统一社会信用代码或组织机构代码
-            "registerTime":"<String>",					//企业注册时间
-            "joinTime":"<String>"					//企业入驻科技园时间
-            "registerCapital":"<String>",				//注册资金			
-            "registerKind":"<String>",						//企业登记注册类型
-            "industryKind":"<String>",						//行业类别
-            "field":"<String>",									//企业所属技术领域
-            "graduatedEnterprise":"<String>",		//是否是毕业企业
-            "graduatedTime":"<String>",					//毕业时间
-            "highEnterprise":"<String>",					//是否高新技术企业
-            "highEnterpriseData":{					//关于这部分对像，是高新技术企业就返回具体数据，不是就返回null
-                "getTime":"<String>",					//高企证书获取时间
-                "certificateCode":"<String>"			//高企证书编号
-            },
-            "mediumSized":"<String>",						//是否是科技型中小企业
-            "mentorRelationship":"<String>",				//是否与创业导师建立辅导关系
-            "headerKind":"<String>",								//企业主要负责人创业特征
-            "serialEntrepreneur":"<String>",					//企业主要负责人是否为连续创业者
-            "headerGender":"<String>",							//企业主要负责人性别
-            "taxKind":"<String>",										//企业纳税人类型
-            "header":"<String>",										//企业负责人
-            "statisticHeader":"<String>",							//统计负责人
-            "submitHeader":"<String>",								//填报人
-            "submitPhone":"<String>",								//填报人电话
-            "submitTime":"<String>",								//填报日期
-            "riskInvestment":"<String>",							//获天使或风险投资额
-            "area":"<String>",    									//占用孵化器场地面积（通过其他表导出）
-            "institutions":"<String>",								//研发机构
-            "totalTransformation":"<String>",						//成果转化总数
-            "relying":"<String>",									//成果转化总数 --->依托高校数量
-            "winning":"<String>",									//成果转化总数 --->获奖成果
-            "result":"<String>",									//成果转化总数 --->产出成果
-            "incubateIncome":"<String>",							//在孵企业总收入
-            "incubateProduct":"<String>",							//在孵企业工业总产值
-            "incubateProfit":"<String>",								//在孵企业净利润
-            "incubateTax":"<String>",									//在孵企业上缴税额
-            "incubateOut":"<String>",									//在孵企业出口总额
-            "employee":"<String>",										//在孵企业从业人员
-            "doctor":"<String>",										//在孵企业从业人员--->博士
-            "master":"<String>",										//在孵企业从业人员--->硕士
-            "graduate":"<String>",										//在孵企业从业人员--->研究生学历
-            "bachelor":"<String>",										//在孵企业从业人员--->本科学历
-            "college":"<String>",										//在孵企业从业人员--->大专学历
-            "tecSecondary":"<String>",								//在孵企业从业人员--->中专学历
-            "tecActivists":"<String>",									//在孵企业从业人员--->科技活动人员
-            "radNumber":"<String>",							//在孵企业从业人员--->研究与试验发展(R&D)人员
-            "returnees":"<String>",										//在孵企业从业人员--->留学回国人员
-            "talents":"<String>",										//在孵企业从业人员--->千人计划人数
-            "trainee":"<String>",											//接纳大学生、研究生实习人员
-            "employment":"<String>",									//接纳应届毕业生就业人员
-            "applications":"<String>",									//当年知识产权申请数
-            "applicationsPatent":"<String>",						//当年知识产权申请数--->发明专利
-            "granted":"<String>",											//当年知识产权授权数
-            "grantedPatent":"<String>",									//当年知识产权授权数---->发明专利
-            "valid":"<String>",													//拥有有效知识产权数
-            "validPatent":"<String>",									//拥有有效知识产权数----->发明专利
-            "softCopyright":"<String>",								//拥有有效知识产权数----->软件著作权
-            "plantVariety":"<String>",								//拥有有效知识产权数----->植物新品种
-            "icLayout":"<String>",									//拥有有效知识产权数----->集成电路布图
-            "foreignPatents":"<String>",								//购买国外技术专利
-            "contractTransaction":"<String>",						//技术合同交易数量
-            "contractUrnover":"<String>",								//技术合同交易额
-            "projectNum":"<String>",										//当年承担国家级科技计划项目数
-            "totalAwards":"<String>",										//当年参赛获奖情况
-            "provinceAwards":"<String>",								//当年参赛获奖情况--->省级以上
-            "underProjects":"<String>",										//承担各类计划项目
-            "nationalProject":"<String>",								//承担各类计划项目---->国家级项目
-            "schoolProject":"<String>",										//校企联合申报项目
-            "declarationName":"<String>",								//联合申报项目名称
-            "declarationNum":"<String>",								//联合申报项目金额
-            "expenditure":"<String>",								//科技活动经费支出总额
-            "radExpenditure":"<String>",			//科技活动经费支出总额---->研究与试验发展（R&D）经费支出
-            "productExpenditure":"<String>",					//科技活动经费支出总额---->新产品开发经费支出
-            "governmentGrant":"<String>",								//科技活动经费支出总额---->政府拨款
-            "selfRaised":"<String>"										//科技活动经费支出总额---->企业自筹
-        }
-    	......
-    	],
-        "isMediumFile":"<String>",								//是否提交供科技型中小企业获批截屏 
-        "isHighEnterpriseFile":"<String>",						//是否提交高企证书
-        "isHeaderFile":"<String>",					//是否提交大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
-        "isContractFile":"<String>",										//是否提交入职合同（多个）
-        "isAwardsFile":"<String>"											//是否提交当年参赛获奖情况（多个）
-    },
+    "data":[{
+            "name": "<String>",
+            "represent": "<String>",
+            "representPhone": "<String>",
+            "representEmail": "<String>",
+            "submitTime": "<String>"
+        },
+        ......
+           ],
     "code":0,
     "msg":"success"
 }

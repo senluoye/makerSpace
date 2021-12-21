@@ -111,6 +111,16 @@ public interface AdminDao {
     @Select("select credit_code from new where credit_code = #{creditCode}")
     String selectCreditCodeFromNewByCreditCode(String creditCode);
 
-    @Select("select * from form where credit_code = #{creditCode}")
-    List<AllForm> getFormByCreditCode(String creditCode);
+    @Select("select old.name, old.represent, old.represent_phone, old.represent_email, form.submit_time " +
+            "from form, old " +
+            "where form.credit_code = #{creditCode} and old.credit_code = #{creditCode}")
+    List<AllForm> getOldFormByCreditCode(String creditCode);
+
+    @Select("select new.name, new.represent, new.represent_phone, new.represent_email, form.submit_time " +
+            "from form, new " +
+            "where form.credit_code = #{creditCode} and new.credit_code = #{creditCode}")
+    List<AllForm> getNewFormByCreditCode(String creditCode);
+
+    @Select("select credit_code from old where credit_code = #{creditCode}")
+    String getCreditCode(String creditCode);
 }

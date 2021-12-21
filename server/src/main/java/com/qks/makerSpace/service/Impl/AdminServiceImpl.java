@@ -261,15 +261,14 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getTechnologyForm(JSONObject jsonObject) throws ServiceException {
         String creditCode = jsonObject.getString("creditCode");
+        List<AllForm> map;
 
-        Map<String, Object> data = new HashMap<>();
+        if (adminDao.getCreditCode(creditCode) != null)
+            map = adminDao.getOldFormByCreditCode(creditCode);
+        else
+            map = adminDao.getNewFormByCreditCode(creditCode);
 
-        List<AllForm> map = adminDao.getFormByCreditCode(creditCode);
-        data.put("map", map);
-
-//        String isMediumFile = adminDao.
-
-        return MyResponseUtil.getResultMap(data, 0, "success");
+        return MyResponseUtil.getResultMap(map, 0, "success");
     }
 
     /**
