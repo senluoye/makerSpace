@@ -10,7 +10,7 @@ import java.util.Map;
 public interface OldEnterpriseService {
 
     Map<String, Object> getOldEnterprise();
-    Map<String, Object> oldRegister(Map<String, Object> map) throws ServiceException;
+    Map<String, Object> oldRegister(JSONObject map) throws ServiceException;
     Map<String, Object> oldEnterprisePay(Map<String, Object> map);
     Map<String, Object> updateOldEnterprise(String token,
                                             String map,

@@ -33,38 +33,24 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return
      */
     @Override
-    public Map<String, Object> oldRegister(Map<String, Object> map) throws ServiceException {
-        Old old = new Old();
+    public Map<String, Object> oldRegister(JSONObject map) throws ServiceException {
+        Old old = JSONObject.parseObject(String.valueOf(map), Old.class);
 
-        System.out.println(map.toString());
-
-        String oldId = UUID.randomUUID().toString();
-        old.setOldId(oldId);
-
-//        if (oldEnterpriseDao.exit(map.get("creditCode").toString()) != null)
-//            throw new ServiceException("该公司已填写过该表");
-
-        old.setCreditCode(map.get("creditCode").toString());
-        old.setOrganizationCode(map.get("organizationCode").toString());
-        old.setPassword(map.get("password").toString());
-        old.setName(map.get("name").toString());
-        old.setRepresent(map.get("represent").toString());
-        old.setRepresentPhone(map.get("representPhone").toString());
-        old.setRepresentEmail(map.get("representEmail").toString());
-        old.setAgent(map.get("agent").toString());
-        old.setAgentPhone(map.get("agentPhone").toString());
-        old.setAgentEmail(map.get("agentEmail").toString());
+        if (oldEnterpriseDao.exit(old.getCreditCode()) != null){
+            // 之前已经申请
+            if (oldEnterpriseDao.oldRegister(old) < 1)
+                throw new ServiceException("录入信息失败");
+        } else {
+            // 之前没有申请
+            old.setOldId(UUID.randomUUID().toString());
+            if (oldEnterpriseDao.updateOldRegister(old) < 1)
+                throw new ServiceException("更新信息失败");
+        }
 
         Map<String, Object> data = new HashMap<>();
-        data.put("id", oldId);
+        data.put("id", old.getCreditCode());
+        return MyResponseUtil.getResultMap(data, 0, "success");
 
-        /**
-         * 先在old表插入一部分数据
-         */
-        if (oldEnterpriseDao.oldRegister(old) > 0)
-            return MyResponseUtil.getResultMap(data, 0, "success");
-
-        return MyResponseUtil.getResultMap(null, -1, "fail");
     }
 
     /**
@@ -122,55 +108,34 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      */
     @Override
     public Map<String, Object> oldEnterpriseDemand(JSONObject map) throws ServiceException {
+        OldDemand oldDemand = JSONObject.parseObject(String.valueOf(map), OldDemand.class);
 
-        Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-        String submitTime = dateFormat.format(date);
-
-
+        String submitTime = dateFormat.format(new Date());
         String room = map.getString("floor") + " - " + map.getString("position");
         String creditCode = map.getString("creditCode");
 
-        OldDemand oldDemand = new OldDemand();
-
-        oldDemand.setLeaseArea(map.getString("leaseArea"));
-        oldDemand.setPosition(map.getString("position"));
-        oldDemand.setLease(map.getString("lease"));
-        oldDemand.setFloor(map.getString("floor"));
-        oldDemand.setElectric(map.getString("electric"));
-        oldDemand.setWater(map.getString("water"));
-        oldDemand.setWeb(map.getString("web"));
-        oldDemand.setOthers(map.getString("others"));
-
-        //下面这段代码不要删
-//        String[] oldDemandId = oldEnterpriseDao.selectDemandByCreditCode(creditCode);
-//
-//        if (oldDemandId != null){
-//            oldDemand.setOldDemandId(oldDemandId[0]);
-//            if (oldEnterpriseDao.updateOldDemand(oldDemand) < 1)
-//                throw new ServiceException("插入数据失败:updateOldDemand");
-//        }
-//        else{
-//            oldDemand.setOldDemandId(UUID.randomUUID().toString());
-//            if (oldEnterpriseDao.addOldDemand(oldDemand) < 1)
-//                throw new ServiceException("插入数据失败:addOldDemand");
-//        }
-
-        oldDemand.setOldDemandId(UUID.randomUUID().toString());
-        if (oldEnterpriseDao.addOldDemand(oldDemand) < 1)
-            throw new ServiceException("插入数据失败:addOldDemand");
+        if (oldEnterpriseDao.demandExit(creditCode) != null) {
+            // 已经存在
+            String oldDemandId = oldEnterpriseDao.selectOldDemandIdByCreditCode(creditCode);
+            if (oldEnterpriseDao.updateOldDemand(oldDemand) < 1)
+                throw new ServiceException("插入数据失败:addOldDemand");
+        } else {
+            // 不存在
+            oldDemand.setOldDemandId(UUID.randomUUID().toString());
+            if (oldEnterpriseDao.addOldDemand(oldDemand) < 1
+                    || oldEnterpriseDao.updateOldDemandId(creditCode, oldDemand.getOldDemandId()) < 1)
+                throw new ServiceException("插入数据失败:addOldDemand");
+        }
 
         // 更新主表中的剩余数据
         if (oldEnterpriseDao.updateOldForDemand(creditCode, "0", submitTime, room, oldDemand.getOldDemandId()) < 1)
             throw new ServiceException("插入数据失败:updateOldForDemand");
 
-
         Map<String, Object> data = new HashMap<>();
         data.put("creditCode", creditCode);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
-
-
 
     /**
      * 入园申请表填写
@@ -182,11 +147,16 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                                                    String str,
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
-
-        System.out.println(str);
         JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
+        Date date = new Date();
 
+        List<Audit> auditList = oldEnterpriseDao.getAudit(creditCode);
+
+        if (auditList.get(0).isAdministratorAudit() && auditList.get(0).isLeadershipAudit())
+            throw new ServiceException("领导和管理员均已审核通过，无法重新填报申请表");
+
+        // 数据初步处理
         Old old = OldParserUtils.parser(map);
         List<OldShareholder> oldShareholders = OldParserUtils.OldShareholderParser(map.getJSONArray("oldShareholder"));
         List<OldMainPerson> oldMainPeoples =  OldParserUtils.OldMainPersonParser(map.getJSONArray("oldMainPerson"));
@@ -199,76 +169,88 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setOldProjectId(oldProjects.get(0).getOldProjectId());
         old.setOldIntellectualId(oldIntellectuals.get(0).getOldIntellectualId());
         old.setOldFundingId(oldFundings.get(0).getFundingId());
-
-        Date date = new Date();
         old.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd").format(date));
 
         try {
             old.setLicense(files[0].getBytes());
             old.setCertificate(files[1].getBytes());
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ServiceException("有文件没有上传");
+            throw new ServiceException("上传文件数量不足");
         }
 
-
-        for (int i = 2; i < files.length; i++) {
+        for (int i = 2; i < files.length; i++)
             oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
-        }
 
-        /**
-         * 插入信息进一部分子表
-         */
-        if (oldEnterpriseDao.updateOld(old) > 0) {
+        if (oldEnterpriseDao.exit(creditCode) != null) {
+            // 如果之前已经有信息存在
+            if (oldEnterpriseDao.updateOld(old) < 0)
+                throw new ServiceException("信息更新失败:old");
+
             for (OldMainPerson oldMainPeople : oldMainPeoples) {
-                if (oldEnterpriseDao.insertOldMainPeople(oldMainPeople) <= 0) {
-                    throw new ServiceException("信息插入失败:oldMainPeople");
-                }
+                if (oldEnterpriseDao.updateOldMainPeople(oldMainPeople) <= 0)
+                    throw new ServiceException("信息更新失败:oldMainPeople");
             }
             for (OldProject oldProject : oldProjects) {
-                if (oldEnterpriseDao.insertOldProjects(oldProject) <= 0) {
-                    throw new ServiceException("信息插入失败:oldProject");
-                }
+                if (oldEnterpriseDao.updateOldProjects(oldProject) <= 0)
+                    throw new ServiceException("信息更新失败:oldProject");
             }
             for (OldIntellectual oldIntellectual : oldIntellectuals) {
-                if (oldEnterpriseDao.insertOldIntellects(oldIntellectual) <= 0) {
-                    throw new ServiceException("信息插入失败:oldIntellectual");
-                }
+                if (oldEnterpriseDao.updateOldIntellects(oldIntellectual) <= 0)
+                    throw new ServiceException("信息更新失败:oldIntellectual");
             }
             for (OldFunding oldFunding : oldFundings) {
-                if (oldEnterpriseDao.insertOldFundings(oldFunding) <= 0) {
-                    throw new ServiceException("信息插入失败:oldFunding");
-                }
+                if (oldEnterpriseDao.updateOldFundings(oldFunding) <= 0)
+                    throw new ServiceException("信息更新失败:oldFunding");
             }
             for (OldShareholder oldShareholder : oldShareholders) {
-                if (oldEnterpriseDao.insertOldShareholder(oldShareholder) <= 0) {
-                    throw new ServiceException("信息插入失败:oldShareholder");
-                }
+                if (oldEnterpriseDao.updateOldShareholder(oldShareholder) <= 0)
+                    throw new ServiceException("信息更新失败:oldShareholder");
             }
 
-            /**
-             * 插入数据到审核表
-             */
-            Audit audit = new Audit();
-            audit.setAuditId(creditCode);
-            audit.setAdministratorAudit(false);
-            audit.setLeadershipAudit(false);
+        } else {
+            // 之前没有信息存在
+            if (oldEnterpriseDao.updateOld(old) <= 0)
+                throw new ServiceException("信息插入失败:old");
 
-            if (oldEnterpriseDao.insertAudit(audit) <= 0)
-                throw new ServiceException("信息插入失败:audit");
-        } else throw new ServiceException("信息插入失败:old");
+            for (OldMainPerson oldMainPeople : oldMainPeoples) {
+                if (oldEnterpriseDao.insertOldMainPeople(oldMainPeople) <= 0)
+                    throw new ServiceException("信息插入失败:oldMainPeople");
+            }
+            for (OldProject oldProject : oldProjects) {
+                if (oldEnterpriseDao.insertOldProjects(oldProject) <= 0)
+                    throw new ServiceException("信息插入失败:oldProject");
+            }
+            for (OldIntellectual oldIntellectual : oldIntellectuals) {
+                if (oldEnterpriseDao.insertOldIntellects(oldIntellectual) <= 0)
+                    throw new ServiceException("信息插入失败:oldIntellectual");
+            }
+            for (OldFunding oldFunding : oldFundings) {
+                if (oldEnterpriseDao.insertOldFundings(oldFunding) <= 0)
+                    throw new ServiceException("信息插入失败:oldFunding");
+            }
+            for (OldShareholder oldShareholder : oldShareholders) {
+                if (oldEnterpriseDao.insertOldShareholder(oldShareholder) <= 0)
+                    throw new ServiceException("信息插入失败:oldShareholder");
+            }
+        }
 
-        /**
-         * 绑定用户和公司
-         * 如果不为空则更新，为空则插入
-         */
-        if (oldEnterpriseDao.selectUserCompany(creditCode) != null)
+        // 插入数据到审核表
+        Audit audit = new Audit();
+        audit.setAuditId(creditCode);
+        audit.setAdministratorAudit(false);
+        audit.setLeadershipAudit(false);
+
+        if (oldEnterpriseDao.insertAudit(audit) <= 0)
+            throw new ServiceException("信息插入失败:audit");
+
+        // 绑定用户和公司
+        if (oldEnterpriseDao.selectUserCompany(creditCode) != null) // 如果不为空则更新，为空则插入
             oldEnterpriseDao.updateUserCompany(userId,creditCode);
         else
             oldEnterpriseDao.insertUserCompany(userId, creditCode);
 
         Map<String, Object> forMap = new HashMap<>();
         forMap.put("creditCode",creditCode);
-
         return MyResponseUtil.getResultMap(forMap, 0, "success");
     }
 

@@ -453,10 +453,16 @@ token 保存时间待定
 
 ```json
 {
-    "map":{
-    	
-	},
-    "picture":"File[]"											//这部分上传一个文件数组，包括名称预核准通知书、身份证复印件
+	"creditCode":"<String>",
+    "organizationCode":"<String>",
+   	"password":"<String>",
+   	"name":"<String>",
+   	"represent":"<String>",
+   	"representPhone":"<String>",
+    "representEmail":"<String>",
+   	"agent":"<String>",
+   	"agentPhone":"<String>1",
+   	"agentEmail":"<String>"
 }
 ```
 

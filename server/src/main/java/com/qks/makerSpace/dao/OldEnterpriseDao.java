@@ -18,6 +18,12 @@ public interface OldEnterpriseDao {
             "#{representPhone}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")
     Integer oldRegister(Old old);
 
+    @Update("update old set organization_code = #{organizationCode}, name = #{name}, password = #{password}, represent = #{represent}, " +
+            "represent_phone = #{representPhone}, represent_email = #{representEmail}, agent = #{agent}, agent_phone = #{agentPhone}, " +
+            "agent_email = #{agentEmail} " +
+            "where credit_code = #{creditCode}")
+    Integer updateOldRegister(Old old);
+
     @Select("select * from old where credit_code = #{creditCode}")
     List<Old> exit(String creditCode);
 
@@ -72,9 +78,15 @@ public interface OldEnterpriseDao {
 
     @Update("update old_demand " +
             "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
-            "   floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
+            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
             "where old_demand.old_demand_id = #{oldDemandId}")
     Integer updateOldDemand(OldDemand oldDemand);
+]
+    @Select("select old_demand_id from old where credit_code = #{creditCode}")
+    String selectOldDemandIdByCreditCode(String creditCode);
+
+    @Update("update old set old_demand_id = #{oldDemand} where credit_code = #{creditCode}")
+    Integer updateOldDemandId(String creditCode, String oldDemand);
 
     /**
      * 以下是关于查询Old相关子表的操作
@@ -103,6 +115,10 @@ public interface OldEnterpriseDao {
     @Select("select credit_code from user_company where user_id = #{userId}")
     String selectCreditCodeByUserId(String userId);
 
+    @Select("select * from old_demand where  ")
+    List<OldDemand> demandExit(String creditCode);
+
+    // 其他子表的相关操作
     @Update("update user_company set credit_code = #{creditCode} where user_id = #{userId}")
     Integer updateUserCompany(String userId, String creditCode);
 
@@ -116,4 +132,41 @@ public interface OldEnterpriseDao {
 
     @Select("select * from form where credit_code = #{creditCode}")
     List<FormDetails> getAllFormDetails(String creditCode);
+
+    @Select("select * from audit where audit_id = #{creditCode}")
+    List<Audit> getAudit(String creditCode);
+
+    // 下面是已经填过表的
+    @Update("update old_mainperson " +
+            "set name = #{name}, born = #{born}, job = #{job}, school = #{school}, old_mainperson_id = #{oldMainpersonId}, " +
+            "title = #{title}, background = #{background}, professional = #{professional}, name = #{name} " +
+            "where id = #{id}")
+    Integer updateOldMainPeople(OldMainPerson oldMainPerson);
+
+    @Update("update old_mainperson " +
+            "set name = #{name}, born = #{born}, job = #{job}, school = #{school}, old_mainperson_id = #{oldMainpersonId}, " +
+            "title = #{title}, background = #{background}, professional = #{professional}, name = #{name} " +
+            "where id = #{id}")
+    Integer updateOldProjects(OldProject oldProject);
+
+    @Update("update old_intellectual " +
+            "set old_project_id = #{oldIntellectualId}, name = #{name}, kind = #{kind}, " +
+            "apply_time = #{applyTime}, approval_time = #{approvalTime}, intellectual_file = #{intellectualFile} " +
+            "where id = #{id}")
+    Integer updateOldIntellects(OldIntellectual oldIntellectual);
+
+    @Update("update old_funding " +
+            "set funding_id = #{fundingId}, name = #{name}, level = #{level}, " +
+            "time = #{time}, grants = #{grants}, award = #{award} " +
+            "where id = #{id}")
+    Integer updateOldFundings(OldFunding oldFunding);
+
+    @Update("update old_shareholder " +
+            "set old_shareholder_id = #{oldShareholderId}, name = #{name}, stake = #{stake}, nature = #{nature} " +
+            "where id = #{id}")
+    Integer updateOldShareholder(OldShareholder oldShareholder);
+
+    @Update("update audit set administrator_audit = #{administratorAudit}, leadership_audit = #{leadershipAudit} " +
+            "where audit_id = #{auditId}")
+    Integer updateAudit(Audit audit);
 }
