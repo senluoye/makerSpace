@@ -2226,7 +2226,7 @@ Audit（审核表）
 
 
 
-### 获取科技园某个企业的所有季度报表
+### 获取科技园所有企业的所有季度报表
 
 **简要描述：**
 
@@ -2240,27 +2240,20 @@ Audit（审核表）
 
 - POST（带token）
 
-**参数**：
-
-```json
-{
-    "creditCode":"<String>"
-}
-```
-
 **返回值：**
 
 ```json
 {
     "data":[{
-            "name": "<String>",
-            "represent": "<String>",
-            "representPhone": "<String>",
-            "representEmail": "<String>",
-            "submitTime": "<String>"
-        },
-        ......
-           ],
+        "creditCode":"<String>",
+        "name": "<String>",
+        "represent": "<String>",
+        "representPhone": "<String>",
+        "representEmail": "<String>",
+        "submitTime": "<String>"
+    },
+    ......
+    ],
     "code":0,
     "msg":"success"
 }

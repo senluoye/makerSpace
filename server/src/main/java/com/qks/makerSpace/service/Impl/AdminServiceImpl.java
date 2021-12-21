@@ -260,15 +260,15 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Map<String, Object> getTechnologyForm(JSONObject jsonObject) throws ServiceException {
-        String creditCode = jsonObject.getString("creditCode");
-        List<AllForm> map;
 
-        if (adminDao.getCreditCode(creditCode) != null)
-            map = adminDao.getOldFormByCreditCode(creditCode);
-        else
-            map = adminDao.getNewFormByCreditCode(creditCode);
+//        String creditCode = jsonObject.getString("creditCode");
 
-        return MyResponseUtil.getResultMap(map, 0, "success");
+        List<AllForm> data = adminDao.getOldFormByCreditCode();
+        List<AllForm> newMap = adminDao.getNewFormByCreditCode();
+
+        data.addAll(newMap);
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     /**
