@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
 import org.apache.ibatis.annotations.*;
@@ -109,4 +110,7 @@ public interface AdminDao {
 
     @Select("select credit_code from new where credit_code = #{creditCode}")
     String selectCreditCodeFromNewByCreditCode(String creditCode);
+
+    @Select("select * from form where credit_code = #{creditCode}")
+    List<AllForm> getFormByCreditCode(String creditCode);
 }

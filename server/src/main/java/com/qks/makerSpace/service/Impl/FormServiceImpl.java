@@ -2,6 +2,7 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.qks.makerSpace.dao.FormDao;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.Form;
@@ -10,9 +11,11 @@ import com.qks.makerSpace.entity.database.FormEmployment;
 import com.qks.makerSpace.entity.database.FormHighEnterprise;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
+import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -59,11 +62,14 @@ public class FormServiceImpl implements FormService {
         if (formDao.getCompanyByUserId(userId) == null)
             throw new ServiceException("请先填写入驻申请");
 
-        Form form = JSONObject.parseObject(map, Form.class);
+        Form form  = JSONObject.parseObject(map, Form.class);
         JSONObject json = JSONObject.parseObject(map);
+
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
+        String formId = UUID.randomUUID().toString();
+
 
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
@@ -72,8 +78,8 @@ public class FormServiceImpl implements FormService {
         form.setHighEnterpriseId(highEnterpriseId);
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
+        form.setFormId(formId);
 
-        System.out.println(form);
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
 
@@ -90,40 +96,40 @@ public class FormServiceImpl implements FormService {
 
         FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
 
-
-        formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
-
         if (form.getHighEnterprise().equals("是")) {
-            formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
             JSONObject jsonObject = json.getJSONObject("highEnterpriseData");
+
+            formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
+            formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
             formHighEnterprise.setCertificateCode(jsonObject.getString("certificateCode"));
             formHighEnterprise.setGetTime(jsonObject.getString("getTime"));
+
+            if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
+                throw new ServiceException("填报数据失败:highEnterpriseFile");
         }
 
-        if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
-            throw new ServiceException("填报数据失败:highEnterpriseFile");
-
-        for (int i = 0 ; i < contractFile.length; i++) {
+        for (MultipartFile multipartFile : contractFile) {
             FormEmployment formEmployment = new FormEmployment();
             formEmployment.setFormEmploymentId(employmentId);
             formEmployment.setEmploymentId(UUID.randomUUID().toString());
-            formEmployment.setContractFile(contractFile[i].getBytes());
+            formEmployment.setContractFile(multipartFile.getBytes());
 
             if (formDao.addContractFile(formEmployment) < 1)
                 throw new ServiceException("填报数据失败:contractFile");
         }
 
-        for (int i = 0 ; i < awardsFile.length; i++) {
+        for (MultipartFile multipartFile : awardsFile) {
             FormAwards formAwards = new FormAwards();
-            formAwards.setFormAwardsId(awardsId);
-            formAwards.setAwardsId(UUID.randomUUID().toString());
-            formAwards.setAwardsFile(awardsFile[i].getBytes());
+            formAwards.setAwardsId(awardsId);
+            formAwards.setFormAwardsId(UUID.randomUUID().toString());
+            formAwards.setAwardsFile(multipartFile.getBytes());
             if (formDao.addAwardsFile(formAwards) < 1)
                 throw new ServiceException("填报数据失败:awardsFile");
         }
 
         Map<String, Object> data = new HashMap<>();
         data.put("creditCode", creditCode);
+
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
@@ -133,8 +139,9 @@ public class FormServiceImpl implements FormService {
      * @return
      */
     @Override
-    public Map<String, Object> getDownLoadForm(String creditCode) {
-        Map<String, Object> map = formDao.getAllInformation(creditCode);
+    public Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException {
+        Form form = formDao.getAllInformation(creditCode);
+        Map<String, Object> map = ChangeUtils.getObjectToMap(form);
         return map;
     }
 

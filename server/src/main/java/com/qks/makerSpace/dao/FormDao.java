@@ -15,7 +15,7 @@ import java.util.Map;
 public interface FormDao {
     //从数据空中那数据，没有考虑图片，所以可以直接全拿，在工具类中会忽略没有用的字段值
     @Select("select * from form where credit_code = #{creditCode}")
-    Map<String , Object> getAllInformation(String creditCode);
+    Form getAllInformation(String creditCode);
 
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> getCompanyByUserId(String userId);
@@ -36,7 +36,7 @@ public interface FormDao {
             "contract_transaction, contract_urnover, project_num, total_awards, " +
             "awards_id, province_awards, under_projects, national_project, " +
             "school_project, declaration_name, declaration_num, expenditure, " +
-            "rad_expenditure, product_expenditure, government_grant, self_raised, time) " +
+            "rad_expenditure, product_expenditure, government_grant, self_raised, time, form_id) " +
             "VALUES (#{teamName}, #{creditCode}, #{registerTime}, #{joinTime}, #{registerCapital}, " +
             "#{registerKind}, #{industryKind}, #{field}, #{graduatedEnterprise}, #{graduatedTime}, #{highEnterprise}, " +
             "#{highEnterpriseId}, #{mediumSized}, #{mentorRelationship}, #{headerKind}, " +
@@ -50,7 +50,7 @@ public interface FormDao {
             "#{icLayout}, #{foreignPatents}, #{contractTransaction}, #{contractUrnover}, #{projectNum}, #{totalAwards}, " +
             "#{awardsId}, #{provinceAwards}, #{underProjects}, #{nationalProject}, #{schoolProject}, #{declarationName}, " +
             "#{declarationNum}, #{expenditure}, #{radExpenditure}, #{productExpenditure}, #{governmentGrant}, #{selfRaised}, " +
-            "#{time})")
+            "#{time}, #{formId})")
     Integer addForm(Form form);
 
     @Update("update form set medium_file = #{mediumFile} where credit_code = #{creditCode}")

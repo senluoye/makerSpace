@@ -1,9 +1,9 @@
-package com.qks.makerSpace.entity.database;
+package com.qks.makerSpace.entity.response;
 
 import lombok.Data;
 
 @Data
-public class Form {
+public class AllForm {
     private String	teamName;
     private String	creditCode;
     private String	registerTime;
@@ -15,12 +15,9 @@ public class Form {
     private String	graduatedEnterprise;
     private String	graduatedTime;
     private String	highEnterprise;
-    private String	highEnterpriseId;
     private String	mediumSized;
-    private byte[]	mediumFile;
     private String	mentorRelationship;
     private String	headerKind;
-    private byte[]	headerFile;
     private String	serialEntrepreneur;
     private String	headerGender;
     private String	taxKind;
@@ -54,7 +51,6 @@ public class Form {
     private String	talents;
     private String	trainee;
     private String	employment;
-    private String	employmentId;
     private String	applications;
     private String	applicationsPatent;
     private String	granted;
@@ -69,7 +65,6 @@ public class Form {
     private String	contractUrnover;
     private String	projectNum;
     private String	totalAwards;
-    private String	awardsId;
     private String	provinceAwards;
     private String	underProjects;
     private String	nationalProject;
@@ -82,5 +77,4 @@ public class Form {
     private String	governmentGrant;
     private String	selfRaised;
     private String  time;
-    private String  formId;
 }

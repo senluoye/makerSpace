@@ -29,7 +29,8 @@ public class GlobalExceptionHandler {
         Map<String, Object> modelMap = new HashMap<>();
         modelMap.put("data", null);
         modelMap.put("code", -1);
-        modelMap.put("msg", e.getMessage());
+//        modelMap.put("msg", e.getMessage());
+        modelMap.put("msg", "数据解析错误或填写数据不完整");
         return modelMap;
     }
 }

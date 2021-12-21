@@ -2,10 +2,8 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
-import com.qks.makerSpace.entity.database.News;
-import com.qks.makerSpace.entity.database.Old;
-import com.qks.makerSpace.entity.database.Space;
-import com.qks.makerSpace.entity.database.SpacePerson;
+import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
 import com.qks.makerSpace.exception.ServiceException;
@@ -51,10 +49,12 @@ public class AdminServiceImpl implements AdminService {
         List<AllTechnology> data = new ArrayList<>(dataOne);
         data.addAll(dataTwo);
 
-        for (AllTechnology allTechnology : data) {
-            if (allTechnology.isAdministratorAudit()) {
-                allTechnology.setAudit("审核已通过");
-            } else allTechnology.setAudit("审核未通过");
+        Iterator<AllTechnology> iterator = data.iterator();
+        while (iterator.hasNext()) {
+            AllTechnology allTechnology = iterator.next();
+            if(allTechnology.isAdministratorAudit() == true) {
+                allTechnology.setAudit("已审核");
+            } else allTechnology.setAudit("未审核");
         }
 
         return MyResponseUtil.getResultMap(data, 0, "success");
@@ -168,7 +168,7 @@ public class AdminServiceImpl implements AdminService {
         Iterator<AllSpace> iterator = allSpaces.iterator();
         while (iterator.hasNext()) {
             AllSpace space = iterator.next();
-            if(space.isAdministratorAudit() == true) {
+            if(space.isAdministratorAudit()) {
                 space.setAudit("已审核");
             } else space.setAudit("未审核");
         }
@@ -258,6 +258,19 @@ public class AdminServiceImpl implements AdminService {
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
+    @Override
+    public Map<String, Object> getTechnologyForm(JSONObject jsonObject) throws ServiceException {
+        String creditCode = jsonObject.getString("creditCode");
+
+        Map<String, Object> data = new HashMap<>();
+
+        List<AllForm> map = adminDao.getFormByCreditCode(creditCode);
+        data.put("map", map);
+
+//        String isMediumFile = adminDao.
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
 
     /**
      * 获取导出表的信息

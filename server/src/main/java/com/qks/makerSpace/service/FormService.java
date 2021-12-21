@@ -18,6 +18,6 @@ public interface FormService {
             MultipartFile headerFile,
             MultipartFile[] contractFile,
             MultipartFile[] awardsFile) throws ServiceException, IOException;
-    Map<String, Object> getDownLoadForm(String creditCode);
+    Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException;
     void downLoadWord(HttpServletResponse response, Map<String, Object> map, int i) throws Exception;
 }
