@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.FormDetails;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -97,7 +98,10 @@ public interface OldEnterpriseDao {
     List<OldIntellectual> getOldIntellectualById(String id);
 
     @Select("select user_id from user_company where credit_code = #{creditCode}")
-    String selectUserCompany(String userId);
+    String selectUserCompany(String creditCode);
+
+    @Select("select credit_code from user_company where user_id = #{userId}")
+    String selectCreditCodeByUserId(String userId);
 
     @Update("update user_company set credit_code = #{creditCode} where user_id = #{userId}")
     Integer updateUserCompany(String userId, String creditCode);
@@ -109,4 +113,7 @@ public interface OldEnterpriseDao {
     @Insert("insert into audit(audit_id, administrator_audit, leadership_audit) " +
             "values (#{auditId}, #{administratorAudit}, #{leadershipAudit})")
     Integer insertAudit(Audit audit);
+
+    @Select("select * from form where credit_code = #{creditCode}")
+    List<FormDetails> getAllFormDetails(String creditCode);
 }

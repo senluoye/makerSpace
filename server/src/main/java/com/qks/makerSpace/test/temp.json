@@ -11,10 +11,6 @@
   "graduatedEnterprise":"<String>",
   "graduatedTime":"<String>",
   "highEnterprise":"是",
-  "highEnterpriseData":{
-    "getTime":"<String>",
-    "certificateCode":"<String>"
-  },
   "mediumSized":"<String>",
   "mentorRelationship":"<String>",
   "headerKind":"<String>",

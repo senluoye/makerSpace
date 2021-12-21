@@ -79,4 +79,14 @@ public class NewEnterpriseController {
                                                     @RequestParam("file") MultipartFile[] file) throws Exception {
         return newEnterpriseService.updateNewEnterprise(httpServletRequest.getHeader("token"), str, file);
     }
+
+    /**
+     * 获取某个企业的所有季度报表
+     * @param str
+     * @return
+     */
+    @RequestMapping(value = "/form/technology", method = RequestMethod.GET)
+    private Map<String, Object> getFormByCreditCode(HttpServletRequest httpServletRequest) throws Exception {
+        return newEnterpriseService.getFormByCreditCode(httpServletRequest.getHeader("token"));
+    }
 }

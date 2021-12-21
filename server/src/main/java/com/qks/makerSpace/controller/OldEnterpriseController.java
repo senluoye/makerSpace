@@ -51,7 +51,7 @@ public class OldEnterpriseController {
     }
 
     /**
-     * 科技园场地申请
+     * 申请房间
      * @param map
      * @return
      */
@@ -72,4 +72,13 @@ public class OldEnterpriseController {
         return oldEnterpriseService.updateOldEnterprise(httpServletRequest.getHeader("token"), str, file);
     }
 
+    /**
+     * 获取某个企业的所有季度报表
+     * @param str
+     * @return
+     */
+    @RequestMapping(value = "old/form/technology", method = RequestMethod.GET)
+    private Map<String, Object> getFormByCreditCode(HttpServletRequest httpServletRequest) throws Exception {
+        return oldEnterpriseService.getFormByCreditCode(httpServletRequest.getHeader("token"));
+    }
 }

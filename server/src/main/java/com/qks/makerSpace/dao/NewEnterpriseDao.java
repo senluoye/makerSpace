@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.FormDetails;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -83,5 +84,9 @@ public interface NewEnterpriseDao {
     @Update("update user_company set credit_code = #{id} where user_id = #{userId}")
     Integer updateUserCompany(String userId, String id);
 
+    @Select("select credit_code from user_company where user_id = #{userId}")
+    String selectCreditCodeByUserId(String userId);
 
+    @Select("select * from form where credit_code = #{creditCode}")
+    List<FormDetails> getAllFormDetails(String creditCode);
 }

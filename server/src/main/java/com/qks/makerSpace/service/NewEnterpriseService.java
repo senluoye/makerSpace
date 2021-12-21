@@ -15,5 +15,5 @@ public interface NewEnterpriseService {
     Map<String, Object> updateNewEnterprise(String token, String str, MultipartFile[] files) throws IllegalAccessException, IOException, ServiceException, Exception;
     Map<String, Object> newEnterpriseDemand(JSONObject map) throws ServiceException;
 
-
+    Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
 }

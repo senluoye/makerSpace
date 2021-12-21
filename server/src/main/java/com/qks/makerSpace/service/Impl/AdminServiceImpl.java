@@ -2,10 +2,8 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
-import com.qks.makerSpace.entity.database.News;
-import com.qks.makerSpace.entity.database.Old;
-import com.qks.makerSpace.entity.database.Space;
-import com.qks.makerSpace.entity.database.SpacePerson;
+import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
 import com.qks.makerSpace.exception.ServiceException;
@@ -170,7 +168,7 @@ public class AdminServiceImpl implements AdminService {
         Iterator<AllSpace> iterator = allSpaces.iterator();
         while (iterator.hasNext()) {
             AllSpace space = iterator.next();
-            if(space.isAdministratorAudit() == true) {
+            if(space.isAdministratorAudit()) {
                 space.setAudit("已审核");
             } else space.setAudit("未审核");
         }
@@ -261,10 +259,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Map<String, Object> getTechnologyForm(JSONObject map) throws ServiceException {
-        return null;
-    }
+    public Map<String, Object> getTechnologyForm(JSONObject jsonObject) throws ServiceException {
 
+        List<AllForm> data = adminDao.getOldFormByCreditCode();
+        List<AllForm> newMap = adminDao.getNewFormByCreditCode();
+
+        data.addAll(newMap);
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
 
     /**
      * 获取导出表的信息

@@ -16,5 +16,5 @@ public interface OldEnterpriseService {
                                             String map,
                                             MultipartFile[] files) throws Exception;
     Map<String, Object> oldEnterpriseDemand(JSONObject map) throws ServiceException;
-
+    Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
 }

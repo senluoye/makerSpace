@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.NewEnterpriseDao;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.ChangeUtils;
@@ -231,4 +232,21 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
+    /**
+     * 获取某个企业的所有季度报表
+     * @param str
+     * @return
+     */
+    @Override
+    public Map<String, Object> getFormByCreditCode(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        String creditCode = newEnterpriseDao.selectCreditCodeByUserId(userId);
+
+        if (creditCode == null)
+            throw new ServiceException("您并没有填写入驻申请表");
+
+        List<FormDetails> data = newEnterpriseDao.getAllFormDetails(creditCode);
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
 }
