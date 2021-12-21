@@ -56,7 +56,7 @@ public class FormServiceImpl implements FormService {
                                                  MultipartFile[] awardsFile) throws ServiceException, IOException {
         String userId = JWTUtils.parser(token).get("userId").toString();
 
-        if (mediumFile == null || highEnterpriseFile == null || headerFile == null || contractFile == null || awardsFile == null)
+        if (mediumFile == null || highEnterpriseFile == null || contractFile == null || awardsFile == null)
             throw new ServiceException("文件缺失");
 
         if (formDao.getCompanyByUserId(userId) == null)
