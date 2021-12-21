@@ -142,16 +142,17 @@ public class FormServiceImpl implements FormService {
     public Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException {
         Form form = formDao.getAllInformation(creditCode);
         Map<String, Object> map = ChangeUtils.getObjectToMap(form);
+        Map<String, Object> hashMap = new HashMap<>();
+        hashMap.put("${year}",String.valueOf(Calendar.getInstance().get(Calendar.YEAR)));
         Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
         Map.Entry<String, Object> entry;
         while (iterator.hasNext()){
             entry = iterator.next();
             // 放入新的Entry
-            map.put(entry.getKey(), entry.getValue());
-            // 删除老的Entry
-            iterator.remove();
+            hashMap.put("${"+entry.getKey()+"}", entry.getValue());
         }
-        return map;
+        System.out.println(hashMap);
+        return hashMap;
     }
 
     /**
@@ -162,7 +163,7 @@ public class FormServiceImpl implements FormService {
     @Override
     public void downLoadWord(HttpServletResponse response, Map<String, Object> map,int kind) throws ServiceException {
         try {
-            String fileName = Calendar.getInstance().get(Calendar.YEAR) + "年度" + map.get("teamName").toString() + "统计表";
+            String fileName = Calendar.getInstance().get(Calendar.YEAR) + "年度" + map.get("${teamName}").toString() + "统计表";
             response.setCharacterEncoding("utf-8");
             response.setContentType("application/x-download");
             response.setHeader("Content-disposition",String.format("attachment; filename=\"%s\"",fileName+".docx"));
