@@ -35,7 +35,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> oldRegister(JSONObject map) throws ServiceException {
         Old old = JSONObject.parseObject(String.valueOf(map), Old.class);
         System.out.println(old);
-        if (oldEnterpriseDao.exit(old.getCreditCode()).size() != 0){
+        if (oldEnterpriseDao.exit(old.getCreditCode()) != null){
             // 之前已经申请
             oldEnterpriseDao.updateOldRegister(old);
         } else {
@@ -168,7 +168,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setOldProjectId(oldProjects.get(0).getOldProjectId());
         old.setOldIntellectualId(oldIntellectuals.get(0).getOldIntellectualId());
         old.setOldFundingId(oldFundings.get(0).getFundingId());
-        old.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd").format(date));
+        old.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 
         try {
             old.setLicense(files[0].getBytes());
@@ -180,7 +180,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         for (int i = 2; i < files.length; i++)
             oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
 
-        if (oldEnterpriseDao.exit(creditCode).size() != 0) {
+        if (oldEnterpriseDao.exitMainPerson(creditCode) != null) {
             // 如果之前已经有信息存在 --->删除对应信息
             if (oldEnterpriseDao.deleteOldMainPerson(oldEnterpriseDao.selectOldMainPerson(creditCode)) <= 0)
                 throw new ServiceException("删除MainPerson错误");

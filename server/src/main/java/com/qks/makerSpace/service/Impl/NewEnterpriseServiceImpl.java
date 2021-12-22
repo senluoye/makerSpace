@@ -163,13 +163,13 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         }
 
         Date date = new Date();
-        news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd").format(date));
+        news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 
         for (int i = 1; i <files.length; i++) {
             newIntellectuals.get(i - 1).setIntellectualFile(files[i].getBytes());
         }
 
-        if(newEnterpriseDao.exit(creditCode) != null) {
+        if(newEnterpriseDao.exitMainPerson(creditCode) != null) {
             // 如果之前已经有信息存在 --->删除对应信息
             if (newEnterpriseDao.deleteNewMainPerson(newEnterpriseDao.selectNewMainPersonId(creditCode)) <= 0)
                 throw new ServiceException("删除MainPerson错误");

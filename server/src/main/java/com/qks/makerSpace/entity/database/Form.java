@@ -83,4 +83,5 @@ public class Form {
     private String	selfRaised;
     private String  time;
     private String  formId;
+    private String  getTime;
 }

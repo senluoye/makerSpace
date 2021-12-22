@@ -26,7 +26,7 @@ public interface OldEnterpriseDao {
     Integer updateOldRegister(Old old);
 
     @Select("select * from old where credit_code = #{creditCode}")
-    List<Old> exit(String creditCode);
+    Old exit(String creditCode);
 
     @Select("select * from old")
     List<Old> getAllOld();
@@ -51,7 +51,7 @@ public interface OldEnterpriseDao {
      * 以下是关于插入Old相关子表的操作
      */
     @Insert("insert into old_mainperson (id, name, born, job, school, title, background, professional, old_mainperson_id)" +
-            "values (#{id}, #{oldMainpersonId}, #{name}, #{born}, #{job}, #{school}, #{title}, #{background}, #{professional})")
+            "values (#{id}, #{name}, #{born}, #{job}, #{school}, #{title}, #{background}, #{professional}, #{oldMainpersonId})")
     Integer insertOldMainPeople(OldMainPerson oldMainPerson);
 
     @Insert("insert into old_project (id, project_brief, advantage, market, energy, pollution, noise, others, old_project_id) " +
@@ -87,7 +87,7 @@ public interface OldEnterpriseDao {
     String selectOldDemandIdByCreditCode(String creditCode);
 
     @Update("update old set old_demand_id = #{oldDemandId} where credit_code = #{creditCode}")
-    Integer updateOldDemandId(String creditCode, String oldDemand);
+    Integer updateOldDemandId(String creditCode, String oldDemandId);
 
     /**
      * 以下是关于查询Old相关子表的操作
@@ -116,8 +116,8 @@ public interface OldEnterpriseDao {
     @Select("select credit_code from user_company where user_id = #{userId}")
     String selectCreditCodeByUserId(String userId);
 
-    @Select("select * from old_demand where credit_code = #{creditCode}")
-    List<OldDemand> demandExit(String creditCode);
+    @Select("select old_demand_id from old where credit_code = #{creditCode}")
+    String demandExit(String creditCode);
 
     // 其他子表的相关操作
     @Update("update user_company set credit_code = #{creditCode} where user_id = #{userId}")
@@ -138,19 +138,19 @@ public interface OldEnterpriseDao {
     List<Audit> getAudit(String creditCode);
 
     // 下面是已经填过表的
-    @Delete("delete * from old_mainperson where old_mainperson_id = #{id}")
+    @Delete("delete from old_mainperson where old_mainperson_id = #{id}")
     Integer deleteOldMainPerson(String id);
 
-    @Delete("delete * from old_project where old_project_id = #{id}")
+    @Delete("delete from old_project where old_project_id = #{id}")
     Integer deleteOldProject(String id);
 
-    @Delete("delete * from old_intellectual where old_intellectual_id = #{id}")
+    @Delete("delete from old_intellectual where old_intellectual_id = #{id}")
     Integer deleteOldIntellectual(String id);
 
-    @Delete("delete * from old_funding where funding_id = #{id}")
+    @Delete("delete from old_funding where funding_id = #{id}")
     Integer deleteOldFunding(String id);
 
-    @Delete("delete * from old_shareholder where old_shareholder_id = #{id}")
+    @Delete("delete from old_shareholder where old_shareholder_id = #{id}")
     Integer deleteOldShareholder(String id);
 
     @Update("update audit set administrator_audit = #{administratorAudit}, leadership_audit = #{leadershipAudit} " +
@@ -166,9 +166,12 @@ public interface OldEnterpriseDao {
     @Select("select old_intellectual_id from old where credit_code = #{creditCode}")
     String selectOldIntellectual(String creditCode);
 
-    @Select("select funding_id from old where credit_code = #{creditCode}")
+    @Select("select old_funding_id from old where credit_code = #{creditCode}")
     String selectOldFunding(String creditCode);
 
     @Select("select old_shareholder_id from old where credit_code = #{creditCode}")
     String selectOldShareholder(String creditCode);
+
+    @Select("select old_mainperson_id from old where credit_code = #{creditCode}")
+    String exitMainPerson(String creditCode);
 }

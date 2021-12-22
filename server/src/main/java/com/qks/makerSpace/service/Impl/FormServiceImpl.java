@@ -1,10 +1,7 @@
 package com.qks.makerSpace.service.Impl;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import com.qks.makerSpace.dao.FormDao;
-import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.Form;
 import com.qks.makerSpace.entity.database.FormAwards;
 import com.qks.makerSpace.entity.database.FormEmployment;
@@ -15,7 +12,6 @@ import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
-import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,10 +65,11 @@ public class FormServiceImpl implements FormService {
         String awardsId = UUID.randomUUID().toString();
         String formId = UUID.randomUUID().toString();
 
-//        Date date = new Date();
-//        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-//        String time = dateFormat.format(date);
+        Date date = new Date();
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time = dateFormat.format(date);
 
+        form.setGetTime(time);
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
         form.setFormId(formId);
@@ -157,7 +154,7 @@ public class FormServiceImpl implements FormService {
 
     /**
      * 导出文件
-     * @param bytes 经过处理后的word二进制模板
+     * @param
      * @return
      */
     @Override

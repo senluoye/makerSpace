@@ -9,5 +9,6 @@ public class AllForm {
     private String represent;
     private String representPhone;
     private String representEmail;
-    private String submitTime;
+//    private String submitTime;
+    private String getTime;
 }

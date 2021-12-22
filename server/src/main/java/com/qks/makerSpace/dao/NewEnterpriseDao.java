@@ -139,4 +139,8 @@ public interface NewEnterpriseDao {
             "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
             "where new_demand.new_demand_id = #{newDemandId}")
     Integer updateNewDemand(NewDemand newDemand, String newDemandId);
+
+
+    @Select("select new_mainperson_id from new where credit_code = #{creditCode}")
+    String exitMainPerson(String creditCode);
 }

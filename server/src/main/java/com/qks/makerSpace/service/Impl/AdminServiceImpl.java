@@ -53,8 +53,8 @@ public class AdminServiceImpl implements AdminService {
         while (iterator.hasNext()) {
             AllTechnology allTechnology = iterator.next();
             if(allTechnology.isAdministratorAudit() == true) {
-                allTechnology.setAudit("已审核");
-            } else allTechnology.setAudit("未审核");
+                allTechnology.setAudit("已通过");
+            } else allTechnology.setAudit("未通过");
         }
 
         return MyResponseUtil.getResultMap(data, 0, "success");
@@ -169,8 +169,8 @@ public class AdminServiceImpl implements AdminService {
         while (iterator.hasNext()) {
             AllSpace space = iterator.next();
             if(space.isAdministratorAudit()) {
-                space.setAudit("已审核");
-            } else space.setAudit("未审核");
+                space.setAudit("已通过");
+            } else space.setAudit("未通过");
         }
 
         return MyResponseUtil.getResultMap(allSpaces, 0, "success");

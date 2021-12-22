@@ -1,15 +1,12 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface FormDao {
@@ -36,7 +33,7 @@ public interface FormDao {
             "contract_transaction, contract_urnover, project_num, total_awards, " +
             "awards_id, province_awards, under_projects, national_project, " +
             "school_project, declaration_name, declaration_num, expenditure, " +
-            "rad_expenditure, product_expenditure, government_grant, self_raised, time, form_id) " +
+            "rad_expenditure, product_expenditure, government_grant, self_raised, time, form_id, get_time) " +
             "VALUES (#{teamName}, #{creditCode}, #{registerTime}, #{joinTime}, #{registerCapital}, " +
             "#{registerKind}, #{industryKind}, #{field}, #{graduatedEnterprise}, #{graduatedTime}, #{highEnterprise}, " +
             "#{highEnterpriseId}, #{mediumSized}, #{mentorRelationship}, #{headerKind}, " +
@@ -50,7 +47,7 @@ public interface FormDao {
             "#{icLayout}, #{foreignPatents}, #{contractTransaction}, #{contractUrnover}, #{projectNum}, #{totalAwards}, " +
             "#{awardsId}, #{provinceAwards}, #{underProjects}, #{nationalProject}, #{schoolProject}, #{declarationName}, " +
             "#{declarationNum}, #{expenditure}, #{radExpenditure}, #{productExpenditure}, #{governmentGrant}, #{selfRaised}, " +
-            "#{time}, #{formId})")
+            "#{time}, #{formId}, #{getTime})")
     Integer addForm(Form form);
 
     @Update("update form set medium_file = #{mediumFile} where credit_code = #{creditCode}")
