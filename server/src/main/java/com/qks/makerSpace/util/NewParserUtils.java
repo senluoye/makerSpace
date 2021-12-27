@@ -20,8 +20,6 @@ public class NewParserUtils {
         news.setInvolved(map.getString("involved"));
         news.setMainBusiness(map.getString("mainBusiness"));
         news.setBusiness(map.getString("business"));
-        news.setSuggestion(map.getString("suggestion"));
-        news.setNote(map.getString("note"));
 
         return news;
     }

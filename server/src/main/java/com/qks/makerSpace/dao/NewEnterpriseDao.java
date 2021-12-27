@@ -34,7 +34,7 @@ public interface NewEnterpriseDao {
             "register_time = #{registerTime}, nature = #{nature}, certificate = #{certificate}, involved = #{involved}," +
             "main_business = #{mainBusiness}, business = #{business}, new_shareholder_id = #{newShareholderId}," +
             "new_mainperson_id = #{newMainpersonId}, new_project_id = #{newProjectId}, new_intellectual_id = #{newIntellectualId}," +
-            "suggestion = #{suggestion}, note = #{note}, submit_time = #{submitTime} " +
+            " submit_time = #{submitTime} " +
             "where credit_code = #{newId}")
     Integer updateNew(News news);
 
