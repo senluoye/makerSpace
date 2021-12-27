@@ -80,7 +80,7 @@ public interface OldEnterpriseDao {
     @Update("update old_demand " +
             "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
             "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
-            "where old_demand.old_demand_id = #{oldDemandId}")
+            "where old_demand_id = #{oldDemandId}")
     Integer updateOldDemand(OldDemand oldDemand, String oldDemandId);
 
     @Select("select old_demand_id from old where credit_code = #{creditCode}")

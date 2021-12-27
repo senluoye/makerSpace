@@ -99,15 +99,12 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setAgentEmail(map.get("agentEmail").toString());
 
         if (newEnterpriseDao.exit(creditCode) != null) {
+            //之前申请过
+            newEnterpriseDao.updateNewRegister(news);
+        } else {
             //之前没有申请过
             news.setNewId(newId);
-            if (newEnterpriseDao.newRegister(news) < 1)
-                throw new ServerException("录入信息失败");
-        } else {
-            //之前申请过
-            if(newEnterpriseDao.updateNewRegister(news) < 1){
-                throw new ServerException("更新信息失败");
-            }
+            newEnterpriseDao.newRegister(news);
         }
 
         Map<String, Object> data = new HashMap<>();
@@ -232,38 +229,25 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      */
     @Override
     public Map<String, Object> newEnterpriseDemand(JSONObject map) throws ServiceException {
+
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         String submitTime = dateFormat.format(date);
-
-
         String room = map.getString("floor") + " - " + map.getString("position");
         String creditCode = map.getString("creditCode");
 
-        NewDemand newDemand = new NewDemand();
-
-        newDemand.setNewDemandId(UUID.randomUUID().toString());
-        newDemand.setLeaseArea(map.getString("leaseArea"));
-        newDemand.setPosition(map.getString("position"));
-        newDemand.setLease(map.getString("lease"));
-        newDemand.setFloor(map.getString("floor"));
-        newDemand.setElectric(map.getString("electric"));
-        newDemand.setWater(map.getString("water"));
-        newDemand.setWeb(map.getString("web"));
-        newDemand.setOthers(map.getString("others"));
+        NewDemand newDemand = JSONObject.parseObject(String.valueOf(map),NewDemand.class);
 
         if(newEnterpriseDao.demandExit(creditCode) != null) {
             //已经存在
-            String newDemandId = newEnterpriseDao.selectNewDemandByCreditCode(creditCode);
-            if(newEnterpriseDao.updateNewDemand(newDemand,newDemandId) < 1) {
+            newDemand.setNewDemandId(UUID.randomUUID().toString());
+            if(newEnterpriseDao.updateNewDemand(newDemand, newDemand.getNewDemandId()) < 1)
+                throw new ServiceException("插入数据失败:updateNewDemand");
+        } else {
+            newDemand.setNewDemandId(UUID.randomUUID().toString());
+            if(newEnterpriseDao.addNewDemand(newDemand) < 1
+                    || newEnterpriseDao.updateNewDemandId(creditCode,newDemand.getNewDemandId()) < 1)
                 throw new ServiceException("插入数据失败:addNewDemand");
-            } else {
-                newDemand.setNewDemandId(UUID.randomUUID().toString());
-                if(newEnterpriseDao.addNewDemand(newDemand) < 1
-                    || newEnterpriseDao.updateNewForDemand(creditCode,"0",submitTime,room,newDemand.getNewDemandId()) < 1) {
-                    throw new ServiceException("插入数据失败:addNewDemand");
-                }
-            }
         }
 
         if(newEnterpriseDao.updateNewForDemand(creditCode,"0",submitTime,room,newDemand.getNewDemandId()) < 1)
@@ -276,7 +260,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
     /**
      * 获取某个企业的所有季度报表
-     * @param str
+     * @param
      * @return
      */
     @Override

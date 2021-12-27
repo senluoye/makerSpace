@@ -1,6 +1,10 @@
 package com.qks.makerSpace.util;
 
 import org.apache.poi.xwpf.usermodel.*;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 
 import java.io.*;
@@ -15,14 +19,16 @@ public class WordChangeUtils {
 
     public static void searchAndReplace(OutputStream outStream , Map<String, Object> map,int kind) {
         try {
-            File file = null;
-            if (kind == 1) {
-                file = ResourceUtils.getFile("classpath:template/output_document.docx");
-            } else {
-                file = ResourceUtils.getFile("classpath:template/station.docx");
-            }
-
-            InputStream inputStream = new FileInputStream(file);
+//            File file = null;
+//            if (kind == 1) {
+//                Resource resource = new DefaultResourceLoader().getResource("classpath:META-INF/resources/template/output_document.docx");
+//                file = resource.getFile();
+//            } else {
+//                ClassPathResource resource_2 = new ClassPathResource("template/station.docx");
+//                file = resource_2.getFile();
+//            }
+//            InputStream inputStream = new FileInputStream(file);
+            InputStream inputStream = new ClassPathResource("template/output_document.docx").getInputStream();
             XWPFDocument document = new XWPFDocument(inputStream);
 
             /**

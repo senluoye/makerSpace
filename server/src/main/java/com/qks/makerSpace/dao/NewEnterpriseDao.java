@@ -103,8 +103,8 @@ public interface NewEnterpriseDao {
             "agent = #{agent}, agent_phone = #{agentPhone}, agent_email = #{agentEmail} where credit_code = #{creditCode}")
     int updateNewRegister(News news);
 
-    @Select("select * from new_demand where credit_code = #{creditCode}")
-    List<NewDemand> demandExit(String creditCode);
+    @Select("select new_demand_id  from new where credit_code = #{creditCode}")
+    String demandExit(String creditCode);
 
     // 下面是已经填过表的
     @Delete("delete * from new_mainperson where new_mainperson_id = #{id}")
@@ -137,10 +137,13 @@ public interface NewEnterpriseDao {
     @Update("update new_demand " +
             "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
             "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
-            "where new_demand.new_demand_id = #{newDemandId}")
+            "where new_demand_id = #{newDemandId}")
     Integer updateNewDemand(NewDemand newDemand, String newDemandId);
 
 
     @Select("select new_mainperson_id from new where credit_code = #{creditCode}")
     String exitMainPerson(String creditCode);
+
+    @Update("update new set new_demand_id = #{newDemandId} where credit_code = #{creditCode}")
+    Integer updateNewDemandId(String creditCode, String newDemandId);
 }

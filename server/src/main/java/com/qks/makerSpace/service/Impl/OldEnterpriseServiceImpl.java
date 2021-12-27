@@ -39,7 +39,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             // 之前已经申请
             oldEnterpriseDao.updateOldRegister(old);
         } else {
-
             // 之前没有申请
             old.setOldId(UUID.randomUUID().toString());
             oldEnterpriseDao.oldRegister(old);
