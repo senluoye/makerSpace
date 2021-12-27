@@ -39,11 +39,13 @@ public interface OldEnterpriseDao {
             "  main_business = #{mainBusiness}, way = #{way}, business = #{business}, " +
             "  old_shareholder_id = #{oldShareholderId}, old_mainperson_id = #{oldMainpersonId}, " +
             "  old_project_id = #{oldProjectId}, old_intellectual_id = #{oldIntellectualId}," +
-            "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, suggestion = #{suggestion}, note = #{note}, submit_time = #{submitTime} " +
+            "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, suggestion = #{suggestion}, " +
+            "note = #{note}, submit_time = #{submitTime} " +
             "where credit_code = #{oldId}")
     Integer updateOld(Old old);
 
-    @Update("update old set state = #{state}, submit_time = #{submitTime}, room = #{room}, old_demand_id = #{oldDemandId} " +
+    @Update("update old set state = #{state}, submit_time = #{submitTime}, " +
+            "room = #{room}, old_demand_id = #{oldDemandId} " +
             "where credit_code = #{creditCode}")
     Integer updateOldForDemand(String creditCode, String state, String submitTime, String room, String oldDemandId);
 
@@ -70,21 +72,27 @@ public interface OldEnterpriseDao {
             "VALUES (#{id}, #{name}, #{stake}, #{nature}, #{oldShareholderId})")
     Integer insertOldShareholder(OldShareholder oldShareholder);
 
-    @Insert("insert into old_demand(lease_area, position, lease, floor, electric, water, web, others, old_demand_id) " +
-            "VALUES (#{leaseArea}, #{position}, #{lease}, #{floor}, #{electric}, #{water}, #{web}, #{others}, #{oldDemandId})")
+    @Insert("insert into old_demand(id, lease_area, position, lease, " +
+            "floor, electric, water, web, others, old_demand_id, time) " +
+            "VALUES (#{id}, #{leaseArea}, #{position}, #{lease}, #{floor}, " +
+            "#{electric}, #{water}, #{web}, #{others}, #{oldDemandId}, #{time})")
     Integer addOldDemand(OldDemand oldDemand);
 
-    @Select("select old_demand_id from old where credit_code = #{creditCode}")
-    String[] selectDemandByCreditCode(String creditCode);
+    @Insert("insert into contract(contract_id, credit_code, voucher, time) " +
+            "VALUES (#{contractId}, #{creditCode}, #{voucher}, #{submitTime})")
+    Integer addOldDemandContract(String contractId, String creditCode, byte[] voucher, String submitTime);
 
-    @Update("update old_demand " +
-            "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
-            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
-            "where old_demand_id = #{oldDemandId}")
-    Integer updateOldDemand(OldDemand oldDemand, String oldDemandId);
+    @Select("select * from old_demand where old_demand_id = #{oldDemandId}")
+    List<OldDemand> selectDemandByOldDemandId(String oldDemandId);
 
-    @Select("select old_demand_id from old where credit_code = #{creditCode}")
-    String selectOldDemandIdByCreditCode(String creditCode);
+//    @Update("update old_demand " +
+//            "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
+//            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
+//            "where old_demand_id = #{oldDemandId}")
+//    Integer updateOldDemand(OldDemand oldDemand, String oldDemandId);
+
+//    @Select("select old_demand_id from old where credit_code = #{creditCode}")
+//    String selectOldDemandIdByCreditCode(String creditCode);
 
     @Update("update old set old_demand_id = #{oldDemandId} where credit_code = #{creditCode}")
     Integer updateOldDemandId(String creditCode, String oldDemandId);

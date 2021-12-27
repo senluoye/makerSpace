@@ -21,6 +21,12 @@ public class SpaceServiceImpl implements SpaceService {
         this.spaceDao = spaceDao;
     }
 
+    /**
+     * 加入众创空间
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public Map<String, Object> joinMakerSpace(JSONObject map) throws ServiceException {
         String inApplyId = UUID.randomUUID().toString();
@@ -64,6 +70,11 @@ public class SpaceServiceImpl implements SpaceService {
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
+    /**
+     * 退出众创空间
+     * @param map
+     * @return
+     */
     @Override
     public Map<String, Object> quitMakerSpace(JSONObject map) {
         return null;

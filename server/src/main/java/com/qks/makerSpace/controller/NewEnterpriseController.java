@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 
 /**
@@ -49,13 +50,17 @@ public class NewEnterpriseController {
     }
 
     /**
-     * 缴费
+     * 续约
      * @param map
      * @return
      */
-    @RequestMapping(value = "newFee", method = RequestMethod.POST)
-    private Map<String, Object> NewEnterprisePay(@RequestBody Map<String, Object> map) {
-        return newEnterpriseService.newEnterprisePay(map);
+    @RequestMapping(value = "demand", method = RequestMethod.PUT)
+    private Map<String, Object> oldEnterprisePay(@RequestPart("map") String json,
+                                                 @RequestPart("paymentVoucher") MultipartFile voucher) throws ServiceException, IOException {
+        if (voucher == null)
+            throw new ServiceException("缺少缴费凭证");
+
+        return newEnterpriseService.newEnterpriseContract(json, voucher);
     }
 
     /**

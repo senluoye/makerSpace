@@ -13,6 +13,7 @@ import com.qks.makerSpace.util.OldParserUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,8 +29,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
     /**
      * 注册
-     * @param map
-     * @return
+     * @param
+     * @return Hashmap
      */
     @Override
     public Map<String, Object> oldRegister(JSONObject map) throws ServiceException {
@@ -52,7 +53,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
     /**
      * 信息状态展示
-     * @return
+     * @return Hashmap
      */
     @Override
     public Map<String, Object> getOldEnterprise() {
@@ -89,16 +90,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
-     * 缴费
-     * @param map
-     * @return
-     */
-    @Override
-    public Map<String, Object> oldEnterprisePay(Map<String, Object> map) {
-        return null;
-    }
-
-    /**
      * 旧企业科技园场地申请
      * @param map
      * @return
@@ -112,18 +103,25 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         String room = map.getString("floor") + " - " + map.getString("position");
         String creditCode = map.getString("creditCode");
 
-        if (oldEnterpriseDao.demandExit(creditCode) != null) {
-            // 已经存在
-            String oldDemandId = oldEnterpriseDao.selectOldDemandIdByCreditCode(creditCode);
-            if (oldEnterpriseDao.updateOldDemand(oldDemand,oldDemandId) < 1)
-                throw new ServiceException("插入数据失败:addOldDemand");
-        } else {
-            // 不存在
-            oldDemand.setOldDemandId(UUID.randomUUID().toString());
-            if (oldEnterpriseDao.addOldDemand(oldDemand) < 1
-                    || oldEnterpriseDao.updateOldDemandId(creditCode, oldDemand.getOldDemandId()) < 1)
-                throw new ServiceException("插入数据失败:addOldDemand");
-        }
+//        if (oldEnterpriseDao.demandExit(creditCode) != null) {
+//            // 已经存在
+//            String oldDemandId = oldEnterpriseDao.selectOldDemandIdByCreditCode(creditCode);
+//            String id = UUID.randomUUID().toString();
+//            oldDemand.setId(id);
+////            if (oldEnterpriseDao.updateOldDemand(oldDemand, oldDemandId) < 1)
+////                throw new ServiceException("插入数据失败:addOldDemand");
+//            if (oldEnterpriseDao.addOldDemand(oldDemand, oldDemandId) < 1)
+//                throw new ServiceException("插入数据失败:addOldDemand");
+//        } else {
+
+        String id = UUID.randomUUID().toString();
+        oldDemand.setId(id);
+        oldDemand.setOldDemandId(UUID.randomUUID().toString());
+        oldDemand.setTime(submitTime);
+        if (oldEnterpriseDao.addOldDemand(oldDemand) < 1 ||
+                oldEnterpriseDao.updateOldDemandId(creditCode, oldDemand.getOldDemandId()) < 1)
+            throw new ServiceException("插入数据失败:addOldDemand");
+//        }
 
         // 更新主表中的剩余数据
         if (oldEnterpriseDao.updateOldForDemand(creditCode, "0", submitTime, room, oldDemand.getOldDemandId()) < 1)
@@ -132,6 +130,38 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         Map<String, Object> data = new HashMap<>();
         data.put("creditCode", creditCode);
         return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 续约
+     * @param String
+     * @param MultipartFile
+     * @return Hashmap
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> oldEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException {
+        JSONObject jsonObject = JSONObject.parseObject(json);
+        OldDemand oldDemand = JSONObject.parseObject(json, OldDemand.class);
+        String creditCode = jsonObject.getString("creditCode");
+
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        String submitTime = dateFormat.format(new Date());
+
+        String oldDemandId = oldEnterpriseDao.demandExit(creditCode);
+        if (oldEnterpriseDao.selectDemandByOldDemandId(oldDemandId).size() == 0)
+            throw new ServiceException("请先递交入驻申请书");
+
+        String oldDemandFormId = UUID.randomUUID().toString();
+        String id = UUID.randomUUID().toString();
+        oldDemand.setId(oldDemandFormId);
+        oldDemand.setTime(submitTime);
+        oldDemand.setOldDemandId(oldDemandId);
+        if (oldEnterpriseDao.addOldDemand(oldDemand) < 1 &&
+                oldEnterpriseDao.addOldDemandContract(id, creditCode, voucher.getBytes(), submitTime) < 1)
+            throw new ServiceException("续约失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
     /**
@@ -240,8 +270,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
     /**
      * 获取某个企业的所有季度报表
-     * @param
-     * @return
+     * @param token
+     * @return Hashmap
      */
     @Override
     public Map<String, Object> getFormByCreditCode(String token) throws ServiceException {
@@ -255,5 +285,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
+
+
 }
 

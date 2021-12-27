@@ -38,13 +38,23 @@ public interface NewEnterpriseDao {
             "where credit_code = #{newId}")
     Integer updateNew(News news);
 
-    @Update("update new set state = #{state}, submit_time = #{submitTime}, room = #{room}, new_demand_id = #{newDemandId} " +
+    @Update("update new set state = #{state}, submit_time = #{submitTime}, " +
+            "room = #{room}, new_demand_id = #{newDemandId} " +
             "where credit_code = #{creditCode}")
     Integer updateNewForDemand(String creditCode, String state, String submitTime, String room, String newDemandId);
 
-    @Insert("insert into new_demand(lease_area, position, lease, floor, electric, water, web, others, new_demand_id) " +
-            "VALUES (#{leaseArea}, #{position}, #{lease}, #{floor}, #{electric}, #{water}, #{web}, #{others}, #{newDemandId})")
+    @Insert("insert into new_demand(id, lease_area, position, lease, " +
+            "floor, electric, water, web, others, new_demand_id, time) " +
+            "VALUES (#{id}, #{leaseArea}, #{position}, #{lease}, #{floor}, " +
+            "#{electric}, #{water}, #{web}, #{others}, #{newDemandId}, #{time})")
     Integer addNewDemand(NewDemand newDemand);
+
+    @Insert("insert into contract(contract_id, credit_code, voucher, time) " +
+            "VALUES (#{contractId}, #{creditCode}, #{voucher}, #{submitTime})")
+    Integer addNewDemandContract(String contractId, String creditCode, byte[] voucher, String submitTime);
+
+    @Select("select * from new_demand where new_demand_id = #{newDemandId}")
+    List<OldDemand> selectDemandByNewDemandId(String newDemandId);
 
     @Insert("insert into " +
             "new_shareholder(id, new_shareholder_id, name, stake, nature) " +
@@ -134,11 +144,11 @@ public interface NewEnterpriseDao {
     @Select("select * from audit where audit_id = #{creditCode}")
     List<Audit> getAudit(String creditCode);
 
-    @Update("update new_demand " +
-            "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
-            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
-            "where new_demand_id = #{newDemandId}")
-    Integer updateNewDemand(NewDemand newDemand, String newDemandId);
+//    @Update("update new_demand " +
+//            "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
+//            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
+//            "where new_demand_id = #{newDemandId}")
+//    Integer updateNewDemand(NewDemand newDemand, String newDemandId);
 
 
     @Select("select new_mainperson_id from new where credit_code = #{creditCode}")

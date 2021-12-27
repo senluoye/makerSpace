@@ -238,17 +238,21 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
         NewDemand newDemand = JSONObject.parseObject(String.valueOf(map),NewDemand.class);
 
-        if(newEnterpriseDao.demandExit(creditCode) != null) {
-            //已经存在
-            newDemand.setNewDemandId(UUID.randomUUID().toString());
-            if(newEnterpriseDao.updateNewDemand(newDemand, newDemand.getNewDemandId()) < 1)
-                throw new ServiceException("插入数据失败:updateNewDemand");
-        } else {
-            newDemand.setNewDemandId(UUID.randomUUID().toString());
-            if(newEnterpriseDao.addNewDemand(newDemand) < 1
-                    || newEnterpriseDao.updateNewDemandId(creditCode,newDemand.getNewDemandId()) < 1)
-                throw new ServiceException("插入数据失败:addNewDemand");
-        }
+//        if(newEnterpriseDao.demandExit(creditCode) != null) {
+//            //已经存在
+//            newDemand.setNewDemandId(UUID.randomUUID().toString());
+//            if(newEnterpriseDao.updateNewDemand(newDemand, newDemand.getNewDemandId()) < 1)
+//                throw new ServiceException("插入数据失败:updateNewDemand");
+//        } else {
+
+        String id = UUID.randomUUID().toString();
+        newDemand.setId(id);
+        newDemand.setNewDemandId(UUID.randomUUID().toString());
+        newDemand.setTime(submitTime);
+        if(newEnterpriseDao.addNewDemand(newDemand) < 1
+                || newEnterpriseDao.updateNewDemandId(creditCode,newDemand.getNewDemandId()) < 1)
+            throw new ServiceException("插入数据失败:addNewDemand");
+//        }
 
         if(newEnterpriseDao.updateNewForDemand(creditCode,"0",submitTime,room,newDemand.getNewDemandId()) < 1)
             throw new ServiceException("插入数据失败:updateNewForDemand");
@@ -274,5 +278,38 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         List<FormDetails> data = newEnterpriseDao.getAllFormDetails(creditCode);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 新企业续约
+     * @param json
+     * @param voucher
+     * @return
+     * @throws ServiceException
+     * @throws IOException
+     */
+    @Override
+    public Map<String, Object> newEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException {
+        JSONObject jsonObject = JSONObject.parseObject(json);
+        NewDemand newDemand = JSONObject.parseObject(json, NewDemand.class);
+        String creditCode = jsonObject.getString("creditCode");
+
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        String submitTime = dateFormat.format(new Date());
+
+        String newDemandId = newEnterpriseDao.demandExit(creditCode);
+        if (newEnterpriseDao.selectDemandByNewDemandId(newDemandId).size() == 0)
+            throw new ServiceException("请先递交入驻申请书");
+
+        String newDemandFormId = UUID.randomUUID().toString();
+        String id = UUID.randomUUID().toString();
+        newDemand.setId(newDemandFormId);
+        newDemand.setTime(submitTime);
+        newDemand.setNewDemandId(newDemandId);
+        if (newEnterpriseDao.addNewDemand(newDemand) < 1 &&
+                newEnterpriseDao.addNewDemandContract(id, creditCode, voucher.getBytes(), submitTime) < 1)
+            throw new ServiceException("续约失败");
+
+        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 }

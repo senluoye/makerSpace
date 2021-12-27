@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class NewDemand {
+    private String id;
     private String newDemandId;
     private String leaseArea;
     private String position;
@@ -13,5 +14,5 @@ public class NewDemand {
     private String water;
     private String web;
     private String others;
-
+    private String time;
 }

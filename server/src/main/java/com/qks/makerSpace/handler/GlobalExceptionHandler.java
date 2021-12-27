@@ -1,5 +1,7 @@
 package com.qks.makerSpace.handler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -12,6 +14,7 @@ import java.util.Map;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
+    private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
      * 全局异常处理
@@ -23,13 +26,13 @@ public class GlobalExceptionHandler {
     @ResponseBody
     private Map<String, Object> exceptionHandler(HttpServletRequest req, Exception e) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        System.out.println("最新的请求: " + df.format(new Date()));
-        e.printStackTrace();
+        logger.info("最新的请求: " + df.format(new Date()));
+        logger.info(String.valueOf(e));
 
         Map<String, Object> modelMap = new HashMap<>();
         modelMap.put("data", null);
         modelMap.put("code", -1);
-        modelMap.put("msg", e.getMessage());
+        modelMap.put("msg", "数据处理失败");
 
         return modelMap;
     }
