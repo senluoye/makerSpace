@@ -3,6 +3,7 @@ package com.qks.makerSpace.service.Impl;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
@@ -210,8 +211,26 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException {
         String creditCode = map.getString("creditCode");
 
-        if (adminDao.agreeById(creditCode) < 1)
+        AdminSuggestion adminSuggestion = new AdminSuggestion();
+
+        adminSuggestion.setCreditCode(creditCode);
+        adminSuggestion.setSuggestion(map.getString("suggestion"));
+        adminSuggestion.setNote(map.getString("note"));
+
+        if (adminDao.agreeById(creditCode) < 1) {
             throw new ServiceException("管理员审核失败");
+        } else {
+            if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null) {
+                if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
+                    throw new ServiceException("更新new失败");
+            }
+            else if (adminDao.selectCreditCodeFromOldByCreditCode(creditCode) != null) {
+                if (adminDao.updateOldSuggestion(adminSuggestion) < 0)
+                    throw new ServiceException("更新old失败");
+            }
+            else throw new ServiceException("表中不粗在该信息");
+        }
+
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
@@ -224,8 +243,25 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException {
         String creditCode = map.getString("creditCode");
 
-        if (adminDao.disagreeById(creditCode) < 1)
+        AdminSuggestion adminSuggestion = new AdminSuggestion();
+
+        adminSuggestion.setCreditCode(creditCode);
+        adminSuggestion.setSuggestion(map.getString("suggestion"));
+        adminSuggestion.setNote(map.getString("note"));
+
+        if (adminDao.disagreeById(creditCode) < 1) {
             throw new ServiceException("管理员审核失败");
+        } else {
+            if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null) {
+                if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
+                    throw new ServiceException("更新new失败");
+            }
+            else if (adminDao.selectCreditCodeFromOldByCreditCode(creditCode) != null) {
+                if (adminDao.updateOldSuggestion(adminSuggestion) < 0)
+                    throw new ServiceException("更新old失败");
+            }
+            else throw new ServiceException("表中不粗在该信息");
+        }
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
@@ -280,8 +316,8 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 导出文件
-     * @param HttpServletResponse 经过处理后的word二进制模板
-     * @param HashMap
+     * @param
+     * @param
      */
     @Override
     public void downLoadWord(HttpServletResponse response, Map<String, Object> map) throws ServiceException {

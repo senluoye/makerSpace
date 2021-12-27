@@ -33,8 +33,6 @@ public class OldParserUtils {
         old.setWay(map.getString("way"));
         old.setBusiness(map.getString("business"));
         old.setCooperation(map.getString("cooperation"));
-        old.setSuggestion(map.getString("suggestion"));
-        old.setNote(map.getString("note"));
 
         return old;
     }

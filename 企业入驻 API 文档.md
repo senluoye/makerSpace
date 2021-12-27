@@ -603,8 +603,6 @@ token 保存时间待定
     ],
     
     "cooperation":"<String>",								//以往和桂电的合作情况
-    "suggestion":"<String>",								//科技园意见
-    "note":"<String>"    								//备注
 }
 ```
 
@@ -1121,8 +1119,6 @@ token 保存时间待定
 		......
 	],
     
-    "suggestion":"<String>",								//科技园意见
-    "note":"<String>"    								//备注
 }
 ```
 
@@ -2305,7 +2301,9 @@ Audit（审核表）
 
 ```json
 {
-    "creditCode":"<String>"
+    "creditCode":"<String>",
+    "suggestion":"<String>",								//科技园意见
+    "note":"<String>"    								//备注
 }
 ```
 
@@ -2339,7 +2337,9 @@ Audit（审核表）
 
 ```json
 {
-    "creditCode":"<String>"
+    "creditCode":"<String>",
+    "suggestion":"<String>",								//科技园意见
+    "note":"<String>"    								//备注
 }
 ```
 

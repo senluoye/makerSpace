@@ -32,8 +32,6 @@ public class News {
     private String newMainpersonId;
     private String newProjectId;
     private String newIntellectualId;
-    private String suggestion;
-    private String note;
     private String submitTime;
     private String room;
     private String inApplyId;

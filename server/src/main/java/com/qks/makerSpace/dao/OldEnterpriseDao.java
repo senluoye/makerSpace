@@ -39,8 +39,12 @@ public interface OldEnterpriseDao {
             "  main_business = #{mainBusiness}, way = #{way}, business = #{business}, " +
             "  old_shareholder_id = #{oldShareholderId}, old_mainperson_id = #{oldMainpersonId}, " +
             "  old_project_id = #{oldProjectId}, old_intellectual_id = #{oldIntellectualId}," +
+<<<<<<< HEAD
             "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, suggestion = #{suggestion}, " +
             "note = #{note}, submit_time = #{submitTime} " +
+=======
+            "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, submit_time = #{submitTime} " +
+>>>>>>> 0eb8639af0144e8a0745678671e5826ed031021d
             "where credit_code = #{oldId}")
     Integer updateOld(Old old);
 

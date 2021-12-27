@@ -1,9 +1,11 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -111,6 +113,9 @@ public interface AdminDao {
     @Select("select credit_code from new where credit_code = #{creditCode}")
     String selectCreditCodeFromNewByCreditCode(String creditCode);
 
+    @Select("select credit_code from old where credit_code = #{creditCode}")
+    String selectCreditCodeFromOldByCreditCode(String creditCode);
+
     @Select("select old.credit_code, old.name, old.represent, old.represent_phone, old.represent_email, form.get_time " +
             "from form, old " +
             "where form.credit_code = old.credit_code " +
@@ -125,4 +130,10 @@ public interface AdminDao {
 
     @Select("select credit_code from old where credit_code = #{creditCode}")
     String getCreditCode(String creditCode);
+
+    @Update("update new set suggestion = #{suggestion}, note = #{note} where credit_code = #{creditCode}")
+    Integer updateNewSuggestion(AdminSuggestion adminSuggestion);
+
+    @Update("update old set suggestion = #{suggestion}, note = #{note} where credit_code = #{creditCode}")
+    Integer updateOldSuggestion(AdminSuggestion adminSuggestion);
 }

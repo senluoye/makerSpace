@@ -136,7 +136,7 @@ public class AdminController {
 
     /**
      * 获取导出表的信息
-     * @param HttpServletResponse
+     * @param
      */
     @RequestMapping(value = "/form/situation", method = RequestMethod.GET)
     private void getStatisticalForm(HttpServletResponse response) throws Exception {
