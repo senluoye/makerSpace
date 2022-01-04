@@ -104,11 +104,11 @@ public interface AdminDao {
             "and old.credit_code = #{creditCode}")
     Integer deleteOldByCreditCode(String creditCode);
 
-    @Update("update audit set administrator_audit = true where audit_id = #{creditCode}")
-    Integer agreeById(String creditCode);
+    @Update("update audit set administrator_audit = #{agree} where audit_id = #{creditCode}")
+    Integer agreeById(String creditCode, String agree);
 
-    @Update("update audit set administrator_audit = false where audit_id = #{creditCode}")
-    Integer disagreeById(String creditCode);
+    @Update("update audit set administrator_audit = #{disagree} where audit_id = #{creditCode}")
+    Integer disagreeById(String creditCode, String disagree);
 
     @Select("select credit_code from new where credit_code = #{creditCode}")
     String selectCreditCodeFromNewByCreditCode(String creditCode);

@@ -74,7 +74,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @return
      */
     @Override
-    public Map<String, Object> newRegister(String str, MultipartFile[] file) throws IOException{
+    public Map<String, Object> newRegister(String str, MultipartFile[] files) throws IOException{
         System.out.println(str);
         JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
@@ -89,14 +89,19 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setOrganizationCode(map.get("organizationCode").toString());
 //        news.setPassword(map.get("password").toString());
         news.setName(map.get("name").toString());
-        news.setPicture(file[0].getBytes());
         news.setRepresent(map.get("represent").toString());
-        news.setRepresentCard(file[1].getBytes());
         news.setRepresentPhone(map.get("representPhone").toString());
         news.setRepresentEmail(map.get("representEmail").toString());
         news.setAgent(map.get("agent").toString());
         news.setAgentPhone(map.get("agentPhone").toString());
         news.setAgentEmail(map.get("agentEmail").toString());
+
+        try {
+            news.setPicture(files[0].getBytes());
+            news.setRepresentCard(files[1].getBytes());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ServerException("上传文件数量不足");
+        }
 
         if (newEnterpriseDao.exit(creditCode) != null) {
             //之前申请过
@@ -108,7 +113,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         }
 
         Map<String, Object> data = new HashMap<>();
-        data.put("id",creditCode);
+        data.put("creditCode", creditCode);
         return MyResponseUtil.getResultMap(data,0,"success");
 
     }
@@ -138,11 +143,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
         List<Audit> auditList = newEnterpriseDao.getAudit(creditCode);
 
-        if (auditList.size() != 0)
-            if (auditList.get(0).isAdministratorAudit() && auditList.get(0).isLeadershipAudit())
-                throw new ServiceException("领导和管理员均已审核通过，无法重新填报申请表");
-
-
         News news = NewParserUtils.newsParser(map);
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.getJSONArray("newMainPerson"));
         List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.getJSONArray("newProject"));
@@ -156,14 +156,18 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         try {
             news.setCertificate(files[0].getBytes());
         } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ServiceException("有文件没有上传");
+            throw new ServiceException("上传文件数量不足");
         }
 
         Date date = new Date();
         news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 
         for (int i = 1; i <files.length; i++) {
-            newIntellectuals.get(i - 1).setIntellectualFile(files[i].getBytes());
+            try {
+                newIntellectuals.get(i - 1).setIntellectualFile(files[i].getBytes());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new ServiceException("读取文件发生错误，请重新上传");
+            }
         }
 
         if(newEnterpriseDao.exitMainPerson(creditCode) != null) {
@@ -204,8 +208,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
         Audit audit = new Audit();
         audit.setAuditId(creditCode);
-        audit.setAdministratorAudit(false);
-        audit.setLeadershipAudit(false);
+        audit.setAdministratorAudit("未审核");
+        audit.setLeadershipAudit("未审核");
 
         if (oldEnterpriseDao.insertAudit(audit) <= 0)
             throw new ServiceException("信息插入失败:audit");
@@ -238,13 +242,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
         NewDemand newDemand = JSONObject.parseObject(String.valueOf(map),NewDemand.class);
 
-//        if(newEnterpriseDao.demandExit(creditCode) != null) {
-//            //已经存在
-//            newDemand.setNewDemandId(UUID.randomUUID().toString());
-//            if(newEnterpriseDao.updateNewDemand(newDemand, newDemand.getNewDemandId()) < 1)
-//                throw new ServiceException("插入数据失败:updateNewDemand");
-//        } else {
-
         String id = UUID.randomUUID().toString();
         newDemand.setId(id);
         newDemand.setNewDemandId(UUID.randomUUID().toString());
@@ -252,7 +249,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         if(newEnterpriseDao.addNewDemand(newDemand) < 1
                 || newEnterpriseDao.updateNewDemandId(creditCode,newDemand.getNewDemandId()) < 1)
             throw new ServiceException("插入数据失败:addNewDemand");
-//        }
 
         if(newEnterpriseDao.updateNewForDemand(creditCode,"0",submitTime,room,newDemand.getNewDemandId()) < 1)
             throw new ServiceException("插入数据失败:updateNewForDemand");

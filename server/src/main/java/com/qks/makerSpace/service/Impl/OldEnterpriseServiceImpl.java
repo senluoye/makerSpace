@@ -46,7 +46,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         }
 
         Map<String, Object> data = new HashMap<>();
-        data.put("id", old.getCreditCode());
+        data.put("creditCode", old.getCreditCode());
         return MyResponseUtil.getResultMap(data, 0, "success");
 
     }
@@ -56,7 +56,10 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return Hashmap
      */
     @Override
-    public Map<String, Object> getOldEnterprise() {
+    public Map<String, Object> getOldEnterprise(String token) {
+//        String userId = JWTUtils.parser(token).get("userId").toString();
+//        String creditCode = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+
         List<Map<String, Object>> data = new ArrayList<>();
         List<Old> oldList = oldEnterpriseDao.getAllOld();
 
@@ -64,7 +67,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             try {
                 data.add(ChangeUtils.getObjectToMap(x));
             } catch (IllegalAccessException e) {
-                e.printStackTrace();
+                System.out.println("??????" + e.getMessage());
             }
         });
 
@@ -103,17 +106,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         String room = map.getString("floor") + " - " + map.getString("position");
         String creditCode = map.getString("creditCode");
 
-//        if (oldEnterpriseDao.demandExit(creditCode) != null) {
-//            // 已经存在
-//            String oldDemandId = oldEnterpriseDao.selectOldDemandIdByCreditCode(creditCode);
-//            String id = UUID.randomUUID().toString();
-//            oldDemand.setId(id);
-////            if (oldEnterpriseDao.updateOldDemand(oldDemand, oldDemandId) < 1)
-////                throw new ServiceException("插入数据失败:addOldDemand");
-//            if (oldEnterpriseDao.addOldDemand(oldDemand, oldDemandId) < 1)
-//                throw new ServiceException("插入数据失败:addOldDemand");
-//        } else {
-
         String id = UUID.randomUUID().toString();
         oldDemand.setId(id);
         oldDemand.setOldDemandId(UUID.randomUUID().toString());
@@ -121,7 +113,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         if (oldEnterpriseDao.addOldDemand(oldDemand) < 1 ||
                 oldEnterpriseDao.updateOldDemandId(creditCode, oldDemand.getOldDemandId()) < 1)
             throw new ServiceException("插入数据失败:addOldDemand");
-//        }
 
         // 更新主表中的剩余数据
         if (oldEnterpriseDao.updateOldForDemand(creditCode, "0", submitTime, room, oldDemand.getOldDemandId()) < 1)
@@ -134,13 +125,10 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
     /**
      * 续约
-     * @param String
-     * @param MultipartFile
      * @return Hashmap
-     * @throws ServiceException
      */
     @Override
-    public Map<String, Object> oldEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException {
+    public Map<String, Object> oldEnterpriseContract(String json, MultipartFile file) throws ServiceException, IOException {
         JSONObject jsonObject = JSONObject.parseObject(json);
         OldDemand oldDemand = JSONObject.parseObject(json, OldDemand.class);
         String creditCode = jsonObject.getString("creditCode");
@@ -157,8 +145,16 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         oldDemand.setId(oldDemandFormId);
         oldDemand.setTime(submitTime);
         oldDemand.setOldDemandId(oldDemandId);
+
+        byte[] bytes;
+        try {
+            bytes = file.getBytes();
+        } catch (Exception e) {
+            throw new ServiceException("读取文件发生错误，请重新上传");
+        }
+
         if (oldEnterpriseDao.addOldDemand(oldDemand) < 1 &&
-                oldEnterpriseDao.addOldDemandContract(id, creditCode, voucher.getBytes(), submitTime) < 1)
+                oldEnterpriseDao.addOldDemandContract(id, creditCode, file.getBytes(), submitTime) < 1)
             throw new ServiceException("续约失败");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
@@ -179,10 +175,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         Date date = new Date();
 
         List<Audit> auditList = oldEnterpriseDao.getAudit(creditCode);
-
-        if (auditList.size() != 0)
-            if (auditList.get(0).isAdministratorAudit() && auditList.get(0).isLeadershipAudit())
-                throw new ServiceException("领导和管理员均已审核通过，无法重新填报申请表");
 
         // 数据初步处理
         Old old = OldParserUtils.parser(map);
@@ -206,13 +198,18 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             throw new ServiceException("上传文件数量不足");
         }
 
-        for (int i = 2; i < files.length; i++)
-            oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
+        for (int i = 2; i < files.length; i++) {
+            try {
+                oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
+            } catch(ArrayIndexOutOfBoundsException e) {
+                throw new ServiceException("读取文件发生错误，请重新上传");
+            }
+        }
 
         if (oldEnterpriseDao.exitMainPerson(creditCode) != null) {
             // 如果之前已经有信息存在 --->删除对应信息
             if (oldEnterpriseDao.deleteOldMainPerson(oldEnterpriseDao.selectOldMainPerson(creditCode)) <= 0)
-                throw new ServiceException("删除MainPerson错误");
+                throw new ServiceException("删除MainPerson失败");
             if (oldEnterpriseDao.deleteOldProject(oldEnterpriseDao.selectOldProject(creditCode)) <= 0)
                 throw new ServiceException("删除Project失败");
             if (oldEnterpriseDao.deleteOldFunding(oldEnterpriseDao.selectOldFunding(creditCode)) <= 0)
@@ -221,7 +218,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 throw new ServiceException("删除Shareholder失败");
             if (oldEnterpriseDao.deleteOldIntellectual(oldEnterpriseDao.selectOldIntellectual(creditCode)) <= 0)
                 throw new ServiceException("删除Intellectual失败");
-
         }
 
         //更新主表
@@ -251,8 +247,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         // 插入数据到审核表
         Audit audit = new Audit();
         audit.setAuditId(creditCode);
-        audit.setAdministratorAudit(false);
-        audit.setLeadershipAudit(false);
+        audit.setAdministratorAudit("未审核");
+        audit.setLeadershipAudit("未审核");
 
         if (oldEnterpriseDao.insertAudit(audit) <= 0)
             throw new ServiceException("信息插入失败:audit");

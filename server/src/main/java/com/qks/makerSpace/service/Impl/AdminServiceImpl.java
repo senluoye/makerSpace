@@ -217,7 +217,7 @@ public class AdminServiceImpl implements AdminService {
         adminSuggestion.setSuggestion(map.getString("suggestion"));
         adminSuggestion.setNote(map.getString("note"));
 
-        if (adminDao.agreeById(creditCode) < 1) {
+        if (adminDao.agreeById(creditCode, "通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
             if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null) {
@@ -228,7 +228,7 @@ public class AdminServiceImpl implements AdminService {
                 if (adminDao.updateOldSuggestion(adminSuggestion) < 0)
                     throw new ServiceException("更新old失败");
             }
-            else throw new ServiceException("表中不粗在该信息");
+            else throw new ServiceException("表中不存在该信息");
         }
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
@@ -248,7 +248,7 @@ public class AdminServiceImpl implements AdminService {
         adminSuggestion.setSuggestion(map.getString("suggestion"));
         adminSuggestion.setNote(map.getString("note"));
 
-        if (adminDao.disagreeById(creditCode) < 1) {
+        if (adminDao.disagreeById(creditCode, "不通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
             if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null) {
@@ -259,7 +259,7 @@ public class AdminServiceImpl implements AdminService {
                 if (adminDao.updateOldSuggestion(adminSuggestion) < 0)
                     throw new ServiceException("更新old失败");
             }
-            else throw new ServiceException("表中不粗在该信息");
+            else throw new ServiceException("表中不存在该信息");
         }
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
@@ -273,7 +273,7 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> agreeSpaceById(JSONObject map) throws ServiceException {
         String creditCode = map.getString("creditCode");
 
-        if (adminDao.agreeById(creditCode) < 1)
+        if (adminDao.agreeById(creditCode, "通过") < 1)
             throw new ServiceException("管理员审核失败");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
@@ -287,7 +287,7 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> disagreeSpaceById(JSONObject map) throws ServiceException {
         String creditCode = map.getString("creditCode");
 
-        if (adminDao.disagreeById(creditCode) < 1)
+        if (adminDao.disagreeById(creditCode, "不通过") < 1)
             throw new ServiceException("管理员审核失败");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
