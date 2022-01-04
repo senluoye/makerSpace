@@ -231,7 +231,6 @@ public class AdminServiceImpl implements AdminService {
             else throw new ServiceException("表中不粗在该信息");
         }
 
-
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
