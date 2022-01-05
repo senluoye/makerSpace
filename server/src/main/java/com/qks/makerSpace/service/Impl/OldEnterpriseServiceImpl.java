@@ -36,7 +36,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> oldRegister(JSONObject map) throws ServiceException {
         Old old = JSONObject.parseObject(String.valueOf(map), Old.class);
         System.out.println(old);
-        if (oldEnterpriseDao.exit(old.getCreditCode()) != null){
+        if (oldEnterpriseDao.exit(old.getCreditCode()).size() != 0){
             // 之前已经申请
             oldEnterpriseDao.updateOldRegister(old);
         } else {
