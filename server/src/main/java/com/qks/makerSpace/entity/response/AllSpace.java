@@ -13,8 +13,7 @@ public class AllSpace {
     private String teamNumber;
     private String describe;
     private String help;
-    private boolean administratorAudit;
-    private String Audit;
-    private boolean leadershipAudit;
+    private String administratorAudit;
+    private String leadershipAudit;
     List<SpacePerson> Person;
 }

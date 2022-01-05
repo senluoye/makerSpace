@@ -40,9 +40,7 @@ public class SpaceServiceImpl implements SpaceService {
                 map.getString("applyTime"),
                 map.getString("teamNumber"),
                 map.getString("describe"),
-                map.getString("help"),
-                false,
-                false
+                map.getString("help")
         );
 
         JSONArray persons = map.getJSONArray("person");
@@ -71,7 +69,10 @@ public class SpaceServiceImpl implements SpaceService {
         audit.setLeadershipAudit("未审核");
         audit.setDescribe("众创空间");
 
-        if (spaceDao.addProject(space) < 1 && spaceDao.addUserSpace(userId, inApplyId) < 1 && spaceDao.addAudit(audit) < 1)
+        if (spaceDao.addProject(space) < 1 && spaceDao.addUserSpace(userId, inApplyId) < 1)
+            throw new ServiceException("加入众创空间失败");
+
+        if (spaceDao.addAudit(audit) < 1)
             throw new ServiceException("加入众创空间失败");
 
         Map<String, Object> data = new HashMap<>();

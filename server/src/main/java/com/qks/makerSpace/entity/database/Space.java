@@ -16,8 +16,6 @@ public class Space {
     private String teamNumber;
     private String describe; // 项目概括
     private String help;
-    private boolean administratorAudit;
-    private boolean leadershipAudit;
     /**
      * 注意，类中缺少承诺人、日期、办公室主任意见、领导审批意见字段
      */

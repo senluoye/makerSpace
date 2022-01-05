@@ -18,9 +18,9 @@ public interface SpaceDao {
     List<Space> getSpaceListByName(String createName);
 
     @Insert("insert into space(in_apply_id, `describe`, create_name, apply_time, " +
-            "           team_number, help, administrator_audit, leadership_audit) " +
+            "           team_number, help) " +
             "values (#{inApplyId}, #{describe}, #{createName}, #{applyTime}, " +
-            "       #{teamNumber}, #{help}, #{administratorAudit}, #{leadershipAudit})")
+            "       #{teamNumber}, #{help})")
     Integer addProject(Space space);
 
     @Insert("insert into space_person(space_person_id, in_apply_id, department, " +

@@ -34,7 +34,8 @@ public interface AdminDao {
             "and audit.audit_id = new.credit_code")
     List<AllTechnology> getAllNewDetails();
 
-    @Select("select in_apply_id, create_name, apply_time, team_number, `describe`, help, administrator_audit, leadership_audit " +
+    @Select("select in_apply_id, create_name, apply_time, team_number, " +
+            "`describe`, help, administrator_audit, leadership_audit " +
             "from space")
     List<Space> getAllSpaceDetails();
 
@@ -83,7 +84,8 @@ public interface AdminDao {
     @Select("select * from new_shareholder where new_shareholder_id = #{newShareholderId}")
     List<NewShareholder> getNewShareholder(String newShareholderId);
 
-    Map<String, Object> getSpaceById(String id);
+    @Select("select * from space where in_apply_id = #{id}")
+    Space getSpaceById(String id);
 
     @Delete("delete space, space_person " +
             "from space, space_person " +
@@ -109,6 +111,9 @@ public interface AdminDao {
 
     @Update("update audit set administrator_audit = #{disagree} where audit_id = #{creditCode}")
     Integer disagreeById(String creditCode, String disagree);
+
+    @Select("select * from audit where audit_id = #{id}")
+    Audit getAuditById(String id);
 
     @Select("select credit_code from new where credit_code = #{creditCode}")
     String selectCreditCodeFromNewByCreditCode(String creditCode);

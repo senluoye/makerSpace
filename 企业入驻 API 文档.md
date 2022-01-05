@@ -1863,7 +1863,7 @@ Audit（审核表）
 }
 ~~~
 
-### 获取全部众创空间企业部分信息
+### 获取全部众创空间企业信息
 
 **简要描述：**
 
@@ -1883,8 +1883,7 @@ Audit（审核表）
 {
     "data":[{
         "inApplyId":"<String>",					// 众创空间申请表Id
-        "administratorAudit":"<boolean>",				// 管理员是否通过审核
-        "Audit":"<String>",													//由 administratorAudit 生成
+        "administratorAudit":"<boolean>",		// 管理员是否通过审核
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
@@ -1903,7 +1902,7 @@ Audit（审核表）
   		"help": "<String>"                  // 想获得的帮助
    	 },{
         "inApplyId":"<String>"					// 众创空间申请表Id
-        "administratorAudit":"<boolean>"				// 管理员是否通过审核
+        "administratorAudit":"<boolean>"		// 管理员是否通过审核
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
@@ -2427,7 +2426,7 @@ Audit（审核表）
 
 ```json
 {
-    "creditCode":"<String>"
+    "inApplyId":"<String>"
 }
 ```
 
@@ -2436,7 +2435,7 @@ Audit（审核表）
 ```json
 {
     "data":{
-        "creditCode":"<String>"
+        "inApplyId":"<String>"
     },
     "code":0,
     "msg":"success"
@@ -2461,7 +2460,7 @@ Audit（审核表）
 
 ```json
 {
-    "creditCode":"<String>"
+    "inApplyId":"<String>"
 }
 ```
 
@@ -2470,7 +2469,7 @@ Audit（审核表）
 ```json
 {
     "data":{
-        "creditCode":"<String>"
+        "inApplyId":"<String>"
     },
     "code":0,
     "msg":"success"

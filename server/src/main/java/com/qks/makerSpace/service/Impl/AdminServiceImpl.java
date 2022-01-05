@@ -2,6 +2,7 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
+import com.qks.makerSpace.dao.SpaceDao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllForm;
@@ -11,6 +12,7 @@ import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
+import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -112,16 +114,6 @@ public class AdminServiceImpl implements AdminService {
 
         Map<String, Object> data = new HashMap<>();
 
-//        data.put("registerCapital", news.getRegisterCapital());
-//        data.put("realCapital", news.getRealCapital());
-//        data.put("originNumber", news.getOriginNumber());
-//        data.put("registerTime", news.getRegisterTime());
-//        data.put("nature", news.getNature());
-//        data.put("certificate", news.getCertificate());
-//        data.put("involved", news.getInvolved());
-//        data.put("mainBusiness", news.getMainBusiness());
-//        data.put("business", news.getBusiness());
-
         data.put("news", news);
         data.put("newDemand", adminDao.getNewDemandById(news.getNewDemandId()));
         data.put("newShareholder", adminDao.getNewShareholder(news.getNewShareholderId()));
@@ -139,8 +131,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getSpaceById(String InApplyId) {
         Map<String, Object> data = new HashMap<>();
-
-
+        Space space = adminDao.getSpaceById(InApplyId);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
@@ -154,11 +145,12 @@ public class AdminServiceImpl implements AdminService {
 
         for (Space space : spaces) {
             AllSpace allSpace = new AllSpace();
+            Audit audit= adminDao.getAuditById(space.getInApplyId());
             String inApplyId = space.getInApplyId();
             List<SpacePerson> spacePeople = adminDao.getSpacePeopleById(inApplyId);
 
             allSpace.setInApplyId(inApplyId);
-            allSpace.setAdministratorAudit(space.isAdministratorAudit());
+            allSpace.setAdministratorAudit(audit.getAdministratorAudit());
             allSpace.setCreateName(space.getCreateName());
             allSpace.setApplyTime(space.getApplyTime());
             allSpace.setTeamNumber(space.getTeamNumber());
@@ -167,14 +159,6 @@ public class AdminServiceImpl implements AdminService {
             allSpace.setPerson(spacePeople);
 
             allSpaces.add(allSpace);
-        }
-
-        Iterator<AllSpace> iterator = allSpaces.iterator();
-        while (iterator.hasNext()) {
-            AllSpace space = iterator.next();
-            if(space.isAdministratorAudit()) {
-                space.setAudit("已通过");
-            } else space.setAudit("未通过");
         }
 
         return MyResponseUtil.getResultMap(allSpaces, 0, "success");
@@ -274,12 +258,12 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> agreeSpaceById(JSONObject map) throws ServiceException {
-        String creditCode = map.getString("creditCode");
+        String inApplyId = map.getString("inApplyId");
 
-        if (adminDao.agreeById(creditCode, "通过") < 1)
+        if (adminDao.agreeById(inApplyId, "通过") < 1)
             throw new ServiceException("管理员审核失败");
 
-        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+        return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }
 
     /**
@@ -288,12 +272,12 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> disagreeSpaceById(JSONObject map) throws ServiceException {
-        String creditCode = map.getString("creditCode");
+        String inApplyId = map.getString("inApplyId");
 
-        if (adminDao.disagreeById(creditCode, "不通过") < 1)
+        if (adminDao.disagreeById(inApplyId, "不通过") < 1)
             throw new ServiceException("管理员审核失败");
 
-        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+        return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }
 
     @Override
