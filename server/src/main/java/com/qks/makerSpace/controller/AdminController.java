@@ -74,7 +74,7 @@ public class AdminController {
      * @return HashMap
      */
     @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.GET)
-    private Map<String, Object> getSpaceById(@PathVariable String inApplyId) {
+    private Map<String, Object> getSpaceById(@PathVariable String inApplyId) throws IllegalAccessException {
         return adminService.getSpaceById(inApplyId);
     }
 

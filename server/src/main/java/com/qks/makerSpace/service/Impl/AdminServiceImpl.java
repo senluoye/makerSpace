@@ -10,6 +10,7 @@ import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
+import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
 import io.swagger.models.auth.In;
@@ -129,9 +130,10 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getSpaceById(String InApplyId) {
+    public Map<String, Object> getSpaceById(String InApplyId) throws IllegalAccessException {
         Map<String, Object> data = new HashMap<>();
         Space space = adminDao.getSpaceById(InApplyId);
+        data = ChangeUtils.getObjectToMap(space);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
