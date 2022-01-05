@@ -106,7 +106,7 @@ public interface NewEnterpriseDao {
     List<FormDetails> getAllFormDetails(String creditCode);
 
     @Select("select * from new where credit_Code = #{creditCode}")
-    News exit(String creditCode);
+    List<News> exit(String creditCode);
 
     @Update("update new set organization_code = #{organizationCode}, name = #{name}, picture = #{picture}, " +
             "represent = #{represent}, represent_card = #{representCard}, represent_phone =#{representPhone}, represent_email = #{representEmail}, " +

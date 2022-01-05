@@ -103,7 +103,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             throw new ServerException("上传文件数量不足");
         }
 
-        if (newEnterpriseDao.exit(creditCode) != null) {
+        if (newEnterpriseDao.exit(creditCode).size() != 0) {
             //之前申请过
             newEnterpriseDao.updateNewRegister(news);
         } else {
