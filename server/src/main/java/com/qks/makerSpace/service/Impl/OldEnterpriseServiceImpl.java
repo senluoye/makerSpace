@@ -209,16 +209,15 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         if (oldEnterpriseDao.exitMainPerson(creditCode) != null) {
             // 如果之前已经有信息存在 --->删除对应信息
-            if (oldEnterpriseDao.deleteOldMainPerson(oldEnterpriseDao.selectOldMainPerson(creditCode)) <= 0)
-                throw new ServiceException("删除MainPerson失败");
-            if (oldEnterpriseDao.deleteOldProject(oldEnterpriseDao.selectOldProject(creditCode)) <= 0)
-                throw new ServiceException("删除Project失败");
-            if (oldEnterpriseDao.deleteOldFunding(oldEnterpriseDao.selectOldFunding(creditCode)) <= 0)
-                throw new ServiceException("删除Funding失败");
-            if (oldEnterpriseDao.deleteOldShareholder(oldEnterpriseDao.selectOldShareholder(creditCode)) <= 0)
-                throw new ServiceException("删除Shareholder失败");
-            if (oldEnterpriseDao.deleteOldIntellectual(oldEnterpriseDao.selectOldIntellectual(creditCode)) <= 0)
-                throw new ServiceException("删除Intellectual失败");
+            try {
+                oldEnterpriseDao.deleteOldMainPerson(oldEnterpriseDao.selectOldMainPerson(creditCode));
+                oldEnterpriseDao.deleteOldProject(oldEnterpriseDao.selectOldProject(creditCode));
+                oldEnterpriseDao.deleteOldFunding(oldEnterpriseDao.selectOldFunding(creditCode));
+                oldEnterpriseDao.deleteOldShareholder(oldEnterpriseDao.selectOldShareholder(creditCode));
+                oldEnterpriseDao.deleteOldIntellectual(oldEnterpriseDao.selectOldIntellectual(creditCode));
+            } catch (Exception e) {
+                throw new ServiceException("填写失败");
+            }
         }
 
         //更新主表
@@ -250,6 +249,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         audit.setAuditId(creditCode);
         audit.setAdministratorAudit("未审核");
         audit.setLeadershipAudit("未审核");
+        audit.setDescribe("");
 
         if (oldEnterpriseDao.insertAudit(audit) <= 0)
             throw new ServiceException("信息插入失败:audit");

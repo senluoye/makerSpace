@@ -53,7 +53,7 @@ public class FormController {
      */
     @RequestMapping(value = "statistical/{creditCode}", method = RequestMethod.GET)
     private void getStatisticalForm(HttpServletResponse response, @PathVariable String creditCode) throws Exception {
-        formService.downLoadWord(response, formService.getDownLoadForm(creditCode) ,1);
+        formService.downLoadWord(response, formService.getDownLoadForm(creditCode));
     }
 
     /**
@@ -63,7 +63,12 @@ public class FormController {
      */
     @RequestMapping(value = "situation/{creditCode}", method = RequestMethod.GET)
     private void getSituationForm(HttpServletResponse response,@PathVariable String creditCode) throws Exception {
-        formService.downLoadWord(response, formService.getDownLoadForm(creditCode),2);
+        formService.downLoadWord(response, formService.getDownLoadForm(creditCode));
+    }
+
+    @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.GET)
+    private void getSpaceForm(HttpServletResponse response, @PathVariable String inApplyId) throws ServiceException, IllegalAccessException {
+        formService.spaceDownLoad(response, inApplyId);
     }
 
 }

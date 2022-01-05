@@ -210,6 +210,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         audit.setAuditId(creditCode);
         audit.setAdministratorAudit("未审核");
         audit.setLeadershipAudit("未审核");
+        audit.setDescribe("科技园");
 
         if (oldEnterpriseDao.insertAudit(audit) <= 0)
             throw new ServiceException("信息插入失败:audit");

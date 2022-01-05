@@ -3,10 +3,12 @@ package com.qks.makerSpace.service.Impl;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.SpaceDao;
+import com.qks.makerSpace.entity.database.Audit;
 import com.qks.makerSpace.entity.database.Space;
 import com.qks.makerSpace.entity.database.SpacePerson;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.SpaceService;
+import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,7 @@ public class SpaceServiceImpl implements SpaceService {
      */
     @Override
     public Map<String, Object> joinMakerSpace(JSONObject map, String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
         String inApplyId = UUID.randomUUID().toString();
 
         Space space = new Space(
@@ -62,7 +65,13 @@ public class SpaceServiceImpl implements SpaceService {
                 throw new ServiceException("加入众创空间失败");
         }
 
-        if (spaceDao.addProject(space) < 1)
+        Audit audit = new Audit();
+        audit.setAuditId(inApplyId);
+        audit.setAdministratorAudit("未审核");
+        audit.setLeadershipAudit("未审核");
+        audit.setDescribe("众创空间");
+
+        if (spaceDao.addProject(space) < 1 && spaceDao.addUserSpace(userId, inApplyId) < 1 && spaceDao.addAudit(audit) < 1)
             throw new ServiceException("加入众创空间失败");
 
         Map<String, Object> data = new HashMap<>();
@@ -73,10 +82,26 @@ public class SpaceServiceImpl implements SpaceService {
     /**
      * 退出众创空间
      * @param map
-     * @return
+     * @return Hashmap
      */
     @Override
-    public Map<String, Object> quitMakerSpace(JSONObject map) {
-        return null;
+    public Map<String, Object> quitMakerSpace(JSONObject map) throws ServiceException {
+        String inApplyId = map.getString("InApplyId");
+        String userId = spaceDao.getUserIdByInApplyId(inApplyId);
+        List<String> inApplyIdList = spaceDao.getInApplyIdByUserId(userId);
+
+        for (int i = 0; i < inApplyIdList.size(); i++) {
+            try {
+                // 先删除关于某一个用户所绑定的所有的Space和SpacePerson数据
+                spaceDao.quitSpace(inApplyIdList.get(i));
+
+                // 然后删除审核表里面的数据
+                spaceDao.deleteFromAuditByInApplyId(inApplyIdList.get(i));
+            } catch (Exception e) {
+                throw new ServiceException("退出众创空间失败");
+            }
+        }
+
+        return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }
 }

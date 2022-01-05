@@ -50,4 +50,27 @@ public class ChangeUtils {
         return null;
     }
 
+    public static  List<Map<String,Object>> objConvertListMap(Object obj) throws IllegalAccessException {
+        List<Map<String,Object>> result = new ArrayList<>();
+        if (obj instanceof List<?>){
+            for (Object o : (List<?>) obj) {
+                Map<String,Object> map = new HashMap<>(16);
+                Class<?> clazz = o.getClass();
+                for (Field field : clazz.getDeclaredFields()) {
+                    field.setAccessible(true);
+                    String key = field.getName();
+                    Object value = field.get(key);
+                    if (value == null){
+                        value = "";
+                    }
+                    map.put(key,value);
+                }
+                result.add(map);
+            }
+            return result;
+        }
+        return null;
+    }
+
+
 }

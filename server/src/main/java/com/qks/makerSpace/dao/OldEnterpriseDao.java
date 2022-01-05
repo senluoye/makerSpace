@@ -141,19 +141,19 @@ public interface OldEnterpriseDao {
 
     // 下面是已经填过表的
     @Delete("delete from old_mainperson where old_mainperson_id = #{id}")
-    Integer deleteOldMainPerson(String id);
+    void deleteOldMainPerson(String id);
 
     @Delete("delete from old_project where old_project_id = #{id}")
-    Integer deleteOldProject(String id);
+    void deleteOldProject(String id);
 
     @Delete("delete from old_intellectual where old_intellectual_id = #{id}")
-    Integer deleteOldIntellectual(String id);
+    void deleteOldIntellectual(String id);
 
     @Delete("delete from old_funding where funding_id = #{id}")
-    Integer deleteOldFunding(String id);
+    void deleteOldFunding(String id);
 
     @Delete("delete from old_shareholder where old_shareholder_id = #{id}")
-    Integer deleteOldShareholder(String id);
+    void deleteOldShareholder(String id);
 
     @Update("update audit set administrator_audit = #{administratorAudit}, leadership_audit = #{leadershipAudit} " +
             "where audit_id = #{auditId}")

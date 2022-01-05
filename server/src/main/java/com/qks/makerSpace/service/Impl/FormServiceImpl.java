@@ -2,10 +2,7 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.FormDao;
-import com.qks.makerSpace.entity.database.Form;
-import com.qks.makerSpace.entity.database.FormAwards;
-import com.qks.makerSpace.entity.database.FormEmployment;
-import com.qks.makerSpace.entity.database.FormHighEnterprise;
+import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
 import com.qks.makerSpace.util.ChangeUtils;
@@ -19,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FormServiceImpl implements FormService {
@@ -158,13 +156,35 @@ public class FormServiceImpl implements FormService {
      * @return
      */
     @Override
-    public void downLoadWord(HttpServletResponse response, Map<String, Object> map,int kind) throws ServiceException {
+    public void downLoadWord(HttpServletResponse response, Map<String, Object> map) throws ServiceException {
         try {
             String fileName = Calendar.getInstance().get(Calendar.YEAR) + "年度" + map.get("${teamName}").toString() + "统计表";
             response.setCharacterEncoding("utf-8");
             response.setContentType("application/x-download");
             response.setHeader("Content-disposition",String.format("attachment; filename=\"%s\"",fileName+".docx"));
-            WordChangeUtils.searchAndReplace(response.getOutputStream(),map,kind);
+            WordChangeUtils.searchAndReplace(response.getOutputStream(),map);
+        } catch (IOException e) {
+            throw new ServiceException("导出信息表失败");
+        }
+    }
+
+    /**
+     *
+     * @param response
+     * @param inApplyId
+     * @throws ServiceException
+     * @throws IllegalAccessException
+     */
+    @Override
+    public void spaceDownLoad(HttpServletResponse response, String inApplyId) throws ServiceException, IllegalAccessException {
+        Space space = formDao.selectSpace(inApplyId);
+        Map<String, Object> spaceMap = ChangeUtils.getObjectToMap(space);
+
+        List<SpacePerson> spacePeople = formDao.selectSpacePerson(inApplyId);
+        List<Map<String, Object>> mapList = ChangeUtils.objConvertListMap(spacePeople);
+
+        try {
+            WordChangeUtils.expor(response.getOutputStream(),spaceMap,mapList);
         } catch (IOException e) {
             throw new ServiceException("导出信息表失败");
         }

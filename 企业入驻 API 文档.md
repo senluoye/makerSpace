@@ -1438,7 +1438,7 @@ token 保存时间待定
 ```json
 {
     "data":{
-        "InApplyId":"<String>",					//众创空间企业唯一ID
+        "InApplyId":"<String>",					//众创空间申请表ID
     },
     "code":0,
     "msg":"success"
@@ -1449,7 +1449,9 @@ token 保存时间待定
 
 ## 众创空间退出
 
-**简要描述：**撤销所申请的众创空间场地
+**简要描述：**
+
+撤销所申请的众创空间场地（）
 
 **请求URL：**
 
@@ -1463,7 +1465,7 @@ token 保存时间待定
 
 ```json
 {
-    "InApplyId":"<String>"                  //众创空间企业唯一ID
+    "InApplyId":"<String>"                  //众创空间企业ID（不是唯一的，每次提交会有新的）
 }
 ```
 
@@ -1472,7 +1474,7 @@ token 保存时间待定
 ```json
 {
     "data":{
-        "InApplyId":"<String>",					//众创空间企业唯一ID
+        "InApplyId":"<String>",					//众创空间企业ID（不是唯一的，每次提交会有新的）
     },
     "code":0,
     "msg":"success"
@@ -1760,19 +1762,29 @@ token 保存时间待定
 
 
 
-## 导出科技园在孵企业情况表
+## 导出众创空间申请表
 
 **简要描述：**
 
-导出科技园在孵企业情况表
+导出众创空间申请表
 
 **请求URL：**
 
-- `/api/form/situation{creditCode}`
+- `/api/form/space/{inApplyId}`
 
 **请求方式：**
 
-- GET（带token）
+- GET
+
+**参数**：
+
+```json
+{
+    "data":{
+    	"inApplyId":"<String>",						//这里传众创空间申请表的id
+	}
+}
+```
 
 **返回值：**
 
@@ -1785,8 +1797,6 @@ token 保存时间待定
     "msg":"success"
 }
 ~~~
-
-
 
 
 
@@ -1872,7 +1882,7 @@ Audit（审核表）
 ~~~json
 {
     "data":[{
-        "inApplyId":"<String>",					// 众创空间唯一Id
+        "inApplyId":"<String>",					// 众创空间申请表Id
         "administratorAudit":"<boolean>",				// 管理员是否通过审核
         "Audit":"<String>",													//由 administratorAudit 生成
   		"createName": "<String>",			  // 项目/创意名称
@@ -1892,7 +1902,7 @@ Audit（审核表）
   		"describe": "<String>",                // 项目/创意概况
   		"help": "<String>"                  // 想获得的帮助
    	 },{
-        "inApplyId":"<String>"					// 众创空间唯一Id
+        "inApplyId":"<String>"					// 众创空间申请表Id
         "administratorAudit":"<boolean>"				// 管理员是否通过审核
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
@@ -2203,7 +2213,7 @@ Audit（审核表）
 ~~~json
 {
     "data":[{
-        "inApplyId":"<String>",					// 众创空间唯一Id
+        "inApplyId":"<String>",					// 众创空间申请表Id
         "administratorAudit":"<boolean>",		// 管理员是否通过审核
         "Audit":"<String>",						//由 administratorAudit 生成
   		"createName": "<String>",			  // 项目/创意名称
@@ -2248,7 +2258,7 @@ Audit（审核表）
 
 ```json
 {
-    "inApplyId":"<String>",									//统一社会信用代码（18位字符）或 组织机构代码
+    "inApplyId":"<String>",									//众创空间申请表id（不是唯一）
 }
 ```
 
