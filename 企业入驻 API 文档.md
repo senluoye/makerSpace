@@ -998,7 +998,7 @@ token 保存时间待定
     	"representPhone":"<String>",
     	"representEmail":"<String>",
     	"agent":"<String>",
-    	"agentPhone":"<String>",
+    	"agentPhone":"<String>1",
     	"agentEmail":"<String>"
 	},
     "picture":"File[]"											//这部分上传一个文件数组，包括名称预核准通知书、身份证复印件
@@ -1853,7 +1853,7 @@ Audit（审核表）
 }
 ~~~
 
-### 获取全部众创空间企业信息
+### 获取全部众创空间企业部分信息
 
 **简要描述：**
 
@@ -2184,7 +2184,51 @@ Audit（审核表）
 }   
 ~~~
 
+### 获取某一个众创空间申请
 
+**简要描述：**
+
+获取某一个众创空间申请
+
+**请求URL：**
+
+- `/api/admin/space/{inApplyId}`
+
+**请求方式：**
+
+- GET(带token)
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "inApplyId":"<String>",					// 众创空间唯一Id
+        "administratorAudit":"<boolean>",		// 管理员是否通过审核
+        "Audit":"<String>",						//由 administratorAudit 生成
+  		"createName": "<String>",			  // 项目/创意名称
+  		"applyTime": "<String>",            // 申请日期
+  		"teamNumber": "<String>",			  // 成员数量
+  		"Person": [{                         // 主要成员信息
+     		"personName": "<String>",			// 姓名
+      		"department": "<String>",			// 部门
+      		"major": "<String>",				// 专业方向
+      		"personPhone": "<String>",			// 手机号码
+      		"personQq": "<String>",				// QQ
+      		"personWechat": "<String>",			// 微信
+      		"note": "<String>"					// 备注
+    	},
+    	......
+  		],
+  		"describe": "<String>",                // 项目/创意概况
+  		"help": "<String>"                  // 想获得的帮助
+   	 }],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+### 
 
 ### 删除某一个众创空间申请
 

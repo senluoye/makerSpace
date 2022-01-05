@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -26,8 +27,8 @@ public class SpaceController {
      * @return
      */
     @RequestMapping(value = "space", method = RequestMethod.POST)
-    private Map<String, Object> joinMakerSpace(@RequestBody JSONObject map) throws ServiceException {
-        return spaceService.joinMakerSpace(map);
+    private Map<String, Object> joinMakerSpace(@RequestBody JSONObject map, HttpServletRequest httpServletRequest) throws ServiceException {
+        return spaceService.joinMakerSpace(map, httpServletRequest.getHeader("token"));
     }
 
 

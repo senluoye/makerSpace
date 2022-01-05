@@ -7,6 +7,6 @@ import java.util.Map;
 
 public interface SpaceService {
 
-    Map<String, Object> joinMakerSpace(JSONObject map) throws ServiceException;
+    Map<String, Object> joinMakerSpace(JSONObject map, String token) throws ServiceException;
     Map<String, Object> quitMakerSpace(JSONObject map) throws ServiceException;
 }

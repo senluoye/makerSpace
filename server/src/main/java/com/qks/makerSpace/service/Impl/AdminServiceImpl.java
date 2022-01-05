@@ -138,7 +138,10 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getSpaceById(String InApplyId) {
-        return MyResponseUtil.getResultMap("这部分没写（信息已经在”众创空间全部信息“处全部返回），如有需要请联系我", 0, "success");
+        Map<String, Object> data = new HashMap<>();
+
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     /**

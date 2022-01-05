@@ -28,7 +28,7 @@ public class SpaceServiceImpl implements SpaceService {
      * @throws ServiceException
      */
     @Override
-    public Map<String, Object> joinMakerSpace(JSONObject map) throws ServiceException {
+    public Map<String, Object> joinMakerSpace(JSONObject map, String token) throws ServiceException {
         String inApplyId = UUID.randomUUID().toString();
 
         Space space = new Space(
