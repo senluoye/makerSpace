@@ -11,7 +11,7 @@ public interface AdminService {
     Map<String, Object> getAllDetails() throws ServiceException;
     Map<String, Object> getNewTechnologyById(String id) throws ServiceException;
     Map<String, Object> getOldTechnologyById(String id) throws ServiceException;
-    Map<String, Object> getSpaceById(String id);
+    Map<String, Object> getSpaceById(String id) throws IllegalAccessException;
     Map<String, Object> getAllSpaceDetails();
     Map<String, Object> deleteByCreditCode(String id) throws ServiceException;
     Map<String, Object> deleteSpaceById(String id) throws ServiceException;
