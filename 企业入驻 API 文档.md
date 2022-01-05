@@ -1760,19 +1760,29 @@ token 保存时间待定
 
 
 
-## 导出科技园在孵企业情况表
+## 导出众创空间申请表
 
 **简要描述：**
 
-导出科技园在孵企业情况表
+导出众创空间申请表
 
 **请求URL：**
 
-- `/api/form/situation{creditCode}`
+- `/api/form/space/{inApplyId}`
 
 **请求方式：**
 
-- GET（带token）
+- GET
+
+**参数**：
+
+```json
+{
+    "data":{
+    	"inApplyId":"<String>",						//这里传统一社会信用代码或组织机构代码
+	}
+}
+```
 
 **返回值：**
 
@@ -1785,8 +1795,6 @@ token 保存时间待定
     "msg":"success"
 }
 ~~~
-
-
 
 
 

@@ -325,7 +325,7 @@ public class AdminServiceImpl implements AdminService {
             response.setCharacterEncoding("utf-8");
             response.setContentType("application/x-download");
             response.setHeader("Content-disposition",String.format("attachment; filename=\"%s\"",fileName+".docx"));
-            WordChangeUtils.searchAndReplace(response.getOutputStream(), map, 1);
+            WordChangeUtils.searchAndReplace(response.getOutputStream(), map);
         } catch (IOException e) {
             throw new ServiceException("导出信息表失败");
         }

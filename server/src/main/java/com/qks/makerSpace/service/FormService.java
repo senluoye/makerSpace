@@ -6,6 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 public interface FormService {
@@ -19,5 +20,7 @@ public interface FormService {
             MultipartFile[] contractFile,
             MultipartFile[] awardsFile) throws ServiceException, IOException;
     Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException;
-    void downLoadWord(HttpServletResponse response, Map<String, Object> map, int i) throws Exception;
+    void downLoadWord(HttpServletResponse response, Map<String, Object> map) throws Exception;
+
+    void spaceDownLoad(HttpServletResponse response, String inApplyId) throws ServiceException, IllegalAccessException;
 }

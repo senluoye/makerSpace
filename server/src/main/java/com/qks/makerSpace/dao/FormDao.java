@@ -66,4 +66,10 @@ public interface FormDao {
 
     @Insert("insert into form_awards(form_awards_id, awards_id, awards_file) VALUES (#{formAwardsId}, #{awardsId}, #{awardsFile})")
     Integer addAwardsFile(FormAwards formAwards);
+
+    @Select("select * from space where in_apply_id = #{inApplyId}")
+    Space selectSpace(String inApplyId);
+
+    @Select("select * from space_person where in_apply_id = #{inApplyId}")
+    List<SpacePerson> selectSpacePerson(String inApplyId);
 }
