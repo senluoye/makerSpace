@@ -28,8 +28,11 @@ public interface OldEnterpriseDao {
     @Select("select * from old where credit_code = #{creditCode}")
     List<Old> exit(String creditCode);
 
-    @Select("select * from old")
-    List<Old> getAllOld();
+    @Select("select * from old where credit_code = #{creditCode}")
+    List<Old> getAllOld(String creditCode);
+
+//    @Select("select * from old")
+//    List<Old> getAllOld();
 
     @Update("update old " +
             "set register_address = #{registerAddress}, license = #{license}, register_capital = #{registerCapital}," +

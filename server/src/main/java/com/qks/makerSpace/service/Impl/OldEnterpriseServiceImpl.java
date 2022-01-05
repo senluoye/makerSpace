@@ -57,17 +57,17 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      */
     @Override
     public Map<String, Object> getOldEnterprise(String token) {
-//        String userId = JWTUtils.parser(token).get("userId").toString();
-//        String creditCode = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        String creditCode = oldEnterpriseDao.selectCreditCodeByUserId(userId);
 
         List<Map<String, Object>> data = new ArrayList<>();
-        List<Old> oldList = oldEnterpriseDao.getAllOld();
+        List<Old> oldList = oldEnterpriseDao.getAllOld(creditCode);
 
         oldList.forEach(x -> {
             try {
                 data.add(ChangeUtils.getObjectToMap(x));
             } catch (IllegalAccessException e) {
-                System.out.println("??????" + e.getMessage());
+                System.out.println(e.getMessage());
             }
         });
 
@@ -86,6 +86,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             temp.put("oldFunding", oldFundings);
             temp.put("oldShareholder", oldShareholders);
             temp.put("oldIntellectual", oldIntellectuals);
+
             data.add(temp);
         });
 
