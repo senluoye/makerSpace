@@ -172,14 +172,16 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
         if(newEnterpriseDao.exitMainPerson(creditCode) != null) {
             // 如果之前已经有信息存在 --->删除对应信息
-            if (newEnterpriseDao.deleteNewMainPerson(newEnterpriseDao.selectNewMainPersonId(creditCode)) <= 0)
-                throw new ServiceException("删除MainPerson错误");
-            if (newEnterpriseDao.deleteNewProject(newEnterpriseDao.selectNewProject(creditCode)) <= 0)
-                throw new ServiceException("删除Project失败");
-            if (newEnterpriseDao.deleteNewShareholder(newEnterpriseDao.selectNewShareholder(creditCode)) <=0)
-                throw new ServiceException("删除Shareholder失败");
-            if (newEnterpriseDao.deleteNewIntellectual(newEnterpriseDao.selectNewIntellectual(creditCode)) <= 0)
-                throw new ServiceException("删除Intellectual失败");
+            try {
+                newEnterpriseDao.deleteNewMainPerson(newEnterpriseDao.selectNewMainPersonId(creditCode));
+                newEnterpriseDao.deleteNewProject(newEnterpriseDao.selectNewProject(creditCode));
+                newEnterpriseDao.deleteNewShareholder(newEnterpriseDao.selectNewShareholder(creditCode));
+                newEnterpriseDao.deleteNewIntellectual(newEnterpriseDao.selectNewIntellectual(creditCode));
+
+                newEnterpriseDao.deleteAuditByCreditCode(creditCode);
+            } catch (Exception e) {
+                throw new ServiceException("填写失败");
+            }
         }
 
         //更新主表

@@ -215,6 +215,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 oldEnterpriseDao.deleteOldFunding(oldEnterpriseDao.selectOldFunding(creditCode));
                 oldEnterpriseDao.deleteOldShareholder(oldEnterpriseDao.selectOldShareholder(creditCode));
                 oldEnterpriseDao.deleteOldIntellectual(oldEnterpriseDao.selectOldIntellectual(creditCode));
+
+                oldEnterpriseDao.deleteAuditByCreditCode(creditCode);
             } catch (Exception e) {
                 throw new ServiceException("填写失败");
             }
@@ -249,7 +251,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         audit.setAuditId(creditCode);
         audit.setAdministratorAudit("未审核");
         audit.setLeadershipAudit("未审核");
-        audit.setDescribe("");
+        audit.setDescribe("科技园");
 
         if (oldEnterpriseDao.insertAudit(audit) <= 0)
             throw new ServiceException("信息插入失败:audit");

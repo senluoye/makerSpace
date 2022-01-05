@@ -144,6 +144,9 @@ public interface NewEnterpriseDao {
     @Select("select * from audit where audit_id = #{creditCode}")
     List<Audit> getAudit(String creditCode);
 
+    @Delete("delete from audit where audit_id = #{creditCode}")
+    void deleteAuditByCreditCode(String creditCode);
+
 //    @Update("update new_demand " +
 //            "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
 //            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +

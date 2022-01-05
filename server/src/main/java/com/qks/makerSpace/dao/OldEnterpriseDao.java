@@ -23,7 +23,7 @@ public interface OldEnterpriseDao {
             "represent_phone = #{representPhone}, represent_email = #{representEmail}, agent = #{agent}, agent_phone = #{agentPhone}, " +
             "agent_email = #{agentEmail} " +
             "where credit_code = #{creditCode}")
-    Integer updateOldRegister(Old old);
+    void updateOldRegister(Old old);
 
     @Select("select * from old where credit_code = #{creditCode}")
     List<Old> exit(String creditCode);
@@ -132,6 +132,9 @@ public interface OldEnterpriseDao {
     @Insert("insert into audit(audit_id, administrator_audit, leadership_audit) " +
             "values (#{auditId}, #{administratorAudit}, #{leadershipAudit})")
     Integer insertAudit(Audit audit);
+
+    @Delete("delete from audit where audit_id = #{creditCode}")
+    void deleteAuditByCreditCode(String creditCode);
 
     @Select("select * from form where credit_code = #{creditCode}")
     List<FormDetails> getAllFormDetails(String creditCode);
