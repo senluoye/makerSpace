@@ -35,7 +35,7 @@ public interface AdminDao {
     List<AllTechnology> getAllNewDetails();
 
     @Select("select in_apply_id, create_name, apply_time, team_number, " +
-            "`describe`, help, administrator_audit, leadership_audit " +
+            "`describe`, help " +
             "from space")
     List<Space> getAllSpaceDetails();
 

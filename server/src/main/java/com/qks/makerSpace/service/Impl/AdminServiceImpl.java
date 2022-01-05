@@ -34,7 +34,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getAllDetails() {
         List<AllTechnology> dataOne = adminDao.getAllOldDetails();
-
+        System.out.println(dataOne.toString());
         Iterator<AllTechnology> iterator_one = dataOne.iterator();
         while (iterator_one.hasNext()) {
             AllTechnology allTechnology = iterator_one.next();
@@ -55,7 +55,7 @@ public class AdminServiceImpl implements AdminService {
         Iterator<AllTechnology> iterator = data.iterator();
         while (iterator.hasNext()) {
             AllTechnology allTechnology = iterator.next();
-            if(allTechnology.isAdministratorAudit() == true) {
+            if(allTechnology.isAdministratorAudit()) {
                 allTechnology.setAudit("已通过");
             } else allTechnology.setAudit("未通过");
         }
