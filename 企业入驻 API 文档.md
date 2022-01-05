@@ -998,7 +998,7 @@ token 保存时间待定
     	"representPhone":"<String>",
     	"representEmail":"<String>",
     	"agent":"<String>",
-    	"agentPhone":"<String>1",
+    	"agentPhone":"<String>",
     	"agentEmail":"<String>"
 	},
     "picture":"File[]"											//这部分上传一个文件数组，包括名称预核准通知书、身份证复印件
@@ -1861,7 +1861,7 @@ Audit（审核表）
 }
 ~~~
 
-### 获取全部众创空间企业部分信息
+### 获取全部众创空间企业信息
 
 **简要描述：**
 

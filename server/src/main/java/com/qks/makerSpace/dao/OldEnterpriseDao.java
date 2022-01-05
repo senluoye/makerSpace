@@ -26,10 +26,13 @@ public interface OldEnterpriseDao {
     Integer updateOldRegister(Old old);
 
     @Select("select * from old where credit_code = #{creditCode}")
-    Old exit(String creditCode);
+    List<Old> exit(String creditCode);
 
-    @Select("select * from old")
-    List<Old> getAllOld();
+    @Select("select * from old where credit_code = #{creditCode}")
+    List<Old> getAllOld(String creditCode);
+
+//    @Select("select * from old")
+//    List<Old> getAllOld();
 
     @Update("update old " +
             "set register_address = #{registerAddress}, license = #{license}, register_capital = #{registerCapital}," +
@@ -39,8 +42,8 @@ public interface OldEnterpriseDao {
             "  main_business = #{mainBusiness}, way = #{way}, business = #{business}, " +
             "  old_shareholder_id = #{oldShareholderId}, old_mainperson_id = #{oldMainpersonId}, " +
             "  old_project_id = #{oldProjectId}, old_intellectual_id = #{oldIntellectualId}, " +
-            "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, suggestion = #{suggestion}, " +
-            "  note = #{note}, submit_time = #{submitTime} " +
+            "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, " +
+            "  submit_time = #{submitTime} " +
             "  where credit_code = #{oldId}")
     Integer updateOld(Old old);
 
@@ -84,15 +87,6 @@ public interface OldEnterpriseDao {
 
     @Select("select * from old_demand where old_demand_id = #{oldDemandId}")
     List<OldDemand> selectDemandByOldDemandId(String oldDemandId);
-
-//    @Update("update old_demand " +
-//            "set lease_area = #{leaseArea}, position = #{position}, lease = #{lease}, " +
-//            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, others = #{others} " +
-//            "where old_demand_id = #{oldDemandId}")
-//    Integer updateOldDemand(OldDemand oldDemand, String oldDemandId);
-
-//    @Select("select old_demand_id from old where credit_code = #{creditCode}")
-//    String selectOldDemandIdByCreditCode(String creditCode);
 
     @Update("update old set old_demand_id = #{oldDemandId} where credit_code = #{creditCode}")
     Integer updateOldDemandId(String creditCode, String oldDemandId);

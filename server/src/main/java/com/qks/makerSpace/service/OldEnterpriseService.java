@@ -11,7 +11,7 @@ import java.util.Map;
 
 public interface OldEnterpriseService {
 
-    Map<String, Object> getOldEnterprise();
+    Map<String, Object> getOldEnterprise(String token);
     Map<String, Object> oldRegister(JSONObject map) throws ServiceException;
     Map<String, Object> updateOldEnterprise(String token, String map, MultipartFile[] files) throws Exception;
     Map<String, Object> oldEnterpriseDemand(JSONObject map) throws ServiceException;

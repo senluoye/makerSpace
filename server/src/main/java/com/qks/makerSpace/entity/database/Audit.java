@@ -6,8 +6,8 @@ import lombok.Data;
 public class Audit {
 
     private String auditId;
-    private boolean administratorAudit;
-    private boolean leadershipAudit;
+    private String administratorAudit;
+    private String leadershipAudit;
     private String describe;
 
 }

@@ -27,8 +27,8 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "oldEnterprise", method = RequestMethod.GET)
-    private Map<String, Object> getOldEnterprise() {
-        return oldEnterpriseService.getOldEnterprise();
+    private Map<String, Object> getOldEnterprise(HttpServletRequest httpServletRequest) {
+        return oldEnterpriseService.getOldEnterprise(httpServletRequest.getHeader("token"));
     }
 
     /**
@@ -40,6 +40,19 @@ public class OldEnterpriseController {
     private Map<String, Object> oldRegister(@RequestBody JSONObject map) throws ServiceException {
         return oldEnterpriseService.oldRegister(map);
     }
+
+    /**
+     * 入园申请表填写
+     * @param str
+     * @return
+     */
+    @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
+    private Map<String, Object> updateOldEnterprise(HttpServletRequest httpServletRequest,
+                                                    @RequestPart("map") String str,
+                                                    @RequestPart("file") MultipartFile[] file) throws Exception {
+        return oldEnterpriseService.updateOldEnterprise(httpServletRequest.getHeader("token"), str, file);
+    }
+
 
     /**
      * 续约
@@ -65,17 +78,7 @@ public class OldEnterpriseController {
         return oldEnterpriseService.oldEnterpriseDemand(map);
     }
 
-    /**
-     * 入园申请表填写
-     * @param str
-     * @return
-     */
-    @RequestMapping(value = "oldEnterprise", method = RequestMethod.PUT)
-    private Map<String, Object> updateOldEnterprise(HttpServletRequest httpServletRequest,
-                                                    @RequestPart("map") String str,
-                                                    @RequestPart("file") MultipartFile[] file) throws Exception {
-        return oldEnterpriseService.updateOldEnterprise(httpServletRequest.getHeader("token"), str, file);
-    }
+
 
     /**
      * 获取某个企业的所有季度报表

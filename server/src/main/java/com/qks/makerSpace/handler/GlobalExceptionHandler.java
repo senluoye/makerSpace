@@ -32,7 +32,7 @@ public class GlobalExceptionHandler {
         Map<String, Object> modelMap = new HashMap<>();
         modelMap.put("data", null);
         modelMap.put("code", -1);
-        modelMap.put("msg", "数据处理失败");
+        modelMap.put("msg", e.getMessage());
 
         return modelMap;
     }

@@ -41,8 +41,10 @@ public class RegisterServiceImpl implements RegisterService {
         user.setPassword(password);
         user.setEmail(email);
 
-        if (registerDao.getUserByName(map.getString("name")) != null)
-            throw new ServiceException("用户已存在");
+        User user1 = registerDao.getUserByName(map.getString("name"));
+        if (user1 != null) {
+            throw new ServiceException("用户名已存在");
+        }
 
         if (registerDao.addNewUser(user) < 1 && registerDao.updateUserCompany(userId) < 1)
             throw new ServiceException("注册失败");
