@@ -233,48 +233,48 @@ token 保存时间待定
 
 > 根据入园申请表填写
 
-|       字段名        |    类型    |                             说名                             |
-| :-----------------: | :--------: | :----------------------------------------------------------: |
-|       old_id        |   String   |                          old表主键                           |
-|     credit_code     |   String   |                 统一社会信用代码（18位字符）                 |
-|  organization_code  |   String   |                         组织机构代码                         |
-|      password       |   String   |                         企业注册密码                         |
-|        name         |   String   |                       申请入驻企业名称                       |
-|      represent      |   String   |                           法人代表                           |
-|   represent_phone   |   String   |                       法人代表联系电话                       |
-|   represent_email   |   String   |                       法人代表邮箱地址                       |
-|        agent        |   String   |                            经办人                            |
-|     agent_phone     |   String   |                        经办人联系电话                        |
-|     agent_email     |   String   |                        经办人邮箱地址                        |
-|  register_address   |   String   |                           注册地址                           |
-|       license       | MediumBolb |                       新的营业执照上传                       |
-|  register_capital   |   String   |                       注册资本（万元）                       |
-|    real_address     |   String   |                         实际经营地址                         |
-|    real_capital     |   String   |                           实收资本                           |
-|     last_income     |   String   |                        上年度经营收入                        |
-|      last_tax       |   String   |                          上年度利税                          |
-|      employees      |   String   |                           员工人数                           |
-|    origin_number    |   String   |                         初始入园人数                         |
-|      set_date       | Timestamp  |                           成立日期                           |
-|       nature        |   String   |                           企业性质                           |
-|     certificate     | MediumBolb |          教师需要上传教师资格证/学生需要上传学生证           |
-|      involved       |   String   |                           所属行业                           |
-|    main_business    |   String   |                           主营业务                           |
-|         way         |   String   |                           入园方式                           |
-|      business       |   String   |                           入园业务                           |
-|    old_demand_id    |   String   |         园区场地租赁需求   -->到 oldDemand 表的外键          |
-| old_shareholder_id  |   String   |           股东构成  -->到 oldSharehoolder 表的外键           |
-|  old_mainperson_id  |   String   |          主要人员介绍  -->到 oldMainPerson表的外键           |
-|   old_project_id    |   String   |       入园项目简要介绍和分析  -->到 oldProject表的外键       |
-| old_intellectual_id |   String   |         知识产权情况  -->到 oldIntellectual表的外键          |
-|   old_funding_id    |   String   |    承担财政资金资助项目及获奖情况  -->到 funding表的外键     |
-|     cooperation     |   String   |                     以往与桂电的合作情况                     |
-|     suggestion      |   String   |                          科技园意见                          |
-|        note         |   String   |                             备注                             |
-|        state        |   String   | 授权状态（初始为 null，待审核为 0，审核不通过为 1，审核通过为 2） |
-|     submit_time     |   String   |                           提交时间                           |
-|        room         |   String   |                            房间号                            |
-|     outApplyId      |   String   |           科技园退租申请书 -->到 OutApply 表的外键           |
+|       字段名        |    类型    |                         说名                          |
+| :-----------------: | :--------: | :---------------------------------------------------: |
+|       old_id        |   String   |                       old表主键                       |
+|     credit_code     |   String   |             统一社会信用代码（18位字符）              |
+|  organization_code  |   String   |                     组织机构代码                      |
+|      password       |   String   |                     企业注册密码                      |
+|        name         |   String   |                   申请入驻企业名称                    |
+|      represent      |   String   |                       法人代表                        |
+|   represent_phone   |   String   |                   法人代表联系电话                    |
+|   represent_email   |   String   |                   法人代表邮箱地址                    |
+|        agent        |   String   |                        经办人                         |
+|     agent_phone     |   String   |                    经办人联系电话                     |
+|     agent_email     |   String   |                    经办人邮箱地址                     |
+|  register_address   |   String   |                       注册地址                        |
+|       license       | MediumBolb |                   新的营业执照上传                    |
+|  register_capital   |   String   |                   注册资本（万元）                    |
+|    real_address     |   String   |                     实际经营地址                      |
+|    real_capital     |   String   |                       实收资本                        |
+|     last_income     |   String   |                    上年度经营收入                     |
+|      last_tax       |   String   |                      上年度利税                       |
+|      employees      |   String   |                       员工人数                        |
+|    origin_number    |   String   |                     初始入园人数                      |
+|      set_date       | Timestamp  |                       成立日期                        |
+|       nature        |   String   |                       企业性质                        |
+|     certificate     | MediumBolb |       教师需要上传教师资格证/学生需要上传学生证       |
+|      involved       |   String   |                       所属行业                        |
+|    main_business    |   String   |                       主营业务                        |
+|         way         |   String   |                       入园方式                        |
+|      business       |   String   |                       入园业务                        |
+|    old_demand_id    |   String   |      园区场地租赁需求   -->到 oldDemand 表的外键      |
+| old_shareholder_id  |   String   |       股东构成  -->到 oldSharehoolder 表的外键        |
+|  old_mainperson_id  |   String   |       主要人员介绍  -->到 oldMainPerson表的外键       |
+|   old_project_id    |   String   |   入园项目简要介绍和分析  -->到 oldProject表的外键    |
+| old_intellectual_id |   String   |      知识产权情况  -->到 oldIntellectual表的外键      |
+|   old_funding_id    |   String   | 承担财政资金资助项目及获奖情况  -->到 funding表的外键 |
+|     cooperation     |   String   |                 以往与桂电的合作情况                  |
+|     suggestion      |   String   |                      科技园意见                       |
+|        note         |   String   |                         备注                          |
+|        state        |   String   | 授权状态（初始为 null，待审核，审核不通过，审核通过） |
+|     submit_time     |   String   |                       提交时间                        |
+|        room         |   String   |                        房间号                         |
+|     outApplyId      |   String   |       科技园退租申请书 -->到 OutApply 表的外键        |
 
 ##### 表名：old_demand （园区场地租赁需求）
 
@@ -1841,8 +1841,7 @@ Audit（审核表）
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "administratorAudit":"<boolean>",								//领导审核状态
-        "Audit":"<String>",													//由 administratorAudit 生成
+        "administratorAudit":"<String>",								//领导审核状态
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },{
@@ -1852,7 +1851,7 @@ Audit（审核表）
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "administratorAudit":"<boolean>",								//领导审核状态
+        "administratorAudit":"<String>",								//领导审核状态
         "floor":"<String>" 												//楼层需求
         "position":"<String>" 											// 位置需求
     },

@@ -12,11 +12,9 @@ public class AllTechnology {
     private String represent;
     private String representPhone;
     private String representEmail;
-    private boolean administratorAudit;
-    private String Audit;
-    private String state;
+    private String administratorAudit;
+//    private String state;
     private String position;
     private String floor;
-    private String describe;
-
+//    private String describe;
 }

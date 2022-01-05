@@ -111,6 +111,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         oldDemand.setId(id);
         oldDemand.setOldDemandId(UUID.randomUUID().toString());
         oldDemand.setTime(submitTime);
+        System.out.println(oldDemand.toString());
+
         if (oldEnterpriseDao.addOldDemand(oldDemand) < 1 ||
                 oldEnterpriseDao.updateOldDemandId(creditCode, oldDemand.getOldDemandId()) < 1)
             throw new ServiceException("插入数据失败:addOldDemand");
