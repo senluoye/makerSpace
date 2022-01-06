@@ -9,16 +9,13 @@ import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
-import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.tree.TreeNode;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class FormServiceImpl implements FormService {
@@ -97,7 +94,6 @@ public class FormServiceImpl implements FormService {
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
 
-<<<<<<< HEAD
         if (mediumFile.getBytes().length != 0) {
             if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
                 throw new ServiceException("填报数据失败:mediumFile");
@@ -107,9 +103,8 @@ public class FormServiceImpl implements FormService {
             if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
                 throw new ServiceException("填报数据失败:headerFile");
         }
-=======
         if (form.getMediumSized().equals("是")) {
-            if (mediumFile.getBytes() != null) {
+            if (mediumFile.getBytes().length != 0) {
                 if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
                     throw new ServiceException("填报数据失败:mediumFile");
             } else {
@@ -117,10 +112,8 @@ public class FormServiceImpl implements FormService {
             }
         }
 
->>>>>>> 2c3b0a6e764070627789fbcb684e4e5d02b2a542
-
         if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
-            if (headerFile.getBytes() != null) {
+            if (headerFile.getBytes().length != 0) {
                 if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
                     throw new ServiceException("填报数据失败:headerFile");
             } else {
@@ -128,7 +121,7 @@ public class FormServiceImpl implements FormService {
             }
         }
 
-        if (form.getEmployment() != "0") {
+        if (!Objects.equals(form.getEmployment(), "0")) {
             if (contractFile.length != 0 && contractFile.length != Integer.valueOf(form.getEmployment())) {
                 for (MultipartFile multipartFile : contractFile) {
                     FormEmployment formEmployment = new FormEmployment();
@@ -145,7 +138,7 @@ public class FormServiceImpl implements FormService {
         }
 
 
-        if (form.getTotalAwards() != "0") {
+        if (!Objects.equals(form.getTotalAwards(), "0")) {
             if (awardsFile.length != 0 && awardsFile.length > Integer.valueOf(form.getTotalAwards())) {
                 for (MultipartFile multipartFile : awardsFile) {
                     FormAwards formAwards = new FormAwards();
