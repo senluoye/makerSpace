@@ -23,7 +23,6 @@ public class FormController {
 
     /**
      * 填写科技园季度报表
-     * @param
      * @return
      */
     @RequestMapping(value = "technology", method = RequestMethod.POST)

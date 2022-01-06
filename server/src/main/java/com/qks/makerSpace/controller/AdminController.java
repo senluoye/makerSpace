@@ -39,7 +39,6 @@ public class AdminController {
 
     /**
      * 获取某一个旧企业入园申请
-     * @param String
      * @return HashMap
      */
     @RequestMapping(value = "oldTechnology/{creditCode}", method = RequestMethod.GET)
@@ -49,7 +48,6 @@ public class AdminController {
 
     /**
      * 获取某一个新企业入园申请
-     * @param String
      * @return HashMap
      */
     @RequestMapping(value = "newTechnology/{creditCode}", method = RequestMethod.GET)
@@ -59,7 +57,7 @@ public class AdminController {
 
     /**
      * 删除某一个企业入园申请
-     * @return
+     * @return Hashmap
      */
     @RequestMapping(value = "technology", method = RequestMethod.DELETE)
     private Map<String, Object> deleteOldByCreditCode(@RequestBody JSONObject map) throws ServiceException {
@@ -70,7 +68,6 @@ public class AdminController {
 
     /**
      * 获取某一个企业众创空间申请
-     * @param String
      * @return HashMap
      */
     @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.GET)
@@ -125,9 +122,7 @@ public class AdminController {
 
     /**
      * 获取某个企业的所有季度报表
-     * @param map
-     * @return
-     * @throws ServiceException
+     * @return Hashmap
      */
     @RequestMapping(value = "form/technology", method = RequestMethod.POST)
     private Map<String, Object> getTechnologyForm(@RequestBody JSONObject map) throws ServiceException {
@@ -136,7 +131,6 @@ public class AdminController {
 
     /**
      * 获取导出表的信息
-     * @param
      */
     @RequestMapping(value = "/form/situation", method = RequestMethod.GET)
     private void getStatisticalForm(HttpServletResponse response) throws Exception {
