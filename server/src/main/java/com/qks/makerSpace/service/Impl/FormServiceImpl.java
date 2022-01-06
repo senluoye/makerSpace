@@ -95,29 +95,38 @@ public class FormServiceImpl implements FormService {
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
 
-        if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
-            throw new ServiceException("填报数据失败:mediumFile");
-
-        if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
-            throw new ServiceException("填报数据失败:headerFile");
-
-        for (MultipartFile multipartFile : contractFile) {
-            FormEmployment formEmployment = new FormEmployment();
-            formEmployment.setFormEmploymentId(employmentId);
-            formEmployment.setEmploymentId(UUID.randomUUID().toString());
-            formEmployment.setContractFile(multipartFile.getBytes());
-
-            if (formDao.addContractFile(formEmployment) < 1)
-                throw new ServiceException("填报数据失败:contractFile");
+        if (mediumFile.getBytes() != null) {
+            if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
+                throw new ServiceException("填报数据失败:mediumFile");
         }
 
-        for (MultipartFile multipartFile : awardsFile) {
-            FormAwards formAwards = new FormAwards();
-            formAwards.setAwardsId(awardsId);
-            formAwards.setFormAwardsId(UUID.randomUUID().toString());
-            formAwards.setAwardsFile(multipartFile.getBytes());
-            if (formDao.addAwardsFile(formAwards) < 1)
-                throw new ServiceException("填报数据失败:awardsFile");
+        if (headerFile.getBytes() != null) {
+            if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
+                throw new ServiceException("填报数据失败:headerFile");
+        }
+
+        if (contractFile.length != 0) {
+            for (MultipartFile multipartFile : contractFile) {
+                FormEmployment formEmployment = new FormEmployment();
+                formEmployment.setFormEmploymentId(employmentId);
+                formEmployment.setEmploymentId(UUID.randomUUID().toString());
+                formEmployment.setContractFile(multipartFile.getBytes());
+
+                if (formDao.addContractFile(formEmployment) < 1)
+                    throw new ServiceException("填报数据失败:contractFile");
+            }
+        }
+
+
+        if (awardsFile.length != 0) {
+            for (MultipartFile multipartFile : awardsFile) {
+                FormAwards formAwards = new FormAwards();
+                formAwards.setAwardsId(awardsId);
+                formAwards.setFormAwardsId(UUID.randomUUID().toString());
+                formAwards.setAwardsFile(multipartFile.getBytes());
+                if (formDao.addAwardsFile(formAwards) < 1)
+                    throw new ServiceException("填报数据失败:awardsFile");
+            }
         }
 
 
