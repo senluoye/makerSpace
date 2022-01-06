@@ -2213,11 +2213,10 @@ Audit（审核表）
     "data":[{
         "inApplyId":"<String>",					// 众创空间申请表Id
         "administratorAudit":"<boolean>",		// 管理员是否通过审核
-        "Audit":"<String>",						//由 administratorAudit 生成
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量
-  		"Person": [{                         // 主要成员信息
+  		"person": [{                         // 主要成员信息
      		"personName": "<String>",			// 姓名
       		"department": "<String>",			// 部门
       		"major": "<String>",				// 专业方向

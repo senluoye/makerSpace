@@ -87,6 +87,9 @@ public interface AdminDao {
     @Select("select * from space where in_apply_id = #{id}")
     Space getSpaceById(String id);
 
+    @Select("select * from space_person where in_apply_id = #{inApplyId}")
+    List<SpacePerson> getPersonListByInApplyId(String inApplyId);
+
     @Delete("delete space, space_person " +
             "from space, space_person " +
             "where space.in_apply_id = space_person.in_apply_id " +

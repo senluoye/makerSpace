@@ -124,10 +124,15 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getSpaceById(String InApplyId) throws IllegalAccessException {
-        Map<String, Object> data = new HashMap<>();
-        Space space = adminDao.getSpaceById(InApplyId);
-        data = ChangeUtils.getObjectToMap(space);
+    public Map<String, Object> getSpaceById(String inApplyId) throws IllegalAccessException {
+        Space space = adminDao.getSpaceById(inApplyId);
+        Map<String, Object> data = ChangeUtils.getObjectToMap(space);
+        List<SpacePerson> spacePersons = adminDao.getPersonListByInApplyId(inApplyId);
+        Audit audit = adminDao.getAuditById(inApplyId);
+        String administratorAudit = audit.getAdministratorAudit();
+
+        data.put("person", spacePersons);
+        data.put("administratorAudit", administratorAudit);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
