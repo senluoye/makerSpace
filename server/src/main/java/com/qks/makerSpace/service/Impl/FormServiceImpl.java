@@ -95,12 +95,12 @@ public class FormServiceImpl implements FormService {
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
 
-        if (mediumFile.getBytes() != null) {
+        if (mediumFile.getBytes().length != 0) {
             if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
                 throw new ServiceException("填报数据失败:mediumFile");
         }
 
-        if (headerFile.getBytes() != null) {
+        if (headerFile.getBytes().length != 0) {
             if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
                 throw new ServiceException("填报数据失败:headerFile");
         }
