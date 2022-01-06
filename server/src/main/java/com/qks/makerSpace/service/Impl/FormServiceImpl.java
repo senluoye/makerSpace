@@ -9,10 +9,12 @@ import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.tree.TreeNode;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -50,8 +52,8 @@ public class FormServiceImpl implements FormService {
                                                  MultipartFile[] awardsFile) throws ServiceException, IOException {
         String userId = JWTUtils.parser(token).get("userId").toString();
 
-        if (mediumFile == null || highEnterpriseFile == null || contractFile == null || awardsFile == null)
-            throw new ServiceException("文件缺失");
+//        if (mediumFile == null || highEnterpriseFile == null || contractFile == null || awardsFile == null)
+//            throw new ServiceException("文件缺失");
 
         if (formDao.getCompanyByUserId(userId) == null)
             throw new ServiceException("请先填写入驻申请");
@@ -95,39 +97,57 @@ public class FormServiceImpl implements FormService {
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
 
-        if (mediumFile.getBytes() != null) {
-            if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
-                throw new ServiceException("填报数据失败:mediumFile");
-        }
-
-        if (headerFile.getBytes() != null) {
-            if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
-                throw new ServiceException("填报数据失败:headerFile");
-        }
-
-        if (contractFile.length != 0) {
-            for (MultipartFile multipartFile : contractFile) {
-                FormEmployment formEmployment = new FormEmployment();
-                formEmployment.setFormEmploymentId(employmentId);
-                formEmployment.setEmploymentId(UUID.randomUUID().toString());
-                formEmployment.setContractFile(multipartFile.getBytes());
-
-                if (formDao.addContractFile(formEmployment) < 1)
-                    throw new ServiceException("填报数据失败:contractFile");
+        if (form.getMediumSized().equals("是")) {
+            if (mediumFile.getBytes() != null) {
+                if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
+                    throw new ServiceException("填报数据失败:mediumFile");
+            } else {
+                throw new ServiceException("请供科技型中小企业获批截屏");
             }
         }
 
 
-        if (awardsFile.length != 0) {
-            for (MultipartFile multipartFile : awardsFile) {
-                FormAwards formAwards = new FormAwards();
-                formAwards.setAwardsId(awardsId);
-                formAwards.setFormAwardsId(UUID.randomUUID().toString());
-                formAwards.setAwardsFile(multipartFile.getBytes());
-                if (formDao.addAwardsFile(formAwards) < 1)
-                    throw new ServiceException("填报数据失败:awardsFile");
+        if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
+            if (headerFile.getBytes() != null) {
+                if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
+                    throw new ServiceException("填报数据失败:headerFile");
+            } else {
+                throw new ServiceException("大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件");
             }
         }
+
+        if (form.getEmployment() != "0") {
+            if (contractFile.length != 0 && contractFile.length != Integer.valueOf(form.getEmployment())) {
+                for (MultipartFile multipartFile : contractFile) {
+                    FormEmployment formEmployment = new FormEmployment();
+                    formEmployment.setFormEmploymentId(employmentId);
+                    formEmployment.setEmploymentId(UUID.randomUUID().toString());
+                    formEmployment.setContractFile(multipartFile.getBytes());
+
+                    if (formDao.addContractFile(formEmployment) < 1)
+                        throw new ServiceException("填报数据失败:contractFile");
+                }
+            } else {
+                throw new ServiceException("请提交对应数量的入职合同");
+            }
+        }
+
+
+        if (form.getTotalAwards() != "0") {
+            if (awardsFile.length != 0 && awardsFile.length > Integer.valueOf(form.getTotalAwards())) {
+                for (MultipartFile multipartFile : awardsFile) {
+                    FormAwards formAwards = new FormAwards();
+                    formAwards.setAwardsId(awardsId);
+                    formAwards.setFormAwardsId(UUID.randomUUID().toString());
+                    formAwards.setAwardsFile(multipartFile.getBytes());
+                    if (formDao.addAwardsFile(formAwards) < 1)
+                        throw new ServiceException("填报数据失败:awardsFile");
+                }
+            } else {
+                throw new ServiceException("请提供对应数量的证书复印或扫描件");
+            }
+        }
+
 
 
 
