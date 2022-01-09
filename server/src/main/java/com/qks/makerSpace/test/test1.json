@@ -2,7 +2,7 @@
     "map":{
       "time":"<String>",
       "teamName":"<String>",
-      "creditCode":"<String>",
+      "creditCode":"12345",
       "registerTime":"<String>",
       "registerCapital":"<String>",
       "registerKind":"<String>",

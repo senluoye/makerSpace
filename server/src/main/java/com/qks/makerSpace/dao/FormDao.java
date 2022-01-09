@@ -77,31 +77,21 @@ Space selectSpace(String inApplyId);
     List<SpacePerson> selectSpacePerson(String inApplyId);
 
     @Select("select old.credit_code, old.name, old.represent, " +
-            "old.represent_email, old.represent_phone, form.get_time " +
-            "from old, form " +
-            "where form.get_time = (" +
-            "   select max(temp.get_time) " +
-            "   from (" +
-            "       select * " +
-            "       from form " +
-            "       order by get_time desc" +
+            "old.represent_phone, old.represent_email, temp.get_time " +
+            "from old, (" +
+            "   select max(get_time) get_time, credit_code " +
+            "   from form group by credit_code" +
             "   ) temp " +
-            "   group by temp.credit_code" +
-            ")")
+            "where old.credit_code = temp.credit_code;")
     List<AllForm> getOldForm();
 
     @Select("select new.credit_code, new.name, new.represent, " +
-            "new.represent_email, new.represent_phone, form.get_time " +
-            "from new, form " +
-            "where form.get_time = (" +
-            "   select max(temp.get_time) " +
-            "   from (" +
-            "       select * " +
-            "       from form " +
-            "       order by get_time desc" +
+            "new.represent_phone, new.represent_email, temp.get_time " +
+            "from new, (" +
+            "   select max(get_time) get_time, credit_code " +
+            "   from form group by credit_code" +
             "   ) temp " +
-            "   group by credit_code" +
-            ")")
+            "where new.credit_code = temp.credit_code;")
     List<AllForm> getNewForm();
 
     @Select("select old.credit_code, old.name, old.represent, " +
