@@ -1614,8 +1614,7 @@ token 保存时间待定
 
 ```json
 {
-    "data":{
-        "map":{
+	"map":{
             "time":"<String>",						// 季度(值为年份加月，例如2021/3表示第一季度)
             "teamName":"<String>",            //企业名称
             "creditCode":"<String>",					//统一社会信用代码或组织机构代码
@@ -1692,13 +1691,12 @@ token 保存时间待定
             "productExpenditure":"<String>",					//科技活动经费支出总额---->新产品开发经费支出
             "governmentGrant":"<String>",								//科技活动经费支出总额---->政府拨款
             "selfRaised":"<String>"										//科技活动经费支出总额---->企业自筹
-        },
     },
-    "mediumFile":"<File>",											//供科技型中小企业获批截屏 
-    "highEnterpriseFile":"<File>",									//高企证书
+    "mediumFile":"<File>",					//供科技型中小企业获批截屏 
+    "highEnterpriseFile":"<File>",			//高企证书
     "headerFile":"<File>",					//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
-    "contractFile":"<File>",										//入职合同（多个）
-    "awardsFile":"<File>"											//当年参赛获奖情况（多个）
+    "contractFile":"<File>",				//接纳应届毕业生就业人员入职合同（多个）
+    "awardsFile":"<File>"					//当年参赛获奖情况（多个）证书扫描或复印件
 }
 ```
 

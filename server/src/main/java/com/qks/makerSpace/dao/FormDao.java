@@ -52,20 +52,22 @@ public interface FormDao {
             "#{time}, #{formId}, #{getTime})")
     Integer addForm(Form form);
 
-    @Update("update form set medium_file = #{mediumFile} where credit_code = #{creditCode}")
-    Integer addMediumFile(byte[] mediumFile, String creditCode);
+    @Update("update form set medium_file = #{mediumFile} where form_id = #{formId}")
+    Integer updateMediumFile(byte[] mediumFile, String formId);
 
-    @Insert("update form set header_file = #{headerFile} where credit_code = #{creditCode}")
-    Integer addHeaderFile(byte[] headerFile, String creditCode);
+    @Update("update form set header_file = #{headerFile} where form_id = #{formId}")
+    Integer updateHeaderFile(byte[] headerFile, String formId);
 
     @Insert("insert into form_high_enterprise(high_enterprise_id, high_enterprise_file, get_time) " +
             "VALUES (#{highEnterpriseId}, #{highEnterpriseFile}, #{getTime})")
     Integer addHighEnterpriseFile(FormHighEnterprise formHighEnterprise);
 
-    @Insert("insert into form_employment(form_employment_id, employment_id, contract_file) VALUES (#{formEmploymentId}, #{employmentId}, #{contractFile})")
+    @Insert("insert into form_employment(form_employment_id, employment_id, contract_file) " +
+            "VALUES (#{formEmploymentId}, #{employmentId}, #{contractFile})")
     Integer addContractFile(FormEmployment formEmployment);
 
-    @Insert("insert into form_awards(form_awards_id, awards_id, awards_file) VALUES (#{formAwardsId}, #{awardsId}, #{awardsFile})")
+    @Insert("insert into form_awards(form_awards_id, awards_id, awards_file) " +
+            "VALUES (#{formAwardsId}, #{awardsId}, #{awardsFile})")
     Integer addAwardsFile(FormAwards formAwards);
 
     @Select("select * from space where in_apply_id = #{inApplyId}")

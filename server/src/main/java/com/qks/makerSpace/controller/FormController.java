@@ -28,16 +28,16 @@ public class FormController {
     @RequestMapping(value = "technology", method = RequestMethod.POST)
     private Map<String, Object> setTechnologyForm(
                                 HttpServletRequest httpServletRequest,
-                                @RequestPart("map") JSONObject map,
-                                @RequestPart("mediumFile") MultipartFile mediumFile,
-                                @RequestPart("highEnterpriseFile") MultipartFile highEnterpriseFile,
-                                @RequestPart("headerFile") MultipartFile headerFile,
-                                @RequestPart("contractFile") MultipartFile[] contractFile,
-                                @RequestPart("awardsFile") MultipartFile[] awardsFile
+                                @RequestParam("map") String map,
+                                @RequestParam("mediumFile") MultipartFile mediumFile,
+                                @RequestParam("highEnterpriseFile") MultipartFile highEnterpriseFile,
+                                @RequestParam("headerFile") MultipartFile headerFile,
+                                @RequestParam("contractFile") MultipartFile[] contractFile,
+                                @RequestParam("awardsFile") MultipartFile[] awardsFile
                                 ) throws ServiceException, IOException {
         return formService.setTechnologyForm(
                 httpServletRequest.getHeader("token"),
-                map,
+                JSONObject.parseObject(map),
                 mediumFile,
                 highEnterpriseFile,
                 headerFile,

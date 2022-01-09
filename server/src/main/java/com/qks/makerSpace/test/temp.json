@@ -3,7 +3,7 @@
   "teamName":"<String>",
   "creditCode":"<String>",
   "registerTime":"<String>",
-  "joinTime":"<String>"
+  "joinTime":"<String>",
   "registerCapital":"<String>",
   "registerKind":"<String>",
   "industryKind":"<String>",

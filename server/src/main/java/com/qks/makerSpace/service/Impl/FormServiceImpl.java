@@ -51,17 +51,18 @@ public class FormServiceImpl implements FormService {
                                                  MultipartFile headerFile,
                                                  MultipartFile[] contractFile,
                                                  MultipartFile[] awardsFile) throws ServiceException, IOException {
-        String userId = JWTUtils.parser(token).get("userId").toString();
 
+        // 先判断有没有填写入驻申请
+        String userId = JWTUtils.parser(token).get("userId").toString();
         if (formDao.getCompanyByUserId(userId) == null)
             throw new ServiceException("请先填写入驻申请");
 
-        String data = map.getString("data");
-        JSONObject json = JSONObject.parseObject(data);
+        // 初始化一些数据
+        String temp = map.getString("map");
+        Form form = JSONObject.parseObject(temp, Form.class);
+        System.out.println(temp);
+        System.out.println(form);
 
-        Form form  = JSONObject.parseObject(String.valueOf(json), Form.class);
-        System.out.println(form.toString());
-        System.out.println(map);
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
@@ -71,67 +72,65 @@ public class FormServiceImpl implements FormService {
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = dateFormat.format(date);
 
+        form.setFormId(formId); // 注意，这个才是主键
         form.setGetTime(time);
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
-        form.setFormId(formId);
         String creditCode = form.getCreditCode();
 
         /**
          * 下面是填报数据
          */
-        FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
 
+        // 首先填报form表
+        if (formDao.addForm(form) < 1)
+            throw new ServiceException("填报数据失败");
+
+        // 首先判断是否为 高新技术企业
         if (form.getHighEnterprise().equals("是")) {
-            form.setHighEnterpriseId(highEnterpriseId);
+            JSONObject mapJson = map.getJSONObject("map");
+            FormHighEnterprise formHighEnterprise = mapJson.getObject("highEnterpriseData", FormHighEnterprise.class);
 
-            JSONObject jsonObject = json.getJSONObject("highEnterpriseData");
+            // 在form中插入高新技术企业表id
+            form.setHighEnterpriseId(highEnterpriseId);
 
             formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
             formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
-            formHighEnterprise.setCertificateCode(jsonObject.getString("certificateCode"));
-            formHighEnterprise.setGetTime(jsonObject.getString("getTime"));
 
+            // 插入记录到高新技术企业表
             if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
                 throw new ServiceException("填报数据失败:highEnterpriseFile");
         }
 
-        if (formDao.addForm(form) < 1)
-            throw new ServiceException("填报数据失败");
-
-        if (mediumFile.getBytes().length != 0) {
-            if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
-                throw new ServiceException("填报数据失败:mediumFile");
-        }
-
-        if (headerFile.getBytes().length != 0) {
-            if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
-                throw new ServiceException("填报数据失败:headerFile");
-        }
+        // 判断是否为 科技型中小企业
         if (form.getMediumSized().equals("是")) {
             if (mediumFile.getBytes().length != 0) {
-                if (formDao.addMediumFile(mediumFile.getBytes(), creditCode) < 1)
+                // 根据formId，在Form表里更新
+                if (formDao.updateMediumFile(mediumFile.getBytes(), formId) < 1)
                     throw new ServiceException("填报数据失败:mediumFile");
             } else {
                 throw new ServiceException("请供科技型中小企业获批截屏");
             }
         }
 
+        // 判断是否为 大学生创业 或 高校科研院所人员
         if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
             if (headerFile.getBytes().length != 0) {
-                if (formDao.addHeaderFile(headerFile.getBytes(), creditCode) < 1)
+                // 根据formId，在Form表里更新
+                if (formDao.updateHeaderFile(headerFile.getBytes(), formId) < 1)
                     throw new ServiceException("填报数据失败:headerFile");
-            } else {
+            } else
                 throw new ServiceException("大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件");
-            }
         }
 
-        if (!Objects.equals(form.getEmployment(), "0")) {
-            if (contractFile.length != 0 && contractFile.length != Integer.valueOf(form.getEmployment())) {
+        // 接纳 应届生毕业就业人员 不为 0 时
+        if (Integer.parseInt(form.getEmployment()) != 0) {
+            if (contractFile.length != 0 && contractFile.length == Integer.parseInt(form.getEmployment())) {
                 for (MultipartFile multipartFile : contractFile) {
                     FormEmployment formEmployment = new FormEmployment();
-                    formEmployment.setFormEmploymentId(employmentId);
-                    formEmployment.setEmploymentId(UUID.randomUUID().toString());
+
+                    formEmployment.setFormEmploymentId(employmentId); // 对应Form表
+                    formEmployment.setEmploymentId(UUID.randomUUID().toString()); // 主键
                     formEmployment.setContractFile(multipartFile.getBytes());
 
                     if (formDao.addContractFile(formEmployment) < 1)
@@ -142,14 +141,16 @@ public class FormServiceImpl implements FormService {
             }
         }
 
-
-        if (!Objects.equals(form.getTotalAwards(), "0")) {
-            if (awardsFile.length != 0 && awardsFile.length > Integer.valueOf(form.getTotalAwards())) {
+        // 当年 参赛获奖情况 不为 0 时
+        if (Integer.parseInt(form.getTotalAwards()) != 0) {
+            if (awardsFile.length != 0 && awardsFile.length == Integer.parseInt(form.getTotalAwards())) {
                 for (MultipartFile multipartFile : awardsFile) {
                     FormAwards formAwards = new FormAwards();
-                    formAwards.setAwardsId(awardsId);
-                    formAwards.setFormAwardsId(UUID.randomUUID().toString());
+
+                    formAwards.setFormAwardsId(awardsId); // 对应Form表
+                    formAwards.setAwardsId(UUID.randomUUID().toString()); // 主键
                     formAwards.setAwardsFile(multipartFile.getBytes());
+
                     if (formDao.addAwardsFile(formAwards) < 1)
                         throw new ServiceException("填报数据失败:awardsFile");
                 }
@@ -158,6 +159,7 @@ public class FormServiceImpl implements FormService {
             }
         }
 
+        // 定义返回体
         Map<String, Object> result = new HashMap<>();
         result.put("creditCode", creditCode);
 
