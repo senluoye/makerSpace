@@ -1483,7 +1483,7 @@ token 保存时间待定
 
 
 
-# 录入季度报表
+# 季度报表
 
 ### 数据表：
 
@@ -1693,12 +1693,12 @@ token 保存时间待定
             "governmentGrant":"<String>",								//科技活动经费支出总额---->政府拨款
             "selfRaised":"<String>"										//科技活动经费支出总额---->企业自筹
         },
-        "mediumFile":"<File>",											//供科技型中小企业获批截屏 
-        "highEnterpriseFile":"<File>",									//高企证书
-        "headerFile":"<File>",					//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
-        "contractFile":"<File>",										//入职合同（多个）
-        "awardsFile":"<File>"											//当年参赛获奖情况（多个）
-    }
+    },
+    "mediumFile":"<File>",											//供科技型中小企业获批截屏 
+    "highEnterpriseFile":"<File>",									//高企证书
+    "headerFile":"<File>",					//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
+    "contractFile":"<File>",										//入职合同（多个）
+    "awardsFile":"<File>"											//当年参赛获奖情况（多个）
 }
 ```
 
@@ -1714,15 +1714,102 @@ token 保存时间待定
 }
 ```
 
+## 获取某个科技园企业的所有季度报表（用户）
+
+**简要描述：**
+
+获取某个企业的所有季度报表（用户）
+
+**请求URL：**
+
+- `/api/form/user/technology`
+
+**请求方式：**
+
+- GET(带token)
+
+**返回值：**
+
+~~~json
+{
+    "data":{
+        
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 获取所有科技园企业的最新季度报表（管理员）
+
+**简要描述：**
+
+获取所有科技园企业的最新季度报表（管理员）
+
+**请求URL：**
+
+- `/api/form/admin/technology`
+
+**请求方式：**
+
+- GET(带token)
+
+**返回值：**
+
+~~~json
+{
+    "data":{[
+		"creditCode":"<String>",
+        "name":"<String>",
+        "represent":"<String>
+        "representPhone":"<String>",
+        "representEmail":"<String>",
+        "getTime":"<String>",
+    ],
+            ...
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 获取某一个科技园企业的所有季度报表（管理员）
+
+**简要描述：**
+
+获取所有科技园企业的最新季度报表（管理员）
+
+**请求URL：**
+
+- `/api/form/admin/technology`
+
+**请求方式：**
+
+- POST(带token)
+
+**参数**：
+
+```json
+{
+    "data":{
+    	"creditCode":"<String>",
+	}
+}
+```
+
+**返回值：**
+
+~~~json
+{
+    "data":{
+        
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
 
 
-
-
-------
-
-# 导出报表
-
-> 报表不分新旧企业，所以此部分独立
 
 ## 导出科技园在孵企业统计表
 

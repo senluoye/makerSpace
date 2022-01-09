@@ -281,16 +281,7 @@ public class AdminServiceImpl implements AdminService {
         return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }
 
-    @Override
-    public Map<String, Object> getTechnologyForm(JSONObject jsonObject) throws ServiceException {
 
-        List<AllForm> data = adminDao.getOldFormByCreditCode();
-        List<AllForm> newMap = adminDao.getNewFormByCreditCode();
-
-        data.addAll(newMap);
-
-        return MyResponseUtil.getResultMap(data, 0, "success");
-    }
 
     /**
      * 获取导出表的信息

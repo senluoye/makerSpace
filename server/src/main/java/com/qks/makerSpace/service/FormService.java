@@ -13,7 +13,7 @@ public interface FormService {
 
     Map<String, Object> setTechnologyForm(
             String token,
-            String map,
+            JSONObject map,
             MultipartFile mediumFile,
             MultipartFile highEnterpriseFile,
             MultipartFile headerFile,
@@ -21,6 +21,7 @@ public interface FormService {
             MultipartFile[] awardsFile) throws ServiceException, IOException;
     Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException;
     void downLoadWord(HttpServletResponse response, Map<String, Object> map) throws Exception;
-
+    Map<String, Object> adminGetTechnologyForm(String token) throws ServiceException;
+    Map<String, Object> userGetTechnologyForm(String token) throws ServiceException;
     void spaceDownLoad(HttpServletResponse response, String inApplyId) throws ServiceException, IllegalAccessException;
 }

@@ -3,6 +3,7 @@ package com.qks.makerSpace.service.Impl;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.FormDao;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
 import com.qks.makerSpace.util.ChangeUtils;
@@ -10,6 +11,9 @@ import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,7 +45,7 @@ public class FormServiceImpl implements FormService {
      */
     @Override
     public Map<String, Object> setTechnologyForm(String token,
-                                                 String map,
+                                                 JSONObject map,
                                                  MultipartFile mediumFile,
                                                  MultipartFile highEnterpriseFile,
                                                  MultipartFile headerFile,
@@ -49,14 +53,15 @@ public class FormServiceImpl implements FormService {
                                                  MultipartFile[] awardsFile) throws ServiceException, IOException {
         String userId = JWTUtils.parser(token).get("userId").toString();
 
-//        if (mediumFile == null || highEnterpriseFile == null || contractFile == null || awardsFile == null)
-//            throw new ServiceException("文件缺失");
-
         if (formDao.getCompanyByUserId(userId) == null)
             throw new ServiceException("请先填写入驻申请");
 
-        Form form  = JSONObject.parseObject(map, Form.class);
-        JSONObject json = JSONObject.parseObject(map);
+        String data = map.getString("data");
+        JSONObject json = JSONObject.parseObject(data);
+
+        Form form  = JSONObject.parseObject(String.valueOf(json), Form.class);
+        System.out.println(form.toString());
+        System.out.println(map);
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
@@ -153,15 +158,45 @@ public class FormServiceImpl implements FormService {
             }
         }
 
+        Map<String, Object> result = new HashMap<>();
+        result.put("creditCode", creditCode);
 
+        return MyResponseUtil.getResultMap(result, 0, "success");
+    }
 
+    /**
+     * @description 获取所有企业的最新季度报表(管理员)
+     * @return Hashmap
+     */
+    @Override
+    public Map<String, Object> adminGetTechnologyForm(String token) throws ServiceException {
+        if (!JWTUtils.parser(token).get("name").toString().equals("admin"))
+            throw new ServiceException("请求主体错误");
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("creditCode", creditCode);
+        List<AllForm> data = formDao.getOldForm();
+        List<AllForm> newMap = formDao.getNewForm();
+
+        data.addAll(newMap);
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+    /**
+     * @description 获取某一个企业的所有季度报表(用户)
+     * @return Hashmap
+     */
+    @Override
+    public Map<String, Object> userGetTechnologyForm(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        String creditCode = formDao.getCreditCodeByUserId(userId);
+        List<Old> olds = formDao.getOldByCreditCode(creditCode);
+        List<AllForm> data;
+
+        if (olds.size() == 0)
+            data = formDao.getFormByNewCreditCode(creditCode);
+        else
+            data = formDao.getFormByOldCreditCode(creditCode);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
-
     /**
      * 获取导出表的信息
      * @param

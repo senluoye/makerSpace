@@ -22,9 +22,6 @@ public interface AdminService {
     Map<String, Object> agreeSpaceById(JSONObject map) throws ServiceException;
     Map<String, Object> disagreeSpaceById(JSONObject map) throws ServiceException;
 
-    // 数据填报信息相关返回
-    Map<String, Object> getTechnologyForm(JSONObject map) throws ServiceException;
-
     Map<String, Object> getDownLoadForm();
     void downLoadWord(HttpServletResponse response, Map<String , Object> map) throws Exception;
 }

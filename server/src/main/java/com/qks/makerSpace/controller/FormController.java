@@ -28,7 +28,7 @@ public class FormController {
     @RequestMapping(value = "technology", method = RequestMethod.POST)
     private Map<String, Object> setTechnologyForm(
                                 HttpServletRequest httpServletRequest,
-                                @RequestPart("map") String map,
+                                @RequestPart("map") JSONObject map,
                                 @RequestPart("mediumFile") MultipartFile mediumFile,
                                 @RequestPart("highEnterpriseFile") MultipartFile highEnterpriseFile,
                                 @RequestPart("headerFile") MultipartFile headerFile,
@@ -43,6 +43,24 @@ public class FormController {
                 headerFile,
                 contractFile,
                 awardsFile);
+    }
+
+    /**
+     * @description 获取所有企业的最新季度报表(管理员)
+     * @return Hashmap
+     */
+    @RequestMapping(value = "admin/technology", method = RequestMethod.GET)
+    private Map<String, Object> adminGetTechnologyForm(HttpServletRequest httpServletRequest) throws ServiceException {
+        return formService.adminGetTechnologyForm(httpServletRequest.getHeader("token"));
+    }
+
+    /**
+     * @description 获取某一个企业的最新季度报表(用户)
+     * @return Hashmap
+     */
+    @RequestMapping(value = "user/technology", method = RequestMethod.POST)
+    private Map<String, Object> userGetTechnologyForm(HttpServletRequest httpServletRequest) throws ServiceException {
+        return formService.userGetTechnologyForm(httpServletRequest.getHeader("token"));
     }
 
     /**

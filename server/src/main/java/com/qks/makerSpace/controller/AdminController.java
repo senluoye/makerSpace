@@ -121,15 +121,6 @@ public class AdminController {
     }
 
     /**
-     * 获取某个企业的所有季度报表
-     * @return Hashmap
-     */
-    @RequestMapping(value = "form/technology", method = RequestMethod.POST)
-    private Map<String, Object> getTechnologyForm(@RequestBody JSONObject map) throws ServiceException {
-        return adminService.getTechnologyForm(map);
-    }
-
-    /**
      * 获取导出表的信息
      */
     @RequestMapping(value = "/form/situation", method = RequestMethod.GET)

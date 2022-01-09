@@ -1,9 +1,11 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.AllForm;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -33,7 +35,7 @@ public interface FormDao {
             "contract_transaction, contract_urnover, project_num, total_awards, " +
             "awards_id, province_awards, under_projects, national_project, " +
             "school_project, declaration_name, declaration_num, expenditure, " +
-            "rad_expenditure, product_expenditure, government_grant, self_raised, time, form_id, get_time) " +
+            "rad_expenditure, product_expenditure, government_grant, self_raised, time, form_id, get_time)  " +
             "VALUES (#{teamName}, #{creditCode}, #{registerTime}, #{joinTime}, #{registerCapital}, " +
             "#{registerKind}, #{industryKind}, #{field}, #{graduatedEnterprise}, #{graduatedTime}, #{highEnterprise}, " +
             "#{highEnterpriseId}, #{mediumSized}, #{mentorRelationship}, #{headerKind}, " +
@@ -53,12 +55,11 @@ public interface FormDao {
     @Update("update form set medium_file = #{mediumFile} where credit_code = #{creditCode}")
     Integer addMediumFile(byte[] mediumFile, String creditCode);
 
-
-
     @Insert("update form set header_file = #{headerFile} where credit_code = #{creditCode}")
     Integer addHeaderFile(byte[] headerFile, String creditCode);
 
-    @Insert("insert into form_high_enterprise(high_enterprise_id, high_enterprise_file, get_time) VALUES (#{highEnterpriseId}, #{highEnterpriseFile}, #{getTime})")
+    @Insert("insert into form_high_enterprise(high_enterprise_id, high_enterprise_file, get_time) " +
+            "VALUES (#{highEnterpriseId}, #{highEnterpriseFile}, #{getTime})")
     Integer addHighEnterpriseFile(FormHighEnterprise formHighEnterprise);
 
     @Insert("insert into form_employment(form_employment_id, employment_id, contract_file) VALUES (#{formEmploymentId}, #{employmentId}, #{contractFile})")
@@ -68,8 +69,57 @@ public interface FormDao {
     Integer addAwardsFile(FormAwards formAwards);
 
     @Select("select * from space where in_apply_id = #{inApplyId}")
-    Space selectSpace(String inApplyId);
+Space selectSpace(String inApplyId);
 
     @Select("select * from space_person where in_apply_id = #{inApplyId}")
     List<SpacePerson> selectSpacePerson(String inApplyId);
+
+    @Select("select old.credit_code, old.name, old.represent, " +
+            "old.represent_email, old.represent_phone, form.get_time " +
+            "from old, form " +
+            "where form.get_time = (" +
+            "   select max(temp.get_time) " +
+            "   from (" +
+            "       select * " +
+            "       from form " +
+            "       order by get_time desc" +
+            "   ) temp " +
+            "   group by temp.credit_code" +
+            ")")
+    List<AllForm> getOldForm();
+
+    @Select("select new.credit_code, new.name, new.represent, " +
+            "new.represent_email, new.represent_phone, form.get_time " +
+            "from new, form " +
+            "where form.get_time = (" +
+            "   select max(temp.get_time) " +
+            "   from (" +
+            "       select * " +
+            "       from form " +
+            "       order by get_time desc" +
+            "   ) temp " +
+            "   group by credit_code" +
+            ")")
+    List<AllForm> getNewForm();
+
+    @Select("select old.credit_code, old.name, old.represent, " +
+            "old.represent_phone, old.represent_email, form.get_time " +
+            "from old, form " +
+            "where old.credit_code = form.credit_code " +
+            "and old.credit_code = #{creditCode}")
+    List<AllForm> getFormByOldCreditCode(String creditCode);
+
+    @Select("select new.credit_code, new.name, new.represent, " +
+            "new.represent_phone, new.represent_email, form.get_time " +
+            "from new, form " +
+            "where new.credit_code = form.credit_code " +
+            "and new.credit_code = #{creditCode}")
+    List<AllForm> getFormByNewCreditCode(String creditCode);
+
+    @Select("select * from user_company where user_id = #{userId}")
+    String getCreditCodeByUserId(String userId);
+
+    @Select("select * from old where credit_code = #{creditCode}")
+    List<Old> getOldByCreditCode(String creditCode);
+
 }
