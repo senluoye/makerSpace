@@ -108,7 +108,7 @@ Space selectSpace(String inApplyId);
             "and new.credit_code = #{creditCode}")
     List<AllForm> getFormByNewCreditCode(String creditCode);
 
-    @Select("select * from user_company where user_id = #{userId}")
+    @Select("select credit_code from user_company where user_id = #{userId}")
     String getCreditCodeByUserId(String userId);
 
     @Select("select * from old where credit_code = #{creditCode}")

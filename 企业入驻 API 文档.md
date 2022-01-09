@@ -1712,11 +1712,11 @@ token 保存时间待定
 }
 ```
 
-## 获取某个科技园企业的所有季度报表（用户）
+## 获取某个科技园企业的所有季度报表部分信息（用户）
 
 **简要描述：**
 
-获取某个企业的所有季度报表（用户）
+获取某个企业的所有季度报表部分信息（用户）
 
 **请求URL：**
 
@@ -1730,8 +1730,15 @@ token 保存时间待定
 
 ~~~json
 {
-    "data":{
-        
+    "data":{[
+		"creditCode":"<String>",
+        "name":"<String>",
+        "represent":"<String>
+        "representPhone":"<String>",
+        "representEmail":"<String>",
+        "getTime":"<String>",
+    ],
+            ...
     },
     "code":0,
     "msg":"success"

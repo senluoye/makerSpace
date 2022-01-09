@@ -189,6 +189,7 @@ public class FormServiceImpl implements FormService {
     public Map<String, Object> userGetTechnologyForm(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         String creditCode = formDao.getCreditCodeByUserId(userId);
+        System.out.println(creditCode);
         List<Old> olds = formDao.getOldByCreditCode(creditCode);
         List<AllForm> data;
 

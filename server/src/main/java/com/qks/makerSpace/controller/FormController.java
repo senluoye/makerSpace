@@ -58,7 +58,7 @@ public class FormController {
      * @description 获取某一个企业的最新季度报表(用户)
      * @return Hashmap
      */
-    @RequestMapping(value = "user/technology", method = RequestMethod.POST)
+    @RequestMapping(value = "user/technology", method = RequestMethod.GET)
     private Map<String, Object> userGetTechnologyForm(HttpServletRequest httpServletRequest) throws ServiceException {
         return formService.userGetTechnologyForm(httpServletRequest.getHeader("token"));
     }
