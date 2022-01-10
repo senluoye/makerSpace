@@ -29,20 +29,28 @@ public class FormController {
     private Map<String, Object> setTechnologyForm(
                                 HttpServletRequest httpServletRequest,
                                 @RequestParam("map") String map,
-                                @RequestParam("mediumFile") MultipartFile mediumFile,
-                                @RequestParam("highEnterpriseFile") MultipartFile highEnterpriseFile,
-                                @RequestParam("headerFile") MultipartFile headerFile,
-                                @RequestParam("contractFile") MultipartFile[] contractFile,
-                                @RequestParam("awardsFile") MultipartFile[] awardsFile
+                                @RequestParam("mediumFile") Object mediumFile,
+                                @RequestParam("highEnterpriseFile") Object highEnterpriseFile,
+                                @RequestParam("headerFile") Object headerFile,
+                                @RequestParam("contractFile") Object[] contractFile,
+                                @RequestParam("awardsFile") Object[] awardsFile
                                 ) throws ServiceException, IOException {
+        MultipartFile[] contractFileList = new MultipartFile[contractFile.length];
+        MultipartFile[] awardsFileList = new MultipartFile[awardsFile.length];
+        for (int i = 0; i < contractFile.length; i++) {
+            contractFileList[i] = (MultipartFile) contractFile[i];
+            awardsFileList[i] = (MultipartFile) awardsFile[i];
+        }
+
         return formService.setTechnologyForm(
                 httpServletRequest.getHeader("token"),
                 JSONObject.parseObject(map),
-                mediumFile,
-                highEnterpriseFile,
-                headerFile,
-                contractFile,
-                awardsFile);
+                (MultipartFile)mediumFile,
+                (MultipartFile)highEnterpriseFile,
+                (MultipartFile)headerFile,
+                contractFileList,
+                awardsFileList
+        );
     }
 
     /**
