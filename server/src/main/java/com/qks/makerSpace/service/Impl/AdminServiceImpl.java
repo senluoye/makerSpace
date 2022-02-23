@@ -143,7 +143,7 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getAllSpaceDetails() {
         List<Space> spaces = adminDao.getAllSpaceDetails();
         List<AllSpace> allSpaces = new ArrayList<>();
-
+        System.out.println(spaces);
         for (Space space : spaces) {
             AllSpace allSpace = new AllSpace();
             Audit audit= adminDao.getAuditById(space.getInApplyId());
