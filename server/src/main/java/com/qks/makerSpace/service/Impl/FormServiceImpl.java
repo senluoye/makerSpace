@@ -104,7 +104,7 @@ public class FormServiceImpl implements FormService {
 
         // 判断是否为 科技型中小企业
         if (form.getMediumSized().equals("是")) {
-            if (mediumFile.getBytes().length != 0) {
+            if (mediumFile != null) {
                 // 根据formId，在Form表里更新
                 if (formDao.updateMediumFile(mediumFile.getBytes(), formId) < 1)
                     throw new ServiceException("填报数据失败:mediumFile");
@@ -115,7 +115,7 @@ public class FormServiceImpl implements FormService {
 
         // 判断是否为 大学生创业 或 高校科研院所人员
         if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
-            if (headerFile.getBytes().length != 0) {
+            if (headerFile != null) {
                 // 根据formId，在Form表里更新
                 if (formDao.updateHeaderFile(headerFile.getBytes(), formId) < 1)
                     throw new ServiceException("填报数据失败:headerFile");

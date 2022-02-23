@@ -281,6 +281,21 @@ public class AdminServiceImpl implements AdminService {
         return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }
 
+    /**
+     * 科技园企业季度报表申鹤通过
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> agreeTechnologyFormById(JSONObject map) throws ServiceException {
+        Map<String, Object> data = new HashMap<>();
+        String creditCode = map.getString("creditCode");
+
+
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
 
 
     /**

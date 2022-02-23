@@ -2570,7 +2570,41 @@ Audit（审核表）
 
 
 
+### 季度报表审核通过
 
+**简要描述：**
+
+科技园企业季度报表通过审核
+
+**请求URL：**
+
+- `/api/admin/technology/notarize/form`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+```json
+{
+    "creditCode":"<String>"
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>"
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+### 
 
 
 

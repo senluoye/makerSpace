@@ -1,5 +1,6 @@
 package com.qks.makerSpace.service;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.exception.ServiceException;
 
@@ -21,6 +22,7 @@ public interface AdminService {
     Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException;
     Map<String, Object> agreeSpaceById(JSONObject map) throws ServiceException;
     Map<String, Object> disagreeSpaceById(JSONObject map) throws ServiceException;
+    Map<String, Object> agreeTechnologyFormById(JSONObject map) throws ServiceException;
 
     Map<String, Object> getDownLoadForm();
     void downLoadWord(HttpServletResponse response, Map<String , Object> map) throws Exception;

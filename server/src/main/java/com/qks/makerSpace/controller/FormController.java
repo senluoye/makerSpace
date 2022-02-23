@@ -29,8 +29,8 @@ public class FormController {
     private Map<String, Object> setTechnologyForm(
                                 HttpServletRequest httpServletRequest,
                                 @RequestParam("map") String map,
-                                @RequestParam("mediumFile") Object mediumFile,
-                                @RequestParam("highEnterpriseFile") Object highEnterpriseFile,
+                                @RequestParam(value = "mediumFile", required = false) Object mediumFile,
+                                @RequestParam(value = "highEnterpriseFile", required = false) Object highEnterpriseFile,
                                 @RequestParam("headerFile") Object headerFile,
                                 @RequestParam("contractFile") Object[] contractFile,
                                 @RequestParam("awardsFile") Object[] awardsFile

@@ -2,10 +2,8 @@ package com.qks.makerSpace.test;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 这个类仅作为测试类使用
@@ -78,7 +76,8 @@ public class TestController {
     }
 
     @RequestMapping(value = "aaa", method = RequestMethod.GET)
-    private String test() {
-        return "宁已经连上了";
+    private String test(@RequestParam(value = "ttt", required = false) MultipartFile file) {
+        if (file == null) System.out.println("asd");
+        return file.toString();
     }
 }

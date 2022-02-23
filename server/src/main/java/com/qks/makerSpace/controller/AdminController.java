@@ -94,6 +94,15 @@ public class AdminController {
     }
 
     /**
+     * 同意某一个企业科技园申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "technology/notarize/form", method = RequestMethod.POST)
+    private Map<String, Object> agreeTechnologyFormById(@RequestBody JSONObject map) throws ServiceException {
+        return adminService.agreeTechnologyFormById(map);
+    }
+
+    /**
      * 取消某一个企业科技园申请
      * @return HashMap
      */
