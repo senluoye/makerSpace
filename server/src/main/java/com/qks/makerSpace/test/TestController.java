@@ -2,8 +2,12 @@ package com.qks.makerSpace.test;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.service.FormService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Map;
 
 /**
  * 这个类仅作为测试类使用
@@ -39,6 +43,9 @@ public class TestController {
      * }
      * @param jsonObject
      */
+
+    @Autowired
+    FormService formService;
 
     @RequestMapping(value = "", method = RequestMethod.POST)
     private void getOldForm(@RequestBody JSONObject jsonObject) {
@@ -79,5 +86,10 @@ public class TestController {
     private String test(@RequestParam(value = "ttt", required = false) MultipartFile file) {
         if (file == null) System.out.println("asd");
         return file.toString();
+    }
+
+    @RequestMapping(value = "test",method = RequestMethod.GET)
+    private Map<String, Object> test2() throws IllegalAccessException {
+        return formService.getDownLoadForm("0987");
     }
 }
