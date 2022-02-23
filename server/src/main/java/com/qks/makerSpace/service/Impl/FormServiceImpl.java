@@ -62,7 +62,7 @@ public class FormServiceImpl implements FormService {
         String temp = map.getString("map");
         FormReq form = JSONObject.parseObject(temp, FormReq.class);
 //        System.out.println(temp);
-//        System.out.println(form);
+        System.out.println(form);
 
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
