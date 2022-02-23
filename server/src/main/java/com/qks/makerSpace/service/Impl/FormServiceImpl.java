@@ -115,16 +115,19 @@ public class FormServiceImpl implements FormService {
 
         // 判断是否为 大学生创业 或 高校科研院所人员
         if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
+            System.out.println(headerFile);
             if (headerFile != null) {
                 // 根据formId，在Form表里更新
                 if (formDao.updateHeaderFile(headerFile.getBytes(), formId) < 1)
                     throw new ServiceException("填报数据失败:headerFile");
-            } else
+            }
+            else
                 throw new ServiceException("大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件");
         }
 
         // 接纳 应届生毕业就业人员 不为 0 时
         if (Integer.parseInt(form.getEmployment()) != 0) {
+            System.out.println(contractFile.length + " " + Integer.parseInt(form.getEmployment()));
             if (contractFile.length != 0 && contractFile.length == Integer.parseInt(form.getEmployment())) {
                 for (MultipartFile multipartFile : contractFile) {
                     FormEmployment formEmployment = new FormEmployment();

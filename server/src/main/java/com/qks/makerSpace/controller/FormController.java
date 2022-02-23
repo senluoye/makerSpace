@@ -1,6 +1,7 @@
 package com.qks.makerSpace.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +28,14 @@ public class FormController {
      */
     @RequestMapping(value = "technology", method = RequestMethod.POST)
     private Map<String, Object> setTechnologyForm(
-                                HttpServletRequest httpServletRequest,
-                                @RequestParam("map") String map,
-                                @RequestParam(value = "mediumFile", required = false) MultipartFile mediumFile,
-                                @RequestParam(value = "highEnterpriseFile", required = false) MultipartFile highEnterpriseFile,
-                                @RequestParam(value = "headerFile", required = false) MultipartFile headerFile,
-                                @RequestParam("contractFile") MultipartFile[] contractFile,
-                                @RequestParam("awardsFile") MultipartFile[] awardsFile
+//                                HttpServletRequest httpServletRequest,
+//            @RequestParam("map") String map,
+//            @RequestParam(value = "mediumFile", required = false) MultipartFile mediumFile,
+//            @RequestParam(value = "highEnterpriseFile", required = false) MultipartFile highEnterpriseFile,
+//            @RequestParam(value = "headerFile", required = false) MultipartFile headerFile,
+//            @RequestParam("contractFile") MultipartFile[] contractFile,
+//            @RequestParam("awardsFile") MultipartFile[] awardsFile,
+            FormReq formReq
                                 ) throws ServiceException, IOException {
 //        MultipartFile[] contractFileList = new MultipartFile[contractFile.length];
 //        MultipartFile[] awardsFileList = new MultipartFile[awardsFile.length];
@@ -43,13 +45,19 @@ public class FormController {
 //        }
 
         return formService.setTechnologyForm(
-                httpServletRequest.getHeader("token"),
-                JSONObject.parseObject(map),
-                mediumFile,
-                highEnterpriseFile,
-                headerFile,
-                contractFile,
-                awardsFile
+                "eyJhbGciOiJIUzI1NiJ9.eyJuYW1lIjoiMTIzMTIzIiwidXNlcklkIjoiZjVkNmFhNjEtNGY1ZS00YjY1LTkwOTctNjMzMmFmZjMxYWE3IiwiZXhwIjoxNjQ1Njg2MDg0LCJpYXQiOjE2NDU1OTk2ODR9.4qTSkE6nLG765HAfyCZz9YbR41ViMzpEfV6WgDnFnq4",
+//                JSONObject.parseObject(map),
+//                (MultipartFile)mediumFile,
+//                (MultipartFile)highEnterpriseFile,
+//                (MultipartFile)headerFile,
+//                contractFile,
+//                awardsFile
+                JSONObject.parseObject(formReq.getMap()),
+                formReq.getMediumFile(),
+                formReq.getHighEnterpriseFile(),
+                formReq.getHeaderFile(),
+                formReq.getContractFile(),
+                formReq.getAwardsFile()
         );
     }
 
