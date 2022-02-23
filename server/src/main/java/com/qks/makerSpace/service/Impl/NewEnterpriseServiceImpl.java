@@ -177,7 +177,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                 newEnterpriseDao.deleteNewProject(newEnterpriseDao.selectNewProject(creditCode));
                 newEnterpriseDao.deleteNewShareholder(newEnterpriseDao.selectNewShareholder(creditCode));
                 newEnterpriseDao.deleteNewIntellectual(newEnterpriseDao.selectNewIntellectual(creditCode));
-
                 newEnterpriseDao.deleteAuditByCreditCode(creditCode);
             } catch (Exception e) {
                 throw new ServiceException("填写失败");

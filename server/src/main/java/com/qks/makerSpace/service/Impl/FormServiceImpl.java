@@ -171,7 +171,7 @@ public class FormServiceImpl implements FormService {
     }
 
     /**
-     * @description 获取所有企业的最新季度报表(管理员)
+     * @description 获取所有企业的所有季度报表(管理员)
      * @return Hashmap
      */
     @Override

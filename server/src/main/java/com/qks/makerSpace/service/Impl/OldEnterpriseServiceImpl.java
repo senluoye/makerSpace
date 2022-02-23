@@ -174,6 +174,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
         JSONObject map = JSONObject.parseObject(str);
+        System.out.println(map);
         String creditCode = map.get("creditCode").toString();
         Date date = new Date();
 
@@ -217,7 +218,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 oldEnterpriseDao.deleteOldFunding(oldEnterpriseDao.selectOldFunding(creditCode));
                 oldEnterpriseDao.deleteOldShareholder(oldEnterpriseDao.selectOldShareholder(creditCode));
                 oldEnterpriseDao.deleteOldIntellectual(oldEnterpriseDao.selectOldIntellectual(creditCode));
-
                 oldEnterpriseDao.deleteAuditByCreditCode(creditCode);
             } catch (Exception e) {
                 throw new ServiceException("填写失败");
