@@ -43,10 +43,12 @@ public class FormParserUtils {
         form.setIncubateIncome(map.getString("incubateIncome"));
         form.setIncubateProduct(map.getString("incubateProduct"));
         form.setIncubateProfit(map.getString("incubateProfit"));
+        form.setIncubateTax(map.getString("incubateTax"));
         form.setIncubateOut(map.getString("incubateOut"));
         form.setEmployee(map.getString("employee"));
         form.setDoctor(map.getString("doctor"));
         form.setMaster(map.getString("master"));
+        form.setGraduate(map.getString("graduate"));
         form.setBachelor(map.getString("bachelor"));
         form.setCollege(map.getString("college"));
         form.setTecSecondary(map.getString("tecSecondary"));
