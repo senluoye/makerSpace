@@ -7,14 +7,8 @@ import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
-import com.qks.makerSpace.util.ChangeUtils;
-import com.qks.makerSpace.util.JWTUtils;
-import com.qks.makerSpace.util.MyResponseUtil;
-import com.qks.makerSpace.util.WordChangeUtils;
+import com.qks.makerSpace.util.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -60,7 +54,9 @@ public class FormServiceImpl implements FormService {
 
         // 初始化一些数据
         String temp = map.getString("map");
-        FormReq form = JSONObject.parseObject(temp, FormReq.class);
+//        FormReq form = JSONObject.parseObject(temp, FormReq.class);
+        FormReq form = FormParserUtils.parser(map);
+
 //        System.out.println(temp);
         System.out.println(form);
 
