@@ -3,6 +3,7 @@ package com.qks.makerSpace.service.Impl;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.FormDao;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
@@ -59,9 +60,9 @@ public class FormServiceImpl implements FormService {
 
         // 初始化一些数据
         String temp = map.getString("map");
-        Form form = JSONObject.parseObject(temp, Form.class);
-        System.out.println(temp);
-        System.out.println(form);
+        FormReq form = JSONObject.parseObject(temp, FormReq.class);
+//        System.out.println(temp);
+//        System.out.println(form);
 
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
@@ -82,10 +83,6 @@ public class FormServiceImpl implements FormService {
          * 下面是填报数据
          */
 
-        // 首先填报form表
-        if (formDao.addForm(form) < 1)
-            throw new ServiceException("填报数据失败");
-
         // 首先判断是否为 高新技术企业
         if (form.getHighEnterprise().equals("是")) {
             JSONObject mapJson = map.getJSONObject("map");
@@ -101,6 +98,10 @@ public class FormServiceImpl implements FormService {
             if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
                 throw new ServiceException("填报数据失败:highEnterpriseFile");
         }
+
+        // 填报form表
+        if (formDao.addForm(form) < 1)
+            throw new ServiceException("填报数据失败");
 
         // 判断是否为 科技型中小企业
         if (form.getMediumSized().equals("是")) {

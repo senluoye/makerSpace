@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AllForm;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -50,7 +51,7 @@ public interface FormDao {
             "#{awardsId}, #{provinceAwards}, #{underProjects}, #{nationalProject}, #{schoolProject}, #{declarationName}, " +
             "#{declarationNum}, #{expenditure}, #{radExpenditure}, #{productExpenditure}, #{governmentGrant}, #{selfRaised}, " +
             "#{time}, #{formId}, #{getTime})")
-    Integer addForm(Form form);
+    Integer addForm(FormReq form);
 
     @Update("update form set medium_file = #{mediumFile} where form_id = #{formId}")
     Integer updateMediumFile(byte[] mediumFile, String formId);
