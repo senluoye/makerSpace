@@ -29,27 +29,27 @@ public class FormController {
     private Map<String, Object> setTechnologyForm(
                                 HttpServletRequest httpServletRequest,
                                 @RequestParam("map") String map,
-                                @RequestParam(value = "mediumFile", required = false) Object mediumFile,
-                                @RequestParam(value = "highEnterpriseFile", required = false) Object highEnterpriseFile,
-                                @RequestParam("headerFile") Object headerFile,
-                                @RequestParam("contractFile") Object[] contractFile,
-                                @RequestParam("awardsFile") Object[] awardsFile
+                                @RequestParam(value = "mediumFile", required = false) MultipartFile mediumFile,
+                                @RequestParam(value = "highEnterpriseFile", required = false) MultipartFile highEnterpriseFile,
+                                @RequestParam(value = "headerFile", required = false) MultipartFile headerFile,
+                                @RequestParam("contractFile") MultipartFile[] contractFile,
+                                @RequestParam("awardsFile") MultipartFile[] awardsFile
                                 ) throws ServiceException, IOException {
-        MultipartFile[] contractFileList = new MultipartFile[contractFile.length];
-        MultipartFile[] awardsFileList = new MultipartFile[awardsFile.length];
-        for (int i = 0; i < contractFile.length; i++) {
-            contractFileList[i] = (MultipartFile) contractFile[i];
-            awardsFileList[i] = (MultipartFile) awardsFile[i];
-        }
+//        MultipartFile[] contractFileList = new MultipartFile[contractFile.length];
+//        MultipartFile[] awardsFileList = new MultipartFile[awardsFile.length];
+//        for (int i = 0; i < contractFile.length; i++) {
+//            contractFileList[i] = (MultipartFile) contractFile[i];
+//            awardsFileList[i] = (MultipartFile) awardsFile[i];
+//        }
 
         return formService.setTechnologyForm(
                 httpServletRequest.getHeader("token"),
                 JSONObject.parseObject(map),
-                (MultipartFile)mediumFile,
-                (MultipartFile)highEnterpriseFile,
-                (MultipartFile)headerFile,
-                contractFileList,
-                awardsFileList
+                mediumFile,
+                highEnterpriseFile,
+                headerFile,
+                contractFile,
+                awardsFile
         );
     }
 

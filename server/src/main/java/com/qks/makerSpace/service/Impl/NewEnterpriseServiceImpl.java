@@ -250,7 +250,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         newDemand.setNewDemandId(UUID.randomUUID().toString());
         newDemand.setTime(submitTime);
         if(newEnterpriseDao.addNewDemand(newDemand) < 1
-                || newEnterpriseDao.updateNewDemandId(creditCode,newDemand.getNewDemandId()) < 1)
+                && newEnterpriseDao.updateNewDemandId(creditCode,newDemand.getNewDemandId()) < 1)
             throw new ServiceException("插入数据失败:addNewDemand");
 
         if(newEnterpriseDao.updateNewForDemand(creditCode,"0",submitTime,room,newDemand.getNewDemandId()) < 1)
