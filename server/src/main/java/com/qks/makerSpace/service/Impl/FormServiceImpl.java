@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -82,8 +83,11 @@ public class FormServiceImpl implements FormService {
         // 首先判断是否为 高新技术企业
         if (form.getHighEnterprise().equals("是")) {
             JSONObject mapJson = map.getJSONObject("map");
-            FormHighEnterprise formHighEnterprise = mapJson.getObject("highEnterpriseData", FormHighEnterprise.class);
-
+//            FormHighEnterprise formHighEnterprise = mapJson.getObject("highEnterpriseData", FormHighEnterprise.class);
+            FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
+            JSONObject highEnterpriseData = mapJson.getJSONObject("highEnterpriseData");
+            formHighEnterprise.setCertificateCode(highEnterpriseData.getString("getTime"));
+            formHighEnterprise.setHighEnterpriseId(highEnterpriseData.getString("certificateCode"));
             // 在form中插入高新技术企业表id
             form.setHighEnterpriseId(highEnterpriseId);
 
@@ -112,7 +116,7 @@ public class FormServiceImpl implements FormService {
 
         // 判断是否为 大学生创业 或 高校科研院所人员
         if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
-            System.out.println(headerFile);
+//            System.out.println(headerFile);
             if (headerFile != null) {
                 // 根据formId，在Form表里更新
                 if (formDao.updateHeaderFile(headerFile.getBytes(), formId) < 1)
@@ -124,7 +128,7 @@ public class FormServiceImpl implements FormService {
 
         // 接纳 应届生毕业就业人员 不为 0 时
         if (Integer.parseInt(form.getEmployment()) != 0) {
-            System.out.println(contractFile.length + " " + Integer.parseInt(form.getEmployment()));
+//            System.out.println(contractFile.length + " " + Integer.parseInt(form.getEmployment()));
             if (contractFile.length != 0 && contractFile.length == Integer.parseInt(form.getEmployment())) {
                 for (MultipartFile multipartFile : contractFile) {
                     FormEmployment formEmployment = new FormEmployment();
