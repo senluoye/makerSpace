@@ -15,7 +15,7 @@
         "getTime":"<String>",
         "certificateCode":"<String>"
       },
-      "mediumSized":"是",
+      "mediumSized":"否",
       "mentorRelationship":"<String>",
       "headerKind":"大学生创业",
       "serialEntrepreneur":"<String>",
