@@ -52,6 +52,7 @@ public class FormServiceImpl implements FormService {
         String userId = JWTUtils.parser(token).get("userId").toString();
         if (formDao.getCompanyByUserId(userId) == null)
             throw new ServiceException("请先填写入驻申请");
+        System.out.println("1111111111");
 
         // 初始化一些数据
         String temp = map.getString("map");
@@ -59,13 +60,13 @@ public class FormServiceImpl implements FormService {
         FormReq form = FormParserUtils.parser(map);
 
 //        System.out.println(temp);
-        System.out.println(form);
+//        System.out.println(form);
 
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
         String formId = UUID.randomUUID().toString();
-
+        System.out.println("222222222");
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = dateFormat.format(date);
@@ -75,17 +76,20 @@ public class FormServiceImpl implements FormService {
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
         String creditCode = form.getCreditCode();
-
+        System.out.println("333333");
         /**
          * 下面是填报数据
          */
 
         // 首先判断是否为 高新技术企业
         if (form.getHighEnterprise().equals("是")) {
-            JSONObject mapJson = map.getJSONObject("map");
-//            FormHighEnterprise formHighEnterprise = mapJson.getObject("highEnterpriseData", FormHighEnterprise.class);
+            String aa = map.getString("map");
+            JSONObject mapJson = JSONObject.parseObject(aa);
+            System.out.println(mapJson);
             FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
-            JSONObject highEnterpriseData = mapJson.getJSONObject("highEnterpriseData");
+            String strTemp = mapJson.getString("highEnterpriseData");
+            JSONObject highEnterpriseData = JSONObject.parseObject(strTemp);
+            System.out.println(highEnterpriseData);
             formHighEnterprise.setCertificateCode(highEnterpriseData.getString("getTime"));
             formHighEnterprise.setHighEnterpriseId(highEnterpriseData.getString("certificateCode"));
             // 在form中插入高新技术企业表id
@@ -93,12 +97,12 @@ public class FormServiceImpl implements FormService {
 
             formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
             formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
-
+            System.out.println(formHighEnterprise);
             // 插入记录到高新技术企业表
             if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
                 throw new ServiceException("填报数据失败:highEnterpriseFile");
         }
-
+        System.out.println("444444");
         // 填报form表
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
@@ -113,7 +117,7 @@ public class FormServiceImpl implements FormService {
                 throw new ServiceException("请供科技型中小企业获批截屏");
             }
         }
-
+        System.out.println("555555");
         // 判断是否为 大学生创业 或 高校科研院所人员
         if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
 //            System.out.println(headerFile);
@@ -125,7 +129,7 @@ public class FormServiceImpl implements FormService {
             else
                 throw new ServiceException("大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件");
         }
-
+        System.out.println("66666666");
         // 接纳 应届生毕业就业人员 不为 0 时
         if (Integer.parseInt(form.getEmployment()) != 0) {
 //            System.out.println(contractFile.length + " " + Integer.parseInt(form.getEmployment()));
@@ -144,7 +148,7 @@ public class FormServiceImpl implements FormService {
                 throw new ServiceException("请提交对应数量的入职合同");
             }
         }
-
+        System.out.println("777777");
         // 当年 参赛获奖情况 不为 0 时
         if (Integer.parseInt(form.getTotalAwards()) != 0) {
             if (awardsFile.length != 0 && awardsFile.length == Integer.parseInt(form.getTotalAwards())) {
@@ -257,7 +261,7 @@ public class FormServiceImpl implements FormService {
         Map<String, Object> spaceMap = ChangeUtils.getObjectToMap(space);
 
         List<SpacePerson> spacePeople = formDao.selectSpacePerson(inApplyId);
-        List<Map<String, Object>> mapList = ChangeUtils.objConvertListMap(spacePeople);
+        List<Map<String, Object>> mapList = ChangeUtils.objToListMap(spacePeople);
 
         try {
             WordChangeUtils.expor(response.getOutputStream(),spaceMap,mapList);

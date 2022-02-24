@@ -1,10 +1,9 @@
 package com.qks.makerSpace.util;
 
+import com.qks.makerSpace.entity.database.SpacePerson;
+
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChangeUtils {
 
@@ -70,6 +69,24 @@ public class ChangeUtils {
             return result;
         }
         return null;
+    }
+
+    public static List<Map<String, Object>> objToListMap(List<SpacePerson> list) {
+        List<Map<String, Object>> list1 = new ArrayList<>();
+        Iterator<SpacePerson> iterator = list.iterator();
+        while (iterator.hasNext()) {
+            SpacePerson spacePerson = iterator.next();
+            Map<String, Object> map = new HashMap<>();
+            map.put("personName",spacePerson.getPersonName().toString());
+            map.put("department",spacePerson.getDepartment().toString());
+            map.put("major",spacePerson.getMajor().toString());
+            map.put("personPhone",spacePerson.getPersonPhone().toString());
+            map.put("personQq",spacePerson.getPersonQq().toString());
+            map.put("personWechat",spacePerson.getPersonWechat().toString());
+            map.put("note",spacePerson.getNote().toString());
+            list1.add(map);
+        }
+        return list1;
     }
 
 
