@@ -257,7 +257,7 @@ public class FormServiceImpl implements FormService {
         Map<String, Object> spaceMap = ChangeUtils.getObjectToMap(space);
 
         List<SpacePerson> spacePeople = formDao.selectSpacePerson(inApplyId);
-        List<Map<String, Object>> mapList = ChangeUtils.objConvertListMap(spacePeople);
+        List<Map<String, Object>> mapList = ChangeUtils.objToListMap(spacePeople);
 
         try {
             WordChangeUtils.expor(response.getOutputStream(),spaceMap,mapList);
