@@ -1029,7 +1029,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/newEnterprise`
+- `/api/new/newEnterprise`
 
 **请求方式：**
 
@@ -1039,6 +1039,7 @@ token 保存时间待定
 
 ```json
 {
+    "creditCode":"<String>"
     "registerCapital":"<String>",							//拟注册资本（万元）
     "realCapital":"<String>",									//实际募集资本（万元）
     "originNumber":"<String>",								//初始入园人数
@@ -1148,7 +1149,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/newEnterprise`
+- `/api/new/newEnterprise`
 
 **请求方式：**
 

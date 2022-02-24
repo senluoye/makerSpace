@@ -174,11 +174,10 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
         JSONObject map = JSONObject.parseObject(str);
+        System.out.println(str);
         System.out.println(map);
         String creditCode = map.get("creditCode").toString();
         Date date = new Date();
-
-        List<Audit> auditList = oldEnterpriseDao.getAudit(creditCode);
 
         // 数据初步处理
         Old old = OldParserUtils.parser(map);

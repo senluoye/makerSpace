@@ -35,10 +35,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getAllDetails() {
         List<AllTechnology> dataOne = adminDao.getAllOldDetails();
-<<<<<<< HEAD
-        System.out.println(dataOne.toString());
-=======
->>>>>>> e6f19d7e7b9178d8222c42531f05057bfaf7535b
+//        System.out.println(dataOne.toString());
         Iterator<AllTechnology> iterator_one = dataOne.iterator();
         while (iterator_one.hasNext()) {
             AllTechnology allTechnology = iterator_one.next();

@@ -75,7 +75,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      */
     @Override
     public Map<String, Object> newRegister(String str, MultipartFile[] files) throws IOException{
-        System.out.println(str);
+//        System.out.println(str);
         JSONObject map = JSONObject.parseObject(str);
         String creditCode = map.get("creditCode").toString();
 
@@ -115,7 +115,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         Map<String, Object> data = new HashMap<>();
         data.put("creditCode", creditCode);
         return MyResponseUtil.getResultMap(data,0,"success");
-
     }
 
     /**
@@ -139,9 +138,10 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                                                    MultipartFile[] files) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
         JSONObject map = JSONObject.parseObject(str);
+//        System.out.println(map);
         String creditCode = map.get("creditCode").toString();
 
-        List<Audit> auditList = newEnterpriseDao.getAudit(creditCode);
+//        List<Audit> auditList = newEnterpriseDao.getAudit(creditCode);
 
         News news = NewParserUtils.newsParser(map);
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.getJSONArray("newMainPerson"));
