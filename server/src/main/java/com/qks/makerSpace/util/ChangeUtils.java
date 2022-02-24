@@ -75,8 +75,11 @@ public class ChangeUtils {
         List<Map<String, Object>> list1 = new ArrayList<>();
         Iterator<SpacePerson> iterator = list.iterator();
         while (iterator.hasNext()) {
+            int num = 0;
             SpacePerson spacePerson = iterator.next();
             Map<String, Object> map = new HashMap<>();
+            map.put("id",String.valueOf(num));
+            num++;
             map.put("personName",spacePerson.getPersonName().toString());
             map.put("department",spacePerson.getDepartment().toString());
             map.put("major",spacePerson.getMajor().toString());
