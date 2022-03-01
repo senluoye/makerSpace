@@ -62,8 +62,6 @@ token 保存时间待定
 
 
 
-
-
 # 登录（login）
 
 **简要描述：**
@@ -187,7 +185,7 @@ token 保存时间待定
 ~~~json
 {
     "name":"<String>",						//用户名
-    "password":"<String>"				//密码
+    "password":"<String>"					//密码
 }
 ~~~
 
@@ -435,15 +433,15 @@ token 保存时间待定
 |   government_grant   | String |                 其中：政府拨款                 |
 |     self_raised      | String |                    企业自筹                    |
 
-## 注册
+## 填写入园申请表(含租赁)
 
 **简要描述：**
 
-旧企业“注册”，这部分api跟下面的详细信息填写的api一起调。
+填写入园申请表所含内容
 
 **请求URL：**
 
-- `/api/old/oldRegister`
+- `/api/old/oldEnterprise`
 
 **请求方式：**
 
@@ -451,77 +449,49 @@ token 保存时间待定
 
 **参数：**
 
-```json
-{
-	"creditCode":"<String>",
-    "organizationCode":"<String>",
-   	"password":"<String>",
-   	"name":"<String>",
-   	"represent":"<String>",
-   	"representPhone":"<String>",
-    "representEmail":"<String>",
-   	"agent":"<String>",
-   	"agentPhone":"<String>1",
-   	"agentEmail":"<String>"
-}
-```
+> 以表单形式提交
 
-**返回值：**
-
-请求成功：
-
-~~~json
-{
-    "data":{
-        "creditCode":"<String>",					//表示新成立企业或非独立注册企业唯一ID
-    },
-    "code":0,
-    "msg":"success"
-}
-~~~
-
-## 填写详细信息并提交
-
-**简要描述：**
-
-部分字段在注册时已经填写
-
-**请求URL：**
-
-- `/api/oldEnterprise`
-
-**请求方式：**
-
-- PUT（带token）
-
-**参数：**
+map部分：
 
 ```json
 {
-    "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
-    "registerAddress":"<String>",									//注册地址
-    "license":"<File>",														//新的营业执照上传
-    "registerCapital":"<String>",									//注册资本（万元）
-    "realAddress":"<String>",									//实际经营地址
-    "realCapital":"<String>",									//实收资本（万元）
-    "lastIncome":"<String>",									//上年度经营收入
-    "lastTax":"<String>",									//上年度税收
-    "employees":"<String>",									//员工人数
-    "originNumber":"<String>",									//初始入园人数
-    "setDate":"<String>",									//成立日期
-    "nature":"<String>",									//企业性质
-    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
-    "involved":"<String>",									//企业性质
-    "mainBusiness":"<String>",									//主营业务
-    "way":"<String>",									//入园方式
-    "business":"<String>",									//入园业务
-    
-    "oldDemand":[],										//另外填写					
-    
+    "creditCode":"<String>",                    //统一社会信用代码（18位字符）
+   	"name":"<String>",							//申请入驻企业名称
+    "charge":"<String>",						//企业负责人
+   	"represent":"<String>",						//法人代表
+   	"representPhone":"<String>",				//联系电话
+    "representEmail":"<String>",				//邮箱地址
+   	"agent":"<String>",							//经办人
+   	"agentPhone":"<String>1",					//经办人电话
+   	"agentEmail":"<String>",					//经办人地址
+    "registerAddress":"<String>",				//注册地址
+    "registerCapital":"<String>",				//注册资本（万元）
+    "realAddress":"<String>",					//实际经营地址
+    "realCapital":"<String>",					//实收资本（万元）
+    "lastIncome":"<String>",					//上年度经营收入
+    "lastTax":"<String>",						//上年度税收
+    "employees":"<String>",						//员工人数
+    "originNumber":"<String>",					//初始入园人数
+    "setDate":"<String>",						//成立日期
+    "nature":"<String>",						//企业性质
+    "involved":"<String>",						//企业性质
+    "mainBusiness":"<String>",					//主营业务
+    "way":"<String>",							//入园方式
+    "business":"<String>",						//入园业务
+    "oldDemand":{								//园区场地租赁需求
+        "leaseArea":"<String>",							//租赁面积(平方米)
+        "position":"<String>",							//位置需求
+        "lease":"<String>",								//租期(年)
+        "floor":"<String>",								//楼层需求
+        "electric":"<String>",							//电力需求
+        "water":"<String>",								//给排水需求
+        "web":"<String>",								//网络需求
+        "others":"<String>"								//其他需求
+    },						
     "oldShareholder":[{
-        "name":"<String>",									//股东姓名或名称
-        "stake":"<String>",									//股份比例
-        "nature":"<String>",									//股东性质
+        "name":"<String>",						//股东姓名或名称
+        "stake":"<String>",						//股份比例
+        "nature":"<String>",					//股东性质
 	},{
         "name":"<String>",
         "stake":"<String>",
@@ -529,15 +499,14 @@ token 保存时间待定
 	}
     	......
     ],
-     
     "oldMainPerson":[{
-        "name":"<String>",									//姓名
-        "born":"<String>",									//出生年月
-        "job":"<String>",									//职务
-        "school":"<String>",									//毕业学校
-        "title":"<String>",									//职称
-        "background":"<String>",									//学历
-        "professional":"<String>",									//专业
+        "name":"<String>",						//姓名
+        "born":"<String>",						//出生年月
+        "job":"<String>",						//职务
+        "school":"<String>",					//毕业学校
+        "title":"<String>",						//职称
+        "background":"<String>",				//学历
+        "professional":"<String>",				//专业
     },{
         "name":"<String>",
         "born":"<String>",
@@ -549,15 +518,14 @@ token 保存时间待定
     }
     	......              
     ],
-
    "oldProject":[{
-        "projectBrief":"<String>",									//项目简介
-        "advantage":"<String>",									//竞争优势分析
-        "market":"<String>",									//市场前景分析
-        "energy":"<String>",									//能耗分析
-        "pollution":"<String>",									//污染分析
-        "noise":"<String>",									//噪音分析
-        "others":"<String>",									//其他分析
+        "projectBrief":"<String>",				//项目简介
+        "advantage":"<String>",					//竞争优势分析
+        "market":"<String>",					//市场前景分析
+        "energy":"<String>",					//能耗分析
+        "pollution":"<String>",					//污染分析
+        "noise":"<String>",						//噪音分析
+        "others":"<String>",					//其他分析
     },{
         "projectBrief":"<String>",
         "advantage":"<String>",
@@ -569,29 +537,27 @@ token 保存时间待定
     }
          ......     
     ],
-       
-	"oldIntellectual":[{
-        "name":"<String>",									//名称
-        "kind":"<String>",									//类别
-        "applyTime":"<String>",									//申请时间
-        "approvalTime":"<String>",									//批准时间
-        "intellectualFile":"<File>",								//知识产权证书等扫描文件
+	"oldIntellectual":[{						//知识产权情况，没有就传空数组
+        "name":"<String>",						//名称
+        "kind":"<String>",						//类别
+        "applyTime":"<String>",					//申请时间
+        "approvalTime":"<String>",				//批准时间
+        
     },{
         "name":"<String>",
         "kind":"<String>",
         "applyTime":"<String>",
         "approvalTime":"<String>",
-        "intellectualFile":"<File>",
+        
     }
 		......
 	],
-
     "oldFunding":[{
-    	"name":"<String>",								//项目奖项名称
-        "level":"<String>",								//级别
-        "time":"<String>",								//时间
-        "grants":"<String>",								//获得政府资助金额
-        "award":"<String>",								//颁奖部门/时间
+    	"name":"<String>",						//项目奖项名称
+        "level":"<String>",						//级别
+        "time":"<String>",						//时间
+        "grants":"<String>",					//获得政府资助金额
+        "award":"<String>",						//颁奖部门/时间
     },{
     	"name":"<String>",
         "level":"<String>",
@@ -601,12 +567,27 @@ token 保存时间待定
     }
         ......
     ],
-    
-    "cooperation":"<String>",								//以往和桂电的合作情况
+    "cooperation":"<String>",					//以往和桂电的合作情况
 }
 ```
 
+文件部分：
 
+```json
+"license":"<File>"								//新的营业执照上传    
+```
+
+```json
+"certificate":"<File>"							//教师需要上传教师资格证/学生需要上传学生证
+```
+
+```json
+"intellectualFile":"<File>"				//知识产权证书等扫描文件(要与oldIntellectual的长度相对应，没有就传null)
+```
+
+```json
+"representFile":"<File>"						//法人身份证扫描件
+```
 
 **返回值：**
 
@@ -615,22 +596,22 @@ token 保存时间待定
 ~~~json
 {
     "data":{
-        "id":"<String>",					//表示迁入和独立企业唯一ID
+        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
     },
     "code":0,
     "msg":"success"
 }
 ~~~
 
-## 信息状态及展示
+## 入园申请信息状态及展示
 
 **简要描述：**
 
-展示所有已填信息，显示授权状态
+展示已填入园申请信息
 
 **请求URL：**
 
-- `/api/oldEnterprise`
+- `/api/old/oldEnterprise`
 
 **请求方式：**
 
@@ -803,46 +784,6 @@ token 保存时间待定
         "others":"<String>"								//其他需求
     }
     "paymentVoucher":"<File>"						// 缴费凭证
-}
-```
-
-**返回值：**
-
-```json
-{
-    "data":{
-        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
-    },
-    "code":0,
-    "msg":"success"
-}
-```
-
-## 申请房间
-
-**简要描述：**科技园场地申请
-
-**请求URL：**
-
-- `/api/old/demand`
-
-**请求方式：**
-
-- POST（带token）
-
-**参数：**
-
-```json
-{
-    "creditCode":"<String>",						//统一社会信用代码	
-    "leaseArea":"<String>",							//租赁面积(平方米)
-    "position":"<String>",							//位置需求
-    "lease":"<String>",								//租期(年)
-    "floor":"<String>",								//楼层需求
-    "electric":"<String>",							//电力需求
-    "water":"<String>",								//给排水需求
-    "web":"<String>",								//网络需求
-    "others":"<String>"								//其他需求
 }
 ```
 

@@ -85,11 +85,11 @@ public class FormServiceImpl implements FormService {
         if (form.getHighEnterprise().equals("是")) {
             String aa = map.getString("map");
             JSONObject mapJson = JSONObject.parseObject(aa);
-            System.out.println(mapJson);
+//            System.out.println(mapJson);
             FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
             String strTemp = mapJson.getString("highEnterpriseData");
             JSONObject highEnterpriseData = JSONObject.parseObject(strTemp);
-            System.out.println(highEnterpriseData);
+//            System.out.println(highEnterpriseData);
             formHighEnterprise.setCertificateCode(highEnterpriseData.getString("getTime"));
             formHighEnterprise.setHighEnterpriseId(highEnterpriseData.getString("certificateCode"));
             // 在form中插入高新技术企业表id
