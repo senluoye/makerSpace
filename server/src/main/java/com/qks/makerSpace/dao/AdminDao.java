@@ -16,6 +16,14 @@ import java.util.Map;
 @Repository
 public interface AdminDao {
 
+    /**
+     * 管理员分配公司账号
+     * @param user
+     * @return
+     */
+    @Insert("insert into user(user_id, name, password) values (#{userId}, #{name}, #{password})")
+    Integer addNewUser(User user);
+
     @Select("select old.credit_code as creditCode, old.organization_code as organizationCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
             "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position, " +

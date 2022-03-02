@@ -13,6 +13,14 @@ import java.util.List;
 @Repository
 public interface OldEnterpriseDao {
 
+    /**
+     * 获取用户
+     * @param userId
+     * @return
+     */
+    @Select("select * from user where user_id = #{userId}")
+    User getUserByUserId(String userId);
+
     @Insert("insert into old(old_id, credit_code, organization_code, name, password, " +
             "represent, represent_phone, represent_email, agent, agent_phone, agent_email)" +
             "VALUES (#{oldId}, #{creditCode}, #{organizationCode}, #{name}, #{password}, #{represent}, " +
@@ -30,9 +38,6 @@ public interface OldEnterpriseDao {
 
     @Select("select * from old where credit_code = #{creditCode}")
     List<Old> getAllOld(String creditCode);
-
-//    @Select("select * from old")
-//    List<Old> getAllOld();
 
     @Update("update old " +
             "set register_address = #{registerAddress}, license = #{license}, register_capital = #{registerCapital}," +

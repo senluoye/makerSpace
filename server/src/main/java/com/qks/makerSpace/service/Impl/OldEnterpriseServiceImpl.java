@@ -164,22 +164,36 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
-     * 入园申请表填写
+     * 入园申请表填写(含更新)
+     * @param token
      * @param str
+     * @param license
+     * @param certificate
+     * @param intellectualFile
+     * @param representFile
      * @return
+     * @throws Exception
      */
     @Override
     public Map<String, Object> updateOldEnterprise(String token,
                                                    String str,
-                                                   MultipartFile[] files) throws Exception {
+                                                   MultipartFile license,
+                                                   MultipartFile certificate,
+                                                   MultipartFile intellectualFile,
+                                                   MultipartFile representFile) throws Exception {
+        /**
+         * 首先验证用户是否存在
+         */
         String userId = JWTUtils.parser(token).get("userId").toString();
+        User user = oldEnterpriseDao.getUserByUserId(userId);
+        if (user == null) return MyResponseUtil.getResultMap(null, -1, "用户不存在");
+
+        /**
+         * 提取数据
+         */
         JSONObject map = JSONObject.parseObject(str);
-        System.out.println(str);
-        System.out.println(map);
         String creditCode = map.get("creditCode").toString();
         Date date = new Date();
-
-        // 数据初步处理
         Old old = OldParserUtils.parser(map);
         List<OldShareholder> oldShareholders = OldParserUtils.OldShareholderParser(map.getJSONArray("oldShareholder"));
         List<OldMainPerson> oldMainPeoples =  OldParserUtils.OldMainPersonParser(map.getJSONArray("oldMainPerson"));
@@ -209,23 +223,15 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             }
         }
 
-        if (oldEnterpriseDao.exitMainPerson(creditCode) != null) {
-            // 如果之前已经有信息存在 --->删除对应信息
-            try {
-                oldEnterpriseDao.deleteOldMainPerson(oldEnterpriseDao.selectOldMainPerson(creditCode));
-                oldEnterpriseDao.deleteOldProject(oldEnterpriseDao.selectOldProject(creditCode));
-                oldEnterpriseDao.deleteOldFunding(oldEnterpriseDao.selectOldFunding(creditCode));
-                oldEnterpriseDao.deleteOldShareholder(oldEnterpriseDao.selectOldShareholder(creditCode));
-                oldEnterpriseDao.deleteOldIntellectual(oldEnterpriseDao.selectOldIntellectual(creditCode));
-                oldEnterpriseDao.deleteAuditByCreditCode(creditCode);
-            } catch (Exception e) {
-                throw new ServiceException("填写失败");
-            }
-        }
-
-        //更新主表
+        /**
+         * 首先向old表中插入数据
+         */
         if (oldEnterpriseDao.updateOld(old) <= 0)
             throw new ServiceException("信息插入失败:old");
+
+        /**
+         * 其次向从表中插入数据
+         */
         for (OldMainPerson oldMainPeople : oldMainPeoples) {
             if (oldEnterpriseDao.insertOldMainPeople(oldMainPeople) <= 0)
                 throw new ServiceException("信息插入失败:oldMainPeople");
@@ -247,7 +253,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 throw new ServiceException("信息插入失败:oldShareholder");
         }
 
-        // 插入数据到审核表
+        /**
+         * 向审核表中插入数据
+         */
         Audit audit = new Audit();
         audit.setAuditId(creditCode);
         audit.setAdministratorAudit("未审核");
@@ -257,7 +265,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         if (oldEnterpriseDao.insertAudit(audit) <= 0)
             throw new ServiceException("信息插入失败:audit");
 
-        // 绑定用户和公司
+        /**
+         * 绑定用户和公司
+         */
         if (oldEnterpriseDao.selectUserCompany(creditCode) != null) // 如果不为空则更新，为空则插入
             oldEnterpriseDao.updateUserCompany(userId,creditCode);
         else

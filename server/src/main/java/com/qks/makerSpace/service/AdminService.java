@@ -9,6 +9,8 @@ import java.util.Map;
 
 public interface AdminService {
 
+    Map<String, Object> addNewUser(JSONObject jsonObject);
+
     Map<String, Object> getAllDetails() throws ServiceException;
     Map<String, Object> getNewTechnologyById(String id) throws ServiceException;
     Map<String, Object> getOldTechnologyById(String id) throws ServiceException;

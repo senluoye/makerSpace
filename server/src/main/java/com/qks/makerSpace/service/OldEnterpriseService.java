@@ -13,7 +13,12 @@ public interface OldEnterpriseService {
 
     Map<String, Object> getOldEnterprise(String token);
     Map<String, Object> oldRegister(JSONObject map) throws ServiceException;
-    Map<String, Object> updateOldEnterprise(String token, String map, MultipartFile[] files) throws Exception;
+    Map<String, Object> updateOldEnterprise(String token,
+                                            String map,
+                                            MultipartFile license,
+                                            MultipartFile certificate,
+                                            MultipartFile intellectualFile,
+                                            MultipartFile representFile) throws Exception;
     Map<String, Object> oldEnterpriseDemand(JSONObject map) throws ServiceException;
     Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
     Map<String, Object> oldEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException;

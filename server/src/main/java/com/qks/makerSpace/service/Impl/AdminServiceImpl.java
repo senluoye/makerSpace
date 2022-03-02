@@ -15,6 +15,9 @@ import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
 import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,6 +30,30 @@ public class AdminServiceImpl implements AdminService {
 
     public AdminServiceImpl(AdminDao adminDao) {
         this.adminDao = adminDao;
+    }
+
+    /**
+     * 管理员分配公司账号
+     * @return Hashmap
+     */
+    @Override
+    public Map<String, Object> addNewUser(JSONObject map) {
+        /**
+         * 获取公司名称和密码
+         */
+        String name = map.getString("name");
+        String password = map.getString("password");
+        User user = new User();
+        user.setUserId(UUID.randomUUID().toString());
+        user.setName(name);
+        user.setPassword(password);
+
+        /**
+         * 插入数据库
+         */
+        if (adminDao.addNewUser(user) > 0) return MyResponseUtil.getResultMap(user, 0, "success");
+
+        return MyResponseUtil.getResultMap(null, -1, "增加用户失败");
     }
 
     /**

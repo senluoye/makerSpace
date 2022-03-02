@@ -22,6 +22,15 @@ public class AdminController {
     }
 
     /**
+     * 管理员分配公司账号
+     * @return Hashmap
+     */
+    @RequestMapping(value = "register", method = RequestMethod.POST)
+    private Map<String, Object> register(@RequestBody JSONObject map) throws ServiceException {
+        return adminService.addNewUser(map);
+    }
+
+    /**
      * 获取全部科技园企业的部分信息
      */
     @RequestMapping(value = "/technology/all", method = RequestMethod.GET)
