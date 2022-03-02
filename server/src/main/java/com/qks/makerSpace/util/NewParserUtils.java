@@ -11,7 +11,15 @@ public class NewParserUtils {
     public static News newsParser(JSONObject map) {
         News news = new News();
 
-        news.setNewId(map.getString("creditCode"));
+        news.setCreditCode(map.getString("creditCode"));
+        news.setName(map.getString("name"));
+        news.setRepresent(map.getString("represent"));
+        news.setRepresentPerson(map.getString("representPerson"));
+        news.setRepresentPhone(map.getString("representPhone"));
+        news.setRepresentEmail(map.getString("representEmail"));
+        news.setAgent(map.getString("agent"));
+        news.setAgentPhone(map.getString("agentPhone"));
+        news.setAgentEmail(map.getString("agentEmail"));
         news.setRegisterCapital(map.getString("registerCapital"));
         news.setRealCapital(map.getString("realCapital"));
         news.setOriginNumber(map.getString("originNumber"));
@@ -20,6 +28,7 @@ public class NewParserUtils {
         news.setInvolved(map.getString("involved"));
         news.setMainBusiness(map.getString("mainBusiness"));
         news.setBusiness(map.getString("business"));
+        news.setCooperation(map.getString("cooperation"));
 
         return news;
     }

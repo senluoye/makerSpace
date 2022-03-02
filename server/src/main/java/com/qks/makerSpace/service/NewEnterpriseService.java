@@ -16,4 +16,11 @@ public interface NewEnterpriseService {
     Map<String, Object> newEnterpriseDemand(JSONObject map) throws ServiceException;
     Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
     Map<String, Object> newEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException;
+
+    Map<String, Object> newRegister(String token,
+                                    JSONObject map,
+                                    MultipartFile picture,
+                                    MultipartFile representCard,
+                                    MultipartFile certificate,
+                                    MultipartFile[] intellectualFile) throws IOException, ServiceException;
 }
