@@ -763,40 +763,40 @@ map部分：
 
 ##### 表名：new（主表）
 
-|      字段名       |  类型  |                             说明                             |
-| :---------------: | :----: | :----------------------------------------------------------: |
-|    credit_code    | String |                 统一社会信用代码（18位字符）                 |
-| organization_code | String |                   组织机构代码企业注册密码                   |
-|     password      | String |                             密码                             |
-|       name        | String |                        新设立企业名称                        |
-|      picture      |  File  |                     提供名称预核准通知书                     |
-|     represent     | String |                          企业负责人                          |
-|  represent_card   |  File  |                       提供身份证复印件                       |
-|  represent_phone  | String |                      企业负责人联系电话                      |
-|  represent_email  | String |                      企业负责人邮箱地址                      |
-|       agent       | String |                            经办人                            |
-|    agent_phone    | String |                        经办人联系电话                        |
-|    agent_email    | String |                        经办人邮箱地址                        |
-| register_capital  | String |                          拟注册资本                          |
-|   real_capital    | String |                         实际募集资本                         |
-|   origin_number   | String |                         初始员工人数                         |
-|   register_time   | String |                         预计注册日期                         |
-|      nature       | String |                        拟注册企业性质                        |
-|    certificate    |  File  |          教室需要上传教师资格证/学生需要上传学生证           |
-|     involved      | String |                           所属行业                           |
-|   main_business   | String |                           主营业务                           |
-|     business      | String |                           入园业务                           |
-|    new_demand     | String |             园区场地租赁需求  -->到 newDemand 表             |
-|  new_shareholder  | String |               股东构成  -->到 newShareholder表               |
-|  new_mainperson   | String |             主要人员介绍  -->到 newMainPerson表              |
-|    new_project    | String |          入园项目简要介绍和分析  -->到 newProject表          |
-| new_intellectual  | String |            知识产权情况  -->到 newIntellectual表             |
-|    suggestion     | String |                          科技园意见                          |
-|       note        | String |                             备注                             |
-|       state       | String | 授权状态（初始为 null，待审核为 0，审核不通过为 1，审核通过为 2） |
-|    submit_time    | String |                           提交时间                           |
-|       room        | String |                            房间号                            |
-|    outApplyId     | String |              科技园退租申请书 -->到 OutApply 表              |
+|      字段名      |  类型  |                             说明                             |
+| :--------------: | :----: | :----------------------------------------------------------: |
+|   credit_code    | String |                 统一社会信用代码（18位字符）                 |
+|       name       | String |                        新设立企业名称                        |
+|     picture      |  File  |                     提供名称预核准通知书                     |
+|    represent     | String |                             法人                             |
+|  represent_card  |  File  |                     法人提供身份证复印件                     |
+| represent_person | String |                          企业负责人                          |
+| represent_phone  | String |                      企业负责人联系电话                      |
+| represent_email  | String |                      企业负责人邮箱地址                      |
+|      agent       | String |                            经办人                            |
+|   agent_phone    | String |                        经办人联系电话                        |
+|   agent_email    | String |                        经办人邮箱地址                        |
+| register_capital | String |                          拟注册资本                          |
+|   real_capital   | String |                         实际募集资本                         |
+|  origin_number   | String |                         初始员工人数                         |
+|  register_time   | String |                         预计注册日期                         |
+|      nature      | String |                        拟注册企业性质                        |
+|   certificate    |  File  |          教室需要上传教师资格证/学生需要上传学生证           |
+|     involved     | String |                           所属行业                           |
+|  main_business   | String |                           主营业务                           |
+|     business     | String |                           入园业务                           |
+|    new_demand    | String |             园区场地租赁需求  -->到 newDemand 表             |
+| new_shareholder  | String |               股东构成  -->到 newShareholder表               |
+|  new_mainperson  | String |             主要人员介绍  -->到 newMainPerson表              |
+|   new_project    | String |          入园项目简要介绍和分析  -->到 newProject表          |
+| new_intellectual | String |            知识产权情况  -->到 newIntellectual表             |
+|   cooperation    | String |                     以往与桂电的合作情况                     |
+|    suggestion    | String |                          科技园意见                          |
+|       note       | String |                             备注                             |
+|      state       | String | 授权状态（初始为 null，待审核为 0，审核不通过为 1，审核通过为 2） |
+|   submit_time    | String |                           提交时间                           |
+|       room       | String |                            房间号                            |
+|    outApplyId    | String |              科技园退租申请书 -->到 OutApply 表              |
 
 
 
@@ -860,9 +860,7 @@ map部分：
 |    approval_time    | String |        批准时间        |
 |  intellectual_file  |  File  | 知识产权证书等扫描文件 |
 
-
-
-## 注册
+## 入园申请
 
 **简要描述：**
 
@@ -878,75 +876,46 @@ map部分：
 
 **参数：**
 
-```json
-{
-    "map":{
-    	"creditCode":"<String>",
-    	"organizationCode":"<String>",
-    	"password":"<String>",
-    	"name":"<String>",
-    	"represent":"<String>",
-    	"representPhone":"<String>",
-    	"representEmail":"<String>",
-    	"agent":"<String>",
-    	"agentPhone":"<String>1",
-    	"agentEmail":"<String>"
-	},
-    "picture":"File[]"											//这部分上传一个文件数组，包括名称预核准通知书、身份证复印件
-}
-```
+> 以表单形式提交
 
-**返回值：**
-
-请求成功：
+map部分：
 
 ~~~json
 {
-    "data":{
-        "creditCode":"<String>",					//表示新成立企业或非独立注册企业唯一ID
+    "creditCode":"<String>",
+    "name":"<String>",									  //新设立企业名称
+    "represent":"<String>",								//企业法人代表
+    "representPerson":"<String>",				   //负责人名字
+    "representPhone":"<String>",				  //负责人电话号码
+    "representEmail":"<String>",					//负责人邮箱
+    "agent":"<String>",									  //经办人
+    "agentPhone":"<String>",					   //经办人电话
+    "agentEmail":"<String>",					     //经办人邮箱
+    "registerCapital":"<String>",					 //拟注册资本（万元）
+    "realCapital":"<String>",						   //实际募集资本（万元）
+    "originNumber":"<String>",					  //初始入园人数
+    "registerTime":"<String>",						 //预计注册日期
+    "nature":"<String>",								 //企业性质
+    "involved":"<String>",							   //企业性质
+    "mainBusiness":"<String>",					   //主营业务
+    "way":"<String>",									 //入园方式
+    "business":"<String>",							  //入园业务
+    
+    "newDemand":{
+        "leaseArea":"<String>",							//租赁面积(平方米)
+    	"position":"<String>",							//位置需求
+    	"lease":"<String>",								//租期(年)
+    	"floor":"<String>",								//楼层需求
+    	"electric":"<String>",							//电力需求
+    	"water":"<String>",								//给排水需求
+    	"web":"<String>",								//网络需求
+    	"others":"<String>"								//其他需求
     },
-    "code":0,
-    "msg":"success"
-}
-~~~
-
-
-
-## 详细信息填写并提交
-
-**简要描述：**
-
-部分字段在注册是已经填写，所以只需要更新表中数据
-
-**请求URL：**
-
-- `/api/new/newEnterprise`
-
-**请求方式：**
-
-- PUT（带token）
-
-**参数：**
-
-```json
-{
-    "creditCode":"<String>"
-    "registerCapital":"<String>",							//拟注册资本（万元）
-    "realCapital":"<String>",									//实际募集资本（万元）
-    "originNumber":"<String>",								//初始入园人数
-    "registerTime":"<String>",									//预计注册日期
-    "nature":"<String>",									//企业性质
-    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
-    "involved":"<String>",									//企业性质
-    "mainBusiness":"<String>",									//主营业务
-    "way":"<String>",									//入园方式
-    "business":"<String>",									//入园业务
-    "newDemand":[],
     
     "newShareholder":[{
-        "name":"<String>",									//股东姓名或名称
-        "stake":"<String>",									//股份比例
-        "nature":"<String>",									//股东性质
+        "name":"<String>",								//股东姓名或名称
+        "stake":"<String>",								 //股份比例
+        "nature":"<String>",							//股东性质
 	},{
         "name":"<String>",
         "stake":"<String>",
@@ -956,13 +925,13 @@ map部分：
     ],
      
     "newMainPerson":[{
-        "name":"<String>",									//姓名
-        "born":"<String>",									//出生年月
-        "job":"<String>",									//职务
-        "school":"<String>",									//毕业学校
+        "name":"<String>",								//姓名
+        "born":"<String>",								 //出生年月
+        "job":"<String>",								  //职务
+        "school":"<String>",							//毕业学校
         "title":"<String>",									//职称
-        "background":"<String>",									//学历
-        "professional":"<String>",									//专业
+        "background":"<String>",				    //学历
+        "professional":"<String>",					  //专业
     },{
         "name":"<String>",
         "born":"<String>",
@@ -976,13 +945,13 @@ map部分：
     ],
 
    "newProject":[{
-        "projectBrief":"<String>",									//项目简介
-        "advantage":"<String>",									//竞争优势分析
-        "market":"<String>",									//市场前景分析
-        "energy":"<String>",									//能耗分析
-        "pollution":"<String>",									//污染分析
+        "projectBrief":"<String>",						//项目简介
+        "advantage":"<String>",						   //竞争优势分析
+        "market":"<String>",							  //市场前景分析
+        "energy":"<String>",							  //能耗分析
+        "pollution":"<String>",							  //污染分析
         "noise":"<String>",									//噪音分析
-        "others":"<String>",									//其他分析
+        "others":"<String>",							   //其他分析
     },{
         "projectBrief":"<String>",
         "advantage":"<String>",
@@ -996,11 +965,11 @@ map部分：
     ],
        
 	"newIntellectual":[{
-        "name":"<String>",									//名称
+        "name":"<String>",								  //名称
         "kind":"<String>",									//类别
-        "applyTime":"<String>",									//申请时间
-        "approvalTime":"<String>",									//批准时间
-        "intellectualFile":"<File>",								//知识产权证书等扫描文件
+        "applyTime":"<String>",						   //申请时间
+        "approvalTime":"<String>",					 //批准时间
+        "intellectualFile":"<File>",					  //知识产权证书等扫描文件
     },{
         "name":"<String>",
         "kind":"<String>",
@@ -1010,11 +979,27 @@ map部分：
     }
 		......
 	],
-    
+    "cooperation":"<String>"						 //以往和桂电的合作情况
 }
-```
+~~~
 
+文件部分：
 
+~~~json
+"picture":"<File>"											//提供名称预核准通知书
+~~~
+
+~~~json
+"representCard":"<File>"							  //企业法人身份证
+~~~
+
+~~~json
+"certificate":"<File>"									   //教师需要上传教师资格证/学生需要上传学生证
+~~~
+
+~~~json
+"intellectualFile":"<File>"								//知识产权证书等扫描件（要与newIntellectual的长度相对应，没有传null）
+~~~
 
 **返回值：**
 
@@ -1023,7 +1008,7 @@ map部分：
 ~~~json
 {
     "data":{
-        "id":"<String>",					//表示新成立企业或非独立注册企业唯一ID
+        "creditCode":"<String>",
     },
     "code":0,
     "msg":"success"
@@ -1203,49 +1188,6 @@ map部分：
     "msg":"success"
 }
 ```
-
-
-## 申请房间
-
-**简要描述：**科技园场地申请
-
-**请求URL：**
-
-- `/api/new/demand`
-
-**请求方式：**
-
-- POST（带token）
-
-**参数：**
-
-```json
-{
-   	"creditCode":"<String>",						//统一社会信用代码	
-    "leaseArea":"<String>",							//租赁面积(平方米)
-    "position":"<String>",							//位置需求
-    "lease":"<String>",								//租期(年)
-    "floor":"<String>",								//楼层需求
-    "electric":"<String>",							//电力需求
-    "water":"<String>",								//给排水需求
-    "web":"<String>",								//网络需求
-    "others":"<String>"								//其他需求
-}
-```
-
-**返回值：**
-
-```json
-{
-    "data":{
-        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
-    },
-    "code":0,
-    "msg":"success"
-}
-```
-
-
 
 
 

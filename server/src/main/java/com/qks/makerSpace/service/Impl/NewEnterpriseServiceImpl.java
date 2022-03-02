@@ -86,7 +86,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         String newId = UUID.randomUUID().toString();
 
         news.setCreditCode(creditCode);
-        news.setOrganizationCode(map.get("organizationCode").toString());
+//        news.setOrganizationCode(map.get("organizationCode").toString());
 //        news.setPassword(map.get("password").toString());
         news.setName(map.get("name").toString());
         news.setRepresent(map.get("represent").toString());
@@ -309,5 +309,83 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             throw new ServiceException("续约失败");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
+    }
+
+    @Override
+    public Map<String, Object> newRegister(String token,
+                                           JSONObject map,
+                                           MultipartFile picture,
+                                           MultipartFile representCard,
+                                           MultipartFile certificate,
+                                           MultipartFile[] intellectualFile) throws IOException, ServiceException {
+        //数据处理
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        String creditCode = map.getString("creditCode");
+
+        News news = NewParserUtils.newsParser(map);
+        news.setNewId(UUID.randomUUID().toString());
+
+        //picture：名称预核准通知书    representCard：法人身份证复印件     certificate:  教室需要上传教师资格证/学生需要上传学生证
+        try {
+            news.setPicture(picture.getBytes());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ServerException("名称预核准通知书未提交");
+        }
+        try {
+            news.setRepresentCard(representCard.getBytes());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ServerException("法人身份证复印件未提交");
+        }
+        try {
+            news.setCertificate(certificate.getBytes());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ServerException("教师资格证/学生证未提交");
+        }
+
+        Date date = new Date();
+        news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+
+        List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.getJSONArray("newMainPerson"));
+        List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.getJSONArray("newProject"));
+        List<NewIntellectual> newIntellectuals = NewParserUtils.NewIntellectualParser(map.getJSONArray("newIntellectual"));
+        List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.getJSONArray("newShareholder"));
+        NewDemand newDemand = JSONObject.parseObject(map.getString("newDemand"),NewDemand.class);
+
+        news.setNewShareholderId(newShareholders.get(0).getNewShareholderId());
+        news.setNewMainpersonId(newMainPeople.get(0).getNewMainpersonId());
+        news.setNewProjectId(newProjects.get(0).getNewProjectId());
+        news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
+
+        for (int i = 0; i <intellectualFile.length; i++) {
+            try {
+                newIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                throw new ServiceException("读取文件发生错误，请重新上传");
+            }
+        }
+
+        //插入数据
+
+
+
+        //更新 Audit
+        Audit audit = new Audit();
+        audit.setAuditId(creditCode);
+        audit.setAdministratorAudit("未审核");
+        audit.setLeadershipAudit("未审核");
+        audit.setDescribe("科技园");
+
+        if (oldEnterpriseDao.insertAudit(audit) <= 0)
+            throw new ServiceException("信息插入失败:audit");
+
+        if (oldEnterpriseDao.selectUserCompany(creditCode) != null) {
+            oldEnterpriseDao.updateUserCompany(userId,creditCode);
+        } else {
+            oldEnterpriseDao.insertUserCompany(userId, creditCode);
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("creditCode", creditCode);
+        return MyResponseUtil.getResultMap(data,0,"success");
     }
 }

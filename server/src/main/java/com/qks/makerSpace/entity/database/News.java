@@ -6,12 +6,11 @@ import lombok.Data;
 public class News {
     private String NewId;
     private String creditCode;
-    private String organizationCode;
-    private String password;
     private String name;
     private byte[] picture;
     private String represent;
     private byte[] representCard;
+    private String representPerson;
     private String representPhone;
     private String representEmail;
     private String agent;
@@ -32,6 +31,7 @@ public class News {
     private String newMainpersonId;
     private String newProjectId;
     private String newIntellectualId;
+    private String cooperation;
     private String submitTime;
     private String room;
     private String inApplyId;
