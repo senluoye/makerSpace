@@ -17,15 +17,18 @@ public interface NewEnterpriseDao {
 
 //  注册
     @Insert("insert into " +
-            "new(new_id,credit_code,organization_code,name,picture,represent,represent_card,represent_phone," +
-            "represent_email,agent,agent_phone,agent_email) " +
-            "VALUES (#{newId},#{creditCode},#{organizationCode}," +
-            "#{name},#{picture},#{represent},#{representCard}," +
-            "#{representPhone},#{representEmail},#{agent}," +
-            "#{agentPhone},#{agentEmail})")
+            "new(new_id, credit_code, name, picture, represent, represent_card, represent_person, represent_phone," +
+            "represent_email, agent, agent_phone, agent_email, register_capital, real_capital, origin_number," +
+            "register_time, nature, certificate, involved, main_business, business, new_demand_id, new_shareholder_id, new_mainperson_id," +
+            "new_project_id, new_intellectual_id, cooperation, submit_time) " +
+            "VALUES (#{newId}, #{creditCode}, #{name}, #{picture}, #{represent}, #{representCard}," +
+            "#{representPerson}, #{representPhone}, #{representEmail}, #{agent}, #{agentPhone}," +
+            "#{agentEmail}, #{registerCapital}, #{realCapital}, #{originNumber}, #{registerTime}, " +
+            "#{nature}, #{certificate}, #{involved}, #{mainBusiness}, #{business}, #{newDemandId}, #{newShareholderId}, " +
+            "#{newMainpersonId}, #{newProjectId}, #{newIntellectualId}, #{cooperation}, #{submitTime})")
     int newRegister(News news);
 
-    @Select("select new_demand_id from new where credit_code = #{creditCode}")
+    /*@Select("select new_demand_id from new where credit_code = #{creditCode}")
     String selectNewDemandByCreditCode(String creditCode);
 
 //  更新提交更多数据
@@ -41,7 +44,7 @@ public interface NewEnterpriseDao {
     @Update("update new set state = #{state}, submit_time = #{submitTime}, " +
             "room = #{room}, new_demand_id = #{newDemandId} " +
             "where credit_code = #{creditCode}")
-    Integer updateNewForDemand(String creditCode, String state, String submitTime, String room, String newDemandId);
+    Integer updateNewForDemand(String creditCode, String state, String submitTime, String room, String newDemandId);*/
 
     @Insert("insert into new_demand(id, lease_area, position, lease, " +
             "floor, electric, water, web, others, new_demand_id, time) " +
@@ -78,8 +81,8 @@ public interface NewEnterpriseDao {
     @Select(" select * from new")
     List<News> getAllNew();
 
-    @Select("select * from new where credit_code = #{creditCode}")
-    String getNewsByCreditCode(String creditCode);
+    /*@Select("select * from new where credit_code = #{creditCode}")
+    String getNewsByCreditCode(String creditCode);*/
 
     @Select(" select * from new_demand where new_demand_id = #{newDemandId}")
     List<NewDemand> getNewDemandById(String newDemandId);
@@ -96,8 +99,8 @@ public interface NewEnterpriseDao {
     @Select("select * from new_shareholder where new_shareholder_id = #{newShareholderId}")
     List<NewShareholder> getNewShareholder(String newShareholderId);
 
-    @Update("update user_company set credit_code = #{id} where user_id = #{userId}")
-    Integer updateUserCompany(String userId, String id);
+    /*@Update("update user_company set credit_code = #{id} where user_id = #{userId}")
+    Integer updateUserCompany(String userId, String id);*/
 
     @Select("select credit_code from user_company where user_id = #{userId}")
     String selectCreditCodeByUserId(String userId);
@@ -105,18 +108,18 @@ public interface NewEnterpriseDao {
     @Select("select * from form where credit_code = #{creditCode}")
     List<FormDetails> getAllFormDetails(String creditCode);
 
-    @Select("select * from new where credit_Code = #{creditCode}")
+    /*@Select("select * from new where credit_Code = #{creditCode}")
     List<News> exit(String creditCode);
 
     @Update("update new set organization_code = #{organizationCode}, name = #{name}, picture = #{picture}, " +
             "represent = #{represent}, represent_card = #{representCard}, represent_phone =#{representPhone}, represent_email = #{representEmail}, " +
             "agent = #{agent}, agent_phone = #{agentPhone}, agent_email = #{agentEmail} where credit_code = #{creditCode}")
-    int updateNewRegister(News news);
+    int updateNewRegister(News news);*/
 
     @Select("select new_demand_id  from new where credit_code = #{creditCode}")
     String demandExit(String creditCode);
 
-    // 下面是已经填过表的
+    /*// 下面是已经填过表的
     @Delete("delete * from new_mainperson where new_mainperson_id = #{id}")
     Integer deleteNewMainPerson(String id);
 
@@ -158,5 +161,5 @@ public interface NewEnterpriseDao {
     String exitMainPerson(String creditCode);
 
     @Update("update new set new_demand_id = #{newDemandId} where credit_code = #{creditCode}")
-    Integer updateNewDemandId(String creditCode, String newDemandId);
+    Integer updateNewDemandId(String creditCode, String newDemandId);*/
 }

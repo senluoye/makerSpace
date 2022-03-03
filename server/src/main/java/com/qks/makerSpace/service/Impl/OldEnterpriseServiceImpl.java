@@ -208,20 +208,20 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setOldFundingId(oldFundings.get(0).getFundingId());
         old.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 
-        try {
-            old.setLicense(files[0].getBytes());
-            old.setCertificate(files[1].getBytes());
-        } catch (ArrayIndexOutOfBoundsException e) {
-            throw new ServiceException("上传文件数量不足");
-        }
-
-        for (int i = 2; i < files.length; i++) {
-            try {
-                oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
-            } catch(ArrayIndexOutOfBoundsException e) {
-                throw new ServiceException("读取文件发生错误，请重新上传");
-            }
-        }
+//        try {
+//            old.setLicense(files[0].getBytes());
+//            old.setCertificate(files[1].getBytes());
+//        } catch (ArrayIndexOutOfBoundsException e) {
+//            throw new ServiceException("上传文件数量不足");
+//        }
+//
+//        for (int i = 2; i < files.length; i++) {
+//            try {
+//                oldIntellectuals.get(i - 2).setIntellectualFile(files[i].getBytes());
+//            } catch(ArrayIndexOutOfBoundsException e) {
+//                throw new ServiceException("读取文件发生错误，请重新上传");
+//            }
+//        }
 
         /**
          * 首先向old表中插入数据
