@@ -185,8 +185,8 @@ token 保存时间待定
 | :-----------------: | :--------: | :---------------------------------------------------: |
 |       old_id        |   String   |                       old表主键                       |
 |     credit_code     |   String   |             统一社会信用代码（18位字符）              |
-|  organization_code  |   String   |                     组织机构代码                      |
-|      password       |   String   |                     企业注册密码                      |
+|       charge        |   String   |                      企业负责人                       |
+|                     |            |                                                       |
 |        name         |   String   |                   申请入驻企业名称                    |
 |      represent      |   String   |                       法人代表                        |
 |   represent_phone   |   String   |                   法人代表联系电话                    |
@@ -220,7 +220,7 @@ token 保存时间待定
 |     suggestion      |   String   |                      科技园意见                       |
 |        note         |   String   |                         备注                          |
 |        state        |   String   | 授权状态（初始为 null，待审核，审核不通过，审核通过） |
-|     submit_time     |   String   |                       提交时间                        |
+|     submit_time     |   String   |                     表单提交时间                      |
 |        room         |   String   |                        房间号                         |
 |     outApplyId      |   String   |       科技园退租申请书 -->到 OutApply 表的外键        |
 
@@ -441,11 +441,11 @@ map部分：
     "oldShareholder":[{
         "name":"<String>",						//股东姓名或名称
         "stake":"<String>",						//股份比例
-        "nature":"<String>",					//股东性质
+        "nature":"<String>"						//股东性质
 	},{
         "name":"<String>",
         "stake":"<String>",
-        "nature":"<String>",
+        "nature":"<String>"
 	}
     	......
     ],
@@ -456,7 +456,7 @@ map部分：
         "school":"<String>",					//毕业学校
         "title":"<String>",						//职称
         "background":"<String>",				//学历
-        "professional":"<String>",				//专业
+        "professional":"<String>"				//专业
     },{
         "name":"<String>",
         "born":"<String>",
@@ -464,7 +464,7 @@ map部分：
         "school":"<String>",
         "title":"<String>",
         "background":"<String>",
-        "professional":"<String>",
+        "professional":"<String>"
     }
     	......              
     ],
@@ -475,7 +475,7 @@ map部分：
         "energy":"<String>",					//能耗分析
         "pollution":"<String>",					//污染分析
         "noise":"<String>",						//噪音分析
-        "others":"<String>",					//其他分析
+        "others":"<String>"						//其他分析
     },{
         "projectBrief":"<String>",
         "advantage":"<String>",
@@ -483,7 +483,7 @@ map部分：
         "energy":"<String>",
         "pollution":"<String>",
         "noise":"<String>",
-        "others":"<String>",
+        "others":"<String>"
     }
          ......     
     ],
@@ -491,14 +491,12 @@ map部分：
         "name":"<String>",						//名称
         "kind":"<String>",						//类别
         "applyTime":"<String>",					//申请时间
-        "approvalTime":"<String>",				//批准时间
-        
+        "approvalTime":"<String>"				//批准时间
     },{
         "name":"<String>",
         "kind":"<String>",
         "applyTime":"<String>",
-        "approvalTime":"<String>",
-        
+        "approvalTime":"<String>"
     }
 		......
 	],
@@ -507,24 +505,24 @@ map部分：
         "level":"<String>",						//级别
         "time":"<String>",						//时间
         "grants":"<String>",					//获得政府资助金额
-        "award":"<String>",						//颁奖部门/时间
+        "award":"<String>"						//颁奖部门/时间
     },{
     	"name":"<String>",
         "level":"<String>",
         "time":"<String>",
         "grants":"<String>",
-        "award":"<String>",
+        "award":"<String>"
     }
         ......
     ],
-    "cooperation":"<String>",					//以往和桂电的合作情况
+    "cooperation":"<String>"					//以往和桂电的合作情况
 }
 ```
 
 文件部分：
 
 ```json
-"license":"<File>"								//新的营业执照上传    
+"license":"<File>"								//新的营业执照上传
 ```
 
 ```json
@@ -1905,7 +1903,7 @@ Audit（审核表）
 
 **简要描述：**
 
-获取一个旧企业的全部信息
+获取一个旧企业的入园申请
 
 **请求URL：**
 
@@ -2042,7 +2040,7 @@ Audit（审核表）
 
 **简要描述：**
 
-获取一个旧企业的全部信息
+获取一个旧企业的入园申请
 
 **请求URL：**
 

@@ -30,7 +30,7 @@ public class OldEnterpriseController {
                                                     @RequestPart("map") String str,
                                                     @RequestPart(value = "license", required = false) MultipartFile license,
                                                     @RequestPart(value = "certificate", required = false) MultipartFile certificate,
-                                                    @RequestPart(value = "intellectualFile", required = false) MultipartFile intellectualFile,
+                                                    @RequestPart(value = "intellectualFile", required = false) MultipartFile[] intellectualFile,
                                                     @RequestPart(value = "representFile", required = false) MultipartFile representFile) throws Exception {
         return oldEnterpriseService.updateOldEnterprise(
                 httpServletRequest.getHeader("token"),

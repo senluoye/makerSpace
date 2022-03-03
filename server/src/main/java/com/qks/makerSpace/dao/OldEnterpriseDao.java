@@ -14,48 +14,43 @@ import java.util.List;
 public interface OldEnterpriseDao {
 
     /**
-     * 获取用户
+     * 根据用户id获取用户
      * @param userId
      * @return
      */
     @Select("select * from user where user_id = #{userId}")
     User getUserByUserId(String userId);
 
-    @Insert("insert into old(old_id, credit_code, organization_code, name, password, " +
-            "represent, represent_phone, represent_email, agent, agent_phone, agent_email)" +
-            "VALUES (#{oldId}, #{creditCode}, #{organizationCode}, #{name}, #{password}, #{represent}, " +
-            "#{representPhone}, #{representEmail}, #{agent}, #{agentPhone}, #{agentEmail})")
-    Integer oldRegister(Old old);
+    /**
+     * 向old表中插入一条记录
+     * @param old
+     * @return
+     */
+    @Insert("insert into old(old_id, credit_code, charge, " +
+            "name, represent, represent_phone, register_address, " +
+            "represent_email, agent, agent_phone, agent_email, license, " +
+            "register_capital, real_address, real_capital, last_income, " +
+            "last_tax, employees, origin_number, set_date, nature, " +
+            "certificate, involved, main_business, way, business, " +
+            "old_demand_id, old_shareholder_id, old_mainperson_id, " +
+            "old_project_id, old_intellectual_id, old_funding_id, " +
+            "cooperation, suggestion, note, state, submit_time, room, outapply_id) " +
+            "VALUES (#{oldId}, #{creditCode}, #{charge}, #{name}, #{represent}, " +
+            "#{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, #{agentPhone}, " +
+            "#{agentEmail}, #{license}, #{registerCapital}, #{realAddress}, #{realCapital}, #{lastIncome}, " +
+            "#{lastTax}, #{employees}, #{originNumber}, #{setDate}, #{nature}, #{certificate}, " +
+            "#{involved}, #{mainBusiness}, #{way}, #{business}, #{oldDemandId}, #{oldShareholderId}, " +
+            "#{oldMainpersonId}, #{oldProjectId}, #{oldIntellectualId}, #{oldFundingId}, #{cooperation}, #{state}, " +
+            "#{submitTime}, #{room}, #{oldInapplyId}, #{oldOutapplyId})")
+    Integer insertOld(Old old);
 
-    @Update("update old set organization_code = #{organizationCode}, name = #{name}, password = #{password}, represent = #{represent}, " +
-            "represent_phone = #{representPhone}, represent_email = #{representEmail}, agent = #{agent}, agent_phone = #{agentPhone}, " +
-            "agent_email = #{agentEmail} " +
-            "where credit_code = #{creditCode}")
-    void updateOldRegister(Old old);
-
-    @Select("select * from old where credit_code = #{creditCode}")
-    List<Old> exit(String creditCode);
-
+    /**
+     * 根据creditCode拿到旧公司信息
+     * @param creditCode
+     * @return
+     */
     @Select("select * from old where credit_code = #{creditCode}")
     List<Old> getAllOld(String creditCode);
-
-    @Update("update old " +
-            "set register_address = #{registerAddress}, license = #{license}, register_capital = #{registerCapital}," +
-            "  real_address = #{realAddress}, real_capital = #{realCapital}, last_income = #{lastIncome}," +
-            "  last_tax = #{lastTax}, employees = #{employees}, origin_number = #{originNumber}," +
-            "  set_date = #{setDate}, nature = #{nature}, certificate = #{certificate}, involved = #{involved}," +
-            "  main_business = #{mainBusiness}, way = #{way}, business = #{business}, " +
-            "  old_shareholder_id = #{oldShareholderId}, old_mainperson_id = #{oldMainpersonId}, " +
-            "  old_project_id = #{oldProjectId}, old_intellectual_id = #{oldIntellectualId}, " +
-            "  old_funding_id = #{oldFundingId}, cooperation = #{cooperation}, " +
-            "  submit_time = #{submitTime} " +
-            "  where credit_code = #{oldId}")
-    Integer updateOld(Old old);
-
-    @Update("update old set state = #{state}, submit_time = #{submitTime}, " +
-            "room = #{room}, old_demand_id = #{oldDemandId} " +
-            "where credit_code = #{creditCode}")
-    Integer updateOldForDemand(String creditCode, String state, String submitTime, String room, String oldDemandId);
 
     /**
      * 以下是关于插入Old相关子表的操作
@@ -92,9 +87,6 @@ public interface OldEnterpriseDao {
 
     @Select("select * from old_demand where old_demand_id = #{oldDemandId}")
     List<OldDemand> selectDemandByOldDemandId(String oldDemandId);
-
-    @Update("update old set old_demand_id = #{oldDemandId} where credit_code = #{creditCode}")
-    Integer updateOldDemandId(String creditCode, String oldDemandId);
 
     /**
      * 以下是关于查询Old相关子表的操作
@@ -134,54 +126,16 @@ public interface OldEnterpriseDao {
             "values (#{userId},#{creditCode})")
     Integer insertUserCompany(String userId, String creditCode);
 
-    @Insert("insert into audit(audit_id, administrator_audit, leadership_audit) " +
-            "values (#{auditId}, #{administratorAudit}, #{leadershipAudit})")
+    /**
+     * 插入新的入园申请
+     * @param audit
+     * @return
+     */
+    @Insert("insert into audit(audit_id, administrator_audit, leadership_audit, `describe`, submit_time, credit_code) " +
+            "values (#{auditId}, #{administratorAudit}, #{leadershipAudit}, #{describe}, #{submitTime}, #{creditCode})")
     Integer insertAudit(Audit audit);
-
-    @Delete("delete from audit where audit_id = #{creditCode}")
-    void deleteAuditByCreditCode(String creditCode);
 
     @Select("select * from form where credit_code = #{creditCode}")
     List<FormDetails> getAllFormDetails(String creditCode);
 
-    @Select("select * from audit where audit_id = #{creditCode}")
-    List<Audit> getAudit(String creditCode);
-
-    // 下面是已经填过表的
-    @Delete("delete from old_mainperson where old_mainperson_id = #{id}")
-    void deleteOldMainPerson(String id);
-
-    @Delete("delete from old_project where old_project_id = #{id}")
-    void deleteOldProject(String id);
-
-    @Delete("delete from old_intellectual where old_intellectual_id = #{id}")
-    void deleteOldIntellectual(String id);
-
-    @Delete("delete from old_funding where funding_id = #{id}")
-    void deleteOldFunding(String id);
-
-    @Delete("delete from old_shareholder where old_shareholder_id = #{id}")
-    void deleteOldShareholder(String id);
-
-    @Update("update audit set administrator_audit = #{administratorAudit}, leadership_audit = #{leadershipAudit} " +
-            "where audit_id = #{auditId}")
-    Integer updateAudit(Audit audit);
-
-    @Select("select old_mainperson_id from old where credit_code = #{creditCode}")
-    String selectOldMainPerson(String creditCode);
-
-    @Select("select old_project_id from old where credit_code = #{creditCode}")
-    String selectOldProject(String creditCode);
-
-    @Select("select old_intellectual_id from old where credit_code = #{creditCode}")
-    String selectOldIntellectual(String creditCode);
-
-    @Select("select old_funding_id from old where credit_code = #{creditCode}")
-    String selectOldFunding(String creditCode);
-
-    @Select("select old_shareholder_id from old where credit_code = #{creditCode}")
-    String selectOldShareholder(String creditCode);
-
-    @Select("select old_mainperson_id from old where credit_code = #{creditCode}")
-    String exitMainPerson(String creditCode);
 }

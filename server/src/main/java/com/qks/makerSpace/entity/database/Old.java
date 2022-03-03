@@ -6,9 +6,8 @@ import lombok.Data;
 public class Old {
     private String oldId;
     private String creditCode;
-    private String organizationCode;
+    private String charge;
     private String name;
-    private String password;
     private String represent;
     private String representPhone;
     private String registerAddress;
