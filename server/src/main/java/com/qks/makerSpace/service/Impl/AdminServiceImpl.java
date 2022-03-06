@@ -49,11 +49,19 @@ public class AdminServiceImpl implements AdminService {
         user.setPassword(password);
 
         /**
-         * 插入数据库
+         * 如果用户存在，则修改密码，否则增加新用户
          */
-        if (adminDao.addNewUser(user) > 0) return MyResponseUtil.getResultMap(user, 0, "success");
-
-        return MyResponseUtil.getResultMap(null, -1, "增加用户失败");
+        List<User> users = adminDao.getUserByName(name);
+        if (users.size() == 0) {
+            if (adminDao.addNewUser(user) > 0)
+                user.setPassword(null);
+                return MyResponseUtil.getResultMap(user, 0, "success");
+        } else {
+            user.setUserId(users.get(0).getUserId());
+            if (adminDao.UpdateUser(user) > 0)
+                user.setPassword(null);
+            return MyResponseUtil.getResultMap(user, 0, "success");
+        }
     }
 
     /**

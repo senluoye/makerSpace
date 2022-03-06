@@ -232,7 +232,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
-
     /**
      * 获取某个企业的所有季度报表
      * @param token

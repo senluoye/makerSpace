@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
@@ -36,23 +37,38 @@ public class NewEnterpriseController {
 
     /**
      * 注册
-     * @param str
+     * @param httpServletRequest
+     * @param map
+     * @param picture
+     * @param representCard
+     * @param certificate
+     * @param intellectualFile
      * @return
+     * @throws Exception
      */
     @RequestMapping(value = "newRegister", method = RequestMethod.POST)
-    private Map<String, Object> newRegister(@RequestPart("file") MultipartFile[] file,
-                                            @RequestPart("map") String str) throws Exception {
-        if (file.length == 0) {
-            return MyResponseUtil.getResultMap(null,-1,"文件上传失败");
-        } else {
-            return newEnterpriseService.newRegister(str, file);
-        }
+    private Map<String, Object> newRegister(HttpServletRequest httpServletRequest,
+                                            @RequestParam("map") String map,
+                                            @RequestParam(value = "picture") MultipartFile picture,
+                                            @RequestParam(value = "representCard") MultipartFile representCard,
+                                            @RequestParam(value = "certificate") MultipartFile certificate,
+                                            @RequestParam(value = "intellectualFile", required = false) MultipartFile[] intellectualFile) throws Exception {
+        return newEnterpriseService.newRegister(
+                httpServletRequest.getHeader("token"),
+                JSONObject.parseObject(map),
+                picture,
+                representCard,
+                certificate,
+                intellectualFile);
     }
 
     /**
      * 续约
-     * @param map
+     * @param json
+     * @param voucher
      * @return
+     * @throws ServiceException
+     * @throws IOException
      */
     @RequestMapping(value = "demand", method = RequestMethod.PUT)
     private Map<String, Object> oldEnterprisePay(@RequestPart("map") String json,
@@ -64,31 +80,10 @@ public class NewEnterpriseController {
     }
 
     /**
-     * 房间申请
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "demand", method = RequestMethod.POST)
-    private Map<String, Object> newEnterpriseDemand(@RequestBody JSONObject map) throws ServiceException {
-        return newEnterpriseService.newEnterpriseDemand(map);
-    }
-
-    /**
-     * 入园申请表填写
-     * @param str
-     * @return
-     */
-    @RequestMapping(value = "newEnterprise", method = RequestMethod.PUT)
-    private Map<String, Object> updateNewEnterprise(HttpServletRequest httpServletRequest,
-                                                    @RequestPart("map") String  str,
-                                                    @RequestParam("file") MultipartFile[] file) throws Exception {
-        return newEnterpriseService.updateNewEnterprise(httpServletRequest.getHeader("token"), str, file);
-    }
-
-    /**
      * 获取某个企业的所有季度报表
-     * @param str
+     * @param httpServletRequest
      * @return
+     * @throws Exception
      */
     @RequestMapping(value = "/form/technology", method = RequestMethod.GET)
     private Map<String, Object> getFormByCreditCode(HttpServletRequest httpServletRequest) throws Exception {

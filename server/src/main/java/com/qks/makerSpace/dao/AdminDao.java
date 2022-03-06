@@ -17,12 +17,24 @@ import java.util.Map;
 public interface AdminDao {
 
     /**
-     * 管理员分配公司账号
+     * 根据名称查找用户
+     * @param name
+     * @return
+     */
+    @Select("select * from user where name = #{name}")
+    List<User> getUserByName(String name);
+
+    /**
+     * 增加新用户
      * @param user
      * @return
      */
     @Insert("insert into user(user_id, name, password) values (#{userId}, #{name}, #{password})")
     Integer addNewUser(User user);
+
+    @Update("update user set name = #{name}, password = #{password}, user_describe = #{userDescribe} " +
+            "where user_id = #{userId}")
+    Integer UpdateUser(User user);
 
     @Select("select old.credit_code as creditCode, old.organization_code as organizationCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +

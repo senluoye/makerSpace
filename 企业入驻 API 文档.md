@@ -896,7 +896,6 @@ map部分：
     "nature":"<String>",								 //企业性质
     "involved":"<String>",							   //企业性质
     "mainBusiness":"<String>",					   //主营业务
-    "way":"<String>",									 //入园方式
     "business":"<String>",							  //入园业务
     
     "newDemand":{
@@ -1753,7 +1752,7 @@ Audit（审核表）
 
 **描述**：
 
-管理员分配账号
+管理员分配账号，再次调用即为修改密码。
 
 **请求URL：**
 
