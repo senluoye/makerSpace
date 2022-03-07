@@ -222,7 +222,7 @@ token 保存时间待定
 |        state        |   String   | 授权状态（初始为 null，待审核，审核不通过，审核通过） |
 |     submit_time     |   String   |                     表单提交时间                      |
 |        room         |   String   |                        房间号                         |
-|     outApplyId      |   String   |       科技园退租申请书 -->到 OutApply 表的外键        |
+|     outapplyId      |   String   |       科技园退租申请书 -->到 OutApply 表的外键        |
 
 ##### 表名：old_demand （园区场地租赁需求）
 
@@ -383,7 +383,7 @@ token 保存时间待定
 |   government_grant   | String |                 其中：政府拨款                 |
 |     self_raised      | String |                    企业自筹                    |
 
-## 填写入园申请表(含租赁)
+## 入园申请(含租赁)
 
 **简要描述：**
 
@@ -718,21 +718,26 @@ map部分：
 
 **参数：**
 
+map部分：
+
 ```json
 {
-    "map":{
-        "creditCode":"<String>",						//统一社会信用代码	
-        "leaseArea":"<String>",							//租赁面积(平方米)
-        "position":"<String>",							//位置需求
-        "lease":"<String>",								//租期(年)
-        "floor":"<String>",								//楼层需求
-        "electric":"<String>",							//电力需求
-        "water":"<String>",								//给排水需求
-        "web":"<String>",								//网络需求
-        "others":"<String>"								//其他需求
-    }
-    "paymentVoucher":"<File>"						// 缴费凭证
+    "creditCode":"<String>",						//统一社会信用代码	
+	"leaseArea":"<String>",							//租赁面积(平方米)
+    "position":"<String>",							//位置需求
+    "lease":"<String>",								//租期(年)
+   	"floor":"<String>",								//楼层需求
+    "electric":"<String>",							//电力需求
+    "water":"<String>",								//给排水需求
+    "web":"<String>",								//网络需求
+    "others":"<String>"								//其他需求
 }
+```
+
+文件部分：
+
+```json
+"paymentVoucher":"<File>"						// 缴费凭证
 ```
 
 **返回值：**
@@ -858,7 +863,7 @@ map部分：
 |    approval_time    | String |        批准时间        |
 |  intellectual_file  |  File  | 知识产权证书等扫描文件 |
 
-## 入园申请
+## 入园申请（含租赁）
 
 **简要描述：**
 
@@ -2482,7 +2487,48 @@ Audit（审核表）
 }
 ```
 
-### 
+
+
+----
+
+# 通知
+
+### 数据表
+
+|   字段名    |  类型  |      说明      |
+| :---------: | :----: | :------------: |
+|  notice_id  | String |  通知表唯一id  |
+| credit_code | String |  公司唯一代码  |
+|    text     | String |    通知内容    |
+| notice_time | String | 通知发表的时间 |
+
+
+
+## 查看旧企业所有通知
+
+**简要描述：**查看企业所有通知
+
+**请求URL：**
+
+- `/api/old/notice`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+```json
+{
+    "data":{
+        
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+
 
 
 

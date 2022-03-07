@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.entity.database.*;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class OldParserUtils {
@@ -27,7 +28,6 @@ public class OldParserUtils {
         old.setAgent(map.getString("agent"));
         old.setAgentPhone(map.getString("agentPhone"));
         old.setAgentEmail(map.getString("agentEmail"));
-
         old.setRegisterAddress(map.getString("registerAddress"));
         old.setRegisterCapital(map.getString("registerCapital"));
         old.setRealAddress(map.getString("realAddress"));
@@ -45,6 +45,15 @@ public class OldParserUtils {
         old.setCooperation(map.getString("cooperation"));
 
         return old;
+    }
+
+    public static OldDemand OldDemandParser(String obj) {
+        OldDemand oldDemand = JSONObject.parseObject(obj, OldDemand.class);
+        oldDemand.setId(UUID.randomUUID().toString());
+        oldDemand.setOldDemandId(UUID.randomUUID().toString());
+        oldDemand.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+
+        return oldDemand;
     }
 
     public static List<OldShareholder> OldShareholderParser(JSONArray obj){

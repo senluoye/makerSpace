@@ -26,22 +26,20 @@ public interface OldEnterpriseDao {
      * @param old
      * @return
      */
-    @Insert("insert into old(old_id, credit_code, charge, " +
-            "name, represent, represent_phone, register_address, " +
-            "represent_email, agent, agent_phone, agent_email, license, " +
-            "register_capital, real_address, real_capital, last_income, " +
-            "last_tax, employees, origin_number, set_date, nature, " +
-            "certificate, involved, main_business, way, business, " +
-            "old_demand_id, old_shareholder_id, old_mainperson_id, " +
-            "old_project_id, old_intellectual_id, old_funding_id, " +
-            "cooperation, suggestion, note, state, submit_time, room, outapply_id) " +
+    @Insert("insert into old(old_id, credit_code, charge, name, represent, " +
+            "represent_phone, register_address, represent_email, agent, agent_phone, " +
+            "agent_email, license, register_capital, real_address, real_capital, last_income, " +
+            "last_tax, employees, origin_number, set_date, nature, certificate, " +
+            "involved, main_business, way, business, old_demand_id, old_shareholder_id, " +
+            "old_mainperson_id, old_project_id, old_intellectual_id, old_funding_id, cooperation, " +
+            "suggestion, note, state, submit_time, room, outapply_id) " +
             "VALUES (#{oldId}, #{creditCode}, #{charge}, #{name}, #{represent}, " +
-            "#{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, #{agentPhone}, " +
+            "#{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, " +
             "#{agentEmail}, #{license}, #{registerCapital}, #{realAddress}, #{realCapital}, #{lastIncome}, " +
             "#{lastTax}, #{employees}, #{originNumber}, #{setDate}, #{nature}, #{certificate}, " +
             "#{involved}, #{mainBusiness}, #{way}, #{business}, #{oldDemandId}, #{oldShareholderId}, " +
-            "#{oldMainpersonId}, #{oldProjectId}, #{oldIntellectualId}, #{oldFundingId}, #{cooperation}, #{state}, " +
-            "#{submitTime}, #{room}, #{oldInapplyId}, #{oldOutapplyId})")
+            "#{oldMainpersonId}, #{oldProjectId}, #{oldIntellectualId}, #{oldFundingId}, #{cooperation}, " +
+            "#{suggestion}, #{note}, #{state}, #{submitTime}, #{room}, #{outapplyId})")
     Integer insertOld(Old old);
 
     /**
@@ -110,7 +108,7 @@ public interface OldEnterpriseDao {
     List<OldIntellectual> getOldIntellectualById(String id);
 
     @Select("select user_id from user_company where credit_code = #{creditCode}")
-    String selectUserCompany(String creditCode);
+    List<String> selectUserCompany(String creditCode);
 
     @Select("select credit_code from user_company where user_id = #{userId}")
     String selectCreditCodeByUserId(String userId);

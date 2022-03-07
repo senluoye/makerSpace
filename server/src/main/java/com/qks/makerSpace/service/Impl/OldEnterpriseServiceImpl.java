@@ -56,20 +56,30 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
          * 提取数据
          */
         JSONObject map = JSONObject.parseObject(str);
+        System.out.println("--------------------");
+        System.out.println(map.toString());
+        System.out.println(str);
 
         // 主表
         Old old = OldParserUtils.parser(map);
+        if (old.getNature() == "大学生创业企业    高校教师创业企业 ")
+        old.setLicense(license.getBytes());
+        old.setCertificate(certificate.getBytes());
+        old.setState("未审核");
+        System.out.println(old);
+        System.out.println("--------------------");
+
         // 租赁
-        OldDemand oldDemand = JSONObject.parseObject(String.valueOf(map.getJSONObject("oldDemand")), OldDemand.class);
+        OldDemand oldDemand = OldParserUtils.OldDemandParser(map.getString("oldDemand"));
         // 股东
         List<OldShareholder> oldShareholders = OldParserUtils.OldShareholderParser(map.getJSONArray("oldShareholder"));
         // 主要人员
         List<OldMainPerson> oldMainPeoples =  OldParserUtils.OldMainPersonParser(map.getJSONArray("oldMainPerson"));
-        // 项目
+        // 入园项目
         List<OldProject> oldProjects = OldParserUtils.OldProjectsParser(map.getJSONArray("oldProject"));
         // 知识产权(非必要)
         List<OldIntellectual> oldIntellectuals = OldParserUtils.OldIntellectualParser(map.getJSONArray("oldIntellectual"));
-        // 项目
+        // 承担财政项目
         List<OldFunding> oldFundings = OldParserUtils.OldFundingParser(map.getJSONArray("oldFunding"));
 
         // 将子表id填入old表中
@@ -77,6 +87,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         old.setOldMainpersonId(oldMainPeoples.get(0).getOldMainpersonId());
         old.setOldProjectId(oldProjects.get(0).getOldProjectId());
         old.setOldFundingId(oldFundings.get(0).getFundingId());
+        old.setOldDemandId(oldDemand.getOldDemandId());
 
         // 如果知识产权不为空
         if (oldIntellectuals.size() != 0) {
@@ -103,25 +114,27 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         /**
          * 其次向从表中插入数据
          */
+        if (oldEnterpriseDao.addOldDemand(oldDemand) <= 0)
+            throw new ServiceException("信息插入失败:房租");
         for (OldMainPerson oldMainPeople : oldMainPeoples) {
             if (oldEnterpriseDao.insertOldMainPeople(oldMainPeople) <= 0)
-                throw new ServiceException("信息插入失败:oldMainPeople");
+                throw new ServiceException("信息插入失败:主要人员");
         }
         for (OldProject oldProject : oldProjects) {
             if (oldEnterpriseDao.insertOldProjects(oldProject) <= 0)
-                throw new ServiceException("信息插入失败:oldProject");
+                throw new ServiceException("信息插入失败:科技项目");
         }
         for (OldIntellectual oldIntellectual : oldIntellectuals) {
             if (oldEnterpriseDao.insertOldIntellects(oldIntellectual) <= 0)
-                throw new ServiceException("信息插入失败:oldIntellectual");
+                throw new ServiceException("信息插入失败:知识产权");
         }
         for (OldFunding oldFunding : oldFundings) {
             if (oldEnterpriseDao.insertOldFundings(oldFunding) <= 0)
-                throw new ServiceException("信息插入失败:oldFunding");
+                throw new ServiceException("信息插入失败:承担财政项目");
         }
         for (OldShareholder oldShareholder : oldShareholders) {
             if (oldEnterpriseDao.insertOldShareholder(oldShareholder) <= 0)
-                throw new ServiceException("信息插入失败:oldShareholder");
+                throw new ServiceException("信息插入失败:股东");
         }
 
         String creditCode = old.getCreditCode();

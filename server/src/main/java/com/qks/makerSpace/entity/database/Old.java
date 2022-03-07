@@ -37,9 +37,10 @@ public class Old {
     private String oldIntellectualId;
     private String oldFundingId;
     private String cooperation;
+    private String suggestion;
+    private String note;
     private String state;
     private String submitTime;
     private String room;
-    private String oldInapplyId;
-    private String oldOutapplyId;
+    private String outapplyId;
 }
