@@ -60,10 +60,16 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         System.out.println(map.toString());
         System.out.println(str);
 
-        // 主表
+        // old类
         Old old = OldParserUtils.parser(map);
-        if (old.getNature() == "大学生创业企业    高校教师创业企业 ")
-        old.setLicense(license.getBytes());
+        String nature = old.getNature();
+        if (nature.equals("大学生创业企业") || nature.equals("高校教师创业企业")) {
+            try {
+                old.setLicense(license.getBytes());
+            } catch (Exception e) {
+                throw new ServiceException("请提供与企业性质对应的文件");
+            }
+        }
         old.setCertificate(certificate.getBytes());
         old.setState("未审核");
         System.out.println(old);
