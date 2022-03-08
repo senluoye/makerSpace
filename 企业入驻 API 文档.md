@@ -1933,7 +1933,7 @@ map部分：
         "name":"<String>",						// 公司名称
         "submitTime":"<String>",				// 申请递交的时间
         "administrator_audit":"<String>",		// 管理员审核状态
-        "describe"
+        "describe":"<String>"					// 企业描述
     },
     ......
     ],
@@ -1965,8 +1965,9 @@ map部分：
     "data":[{
         "creditCode":"<Strng>",					// 社会信用代码
         "name":"<String>",						// 公司名称
-        "submitTime":"<String>"，				// 申请递交的时间
-        "administrator_audit":"<String>"		// 管理员审核状态
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "describe":"<String>"					// 企业描述
     },
     	......
     ],

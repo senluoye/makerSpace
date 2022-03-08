@@ -7,5 +7,6 @@ public class ApplyingReq {
     String creditCode;
     String name;
     String submitTime;
-    String administrator_audit;
+    String administratorAudit;
+    String describe;
 }

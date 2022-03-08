@@ -65,7 +65,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
          * 然后验证creditCode是否被其他用户使用
          */
         List<String> userIds = oldEnterpriseDao.selectUserIdByCreditCode(creditCode);
-        if (userIds.size() != 0 && userIds.get(0).equals(userId))
+        if (userIds.size() != 0 && !userIds.get(0).equals(userId))
             throw new ServiceException("该社会信用代码已被其他用户填报");
 
         /**
