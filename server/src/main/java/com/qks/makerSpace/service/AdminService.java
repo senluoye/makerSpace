@@ -19,7 +19,14 @@ public interface AdminService {
     Map<String, Object> deleteByCreditCode(String id) throws ServiceException;
     Map<String, Object> deleteSpaceById(String id) throws ServiceException;
 
-    // 管理员审核相关服务
+    /**
+     * 获取最新的入园审核
+     * @return
+     */
+    Map<String, Object> getAllTechnologyApplying();
+    Map<String, Object> getAllSpaceApplying();
+
+    // 相关服务
     Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException;
     Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException;
     Map<String, Object> agreeSpaceById(JSONObject map) throws ServiceException;

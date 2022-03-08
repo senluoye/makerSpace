@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
 import com.qks.makerSpace.dao.SpaceDao;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.request.ApplyingReq;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
@@ -65,7 +66,27 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 获取全部科技园企业的申请信息
+     * 获取最新所有未审核科技园入园申请
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAllTechnologyApplying() {
+        List<ApplyingReq> lists = adminDao.getAllTechnologyApplying();
+        return MyResponseUtil.getResultMap(lists, 0, "success");
+    }
+
+    /**
+     * 获取最新所有未审核众创空间入园申请
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAllSpaceApplying() {
+        List<ApplyingReq> lists = adminDao.getAllSpaceApplying();
+        return MyResponseUtil.getResultMap(lists, 0, "success");
+    }
+
+    /**
+     * 获取全部科技园企业的部分信息
      */
     @Override
     public Map<String, Object> getAllDetails() {

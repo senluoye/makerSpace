@@ -56,12 +56,37 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
          * 提取数据
          */
         JSONObject map = JSONObject.parseObject(str);
-        System.out.println("--------------------");
-        System.out.println(map.toString());
-        System.out.println(str);
 
-        // old类
+        // 获取old类
         Old old = OldParserUtils.parser(map);
+        String creditCode = old.getCreditCode();
+
+        /**
+         * 然后验证creditCode是否被其他用户使用
+         */
+        List<String> userIds = oldEnterpriseDao.selectUserIdByCreditCode(creditCode);
+        if (userIds.size() != 0 && userIds.get(0).equals(userId))
+            throw new ServiceException("该社会信用代码已被其他用户填报");
+
+        /**
+         * 绑定用户和公司
+         */
+        List<UserCompany> users = oldEnterpriseDao.selectUserCompany(userId);
+        if (users.size() != 0) {
+            // 如果不为空则更新，需要更新old表、audit表、user_company表
+            oldEnterpriseDao.updateUserCompany(userId, creditCode);
+            List<String> auditIds = oldEnterpriseDao.selectAuditIdByCreditCode(users.get(0).getCreditCode());
+            List<String> oldIds = oldEnterpriseDao.selectOldIdByCreditCode(users.get(0).getCreditCode());
+            for (String oldId : oldIds)
+                oldEnterpriseDao.updateOldCreditCode(oldId, creditCode);
+            for (String auditId : auditIds)
+                oldEnterpriseDao.updateAuditCreditCode(auditId, creditCode);
+        }
+        else {
+            // 为空则插入
+            oldEnterpriseDao.insertUserCompany(userId, creditCode);
+        }
+
         String nature = old.getNature();
         if (nature.equals("大学生创业企业") || nature.equals("高校教师创业企业")) {
             try {
@@ -72,8 +97,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         }
         old.setCertificate(certificate.getBytes());
         old.setState("未审核");
-        System.out.println(old);
-        System.out.println("--------------------");
 
         // 租赁
         OldDemand oldDemand = OldParserUtils.OldDemandParser(map.getString("oldDemand"));
@@ -142,16 +165,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             if (oldEnterpriseDao.insertOldShareholder(oldShareholder) <= 0)
                 throw new ServiceException("信息插入失败:股东");
         }
-
-        String creditCode = old.getCreditCode();
-
-        /**
-         * 绑定用户和公司
-         */
-        if (oldEnterpriseDao.selectUserCompany(creditCode) != null) // 如果不为空则更新，为空则插入
-            oldEnterpriseDao.updateUserCompany(userId, creditCode);
-        else
-            oldEnterpriseDao.insertUserCompany(userId, creditCode);
 
         /**
          * 向入园申请审核表中插入数据

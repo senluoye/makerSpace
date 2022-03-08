@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.request.ApplyingReq;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
@@ -35,6 +36,20 @@ public interface AdminDao {
     @Update("update user set name = #{name}, password = #{password}, user_describe = #{userDescribe} " +
             "where user_id = #{userId}")
     Integer UpdateUser(User user);
+
+    /**
+     *  获取最新所有未审核科技园入园申请
+     * @return
+     */
+    @Select("select credit_code, administrator_audit, `describe`, max(submit_time)" +
+            "from audit " +
+            "group by credit_code " +
+            "order by submit_time " +
+            "where `describe`  ")
+    List<ApplyingReq> getAllTechnologyApplying();
+
+    @Select("select ")
+    List<ApplyingReq> getAllSpaceApplying();
 
     @Select("select old.credit_code as creditCode, old.organization_code as organizationCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
