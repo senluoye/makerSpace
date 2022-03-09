@@ -3,12 +3,14 @@ package com.qks.makerSpace.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
+import com.qks.makerSpace.util.JWTUtils;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @RestController
@@ -44,6 +46,34 @@ public class AdminController {
     @RequestMapping(value = "/space/all", method = RequestMethod.GET)
     private Map<String, Object> getSpaceAllDetails() {
         return adminService.getAllSpaceDetails();
+    }
+
+    /**
+     * 获取最新所有未审核科技园入园申请
+     * @return
+     */
+    @RequestMapping(value = "/applying/technology", method = RequestMethod.GET)
+    private Map<String, Object> getAllTechnologyApplying(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("admin"))
+            return adminService.getAllTechnologyApplying();
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
+
+    /**
+     * 获取最新所有未审核众创空间入园申请
+     * @return
+     */
+    @RequestMapping(value = "/applying/space", method = RequestMethod.GET)
+    private Map<String, Object> getAllSpaceApplying(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("admin"))
+            return adminService.getAllSpaceApplying();
+        else
+            throw new ServiceException("请求主体非管理员");
     }
 
     /**

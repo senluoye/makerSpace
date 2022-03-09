@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
 import com.qks.makerSpace.dao.SpaceDao;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.request.ApplyingReq;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
@@ -65,7 +66,40 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 获取全部科技园企业的申请信息
+     * 获取最新所有未审核科技园入园申请
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAllTechnologyApplying() {
+        List<ApplyingReq> lists = adminDao.getAllTechnologyApplying();
+        for (ApplyingReq applyingReq : lists) {
+            // 首先看看该公司在不在旧企业表中
+            List<String> oldNameList = adminDao.getOldNameByCreditCode(applyingReq.getCreditCode());
+            if (oldNameList.size() > 0) // 不为0，在旧企业中
+                applyingReq.setName(oldNameList.get(0));
+            else {
+                List<String> newNameList = adminDao.getNewNameByCreditCode(applyingReq.getCreditCode());
+                applyingReq.setName(newNameList.get(0));
+            }
+        }
+        return MyResponseUtil.getResultMap(lists, 0, "success");
+    }
+
+    /**
+     * 获取最新所有未审核众创空间入园申请
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAllSpaceApplying() {
+        List<ApplyingReq> lists = adminDao.getAllSpaceApplying();
+        for (ApplyingReq applyingReq : lists) {
+            applyingReq.setName(adminDao.getOldNameByCreditCode(applyingReq.getCreditCode()).get(0));
+        }
+        return MyResponseUtil.getResultMap(lists, 0, "success");
+    }
+
+    /**
+     * 获取全部科技园企业的部分信息
      */
     @Override
     public Map<String, Object> getAllDetails() {
@@ -206,7 +240,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> deleteByCreditCode(String creditCode) throws ServiceException {
-        if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) == null)
+        if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode).size() == 0)
             throw new ServiceException("表中不存在该项数据");
         else if (adminDao.deleteOldByCreditCode(creditCode) < 1)
                 throw new ServiceException("删除失败");
@@ -243,11 +277,11 @@ public class AdminServiceImpl implements AdminService {
         if (adminDao.agreeById(creditCode, "通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
-            if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null) {
+            if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode).size() != 0) {
                 if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
                     throw new ServiceException("更新new失败");
             }
-            else if (adminDao.selectCreditCodeFromOldByCreditCode(creditCode) != null) {
+            else if (adminDao.selectCreditCodeFromOldByCreditCode(creditCode).size() != 0) {
                 if (adminDao.updateOldSuggestion(adminSuggestion) < 0)
                     throw new ServiceException("更新old失败");
             }

@@ -2,7 +2,6 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -20,6 +19,9 @@ public interface OldEnterpriseDao {
      */
     @Select("select * from user where user_id = #{userId}")
     User getUserByUserId(String userId);
+
+    @Select("select user_id from user_company where credit_code = #{creditCode}")
+    List<String> selectUserIdByCreditCode(String creditCode);
 
     /**
      * 向old表中插入一条记录
@@ -107,8 +109,39 @@ public interface OldEnterpriseDao {
     @Select("select * from old_intellectual where old_intellectual_id = #{id}")
     List<OldIntellectual> getOldIntellectualById(String id);
 
-    @Select("select user_id from user_company where credit_code = #{creditCode}")
-    List<String> selectUserCompany(String creditCode);
+    /**
+     * 根据用户id查看是否已经存入公司代码
+     * @param userId
+     * @return
+     */
+    @Select("select * from user_company where user_id = #{userId}")
+    List<UserCompany> selectUserCompany(String userId);
+
+    @Select("select old_id from old where credit_code = #{creditCode}")
+    List<String> selectOldIdByCreditCode(String creditCode);
+
+    @Select("select audit_id from audit where credit_code = #{creditCode}")
+    List<String> selectAuditIdByCreditCode(String creditCode);
+
+    /**
+     * old更新creditCode
+     * @param oldCreditCode
+     * @param newCreditCode
+     */
+    @Update("update old " +
+            "set credit_code = #{newCreditCode} " +
+            "where old_id = #{oldId}")
+    void updateOldCreditCode(String oldId, String newCreditCode);
+
+    /**
+     * 更新audit表的creditCode
+     * @param oldCreditCode
+     * @param newCreditCode
+     */
+    @Update("update audit " +
+            "set credit_code = #{newCreditCode}" +
+            "where audit_id = #{auditId}")
+    void updateAuditCreditCode(String auditId, String newCreditCode);
 
     @Select("select credit_code from user_company where user_id = #{userId}")
     String selectCreditCodeByUserId(String userId);
@@ -117,7 +150,9 @@ public interface OldEnterpriseDao {
     String demandExit(String creditCode);
 
     // 其他子表的相关操作
-    @Update("update user_company set credit_code = #{creditCode} where user_id = #{userId}")
+    @Update("update user_company " +
+            "set credit_code = #{creditCode} " +
+            "where user_id = #{userId}")
     Integer updateUserCompany(String userId, String creditCode);
 
     @Insert("insert into user_company(user_id,credit_code) " +

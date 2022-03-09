@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.request.ApplyingReq;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
@@ -35,6 +36,32 @@ public interface AdminDao {
     @Update("update user set name = #{name}, password = #{password}, user_describe = #{userDescribe} " +
             "where user_id = #{userId}")
     Integer UpdateUser(User user);
+
+    /**
+     *  获取最新所有未审核科技园入园申请
+     * @return
+     */
+    @Select("select credit_code, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
+            "from (select * from audit where `describe` = '科技园') temp " +
+            "group by credit_code")
+    List<ApplyingReq> getAllTechnologyApplying();
+
+    @Select("select credit_code, administrator_audit, `describe`, max(submit_time) submit_time" +
+            "from audit " +
+            "group by credit_code, submit_time " +
+            "order by submit_time " +
+            "where `describe` = '众创空间' ")
+    List<ApplyingReq> getAllSpaceApplying();
+
+    @Select("select name from old where credit_code = #{creditCode}")
+    List<String> getOldNameByCreditCode(String creditCode);
+
+    @Select("select name from new where credit_code = #{creditCode}")
+    List<String> getNewNameByCreditCode(String creditCode);
+
+    @Select("select create_name name from space where in_apply_id = #{in_apply_id}")
+    List<String> getSpaceNameByCreditCode(String inApplyId);
+
 
     @Select("select old.credit_code as creditCode, old.organization_code as organizationCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
@@ -139,13 +166,10 @@ public interface AdminDao {
     Audit getAuditById(String id);
 
     @Select("select credit_code from new where credit_code = #{creditCode}")
-    String selectCreditCodeFromNewByCreditCode(String creditCode);
+    List<String> selectCreditCodeFromNewByCreditCode(String creditCode);
 
     @Select("select credit_code from old where credit_code = #{creditCode}")
-    String selectCreditCodeFromOldByCreditCode(String creditCode);
-
-    @Select("select credit_code from old where credit_code = #{creditCode}")
-    String getCreditCode(String creditCode);
+    List<String> selectCreditCodeFromOldByCreditCode(String creditCode);
 
     @Update("update new set suggestion = #{suggestion}, note = #{note} where credit_code = #{creditCode}")
     Integer updateNewSuggestion(AdminSuggestion adminSuggestion);

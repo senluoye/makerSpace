@@ -12,13 +12,7 @@
 
 
 
-# 登录（login）
-
-**简要描述：**
-
-- 管理员登录
-- 迁入和独立注册企业登录
-- 新成立企业或非独立注册企业登录
+# 登录
 
 ## 领导登录
 
@@ -1747,7 +1741,16 @@ map部分：
 
 ## 数据表
 
-Audit（审核表）
+#### Audit（入园审核表）
+
+|        字段         |  类型  |                  说明                  |
+| :-----------------: | :----: | :------------------------------------: |
+|      audit_id       | String |            入园审核表唯一id            |
+| administrator_audit | String | 管理员审核情况（未审核、通过、未通过） |
+|  leadership_audit   | String |  领导审核情况（未审核、通过、未通过）  |
+|      describe       | String |    企业类型描述（科技园、众创空间）    |
+|     submit_time     | String |              申请提交时间              |
+|     credit_code     | String |                公司代码                |
 
 
 
@@ -1772,7 +1775,7 @@ Audit（审核表）
 ~~~json
 {
     "name":"<String>",						//公司名
-    "password":"<String>",					//密码
+    "password":"<String>"					//密码
 }
 ~~~
 
@@ -1839,6 +1842,8 @@ Audit（审核表）
 }
 ~~~
 
+
+
 ### 获取全部众创空间企业信息
 
 **简要描述：**
@@ -1902,6 +1907,78 @@ Audit（审核表）
     "msg":"success"
 }
 ~~~
+
+
+
+### 获取最新所有未审核科技园入园申请
+
+**简要描述：**
+
+获取最新所有未审核科技园入园申请（概览）
+
+**请求URL：**
+
+- `/api/admin/applying/technology`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "creditCode":"<Strng>",					// 社会信用代码
+        "name":"<String>",						// 公司名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "describe":"<String>"					// 企业描述
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+### 获取最新所有未审核众创空间入园申请
+
+**简要描述：**
+
+获取最新所有未审核众创空间入园申请（概览）
+
+**请求URL：**
+
+- `/api/admin/applying/space`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "creditCode":"<Strng>",					// 社会信用代码
+        "name":"<String>",						// 公司名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "describe":"<String>"					// 企业描述
+    },
+    	......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+
 
 ### 获取某一个旧企业入园申请
 
@@ -2212,13 +2289,13 @@ Audit（审核表）
 }
 ~~~
 
-### 
+
 
 ### 删除某一个众创空间申请
 
 **描述**
 
-获取某一个企业众创空间申请
+删除某一个企业众创空间申请
 
 **请求URL：**
 
