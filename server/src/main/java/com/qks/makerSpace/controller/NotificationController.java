@@ -40,4 +40,22 @@ public class NotificationController {
         return notificationService.deleteNotice(map.get("noticeId").toString());
     }
 
+    //获取某条具体通知，并对公司标记
+    @RequestMapping(value = "/detailNotice", method = RequestMethod.POST)
+    public Map<String, Object> noticeRead(@RequestBody Map<String, Object> map) throws ServiceException {
+        return notificationService.noticeRead(map);
+    }
+
+    //查询未看某通知的企业
+    @RequestMapping(value = "/noRead", method = RequestMethod.GET)
+    public Map<String, Object> noRead(@RequestBody Map<String, Object> map) throws ServiceException {
+        return notificationService.noRead(map);
+    }
+
+    //查看已经看某通知的企业
+    @RequestMapping(value = "/already", method = RequestMethod.GET)
+    public Map<String, Object> alreadyRead(@RequestBody Map<String, Object> map) throws ServiceException {
+        return notificationService.alreadyRead(map);
+    }
+
 }

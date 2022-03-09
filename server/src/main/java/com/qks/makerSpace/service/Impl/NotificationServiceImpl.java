@@ -3,9 +3,11 @@ package com.qks.makerSpace.service.Impl;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.NotificationDao;
 import com.qks.makerSpace.entity.database.Notification;
+import com.qks.makerSpace.entity.response.NoticeResponse;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NotificationService;
 import com.qks.makerSpace.util.MyResponseUtil;
+import org.apache.xmlbeans.impl.regex.REUtil;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
@@ -73,5 +75,42 @@ public class NotificationServiceImpl implements NotificationService {
         if (notificationDao.deleteByNoticeId(noticeId) > 0) {
             return MyResponseUtil.getResultMap(null,0,"success");
         } else throw new ServiceException("该通知不存在，或已删除");
+    }
+
+    @Override
+    public Map<String, Object> noticeRead(Map<String, Object> map) throws ServiceException {
+        String noticeId = map.get("noticeId").toString();
+        String name = map.get("name").toString();
+        System.out.println(name);
+        System.out.println(noticeId);
+
+        Notification notification = notificationDao.getDetailNotice(noticeId);
+        if (notification == null) {
+            throw new ServiceException("该通知不存在");
+        }
+        if (notificationDao.noticeRead(UUID.randomUUID().toString(),noticeId,name) > 0){
+            return MyResponseUtil.getResultMap(notification,0,"success");
+        } else throw new ServiceException("出现一点小问题");
+
+    }
+
+    @Override
+    public Map<String, Object> noRead(Map<String, Object> map) throws ServiceException {
+        String noticeId = map.get("noticeId").toString();
+        List<NoticeResponse> list = notificationDao.noRead(noticeId);
+
+        if (list.size() != 0) {
+            return MyResponseUtil.getResultMap(list,0,"success");
+        } else throw new ServiceException("未查寻到结果");
+    }
+
+    @Override
+    public Map<String, Object> alreadyRead(Map<String, Object> map) throws ServiceException {
+        String noticeId = map.get("noticeId").toString();
+        List<NoticeResponse> list = notificationDao.alreadyRead(noticeId);
+
+        if (list.size() != 0) {
+            return MyResponseUtil.getResultMap(list,0,"success");
+        } else throw new ServiceException("未查寻到结果");
     }
 }

@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.Notification;
+import com.qks.makerSpace.entity.response.NoticeResponse;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -23,9 +24,26 @@ public interface NotificationDao {
     @Delete("delete from notification where notice_id = #{noticeId}")
     Integer deleteByNoticeId(String noticeId);
 
-    @Select("select * from notification  where for_top = '1' order by notice_time desc")
+    @Select("select * from notification where for_top = '1' order by notice_time desc")
     List<Notification> getTopNotification();
 
     @Select("select * from notification where for_top = '0' order by notice_time desc")
     List<Notification> getCommonNotification();
+
+    @Select("select * from notification where notice_id = #{noticeId}")
+    Notification getDetailNotice(String noticeId);
+
+    @Insert("insert into notice_read(id, notice_id, name) " +
+            "values (#{id}, #{noticeId}, #{name})")
+    Integer noticeRead(String id, String noticeId, String name);
+
+    @Select("select name from notice_read where notice_id = #{noticeId}")
+    List<NoticeResponse> alreadyRead(String noticeId);
+
+//    有问题
+    @Select("select name " +
+            "from user " +
+            "where not exists " +
+            "(select name from notice_read where notice_id = #{noticeId})")
+    List<NoticeResponse> noRead(String noticeId);
 }

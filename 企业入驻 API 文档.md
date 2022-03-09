@@ -2495,12 +2495,24 @@ Audit（审核表）
 
 ### 数据表
 
+**notification**
+
 |   字段名    |  类型  |             说明             |
 | :---------: | :----: | :--------------------------: |
 |  notice_id  | String |         通知表唯一id         |
 |    text     | String |           通知内容           |
 |   for_top   | String | 通知置顶情况（0正常，1置顶） |
 | notice_time | String |        通知发表的时间        |
+
+**notice_read**
+
+|  字段值   |  类型  |   说明   |
+| :-------: | :----: | :------: |
+|    id     | String |  唯一id  |
+| notice_id | String |  通知id  |
+|   name    | String | 企业名字 |
+
+
 
 ## 发布通知
 
@@ -2551,11 +2563,9 @@ Audit（审核表）
 
 ~~~json
 {
-    "map":{
         "noticeId":"<String>",			 //通知表唯一id
     	"text":"<String>",					//通知内容
         "forTop":"<String>"				 //置顶情况
-    }
 }
 ~~~
 
@@ -2593,7 +2603,7 @@ Audit（审核表）
 
 
 
-## 查看旧企业所有通知
+## 查看所有通知
 
 **简要描述：**查看企业所有通知，通知以降序排序，时间最晚的在最前面
 
@@ -2609,6 +2619,51 @@ Audit（审核表）
 
 ```json
 {
+    "data":[{
+        "noticeId":"<String>",					//通知表唯一id
+        "text":"<String>",						   //通知内容
+        "noticeTime":"<String>"				 //通知发布时间
+    },{
+        "noticeId":"<String>",					//通知表唯一id
+        "text":"<String>",						   //通知内容
+        "noticeTime":"<String>"				 //通知发布时间
+    },{
+        "noticeId":"<String>",					//通知表唯一id
+        "text":"<String>",						   //通知内容
+        "noticeTime":"<String>"				 //通知发布时间
+    },
+            ...
+           ],
+    "code":0,
+    "msg":"success"
+}
+```
+
+## 查看具体通知
+
+**简要描述：**查看通知的同时，标记该公司已读这条通知
+
+**请求URL：**
+
+- `/api/detailNtoice`
+
+**请求方式：**
+
+- GET
+
+**参数：**
+
+~~~json
+{
+    "noticeId":"<String>",
+    "name":"<String>"							//企业名
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
     "data":{
         "noticeId":"<String>",					//通知表唯一id
         "text":"<String>",						   //通知内容
@@ -2617,7 +2672,85 @@ Audit（审核表）
     "code":0,
     "msg":"success"
 }
-```
+~~~
+
+## 查询未阅读企业（Dao未完成）
+
+**简要描述：**查询没有查看某条通知的企业
+
+**请求URL：**
+
+- `/api/noRead`
+
+**请求方式：**
+
+- GET
+
+**请求参数：**
+
+~~~json
+{
+    "noticeId":"<String>"
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "name":"<String>"
+    },{
+        "name":"<String>"
+    },{
+        "name":"<String>"
+    },
+       ...
+    ],
+     "code":0,
+     "msg":"success"
+}
+~~~
+
+## 查看已阅读企业
+
+**简要描述：**查看已经阅读过通知的企业
+
+**请求URL：**
+
+- `/api/already`
+
+**请求方式：**
+
+- GET
+
+**请求参数：**
+
+~~~json
+{
+    "noticeId":"<Stirng>"
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "name":"<String>"
+    },{
+        "name":"<String>"
+    },{
+        "name":"<String>"
+    },
+       ...
+    ],
+     "code":0,
+     "msg":"success"
+}
+~~~
+
+
 
 
 
