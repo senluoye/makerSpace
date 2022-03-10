@@ -158,8 +158,8 @@ public interface AdminDao {
             "where in_apply_id = #{inApplyId}")
     Integer updateSpaceBySuggestion(AdminSpaceSuggestion adminSpaceSuggestion);
 
-    @Update("update audit set administrator_audit = #{disagree} where credit_code = #{creditCode}")
-    Integer disagreeById(String creditCode, String disagree);
+    @Update("update audit set administrator_audit = #{disagree} where credit_code = #{inApplyId}")
+    Integer disagreeById(String inApplyId, String disagree);
 
     @Select("select * from audit where audit_id = #{id}")
     Audit getAuditById(String id);

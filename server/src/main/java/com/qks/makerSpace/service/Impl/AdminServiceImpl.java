@@ -344,21 +344,29 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 取消某一个企业众创空间申请
+     * 不同意某一个企业众创空间申请
      * @return HashMap
      */
     @Override
     public Map<String, Object> disagreeSpaceById(JSONObject map) throws ServiceException {
         String inApplyId = map.getString("inApplyId");
+        AdminSpaceSuggestion adminSpaceSuggestion = new AdminSpaceSuggestion();
+        adminSpaceSuggestion.setInApplyId(inApplyId);
+        adminSpaceSuggestion.setLeaderOpinion(map.getString("officeOpinion"));
+        adminSpaceSuggestion.setLeaderOpinion(map.getString("leaderOpinion"));
 
         if (adminDao.disagreeById(inApplyId, "不通过") < 1)
             throw new ServiceException("管理员审核失败");
+
+        // 然后更新space表
+        if (adminDao.updateSpaceBySuggestion(adminSpaceSuggestion) < 1)
+            throw new ServiceException("更新意见失败");
 
         return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }
 
     /**
-     * 科技园企业季度报表申鹤通过
+     * 科技园企业季度报表审核通过
      * @param map
      * @return
      * @throws ServiceException

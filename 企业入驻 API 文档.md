@@ -2522,7 +2522,10 @@ map部分：
 
 ```json
 {
-    "inApplyId":"<String>"
+    "inApplyId":"<String>",
+    "officeOpinion":"<String>",				// 办公室主任意见
+    "leaderOpinion":"<String>"				// 领导审批意见
+}
 }
 ```
 
