@@ -43,8 +43,8 @@ public class SpaceServiceImpl implements SpaceService {
         // 先看看该项目是否已经入驻
         List<Space> spaces = spaceDao.selectSpaceByName(space.getCreateName());
         if (spaces.size() != 0) {
-            List<UserSpace> userSpaces = spaceDao.selectUserSpaceById(spaces.get(0).getInApplyId());
-            if (userSpaces.size() != 0 && userSpaces.get(0).getUserId().equals(userId))
+            List<UserSpace> userIds = spaceDao.selectUserSpaceById(spaces.get(0).getInApplyId());
+            if (userIds.size() != 0 && !userIds.get(0).getUserId().equals(userId))
                 // 项目存在并且用户不是自己，则证明该项目已经被其他人入驻
                 throw new ServiceException("该项目已被其他用户填报");
 
@@ -68,7 +68,7 @@ public class SpaceServiceImpl implements SpaceService {
         /**
          * 绑定用户和公司
          */
-        List<UserSpace> userSpaceList = spaceDao.selectUserSpaceById(userId);
+        List<String> userSpaceList = spaceDao.selectUserSpaceByUserId(userId);
         if (userSpaceList.size() != 0) { // 如果用户之前已经绑定过公司
             // 修改表中的inapplyid
             UserSpace userSpace = new UserSpace();
@@ -94,10 +94,10 @@ public class SpaceServiceImpl implements SpaceService {
         audit.setDescribe("众创空间");
         audit.setAdministratorAudit("未审核");
         audit.setLeadershipAudit("未审核");
-        audit.setSubmitTime(space.getTime());
+        audit.setSubmitTime(space.getSubmitTime());
         audit.setCreditCode(inApplyId);
 
-        if (spaceDao.addAudit(audit) < 1)
+        if (spaceDao.addAudit(audit) < 1 && spaceDao.addAuditId(inApplyId, audit.getAuditId()) < 1)
             throw new ServiceException("加入众创空间失败");
 
         Map<String, Object> data = new HashMap<>();

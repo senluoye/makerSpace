@@ -22,10 +22,14 @@ public interface SpaceDao {
     @Select("select * from user_space where in_apply_id = #{inApplyId}")
     List<UserSpace> selectUserSpaceById(String inApplyId);
 
-    @Insert("insert into space(in_apply_id, create_name, apply_time, team_number, " +
+    @Select("select in_apply_id from user_space where user_id = #{userId}")
+    List<String> selectUserSpaceByUserId(String userId);
+
+
+    @Insert("insert into space(space_id, in_apply_id, create_name, apply_time, team_number, " +
             "`describe`, help, submit_time, time, accepter, office_opinion, " +
             "leader_opinion) " +
-            "values (#{inApplyId}, #{createName}, #{applyTime}, #{teamNumber}, " +
+            "values (#{spaceId}, #{inApplyId}, #{createName}, #{applyTime}, #{teamNumber}, " +
             "#{describe}, #{help}, #{submitTime}, #{time}, #{accepter}, #{officeOpinion}, " +
             "#{leaderOpinion})")
     Integer addProject(Space space);
@@ -34,9 +38,9 @@ public interface SpaceDao {
     Integer updateUserSpace(UserSpace userSpace);
 
     @Insert("insert into space_person(space_person_id, in_apply_id, department, " +
-            "       person_phone, person_qq, person_wechat, note, major, person_name) " +
+            "       person_phone, person_qq, person_wechat, note, major, person_name, submit_time) " +
             "VALUES (#{spacePersonId}, #{inApplyId}, #{department}, #{personPhone}, " +
-            "       #{personQq}, #{personWechat}, #{note}, #{major}, #{personName})")
+            "       #{personQq}, #{personWechat}, #{note}, #{major}, #{personName}, #{submitTime})")
     Integer addPerson(SpacePerson spacePerson);
 
     @Delete("delete space.*, space_person.* " +
@@ -48,9 +52,14 @@ public interface SpaceDao {
     @Insert("insert into user_space(user_id, in_apply_id) values (#{userId}, #{inApplyId})")
     Integer addUserSpace(String userId, String inApplyId);
 
-    @Insert("insert into audit(audit_id, administrator_audit, leadership_audit, `describe`) " +
-            "values (#{auditId}, #{administratorAudit}, #{leadershipAudit}, #{describe})")
+    @Insert("insert into audit(audit_id, administrator_audit, " +
+            "leadership_audit, `describe`, submit_time) " +
+            "values (#{auditId}, #{administratorAudit}, #{leadershipAudit}, " +
+            "#{describe}, #{submitTime})")
     Integer addAudit(Audit audit);
+
+    @Update("update audit set credit_code = #{inApplyId} where audit_id = #{auditId}")
+    Integer addAuditId(String inApplyId, String auditId);
 
     @Select("select user_id from user_space where in_apply_id = #{inApplyId}")
     String getUserIdByInApplyId(String inApplyId);
