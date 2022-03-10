@@ -5,6 +5,7 @@ import com.qks.makerSpace.dao.AdminDao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.SpaceApplyingReq;
 import com.qks.makerSpace.entity.request.TechnologyApplyingReq;
+import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
@@ -274,6 +275,7 @@ public class AdminServiceImpl implements AdminService {
         if (adminDao.agreeById(creditCode, "通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
+            // 更新old/new表中的剩余两个字段
             if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode).size() != 0) {
                 if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
                     throw new ServiceException("更新new失败");
@@ -325,9 +327,18 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> agreeSpaceById(JSONObject map) throws ServiceException {
         String inApplyId = map.getString("inApplyId");
+        AdminSpaceSuggestion adminSpaceSuggestion = new AdminSpaceSuggestion();
+        adminSpaceSuggestion.setInApplyId(inApplyId);
+        adminSpaceSuggestion.setLeaderOpinion(map.getString("officeOpinion"));
+        adminSpaceSuggestion.setLeaderOpinion(map.getString("leaderOpinion"));
 
+        // 首先更新audit表
         if (adminDao.agreeById(inApplyId, "通过") < 1)
             throw new ServiceException("管理员审核失败");
+
+        // 然后更新space表
+        if (adminDao.updateSpaceBySuggestion(adminSpaceSuggestion) < 1)
+            throw new ServiceException("更新意见失败");
 
         return MyResponseUtil.getResultMap(inApplyId, 0, "success");
     }

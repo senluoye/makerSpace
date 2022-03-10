@@ -3,6 +3,7 @@ package com.qks.makerSpace.dao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.SpaceApplyingReq;
 import com.qks.makerSpace.entity.request.TechnologyApplyingReq;
+import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllTechnology;
 import org.apache.ibatis.annotations.*;
@@ -150,8 +151,12 @@ public interface AdminDao {
             "and old.credit_code = #{creditCode}")
     Integer deleteOldByCreditCode(String creditCode);
 
-    @Update("update audit set administrator_audit = #{agree} where credit_code = #{creditCode}")
-    Integer agreeById(String creditCode, String agree);
+    @Update("update audit set administrator_audit = #{agree} where credit_code = #{inApplyId}")
+    Integer agreeById(String inApplyId, String agree);
+
+    @Update("update space set office_opinion = #{officeOpinion}, leader_opinion = #{leaderOpinion} " +
+            "where in_apply_id = #{inApplyId}")
+    Integer updateSpaceBySuggestion(AdminSpaceSuggestion adminSpaceSuggestion);
 
     @Update("update audit set administrator_audit = #{disagree} where credit_code = #{creditCode}")
     Integer disagreeById(String creditCode, String disagree);

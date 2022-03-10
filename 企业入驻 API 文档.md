@@ -1266,8 +1266,8 @@ map部分：
 	"brief": "<String>",  	             	// 项目/创意概况
     "help": "<String>",						// 想获得的帮助
 	"time":"<String>",						// 日期
-    "officeOpinion":"<String>",			// 办公室主任意见
-    "leaderOpinion":"<String>",			// 领导意见
+    "officeOpinion":"",						// 办公室主任意见(先传空)
+    "leaderOpinion":"",						// 领导意见(先传空)
     "accepter":"<Strign>"					// 承诺人
 }
 ```
@@ -1534,11 +1534,10 @@ map部分：
 }
 ```
 
-
+文件部分：
 
 ```json
 {
-	"map":"",
     "mediumFile":"<File>",					//供科技型中小企业获批截屏 
     "highEnterpriseFile":"<File>",			//高企证书
     "headerFile":"<File>",					//大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件
@@ -2487,7 +2486,9 @@ map部分：
 
 ```json
 {
-    "inApplyId":"<String>"
+    "inApplyId":"<String>",					// 众创空间id
+    "officeOpinion":"<String>",				// 办公室主任意见
+    "leaderOpinion":"<String>"				// 领导审批意见
 }
 ```
 
