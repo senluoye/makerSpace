@@ -259,7 +259,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 同意某一个企业科技园申请
+     * 同意某一个科技园申请
      * @return HashMap
      */
     @Override
@@ -267,7 +267,6 @@ public class AdminServiceImpl implements AdminService {
         String creditCode = map.getString("creditCode");
 
         AdminSuggestion adminSuggestion = new AdminSuggestion();
-
         adminSuggestion.setCreditCode(creditCode);
         adminSuggestion.setSuggestion(map.getString("suggestion"));
         adminSuggestion.setNote(map.getString("note"));
@@ -278,8 +277,7 @@ public class AdminServiceImpl implements AdminService {
             if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode).size() != 0) {
                 if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
                     throw new ServiceException("更新new失败");
-            }
-            else if (adminDao.selectCreditCodeFromOldByCreditCode(creditCode).size() != 0) {
+            } else if (adminDao.selectCreditCodeFromOldByCreditCode(creditCode).size() != 0) {
                 if (adminDao.updateOldSuggestion(adminSuggestion) < 0)
                     throw new ServiceException("更新old失败");
             }

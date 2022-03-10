@@ -38,12 +38,12 @@ public interface AdminDao {
      * @return
      */
     @Select("select credit_code, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
-            "from (select * from audit where `describe` = '科技园') temp " +
+            "from (select * from audit where `describe` = '科技园' and administrator_audit = '未审核') temp " +
             "group by credit_code")
     List<TechnologyApplyingReq> getAllTechnologyApplying();
 
     @Select("select credit_code inApplyId, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
-            "from (select * from audit where `describe` = '众创空间') temp " +
+            "from (select * from audit where `describe` = '众创空间' and administrator_audit = '未审核') temp " +
             "group by credit_code ")
     List<SpaceApplyingReq> getAllSpaceApplying();
 
@@ -150,7 +150,7 @@ public interface AdminDao {
             "and old.credit_code = #{creditCode}")
     Integer deleteOldByCreditCode(String creditCode);
 
-    @Update("update audit set administrator_audit = #{agree} where audit_id = #{creditCode}")
+    @Update("update audit set administrator_audit = #{agree} where credit_code = #{creditCode}")
     Integer agreeById(String creditCode, String agree);
 
     @Update("update audit set administrator_audit = #{disagree} where audit_id = #{creditCode}")
@@ -168,6 +168,7 @@ public interface AdminDao {
     @Update("update new set suggestion = #{suggestion}, note = #{note} where credit_code = #{creditCode}")
     Integer updateNewSuggestion(AdminSuggestion adminSuggestion);
 
-    @Update("update old set suggestion = #{suggestion}, note = #{note} where credit_code = #{creditCode}")
+    @Update("update old set suggestion = #{suggestion}, note = #{note} " +
+            "where credit_code = #{creditCode}")
     Integer updateOldSuggestion(AdminSuggestion adminSuggestion);
 }
