@@ -46,11 +46,9 @@ public interface AdminDao {
             "group by credit_code")
     List<ApplyingReq> getAllTechnologyApplying();
 
-    @Select("select credit_code, administrator_audit, `describe`, max(submit_time) submit_time" +
-            "from audit " +
-            "group by credit_code, submit_time " +
-            "order by submit_time " +
-            "where `describe` = '众创空间' ")
+    @Select("select credit_code, administrator_audit, `describe`, max(submit_time) submit_time " +
+            "from (select * from audit where `describe` = '众创空间') temp " +
+            "group by credit_code ")
     List<ApplyingReq> getAllSpaceApplying();
 
     @Select("select name from old where credit_code = #{creditCode}")

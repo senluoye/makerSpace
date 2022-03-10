@@ -1972,7 +1972,7 @@ map部分：
 ~~~json
 {
     "data":[{
-        "creditCode":"<Strng>",					// 社会信用代码
+        "inApplyId":"<Strng>",					// 众创空间唯一ID
         "name":"<String>",						// 公司名称
         "submitTime":"<String>",				// 申请递交的时间
         "administrator_audit":"<String>",		// 管理员审核状态
