@@ -53,13 +53,10 @@ public interface SpaceDao {
     Integer addUserSpace(String userId, String inApplyId);
 
     @Insert("insert into audit(audit_id, administrator_audit, " +
-            "leadership_audit, `describe`, submit_time) " +
+            "leadership_audit, `describe`, submit_time, credit_code) " +
             "values (#{auditId}, #{administratorAudit}, #{leadershipAudit}, " +
-            "#{describe}, #{submitTime})")
+            "#{describe}, #{submitTime}, #{creditCode})")
     Integer addAudit(Audit audit);
-
-    @Update("update audit set credit_code = #{inApplyId} where audit_id = #{auditId}")
-    Integer addAuditId(String inApplyId, String auditId);
 
     @Select("select user_id from user_space where in_apply_id = #{inApplyId}")
     String getUserIdByInApplyId(String inApplyId);

@@ -97,7 +97,9 @@ public class SpaceServiceImpl implements SpaceService {
         audit.setSubmitTime(space.getSubmitTime());
         audit.setCreditCode(inApplyId);
 
-        if (spaceDao.addAudit(audit) < 1 && spaceDao.addAuditId(inApplyId, audit.getAuditId()) < 1)
+        System.out.println(audit);
+
+        if (spaceDao.addAudit(audit) < 1)
             throw new ServiceException("加入众创空间失败");
 
         Map<String, Object> data = new HashMap<>();
