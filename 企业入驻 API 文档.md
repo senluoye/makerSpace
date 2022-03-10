@@ -1973,7 +1973,7 @@ map部分：
 {
     "data":[{
         "inApplyId":"<Strng>",					// 众创空间唯一ID
-        "name":"<String>",						// 公司名称
+        "name":"<String>",						// 创意项目名称
         "submitTime":"<String>",				// 申请递交的时间
         "administrator_audit":"<String>",		// 管理员审核状态
         "describe":"<String>"					// 企业描述

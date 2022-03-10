@@ -2,11 +2,10 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
-import com.qks.makerSpace.dao.SpaceDao;
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.request.ApplyingReq;
+import com.qks.makerSpace.entity.request.SpaceApplyingReq;
+import com.qks.makerSpace.entity.request.TechnologyApplyingReq;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
-import com.qks.makerSpace.entity.response.AllForm;
 import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
 import com.qks.makerSpace.exception.ServiceException;
@@ -14,11 +13,7 @@ import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -71,8 +66,8 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllTechnologyApplying() {
-        List<ApplyingReq> lists = adminDao.getAllTechnologyApplying();
-        for (ApplyingReq applyingReq : lists) {
+        List<TechnologyApplyingReq> lists = adminDao.getAllTechnologyApplying();
+        for (TechnologyApplyingReq applyingReq : lists) {
             // 首先看看该公司在不在旧企业表中
             List<String> oldNameList = adminDao.getOldNameByCreditCode(applyingReq.getCreditCode());
             if (oldNameList.size() > 0) // 不为0，在旧企业中
@@ -91,9 +86,12 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllSpaceApplying() {
-        List<ApplyingReq> lists = adminDao.getAllSpaceApplying();
-        for (ApplyingReq applyingReq : lists) {
-            applyingReq.setName(adminDao.getSpaceNameByCreditCode(applyingReq.getCreditCode()).get(0));
+        List<SpaceApplyingReq> lists = adminDao.getAllSpaceApplying();
+        for (SpaceApplyingReq spaceApplyingReq : lists) {
+            System.out.println(spaceApplyingReq);
+            String inApplyId =  spaceApplyingReq.getInApplyId();
+            String name = adminDao.getSpaceNameByCreditCode(inApplyId).get(0);
+            spaceApplyingReq.setName(name);
         }
         return MyResponseUtil.getResultMap(lists, 0, "success");
     }

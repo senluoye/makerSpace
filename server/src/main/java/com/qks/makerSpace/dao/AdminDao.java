@@ -1,18 +1,14 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.request.ApplyingReq;
+import com.qks.makerSpace.entity.request.SpaceApplyingReq;
+import com.qks.makerSpace.entity.request.TechnologyApplyingReq;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
-import com.qks.makerSpace.entity.response.AllForm;
-import com.qks.makerSpace.entity.response.AllSpace;
 import com.qks.makerSpace.entity.response.AllTechnology;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface AdminDao {
@@ -44,12 +40,12 @@ public interface AdminDao {
     @Select("select credit_code, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
             "from (select * from audit where `describe` = '科技园') temp " +
             "group by credit_code")
-    List<ApplyingReq> getAllTechnologyApplying();
+    List<TechnologyApplyingReq> getAllTechnologyApplying();
 
-    @Select("select credit_code, administrator_audit, `describe`, max(submit_time) submit_time " +
+    @Select("select credit_code inApplyId, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
             "from (select * from audit where `describe` = '众创空间') temp " +
             "group by credit_code ")
-    List<ApplyingReq> getAllSpaceApplying();
+    List<SpaceApplyingReq> getAllSpaceApplying();
 
     @Select("select name from old where credit_code = #{creditCode}")
     List<String> getOldNameByCreditCode(String creditCode);
