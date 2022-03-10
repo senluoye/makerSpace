@@ -1201,35 +1201,40 @@ map部分：
 
 ##### space（主表）
 
-|       字段名       |  类型   |        说明        |
-| :----------------: | :-----: | :----------------: |
-|     inApplyId      | String  |  众创空间申请表id  |
-|  space_person_id   | String  |      人员表Id      |
-|     createName     | String  |   项目/创意名称    |
-|     applyTime      | String  |      申请日期      |
-|     teamNumber     | String  |      团队人数      |
-|      describe      | String  |   项目/创意概况    |
-|        help        | String  |    想获得的帮助    |
-| administratorAudit | tinyint | 管理员是否通过审核 |
-|  leadershipAudit   | tinyint |  领导是否通过审核  |
+|     字段名      |  类型  |       说明       |
+| :-------------: | :----: | :--------------: |
+|    space_id     | String | 众创空间申请表id |
+|   in_apply_id   | String |    众创空间id    |
+| space_person_id | String |     人员表Id     |
+|   create_name   | String |  项目/创意名称   |
+|   apply_time    | String |     申请日期     |
+|   team_number   | String |     团队人数     |
+|    describe     | String |  项目/创意概况   |
+|      help       | String |   想获得的帮助   |
+|    accepter     | String |      承诺人      |
+|      time       | String |       日期       |
+| office_opinion  | String |  办公室主任意见  |
+| leader_opinion  | String |   领导审批意见   |
+|   submit_time   | String |   表单提交时间   |
 
 ##### space_person（人员表）
 
-|    字段名     |  类型  |       说明       |
-| :-----------: | :----: | :--------------: |
-| spacePersonId | String |     人员表Id     |
-|   inApplyId   | String | 众创空间申请表id |
-|  personName   | String |       姓名       |
-|  department   | String |  所在院校/部门   |
-|     major     | String |     专业方向     |
-|  personPhone  | String |     手机号码     |
-|   personQq    | String |       QQ号       |
-| personWechat  | String |      微信号      |
-|     note      | String |       备注       |
+|     字段名     |  类型  |       说明       |
+| :------------: | :----: | :--------------: |
+| space_personId | String |     人员表Id     |
+|   in_applyId   | String | 众创空间申请表id |
+|  person_name   | String |       姓名       |
+|   department   | String |  所在院校/部门   |
+|     major      | String |     专业方向     |
+|  person_phone  | String |     手机号码     |
+|   person_qq    | String |       QQ号       |
+| person_wechat  | String |      微信号      |
+|      note      | String |       备注       |
+|  submit_time   | String |   表单提交时间   |
 
 ## 众创空间申请
 
-**简要描述：**众创空间场地申请
+**简要描述：**众创空间申请
 
 **请求URL：**
 
@@ -1243,23 +1248,27 @@ map部分：
 
 ```json
 {          
-      "describe": "<String>",             // 注明新/旧企业
-      "createName": "<String>",			  // 项目/创意名称
-      "applyTime": "<String>",            // 申请日期
-      "teamNumber": "<String>",			  // 成员数量
-      "person": [{                         // 主要成员信息
-          "personName": "<String>",
-          "department": "<String>",
-          "major": "<String>",
-          "personPhone": "<String>",
-          "personQq": "<String>",
-          "personWechat": "<String>",
-          "note": "<String>"
-        },
-        ......
-      ],
-      "brief": "<String>",                // 项目/创意概况
-      "help": "<String>"                  // 想获得的帮助
+	"describe": "<String>",             	// 项目/创意概况
+    "createName": "<String>",			  	// 项目/创意名称
+    "applyTime": "<String>",            	// 申请日期
+    "teamNumber": "<String>",			  	// 成员数
+    "person": [{                         	// 主要成员信息
+        "personName": "<String>",
+        "department": "<String>",
+        "major": "<String>",
+        "personPhone": "<String>",
+        "personQq": "<String>",
+        "personWechat": "<String>",
+        "note": "<String>"
+    },
+    ......
+    ],
+	"brief": "<String>",  	             	// 项目/创意概况
+    "help": "<String>",						// 想获得的帮助
+	"time":"<String>",						// 日期
+    "officeOpinion":"<String>",			// 办公室主任意见
+    "leaderOpinion":"<String>",			// 领导意见
+    "accepter":"<Strign>"					// 承诺人
 }
 ```
 
@@ -1268,7 +1277,7 @@ map部分：
 ```json
 {
     "data":{
-        "InApplyId":"<String>",					//众创空间申请表ID
+        "InApplyId":"<String>",					//众创空间ID
     },
     "code":0,
     "msg":"success"

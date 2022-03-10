@@ -93,7 +93,7 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getAllSpaceApplying() {
         List<ApplyingReq> lists = adminDao.getAllSpaceApplying();
         for (ApplyingReq applyingReq : lists) {
-            applyingReq.setName(adminDao.getOldNameByCreditCode(applyingReq.getCreditCode()).get(0));
+            applyingReq.setName(adminDao.getSpaceNameByCreditCode(applyingReq.getCreditCode()).get(0));
         }
         return MyResponseUtil.getResultMap(lists, 0, "success");
     }

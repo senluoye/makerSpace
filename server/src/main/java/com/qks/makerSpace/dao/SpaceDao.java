@@ -3,10 +3,12 @@ package com.qks.makerSpace.dao;
 import com.qks.makerSpace.entity.database.Audit;
 import com.qks.makerSpace.entity.database.Space;
 import com.qks.makerSpace.entity.database.SpacePerson;
+import com.qks.makerSpace.entity.database.UserSpace;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,13 +17,21 @@ import java.util.List;
 public interface SpaceDao {
 
     @Select("select * from space where create_name = #{createName}")
-    List<Space> getSpaceListByName(String createName);
+    List<Space> selectSpaceByName(String createName);
 
-    @Insert("insert into space(in_apply_id, `describe`, create_name, apply_time, " +
-            "           team_number, help) " +
-            "values (#{inApplyId}, #{describe}, #{createName}, #{applyTime}, " +
-            "       #{teamNumber}, #{help})")
+    @Select("select * from user_space where in_apply_id = #{inApplyId}")
+    List<UserSpace> selectUserSpaceById(String inApplyId);
+
+    @Insert("insert into space(in_apply_id, create_name, apply_time, team_number, " +
+            "`describe`, help, submit_time, time, accepter, office_opinion, " +
+            "leader_opinion) " +
+            "values (#{inApplyId}, #{createName}, #{applyTime}, #{teamNumber}, " +
+            "#{describe}, #{help}, #{submitTime}, #{time}, #{accepter}, #{officeOpinion}, " +
+            "#{leaderOpinion})")
     Integer addProject(Space space);
+
+    @Update("update user_space set in_apply_id = #{inApplyId} where user_id = #{userId}")
+    Integer updateUserSpace(UserSpace userSpace);
 
     @Insert("insert into space_person(space_person_id, in_apply_id, department, " +
             "       person_phone, person_qq, person_wechat, note, major, person_name) " +

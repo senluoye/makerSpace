@@ -19,7 +19,7 @@ public class SpaceController {
     }
 
     /**
-     * 众创空间场地申请
+     * 众创空间申请
      * @param map
      * @return
      */

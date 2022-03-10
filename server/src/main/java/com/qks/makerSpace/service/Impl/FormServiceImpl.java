@@ -52,21 +52,15 @@ public class FormServiceImpl implements FormService {
         String userId = JWTUtils.parser(token).get("userId").toString();
         if (formDao.getCompanyByUserId(userId) == null)
             throw new ServiceException("请先填写入驻申请");
-        System.out.println("1111111111");
 
         // 初始化一些数据
         String temp = map.getString("map");
-//        FormReq form = JSONObject.parseObject(temp, FormReq.class);
         FormReq form = FormParserUtils.parser(map);
-
-//        System.out.println(temp);
-//        System.out.println(form);
 
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
         String formId = UUID.randomUUID().toString();
-        System.out.println("222222222");
         Date date = new Date();
         SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String time = dateFormat.format(date);
@@ -76,11 +70,10 @@ public class FormServiceImpl implements FormService {
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
         String creditCode = form.getCreditCode();
-        System.out.println("333333");
+
         /**
          * 下面是填报数据
          */
-
         // 首先判断是否为 高新技术企业
         if (form.getHighEnterprise().equals("是")) {
             String aa = map.getString("map");

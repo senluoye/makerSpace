@@ -6,10 +6,12 @@ import com.qks.makerSpace.dao.SpaceDao;
 import com.qks.makerSpace.entity.database.Audit;
 import com.qks.makerSpace.entity.database.Space;
 import com.qks.makerSpace.entity.database.SpacePerson;
+import com.qks.makerSpace.entity.database.UserSpace;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.SpaceService;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
+import com.qks.makerSpace.util.SpaceParserUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -32,45 +34,68 @@ public class SpaceServiceImpl implements SpaceService {
     @Override
     public Map<String, Object> joinMakerSpace(JSONObject map, String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
-        String inApplyId = UUID.randomUUID().toString();
 
-        Space space = new Space(
-                inApplyId,
-                map.getString("createName"),
-                map.getString("applyTime"),
-                map.getString("teamNumber"),
-                map.getString("describe"),
-                map.getString("help")
-        );
+        /**
+         * 解析space类
+         */
+        Space space = SpaceParserUtils.spaceParser(map);
 
+        // 先看看该项目是否已经入驻
+        List<Space> spaces = spaceDao.selectSpaceByName(space.getCreateName());
+        if (spaces.size() != 0) {
+            List<UserSpace> userSpaces = spaceDao.selectUserSpaceById(spaces.get(0).getInApplyId());
+            if (userSpaces.size() != 0 && userSpaces.get(0).getUserId().equals(userId))
+                // 项目存在并且用户不是自己，则证明该项目已经被其他人入驻
+                throw new ServiceException("该项目已被其他用户填报");
+
+            // 自己的项目，则修改space的inAppLyId
+            space.setInApplyId(spaces.get(0).getInApplyId());
+        }
+
+        /**
+         * 在表中新插入数据
+         */
+        String inApplyId = space.getInApplyId();
+
+        // 解析spacePerson类
         JSONArray persons = map.getJSONArray("person");
-        List<SpacePerson> personList = new ArrayList<>();
+        List<SpacePerson> personList = SpaceParserUtils.spacePersonParser(space, persons);
 
-        for (int i = 0; i < persons.size(); i++) {
-            SpacePerson spacePerson = new SpacePerson(
-                    UUID.randomUUID().toString(),
-                    inApplyId,
-                    persons.getJSONObject(i).getString("personName"),
-                    persons.getJSONObject(i).getString("department"),
-                    persons.getJSONObject(i).getString("major"),
-                    persons.getJSONObject(i).getString("personPhone"),
-                    persons.getJSONObject(i).getString("personQq"),
-                    persons.getJSONObject(i).getString("personWechat"),
-                    persons.getJSONObject(i).getString("note")
-            );
+        // 首先插入space表
+        if (spaceDao.addProject(space) < 1)
+            throw new ServiceException("加入众创空间失败");
 
-            if (spaceDao.addPerson(spacePerson) < 1)
+        /**
+         * 绑定用户和公司
+         */
+        List<UserSpace> userSpaceList = spaceDao.selectUserSpaceById(userId);
+        if (userSpaceList.size() != 0) { // 如果用户之前已经绑定过公司
+            // 修改表中的inapplyid
+            UserSpace userSpace = new UserSpace();
+            userSpace.setUserId(userId);
+            userSpace.setInApplyId(inApplyId);
+            spaceDao.updateUserSpace(userSpace);
+        } else {
+            // 否则新插入一条记录
+            if (spaceDao.addUserSpace(userId, inApplyId) < 1)
                 throw new ServiceException("加入众创空间失败");
         }
 
+        // 循环插入所有soacePerson子表
+        for (SpacePerson spacePerson : personList) {
+            spaceDao.addPerson(spacePerson);
+        }
+
+        /**
+         * 加入审核表
+         */
         Audit audit = new Audit();
-        audit.setAuditId(inApplyId);
+        audit.setAuditId(UUID.randomUUID().toString());
+        audit.setDescribe("众创空间");
         audit.setAdministratorAudit("未审核");
         audit.setLeadershipAudit("未审核");
-        audit.setDescribe("众创空间");
-
-        if (spaceDao.addProject(space) < 1 && spaceDao.addUserSpace(userId, inApplyId) < 1)
-            throw new ServiceException("加入众创空间失败");
+        audit.setSubmitTime(space.getTime());
+        audit.setCreditCode(inApplyId);
 
         if (spaceDao.addAudit(audit) < 1)
             throw new ServiceException("加入众创空间失败");
