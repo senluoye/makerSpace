@@ -259,7 +259,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 同意某一个科技园申请
+     * 同意某一个科技园入园申请
      * @return HashMap
      */
     @Override

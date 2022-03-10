@@ -153,7 +153,7 @@ public interface AdminDao {
     @Update("update audit set administrator_audit = #{agree} where credit_code = #{creditCode}")
     Integer agreeById(String creditCode, String agree);
 
-    @Update("update audit set administrator_audit = #{disagree} where audit_id = #{creditCode}")
+    @Update("update audit set administrator_audit = #{disagree} where credit_code = #{creditCode}")
     Integer disagreeById(String creditCode, String disagree);
 
     @Select("select * from audit where audit_id = #{id}")
