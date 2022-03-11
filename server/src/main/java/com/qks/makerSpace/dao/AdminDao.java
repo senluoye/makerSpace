@@ -27,10 +27,13 @@ public interface AdminDao {
      * @param user
      * @return
      */
-    @Insert("insert into user(user_id, name, password) values (#{userId}, #{name}, #{password})")
+    @Insert("insert into user(user_id, name, password, user_describe, email) " +
+            "values (#{userId}, #{name}, #{password}, #{userDescribe}, #{email})")
     Integer addNewUser(User user);
 
-    @Update("update user set name = #{name}, password = #{password}, user_describe = #{userDescribe} " +
+    @Update("update user " +
+            "set name = #{name}, password = #{password}, user_describe = #{userDescribe}," +
+            "email = #{email} " +
             "where user_id = #{userId}")
     Integer UpdateUser(User user);
 

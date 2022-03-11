@@ -58,6 +58,7 @@ public class AdminServiceImpl implements AdminService {
         user.setUserId(UUID.randomUUID().toString());
         user.setName(name);
         user.setPassword(password);
+        user.setUserDescribe(2);
         user.setEmail(email);
 
         /**
