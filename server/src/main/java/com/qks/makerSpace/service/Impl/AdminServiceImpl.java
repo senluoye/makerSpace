@@ -14,6 +14,12 @@ import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.ChangeUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,9 +30,16 @@ import java.util.*;
 public class AdminServiceImpl implements AdminService {
 
     private final AdminDao adminDao;
+    private final JavaMailSender mailSender;
 
-    public AdminServiceImpl(AdminDao adminDao) {
+    private final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
+
+    @Value("${spring.mail.username}")
+    private String from;
+
+    public AdminServiceImpl(AdminDao adminDao, JavaMailSender mailSender) {
         this.adminDao = adminDao;
+        this.mailSender = mailSender;
     }
 
     /**
@@ -40,25 +53,38 @@ public class AdminServiceImpl implements AdminService {
          */
         String name = map.getString("name");
         String password = map.getString("password");
+        String email = map.getString("email");
         User user = new User();
         user.setUserId(UUID.randomUUID().toString());
         user.setName(name);
         user.setPassword(password);
+        user.setEmail(email);
 
         /**
          * 如果用户存在，则修改密码，否则增加新用户
          */
         List<User> users = adminDao.getUserByName(name);
         if (users.size() == 0) {
-            if (adminDao.addNewUser(user) > 0)
-                user.setPassword(null);
-                return MyResponseUtil.getResultMap(user, 0, "success");
+            adminDao.addNewUser(user);
         } else {
             user.setUserId(users.get(0).getUserId());
-            if (adminDao.UpdateUser(user) > 0)
-                user.setPassword(null);
-            return MyResponseUtil.getResultMap(user, 0, "success");
+            adminDao.UpdateUser(user);
         }
+
+        String text = "公司名称：" + user.getName() + "\n" + "公司密码：" + user.getPassword();
+
+        /**
+         * 发送邮箱
+         */
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(user.getEmail());//收信人
+        message.setSubject("公司账号密码");//主题
+        message.setText(text);//内容
+        message.setFrom(from);//发信人
+        mailSender.send(message);
+
+        user.setPassword(null);
+        return MyResponseUtil.getResultMap(user, 0, "success");
     }
 
     /**

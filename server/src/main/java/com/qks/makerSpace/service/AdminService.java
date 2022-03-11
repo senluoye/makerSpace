@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 public interface AdminService {
-
     Map<String, Object> addNewUser(JSONObject jsonObject);
 
     Map<String, Object> getAllDetails() throws ServiceException;

@@ -1,11 +1,9 @@
 package com.qks.makerSpace.service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 public interface UserService {
 
-    Map<String, Object> login(Map<String, Object> map);
-    Map<String, Object> register(Map<String, Object> map);
-    Map<String, Object> getAllUser();
-
+    Map<String, Object> getHomepage(HttpServletRequest httpServletRequest);
 }
