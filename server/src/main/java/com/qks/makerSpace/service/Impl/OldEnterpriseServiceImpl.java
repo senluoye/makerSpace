@@ -187,7 +187,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
-     * 信息状态展示
+     * 获取上一次入园申请
      * @return Hashmap
      */
     @Override
@@ -196,37 +196,25 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
         String creditCode = creditCodes.get(0);
 
-        List<Map<String, Object>> data = new ArrayList<>();
-        List<Old> oldList = oldEnterpriseDao.getAllOld(creditCode);
+        Old old = oldEnterpriseDao.getOld(creditCode);
 
-        oldList.forEach(x -> {
-            try {
-                data.add(ChangeUtils.getObjectToMap(x));
-            } catch (IllegalAccessException e) {
-                System.out.println(e.getMessage());
-            }
-        });
+        List<OldDemand> oldDemands = oldEnterpriseDao.getOldDemandById(old.getOldDemandId());
+        List<OldMainPerson> oldMainPersons = oldEnterpriseDao.getOldMainPeopleById(old.getOldMainpersonId());
+        List<OldProject> oldProjects = oldEnterpriseDao.getOldProjectById(old.getOldProjectId());
+        List<OldFunding> oldFundings = oldEnterpriseDao.getOldFundingById(old.getOldFundingId());
+        List<OldShareholder> oldShareholders = oldEnterpriseDao.getOldShareholderById(old.getOldShareholderId());
+        List<OldIntellectual> oldIntellectuals = oldEnterpriseDao.getOldIntellectualById(old.getOldIntellectualId());
 
-        oldList.forEach(x -> {
-            List<OldDemand> oldDemands = oldEnterpriseDao.getOldDemandById(x.getOldDemandId());
-            List<OldMainPerson> oldMainPeosons = oldEnterpriseDao.getOldMainPeopleById(x.getOldMainpersonId());
-            List<OldProject> oldProjects = oldEnterpriseDao.getOldProjectById(x.getOldProjectId());
-            List<OldFunding> oldFundings = oldEnterpriseDao.getOldFundingById(x.getOldFundingId());
-            List<OldShareholder> oldShareholders = oldEnterpriseDao.getOldShareholderById(x.getOldShareholderId());
-            List<OldIntellectual> oldIntellectuals = oldEnterpriseDao.getOldIntellectualById(x.getOldIntellectualId());
+        Map<String, Object> temp = OldParserUtils.OldGetResponse(old);
 
-            Map<String, Object> temp = OldParserUtils.OldGetResponse(x);
-            temp.put("oldDemand", oldDemands);
-            temp.put("oldMainPerson", oldMainPeosons);
-            temp.put("oldProject", oldProjects);
-            temp.put("oldFunding", oldFundings);
-            temp.put("oldShareholder", oldShareholders);
-            temp.put("oldIntellectual", oldIntellectuals);
+        temp.put("oldDemand", oldDemands);
+        temp.put("oldMainPerson", oldMainPersons);
+        temp.put("oldProject", oldProjects);
+        temp.put("oldFunding", oldFundings);
+        temp.put("oldShareholder", oldShareholders);
+        temp.put("oldIntellectual", oldIntellectuals);
 
-            data.add(temp);
-        });
-
-        return MyResponseUtil.getResultMap(data, 0, "success");
+        return MyResponseUtil.getResultMap(temp, 0, "success");
     }
 
     /**

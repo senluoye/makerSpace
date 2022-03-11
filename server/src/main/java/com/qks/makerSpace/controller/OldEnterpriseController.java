@@ -42,7 +42,7 @@ public class OldEnterpriseController {
     }
 
     /**
-     * 获取最新的一次申请
+     * 获取上一次入园申请
      * @param
      * @return
      */

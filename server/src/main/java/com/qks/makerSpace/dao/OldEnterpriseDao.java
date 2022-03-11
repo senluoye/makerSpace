@@ -50,8 +50,13 @@ public interface OldEnterpriseDao {
      * @param creditCode
      * @return
      */
-    @Select("select * from old where credit_code = #{creditCode}")
-    List<Old> getAllOld(String creditCode);
+    @Select("select * from old " +
+            "where submit_time = (" +
+            "   select max(submit_time) " +
+            "   from old " +
+            "   where credit_code = #{creditCode}" +
+            ")")
+    Old getOld(String creditCode);
 
     /**
      * 以下是关于插入Old相关子表的操作
