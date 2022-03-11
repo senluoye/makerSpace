@@ -42,13 +42,23 @@ public class OldEnterpriseController {
     }
 
     /**
-     * 信息状态展示
+     * 获取最新的一次申请
      * @param
      * @return
      */
-    @RequestMapping(value = "oldEnterprise", method = RequestMethod.GET)
+    @RequestMapping(value = "old/oldEnterprise", method = RequestMethod.GET)
     private Map<String, Object> getOldEnterprise(HttpServletRequest httpServletRequest) {
         return oldEnterpriseService.getOldEnterprise(httpServletRequest.getHeader("token"));
+    }
+
+    /**
+     * 获取以往所有入园申请记录
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "old/oldEnterprise/applying", method = RequestMethod.GET)
+    private Map<String, Object> getOldEnterpriseApplying(HttpServletRequest httpServletRequest) {
+        return oldEnterpriseService.getOldEnterpriseApplying(httpServletRequest.getHeader("token"));
     }
 
     /**
@@ -64,9 +74,6 @@ public class OldEnterpriseController {
 
         return oldEnterpriseService.oldEnterpriseContract(json, voucher);
     }
-
-
-
 
 
     /**

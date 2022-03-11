@@ -84,7 +84,7 @@ public class AdminServiceImpl implements AdminService {
         message.setFrom(from);//发信人
         mailSender.send(message);
 
-        user.setPassword(null);
+        user.setPassword(null); // 去掉密码
         return MyResponseUtil.getResultMap(user, 0, "success");
     }
 

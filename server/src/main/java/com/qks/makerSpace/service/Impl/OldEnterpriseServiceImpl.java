@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
+import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
 import com.qks.makerSpace.util.ChangeUtils;
@@ -192,7 +193,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     @Override
     public Map<String, Object> getOldEnterprise(String token) {
         String userId = JWTUtils.parser(token).get("userId").toString();
-        String creditCode = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        String creditCode = creditCodes.get(0);
 
         List<Map<String, Object>> data = new ArrayList<>();
         List<Old> oldList = oldEnterpriseDao.getAllOld(creditCode);
@@ -225,6 +227,35 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         });
 
         return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 获取以往所有入园申请记录
+     * @param
+     * @return
+     */
+    @Override
+    public Map<String, Object> getOldEnterpriseApplying (String token) {
+        /**
+         * 首先找到与用户对应的公司代码
+         */
+        String userId = JWTUtils.parser(token).get("userId").toString();;
+        List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        String creditCode;
+
+        if (creditCodes.size() != 0) {
+            creditCode = creditCodes.get(0);
+            List<TechnologyApplyingRes> technologyApplyIngResList = oldEnterpriseDao.selectAuditByCreditCode(creditCode);
+            List<String> name = oldEnterpriseDao.selectOldNameByCreditCode(creditCode);
+            List<String> suggestion = oldEnterpriseDao.getSuggestionByCreditCode(creditCode);
+            for (TechnologyApplyingRes i : technologyApplyIngResList) {
+                i.setName(name.get(0));
+                i.setSuggestion(suggestion.get(0));
+            }
+            return MyResponseUtil.getResultMap(technologyApplyIngResList, 0, "success");
+        }
+
+        return MyResponseUtil.getResultMap(new ArrayList<>(), 0, "success");
     }
 
     /**
@@ -272,10 +303,12 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     @Override
     public Map<String, Object> getFormByCreditCode(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
-        String creditCode = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        String creditCode = creditCodes.get(0);
 
-        if (creditCode == null)
-            throw new ServiceException("您并没有填写入驻申请表");
+
+//        if (creditCode == null)
+//            throw new ServiceException("您并没有填写入驻申请表");
 
         List<FormDetails> data = oldEnterpriseDao.getAllFormDetails(creditCode);
 

@@ -12,6 +12,7 @@ import java.util.Map;
 public interface OldEnterpriseService {
 
     Map<String, Object> getOldEnterprise(String token);
+    Map<String, Object> getOldEnterpriseApplying(String token);
     Map<String, Object> updateOldEnterprise(String token,
                                             String map,
                                             MultipartFile license,

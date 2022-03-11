@@ -587,11 +587,13 @@ map部分：
 }
 ~~~
 
-## 获取以往入园申请
+
+
+## 获取上一次入园申请记录
 
 **简要描述：**
 
-获取以往已填入园申请信息(缩略版)，含审核状态
+获取上一次入园申请信息(详细版)记录
 
 **请求URL：**
 
@@ -603,7 +605,7 @@ map部分：
 
 **返回值：**
 
-~~~json
+```json
 {
 	"data":[{
         "registerAddress":"<String>",									//注册地址
@@ -736,7 +738,45 @@ map部分：
 	  "code":0,
 	  "msg":"success"
 }   
+```
+
+
+
+
+
+## 获取以往入园申请记录
+
+**简要描述：**
+
+获取以往已填入园申请信息(缩略版)，含审核状态
+
+**请求URL：**
+
+- `/api/old/oldEnterprise/applying`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+		"name":"<String>",					// 公司名称
+        "submitTime":"<String>",			// 表单提交时间
+        "administratorAudit":"<String>",	// 管理员审核情况
+        "leadershipAudit":"<String>",		// 领导审核情况
+        "suggestion":"<String>"				//科技园意见
+    },
+    ......       
+    ],
+    "code":"0",
+    "msg":"success"
+}
 ~~~
+
+
 
 ## 续约管理
 
@@ -1616,16 +1656,16 @@ map部分：
 
 ~~~json
 {
-    "data":{[
-		"creditCode":"<String>",
+    "data":[{
+        "creditCode":"<String>",
         "name":"<String>",
-        "represent":"<String>
+        "represent":"<String>,
         "representPhone":"<String>",
         "representEmail":"<String>",
         "getTime":"<String>",
+    }
+    ......
     ],
-            ...
-    },
     "code":0,
     "msg":"success"
 }
@@ -1982,7 +2022,7 @@ map部分：
         "name":"<String>",						// 公司名称
         "submitTime":"<String>",				// 申请递交的时间
         "administrator_audit":"<String>",		// 管理员审核状态
-        "describe":"<String>"					// 企业描述
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
     },
     ......
     ],
@@ -2016,7 +2056,7 @@ map部分：
         "name":"<String>",						// 创意项目名称
         "submitTime":"<String>",				// 申请递交的时间
         "administrator_audit":"<String>",		// 管理员审核状态
-        "describe":"<String>"					// 企业描述
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
     },
     	......
     ],

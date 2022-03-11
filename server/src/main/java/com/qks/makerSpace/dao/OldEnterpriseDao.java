@@ -2,6 +2,7 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
+import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -34,14 +35,14 @@ public interface OldEnterpriseDao {
             "last_tax, employees, origin_number, set_date, nature, certificate, " +
             "involved, main_business, way, business, old_demand_id, old_shareholder_id, " +
             "old_mainperson_id, old_project_id, old_intellectual_id, old_funding_id, cooperation, " +
-            "suggestion, note, state, submit_time, room, outapply_id) " +
+            "suggestion, note, submit_time, room, outapply_id) " +
             "VALUES (#{oldId}, #{creditCode}, #{charge}, #{name}, #{represent}, " +
             "#{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, " +
             "#{agentEmail}, #{license}, #{registerCapital}, #{realAddress}, #{realCapital}, #{lastIncome}, " +
             "#{lastTax}, #{employees}, #{originNumber}, #{setDate}, #{nature}, #{certificate}, " +
             "#{involved}, #{mainBusiness}, #{way}, #{business}, #{oldDemandId}, #{oldShareholderId}, " +
             "#{oldMainpersonId}, #{oldProjectId}, #{oldIntellectualId}, #{oldFundingId}, #{cooperation}, " +
-            "#{suggestion}, #{note}, #{state}, #{submitTime}, #{room}, #{outapplyId})")
+            "#{suggestion}, #{note}, #{submitTime}, #{room}, #{outapplyId})")
     Integer insertOld(Old old);
 
     /**
@@ -120,6 +121,12 @@ public interface OldEnterpriseDao {
     @Select("select old_id from old where credit_code = #{creditCode}")
     List<String> selectOldIdByCreditCode(String creditCode);
 
+    @Select("select name from old where credit_code = #{creditCode}")
+    List<String> selectOldNameByCreditCode(String creditCode);
+
+    @Select("select suggestion from old where credit_code = #{creditCode}")
+    List<String> getSuggestionByCreditCode(String creditCode);
+
     @Select("select audit_id from audit where credit_code = #{creditCode}")
     List<String> selectAuditIdByCreditCode(String creditCode);
 
@@ -144,7 +151,12 @@ public interface OldEnterpriseDao {
     void updateAuditCreditCode(String auditId, String newCreditCode);
 
     @Select("select credit_code from user_company where user_id = #{userId}")
-    String selectCreditCodeByUserId(String userId);
+    List<String> selectCreditCodeByUserId(String userId);
+
+    @Select("select administrator_audit, leadership_audit, submit_time " +
+            "from audit where credit_code = #{creditCode} " +
+            "order by submit_time desc")
+    List<TechnologyApplyingRes> selectAuditByCreditCode(String creditCode);
 
     @Select("select old_demand_id from old where credit_code = #{creditCode}")
     String demandExit(String creditCode);
