@@ -19,12 +19,21 @@ public class LeaderController {
     }
 
     /**
-     * 审核授权
+     * 审核授权(科技园部分)
      */
-    @RequestMapping(value = "authorization", method = RequestMethod.POST)
-    private Map<String, Object> authorization(@RequestBody JSONObject map) {
-        return MyResponseUtil.getResultMap(leaderService.authorization(map), 0, "success");
+    @RequestMapping(value = "authorization/technology", method = RequestMethod.POST)
+    private Map<String, Object> authorizationTechnology(@RequestBody JSONObject map) {
+        return leaderService.authorizationTechnology();
     }
+
+    /**
+     * 审核授权(众创空间部分)
+     */
+    @RequestMapping(value = "authorization/space", method = RequestMethod.POST)
+    private Map<String, Object> authorizationSpace(@RequestBody JSONObject map) {
+        return leaderService.authorizationSpace();
+    }
+
 
     /**
      * 获取全部迁入和独立注册企业的基本信息
