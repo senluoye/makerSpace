@@ -1,7 +1,9 @@
 package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.controller.UserController;
 import com.qks.makerSpace.dao.FormDao;
+import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AllForm;
@@ -54,48 +56,42 @@ public class FormServiceImpl implements FormService {
             throw new ServiceException("请先填写入驻申请");
 
         // 初始化一些数据
-        String temp = map.getString("map");
         FormReq form = FormParserUtils.parser(map);
 
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
         String formId = UUID.randomUUID().toString();
-        Date date = new Date();
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String time = dateFormat.format(date);
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String creditCode = form.getCreditCode();
 
         form.setFormId(formId); // 注意，这个才是主键
         form.setGetTime(time);
         form.setAwardsId(awardsId);
         form.setEmploymentId(employmentId);
-        String creditCode = form.getCreditCode();
 
         /**
          * 下面是填报数据
          */
         // 首先判断是否为 高新技术企业
         if (form.getHighEnterprise().equals("是")) {
-            String aa = map.getString("map");
-            JSONObject mapJson = JSONObject.parseObject(aa);
-//            System.out.println(mapJson);
+            // 初始化高新技术企业类
             FormHighEnterprise formHighEnterprise = new FormHighEnterprise();
-            String strTemp = mapJson.getString("highEnterpriseData");
-            JSONObject highEnterpriseData = JSONObject.parseObject(strTemp);
-//            System.out.println(highEnterpriseData);
-            formHighEnterprise.setCertificateCode(highEnterpriseData.getString("getTime"));
-            formHighEnterprise.setHighEnterpriseId(highEnterpriseData.getString("certificateCode"));
-            // 在form中插入高新技术企业表id
-            form.setHighEnterpriseId(highEnterpriseId);
 
+            JSONObject highEnterpriseData = map.getJSONObject("highEnterpriseData");
+
+            formHighEnterprise.setGetTime(highEnterpriseData.getString("getTime"));
+            formHighEnterprise.setCertificateCode(highEnterpriseData.getString("certificateCode"));
             formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
             formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
-            System.out.println(formHighEnterprise);
+
+            form.setHighEnterpriseId(highEnterpriseId);
+
             // 插入记录到高新技术企业表
             if (formDao.addHighEnterpriseFile(formHighEnterprise) < 1)
                 throw new ServiceException("填报数据失败:highEnterpriseFile");
         }
-        System.out.println("444444");
+
         // 填报form表
         if (formDao.addForm(form) < 1)
             throw new ServiceException("填报数据失败");
@@ -110,7 +106,6 @@ public class FormServiceImpl implements FormService {
                 throw new ServiceException("请供科技型中小企业获批截屏");
             }
         }
-        System.out.println("555555");
         // 判断是否为 大学生创业 或 高校科研院所人员
         if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
 //            System.out.println(headerFile);
@@ -122,10 +117,9 @@ public class FormServiceImpl implements FormService {
             else
                 throw new ServiceException("大学生创业和高校创业需分别提供毕业证或学生证复印件、教师资格证复印件");
         }
-        System.out.println("66666666");
+
         // 接纳 应届生毕业就业人员 不为 0 时
         if (Integer.parseInt(form.getEmployment()) != 0) {
-//            System.out.println(contractFile.length + " " + Integer.parseInt(form.getEmployment()));
             if (contractFile.length != 0 && contractFile.length == Integer.parseInt(form.getEmployment())) {
                 for (MultipartFile multipartFile : contractFile) {
                     FormEmployment formEmployment = new FormEmployment();
@@ -141,7 +135,6 @@ public class FormServiceImpl implements FormService {
                 throw new ServiceException("请提交对应数量的入职合同");
             }
         }
-        System.out.println("777777");
         // 当年 参赛获奖情况 不为 0 时
         if (Integer.parseInt(form.getTotalAwards()) != 0) {
             if (awardsFile.length != 0 && awardsFile.length == Integer.parseInt(form.getTotalAwards())) {
@@ -168,6 +161,38 @@ public class FormServiceImpl implements FormService {
     }
 
     /**
+     * 获取上一次填写的季度报表
+     * @param token
+     * @return
+     */
+    @Override
+    public Map<String, Object> getTechnologyForm(String token) throws ServiceException, IOException{
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<UserCompany> userCompanies = formDao.getCompanyByUserId(userId);
+        if (userCompanies.size() == 0)
+            throw new ServiceException("请先填写入驻申请");
+
+        Map<String, Object> data;
+
+        String creditCode = userCompanies.get(0).getCreditCode();
+        Form form = formDao.getLastFormByCreditCode(creditCode);
+
+        if (form == null) {
+            // 如果之前没有提交过申请
+            Old old = formDao.getLastOldByCreditCode(creditCode);
+            data = FormParserUtils.FormMapParser(old);
+
+            return MyResponseUtil.getResultMap(data, 0, "success");
+        }
+
+        HighEnterpriseData highEnterpriseData = formDao.getHighEnterpriseById(form.getHighEnterpriseId());
+        data = FormParserUtils.FormMapParser(highEnterpriseData, form);
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+
+    /**
      * @description 获取所有企业的所有季度报表(管理员)
      * @return Hashmap
      */
@@ -182,6 +207,7 @@ public class FormServiceImpl implements FormService {
         data.addAll(newMap);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
+
     /**
      * @description 获取某一个企业的所有季度报表(用户)
      * @return Hashmap
@@ -189,8 +215,10 @@ public class FormServiceImpl implements FormService {
     @Override
     public Map<String, Object> userGetTechnologyForm(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
-        String creditCode = formDao.getCreditCodeByUserId(userId);
-        System.out.println(creditCode);
+        List<String> creditCodes = formDao.getCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) throw new ServiceException("您还未填写季度报表");
+        String creditCode = creditCodes.get(0);
+
         List<Old> olds = formDao.getOldByCreditCode(creditCode);
         List<AllForm> data;
 

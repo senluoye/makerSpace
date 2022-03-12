@@ -1,7 +1,9 @@
 package com.qks.makerSpace.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.FormReq;
 
@@ -14,7 +16,7 @@ public class FormParserUtils {
         form.setTime(map.getString("time"));
         form.setTeamName(map.getString("teamName"));
         form.setCreditCode(map.getString("creditCode"));
-        form.setRegisterCapital(map.getString("registerTime"));
+        form.setRegisterTime(map.getString("registerTime"));
         form.setJoinTime(map.getString("joinTime"));
         form.setRegisterCapital(map.getString("registerCapital"));
         form.setRegisterKind(map.getString("registerKind"));
@@ -24,6 +26,7 @@ public class FormParserUtils {
         form.setGraduatedTime(map.getString("graduatedTime"));
         form.setHighEnterprise(map.getString("highEnterprise"));
         form.setMediumSized(map.getString("mediumSized"));
+        form.setMentorRelationship(map.getString("mentorRelationship"));
         form.setHeaderKind(map.getString("headerKind"));
         form.setSerialEntrepreneur(map.getString("serialEntrepreneur"));
         form.setHeaderGender(map.getString("headerGender"));
@@ -83,6 +86,97 @@ public class FormParserUtils {
         form.setProductExpenditure(map.getString("productExpenditure"));
         form.setGovernmentGrant(map.getString("governmentGrant"));
         form.setSelfRaised(map.getString("selfRaised"));
+
         return form;
+    }
+
+    public static Map<String, Object> FormMapParser(HighEnterpriseData highEnterpriseData, Form form) {
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("time", form.getTime());
+        data.put("teamName", form.getTeamName());
+        data.put("creditCode", form.getCreditCode());
+        data.put("registerTime", form.getRegisterTime());
+        data.put("joinTime", form.getJoinTime());
+        data.put("registerCapital", form.getRegisterCapital());
+        data.put("registerKind", form.getRegisterKind());
+        data.put("industryKind", form.getIndustryKind());
+        data.put("field", form.getField());
+        data.put("graduatedEnterprise", form.getGraduatedEnterprise());
+        data.put("graduatedTime", form.getGraduatedTime());
+        data.put("highEnterprise", form.getHighEnterprise());
+        data.put("highEnterpriseData", JSON.toJSONString(highEnterpriseData));
+        data.put("mediumSized", form.getMediumSized());
+        data.put("mentorRelationship", form.getMentorRelationship());
+        data.put("headerKind", form.getHeaderKind());
+        data.put("serialEntrepreneur", form.getSerialEntrepreneur());
+        data.put("headerGender", form.getHeaderGender());
+        data.put("taxKind", form.getTaxKind());
+        data.put("header", form.getHeader());
+        data.put("statisticHeader", form.getStatisticHeader());
+        data.put("submitHeader", form.getSubmitHeader());
+        data.put("submitPhone", form.getSubmitPhone());
+        data.put("submitTime", form.getSubmitTime());
+        data.put("riskInvestment", form.getRiskInvestment());
+        data.put("area", form.getArea());
+        data.put("institutions", form.getInstitutions());
+        data.put("totalTransformation", form.getTotalTransformation());
+        data.put("relying", form.getRelying());
+        data.put("winning", form.getWinning());
+        data.put("result", form.getResult());
+        data.put("incubateIncome", form.getIncubateIncome());
+        data.put("incubateProduct", form.getIncubateProduct());
+        data.put("incubateProfit", form.getIncubateProfit());
+        data.put("incubateTax", form.getIncubateTax());
+        data.put("incubateOut", form.getIncubateOut());
+        data.put("employee", form.getEmployee());
+        data.put("doctor", form.getDoctor());
+        data.put("master", form.getMaster());
+        data.put("graduate", form.getGraduate());
+        data.put("bachelor", form.getBachelor());
+        data.put("college", form.getCollege());
+        data.put("tecSecondary", form.getTecSecondary());
+        data.put("tecActivists", form.getTecActivists());
+        data.put("radNumber", form.getRadNumber());
+        data.put("returnees", form.getReturnees());
+        data.put("talents", form.getTalents());
+        data.put("trainee", form.getTrainee());
+        data.put("employment", form.getEmployment());
+        data.put("applications", form.getApplications());
+        data.put("applicationsPatent", form.getApplicationsPatent());
+        data.put("granted", form.getGranted());
+        data.put("grantedPatent", form.getGrantedPatent());
+        data.put("valid", form.getValid());
+        data.put("validPatent", form.getValidPatent());
+        data.put("softCopyright", form.getSoftCopyright());
+        data.put("plantVariety", form.getPlantVariety());
+        data.put("icLayout", form.getIcLayout());
+        data.put("foreignPatents", form.getForeignPatents());
+        data.put("contractTransaction", form.getContractTransaction());
+        data.put("contractUrnover", form.getContractUrnover());
+        data.put("projectNum", form.getProjectNum());
+        data.put("totalAwards", form.getTotalAwards());
+        data.put("provinceAwards", form.getProvinceAwards());
+        data.put("underProjects", form.getUnderProjects());
+        data.put("nationalProject", form.getNationalProject());
+        data.put("schoolProject", form.getSchoolProject());
+        data.put("declarationName", form.getDeclarationName());
+        data.put("declarationNum", form.getDeclarationNum());
+        data.put("expenditure", form.getExpenditure());
+        data.put("radExpenditure", form.getRadExpenditure());
+        data.put("productExpenditure", form.getProductExpenditure());
+        data.put("governmentGrant", form.getGovernmentGrant());
+        data.put("selfRaised", form.getSelfRaised());
+
+        return data;
+    }
+
+    public static Map<String, Object> FormMapParser(Old old) {
+        Map<String, Object> data = new HashMap<>();
+
+        
+
+
+        return data;
     }
 }

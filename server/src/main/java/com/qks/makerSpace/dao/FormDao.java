@@ -1,5 +1,6 @@
 package com.qks.makerSpace.dao;
 
+import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AllForm;
@@ -19,6 +20,9 @@ public interface FormDao {
 
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> getCompanyByUserId(String userId);
+
+    @Select("select * from form where get_time = (select max(get_time) from form where credit_code = #{creditCode}) and credit_code = #{creditCode}")
+    Form getLastFormByCreditCode(String creditCode);
 
     @Insert("insert into form(team_name, credit_code, register_time, " +
             "join_time, register_capital, register_kind, industry_kind, " +
@@ -59,9 +63,12 @@ public interface FormDao {
     @Update("update form set header_file = #{headerFile} where form_id = #{formId}")
     Integer updateHeaderFile(byte[] headerFile, String formId);
 
-    @Insert("insert into form_high_enterprise(high_enterprise_id, high_enterprise_file, get_time) " +
-            "VALUES (#{highEnterpriseId}, #{highEnterpriseFile}, #{getTime})")
+    @Insert("insert into form_high_enterprise(high_enterprise_id, high_enterprise_file, get_time, certificate_code) " +
+            "VALUES (#{highEnterpriseId}, #{highEnterpriseFile}, #{getTime}, #{certificateCode})")
     Integer addHighEnterpriseFile(FormHighEnterprise formHighEnterprise);
+
+    @Select("select * from form_high_enterprise where high_enterprise_id = #{highEnterpriseId}")
+    HighEnterpriseData getHighEnterpriseById(String highEnterpriseId);
 
     @Insert("insert into form_employment(form_employment_id, employment_id, contract_file) " +
             "VALUES (#{formEmploymentId}, #{employmentId}, #{contractFile})")
@@ -110,9 +117,18 @@ Space selectSpace(String inApplyId);
     List<AllForm> getFormByNewCreditCode(String creditCode);
 
     @Select("select credit_code from user_company where user_id = #{userId}")
-    String getCreditCodeByUserId(String userId);
+    List<String> getCreditCodeByUserId(String userId);
 
     @Select("select * from old where credit_code = #{creditCode}")
     List<Old> getOldByCreditCode(String creditCode);
+
+    @Select("select * " +
+            "from old " +
+            "where submit_time = (" +
+            "   select max(submit_time) " +
+            "   from old " +
+            "   where credit_code = #{creditCode}" +
+            ") and credit_code = #{creditCode}")
+    Old getLastOldByCreditCode(String creditCode);
 
 }

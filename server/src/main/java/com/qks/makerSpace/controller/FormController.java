@@ -48,6 +48,17 @@ public class FormController {
     }
 
     /**
+     * 获取上一次科技园季度报表
+     * @return
+     */
+    @RequestMapping(value = "technology", method = RequestMethod.GET)
+    private Map<String, Object> getTechnologyForm(HttpServletRequest httpServletRequest)
+            throws ServiceException, IOException {
+
+        return formService.getTechnologyForm(httpServletRequest.getHeader("token"));
+    }
+
+    /**
      * @description 获取所有企业的最新季度报表(管理员)
      * @return Hashmap
      */

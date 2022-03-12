@@ -1511,7 +1511,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/form/technology`
+- ` /api/form/technology`
 
 **请求方式：**
 
@@ -1527,6 +1527,7 @@ map部分：
 	"teamName": "<String>", //企业名称
 	"creditCode": "<String>", //统一社会信用代码或组织机构代码
 	"registerTime": "<String>", //企业注册时间
+    "joinTime":"<String>",			// 
 	"registerCapital": "<String>", //注册资金			
 	"registerKind": "<String>", //企业登记注册类型
 	"industryKind": "<String>", //行业类别
@@ -1626,6 +1627,42 @@ map部分：
 }
 ```
 
+
+
+## 获取上一次填写的季度报表
+
+**简要描述：**
+
+因为季度报表填写的时候要求先导入数据库已有的数据，所以这里增加一个获取上一次填写的季度报表的api。这里只返回map，不返回文件（赋值为null）。
+
+如果之前没有填写过季度报表，则返回在入园申请表中关联的部分数据。
+
+**请求URL：**
+
+- ` /api/form/technology`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+map部分：
+
+```
+{
+    "data":{
+    
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+
+
+
+
 ## 获取某个科技园企业的所有季度报表部分信息（用户）
 
 **简要描述：**
@@ -1647,7 +1684,7 @@ map部分：
     "data":[{
         "creditCode":"<String>",
         "name":"<String>",
-        "represent":"<String>,
+        "represent":"<String>",
         "representPhone":"<String>",
         "representEmail":"<String>",
         "getTime":"<String>",
@@ -1663,7 +1700,7 @@ map部分：
 
 **简要描述：**
 
-获取所有科技园企业的所有季度报表信息（管理员）
+获取所有科技园企业的所有季度报表部分信息（管理员）
 
 **请求URL：**
 
@@ -1678,10 +1715,10 @@ map部分：
 ~~~json
 {
     "data":{[
-        "formId":"<String>"				// 唯一凭证
+        "formId":"<String>",				// 唯一凭证
 		"creditCode":"<String>",
         "name":"<String>",
-        "represent":"<String>
+        "represent":"<String>",
         "representPhone":"<String>",
         "representEmail":"<String>",
         "getTime":"<String>",
