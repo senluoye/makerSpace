@@ -1527,7 +1527,7 @@ map部分：
 	"teamName": "<String>", //企业名称
 	"creditCode": "<String>", //统一社会信用代码或组织机构代码
 	"registerTime": "<String>", //企业注册时间
-    "joinTime":"<String>",			// 
+    "joinTime":"<String>",			// 企业入驻科技园时间
 	"registerCapital": "<String>", //注册资金			
 	"registerKind": "<String>", //企业登记注册类型
 	"industryKind": "<String>", //行业类别
@@ -2962,31 +2962,65 @@ map部分：
 
 
 
-## 审核授权
+## 入园申请审核授权
 
 **简要描述：**
 
-审核授权
+领导端审核授权，由于不分角色，所以应同时获取科技园、众创空间所有未审核的入园申请。由于两者字段有所差别，这里为了更好地解析，将其分为两个部分。
 
 **请求URL：**
 
-- `/api/authorization`
+- `/api/leader/authorization/technology`
 
 **请求方式：**
 
-- POST(带token)
+- GET(带token)
 
-**参数**：
+**返回值**：
 
 ```json
 {
-    "creditCode":"<String>"
+    "data":[{
+        "creditCode":"<Strng>",					// 社会信用代码
+        "name":"<String>",						// 公司名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+```
+
+**请求URL：**
+
+- `/api/leader/authorization/space`
+
+**请求方式：**
+
+- GET(带token)
+
+**返回值**：
+
+```json
+{
+    "data":[{
+        "inApplyId":"<Strng>",					// 社会信用代码
+        "name":"<String>",						// 公司名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
 }
 ```
 
 
-
-**返回值：**
 
 
 
@@ -3000,7 +3034,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/getold`
+- `/api/leader/getold`
 
 **请求方式：**
 
@@ -3046,7 +3080,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/getold/{id}`
+- `/api/leader/getold/{id}`
 
 **请求方式：**
 
@@ -3199,7 +3233,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/getnew`
+- `/api/leader/getnew`
 
 **请求方式：**
 
@@ -3243,7 +3277,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/getold/{id}`
+- `/api/leader/getold/{id}`
 
 **请求方式：**
 
