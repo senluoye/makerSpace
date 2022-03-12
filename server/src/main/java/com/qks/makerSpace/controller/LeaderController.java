@@ -1,11 +1,14 @@
 package com.qks.makerSpace.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.service.LeaderService;
+import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @RestController
@@ -22,16 +25,26 @@ public class LeaderController {
      * 审核授权(科技园部分)
      */
     @RequestMapping(value = "authorization/technology", method = RequestMethod.POST)
-    private Map<String, Object> authorizationTechnology(@RequestBody JSONObject map) {
-        return leaderService.authorizationTechnology();
+    private Map<String, Object> authorizationTechnology(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.authorizationTechnology();
+        else
+            throw new ServiceException("请求主体非管理员");
     }
 
     /**
      * 审核授权(众创空间部分)
      */
     @RequestMapping(value = "authorization/space", method = RequestMethod.POST)
-    private Map<String, Object> authorizationSpace(@RequestBody JSONObject map) {
-        return leaderService.authorizationSpace();
+    private Map<String, Object> authorizationSpace(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.authorizationSpace();
+        else
+            throw new ServiceException("请求主体非管理员");
     }
 
 
