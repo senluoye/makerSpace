@@ -3,8 +3,8 @@ package com.qks.makerSpace.entity.request;
 import lombok.Data;
 
 @Data
-public class SpaceApplyingReq {
-    String inApplyId;
+public class AdminTechnologyApplyingReq {
+    String creditCode;
     String name;
     String submitTime;
     String administratorAudit;

@@ -3,8 +3,8 @@ package com.qks.makerSpace.service.Impl;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.request.SpaceApplyingReq;
-import com.qks.makerSpace.entity.request.TechnologyApplyingReq;
+import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
+import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
 import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllSpace;
@@ -16,7 +16,6 @@ import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -94,8 +93,8 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllTechnologyApplying() {
-        List<TechnologyApplyingReq> lists = adminDao.getAllTechnologyApplying();
-        for (TechnologyApplyingReq applyingReq : lists) {
+        List<AdminTechnologyApplyingReq> lists = adminDao.getAllTechnologyApplying();
+        for (AdminTechnologyApplyingReq applyingReq : lists) {
             // 首先看看该公司在不在旧企业表中
             List<String> oldNameList = adminDao.getOldNameByCreditCode(applyingReq.getCreditCode());
             if (oldNameList.size() > 0) // 不为0，在旧企业中
@@ -114,8 +113,8 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllSpaceApplying() {
-        List<SpaceApplyingReq> lists = adminDao.getAllSpaceApplying();
-        for (SpaceApplyingReq spaceApplyingReq : lists) {
+        List<AdminSpaceApplyingReq> lists = adminDao.getAllSpaceApplying();
+        for (AdminSpaceApplyingReq spaceApplyingReq : lists) {
             System.out.println(spaceApplyingReq);
             String inApplyId =  spaceApplyingReq.getInApplyId();
             String name = adminDao.getSpaceNameByCreditCode(inApplyId).get(0);

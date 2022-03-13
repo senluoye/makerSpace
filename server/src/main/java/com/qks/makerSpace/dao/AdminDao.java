@@ -1,8 +1,8 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.request.SpaceApplyingReq;
-import com.qks.makerSpace.entity.request.TechnologyApplyingReq;
+import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
+import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
 import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllTechnology;
@@ -44,12 +44,12 @@ public interface AdminDao {
     @Select("select credit_code, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
             "from (select * from audit where `describe` = '科技园' and administrator_audit = '未审核') temp " +
             "group by credit_code")
-    List<TechnologyApplyingReq> getAllTechnologyApplying();
+    List<AdminTechnologyApplyingReq> getAllTechnologyApplying();
 
     @Select("select credit_code inApplyId, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
             "from (select * from audit where `describe` = '众创空间' and administrator_audit = '未审核') temp " +
             "group by credit_code ")
-    List<SpaceApplyingReq> getAllSpaceApplying();
+    List<AdminSpaceApplyingReq> getAllSpaceApplying();
 
     @Select("select name from old where credit_code = #{creditCode}")
     List<String> getOldNameByCreditCode(String creditCode);

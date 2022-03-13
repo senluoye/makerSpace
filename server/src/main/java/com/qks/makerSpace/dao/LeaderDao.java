@@ -1,7 +1,8 @@
 package com.qks.makerSpace.dao;
 
-import com.qks.makerSpace.entity.request.SpaceApplyingReq;
-import com.qks.makerSpace.entity.request.TechnologyApplyingReq;
+import com.qks.makerSpace.entity.request.LeaderSpaceApplyingReq;
+import com.qks.makerSpace.entity.request.LeaderTechnologyApplyingReq;
+import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -13,12 +14,12 @@ public interface LeaderDao {
     @Select("select credit_code, leadership_audit leadershipAudit, `describe`, max(submit_time) submitTime " +
             "from (select * from audit where `describe` = '科技园' and leadership_audit = '未审核') temp " +
             "group by credit_code")
-    List<TechnologyApplyingReq> getAllTechnologyApplying();
+    List<LeaderTechnologyApplyingReq> getAllTechnologyApplying();
 
     @Select("select credit_code inApplyId, leadership_audit leadershipAudit, `describe`, max(submit_time) submitTime " +
             "from (select * from audit where `describe` = '众创空间' and leadership_audit = '未审核') temp " +
             "group by credit_code ")
-    List<SpaceApplyingReq> getAllSpaceApplying();
+    List<LeaderSpaceApplyingReq> getAllSpaceApplying();
 
     @Select("select name from old where credit_code = #{creditCode}")
     List<String> getOldNameByCreditCode(String creditCode);
