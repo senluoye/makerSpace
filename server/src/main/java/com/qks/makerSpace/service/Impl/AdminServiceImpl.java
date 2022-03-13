@@ -129,19 +129,14 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getAllDetails() {
         List<AllTechnology> dataOne = adminDao.getAllOldDetails();
-//        System.out.println(dataOne.toString());
 
-        Iterator<AllTechnology> iterator_one = dataOne.iterator();
-        while (iterator_one.hasNext()) {
-            AllTechnology allTechnology = iterator_one.next();
+        for (AllTechnology allTechnology : dataOne) {
             allTechnology.setCompanyKind("old");
         }
 
         List<AllTechnology> dataTwo = adminDao.getAllNewDetails();
         System.out.println(dataTwo.toString());
-        Iterator<AllTechnology> iterator_two = dataTwo.iterator();
-        while (iterator_two.hasNext()) {
-            AllTechnology allTechnology = iterator_two.next();
+        for (AllTechnology allTechnology : dataTwo) {
             allTechnology.setCompanyKind("new");
         }
 
@@ -163,22 +158,6 @@ public class AdminServiceImpl implements AdminService {
             throw new ServiceException("数据不存在");
 
         Map<String, Object> data = new HashMap<>();
-
-//        data.put("creditCode", old.getCreditCode());
-//        data.put("registerAddress", old.getRegisterAddress());
-//        data.put("registerCapital", old.getRealCapital());
-//        data.put("realAddress", old.getRealAddress());
-//        data.put("realCapital", old.getRealCapital());
-//        data.put("lastIncome", old.getLastIncome());
-//        data.put("lastTax", old.getLastTax());
-//        data.put("employees", old.getEmployees());
-//        data.put("originNumber", old.getOriginNumber());
-//        data.put("setDate", old.getSetDate());
-//        data.put("nature", old.getNature());
-//        data.put("involved", old.getInvolved());
-//        data.put("mainBusiness", old.getMainBusiness());
-//        data.put("way", old.getWay());
-//        data.put("business", old.getBusiness());
 
         data.put("old", old);
         data.put("oldDemand", adminDao.getOldDemandById(old.getOldDemandId()));

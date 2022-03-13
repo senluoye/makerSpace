@@ -2948,6 +2948,150 @@ map部分：
 
 
 
+# 留言
+
+### **数据表**
+
+|    字段名    |  类型  |     说明     |
+| :----------: | :----: | :----------: |
+|  message_id  | String | 留言表唯一ID |
+|   user_id    | String |    用户ID    |
+| message_text |  text  |   留言内容   |
+| message_time | String |   留言时间   |
+
+
+
+## 提交一次留言
+
+**简要描述：**
+
+用户提交一次留言，用于管理员查看。
+
+**请求URL：**
+
+- `/api/message/user`
+
+**请求方式：**
+
+- POST(带token)
+
+**参数：**
+
+```json
+{
+    "messageText":"<String>"				// 留言内容
+}
+```
+
+**返回值**：
+
+```json
+{
+    "data":{
+        "messageId":"<String>"				// 留言Id
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+
+
+## 用户查看自己填写的留言
+
+**简要描述：**
+
+用户查看自己填写的留言（按时间排序）
+
+**请求URL：**
+
+- `/api/message/user`
+
+**请求方式：**
+
+- GET(带token)
+
+**返回值**：
+
+```json
+{
+    "data":[{
+        "messageId": "<String>",
+        "userId": "<String>",
+        "messageText": "<String>",
+        "messageTime": "2022-03-13 11:30:28"
+    },
+    ...... 
+    ],
+    "code":0,
+    "msg":"success"
+}
+```
+
+## 管理员查看用户填写的留言
+
+**简要描述：**
+
+管理员查看所有用户填写的留言（按时间排序）
+
+**请求URL：**
+
+- `/api/message/admin`
+
+**请求方式：**
+
+- GET(带token)
+
+**返回值**：
+
+```json
+{
+    "data":[{
+        "messageId": "<String>",					// 留言id
+        "name": "<String>",							// 公司名称
+        "messageText": "<String>",					// 留言内容
+        "messageTime": "2022-03-13 11:30:28"		// 留言时间
+    },
+    ...... 
+    ],
+    "code":0,
+    "msg":"success"
+}
+```
+
+## 领导查看用户填写的留言
+
+**简要描述：**
+
+领导查看用户填写的留言（按时间排序）
+
+**请求URL：**
+
+- `/api/message/leader`
+
+**请求方式：**
+
+- GET(带token)
+
+**返回值**：
+
+```json
+{
+    "data":[{
+        "messageId": "<String>",					// 留言id
+        "name": "<String>",							// 公司名称
+        "messageText": "<String>",					// 留言内容
+        "messageTime": "2022-03-13 11:30:28"		// 留言时间
+    },
+    ...... 
+    ],
+    "code":0,
+    "msg":"success"
+}
+```
+
+
+
 
 
 
@@ -3022,15 +3166,11 @@ map部分：
 
 
 
-
-
-
-
 ## 获取全部迁入和独立注册企业
 
 **简要描述：**
 
-返回部分参数
+获取全部迁入和独立注册企业的部分信息
 
 **请求URL：**
 
