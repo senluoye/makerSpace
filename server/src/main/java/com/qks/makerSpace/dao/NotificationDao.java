@@ -40,10 +40,7 @@ public interface NotificationDao {
     @Select("select name from notice_read where notice_id = #{noticeId}")
     List<NoticeResponse> alreadyRead(String noticeId);
 
-//    有问题
-    @Select("select name " +
-            "from user " +
-            "where not exists " +
-            "(select name from notice_read where notice_id = #{noticeId})")
+//    有问题 ;
+    @Select("select name from user where name not in (select name from notice_read where notice_id = #{noticeId})")
     List<NoticeResponse> noRead(String noticeId);
 }

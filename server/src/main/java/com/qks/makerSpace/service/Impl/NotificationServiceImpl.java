@@ -108,6 +108,7 @@ public class NotificationServiceImpl implements NotificationService {
     public Map<String, Object> alreadyRead(Map<String, Object> map) throws ServiceException {
         String noticeId = map.get("noticeId").toString();
         List<NoticeResponse> list = notificationDao.alreadyRead(noticeId);
+        System.out.println(list);
 
         if (list.size() != 0) {
             return MyResponseUtil.getResultMap(list,0,"success");

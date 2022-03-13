@@ -83,4 +83,89 @@ public class LeaderController {
     private Map<String, Object> addAdmin(@RequestBody JSONObject map) {
         return MyResponseUtil.getResultMap(leaderService.deleteOldById(map), 0, "success");
     }
+
+    /**
+     * 同意某个季度报表
+     * @param httpServletRequest
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "/form/agree", method = RequestMethod.POST)
+    private Map<String, Object> agreeForm(HttpServletRequest httpServletRequest, @RequestBody JSONObject map) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.agreeFormById(map);
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
+
+    /**
+     * 不同意某个季度报表
+     * @param httpServletRequest
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "form/disagree", method = RequestMethod.POST)
+    private Map<String, Object> disagreeForm(HttpServletRequest httpServletRequest, @RequestBody JSONObject map) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.disagreeFormById(map);
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
+
+    /**
+     * 获取领导未通过的季度报表
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "form/leaderAudit", method = RequestMethod.GET)
+    private Map<String, Object> getFormLeaderAudit(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.getFormLeaderAudit();
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
+
+    /**
+     * 获取某个企业最新的季度报表
+     * @param httpServletRequest
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "form/detail", method = RequestMethod.POST)
+    private Map<String, Object> getFormDetail(HttpServletRequest httpServletRequest,@RequestBody JSONObject map) throws ServiceException {
+
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.getFormDetail(map);
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
+
+    /**
+     *获取某个企业的历史季度报表
+     * @param httpServletRequest
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "form/company", method = RequestMethod.POST)
+    private Map<String, Object> getFormByCompany(HttpServletRequest httpServletRequest,@RequestBody JSONObject map) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("admin"))
+            return leaderService.getFormByCompany(map);
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
 }
