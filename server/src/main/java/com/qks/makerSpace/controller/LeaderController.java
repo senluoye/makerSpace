@@ -22,9 +22,9 @@ public class LeaderController {
     }
 
     /**
-     * 审核授权(科技园部分)
+     * 获取最新入园申请(科技园部分)
      */
-    @RequestMapping(value = "authorization/technology", method = RequestMethod.POST)
+    @RequestMapping(value = "authorization/technology", method = RequestMethod.GET)
     private Map<String, Object> authorizationTechnology(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         String name = JWTUtils.parser(token).get("name").toString();
@@ -35,9 +35,9 @@ public class LeaderController {
     }
 
     /**
-     * 审核授权(众创空间部分)
+     * 获取最新入园申请(众创空间部分)
      */
-    @RequestMapping(value = "authorization/space", method = RequestMethod.POST)
+    @RequestMapping(value = "authorization/space", method = RequestMethod.GET)
     private Map<String, Object> authorizationSpace(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         String name = JWTUtils.parser(token).get("name").toString();
