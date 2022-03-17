@@ -39,9 +39,13 @@ public class NotificationServiceImpl implements NotificationService {
         System.out.println(map);
         String text = map.get("text").toString();
         String forTop = map.get("forTop").toString();
+        String title = map.get("title").toString();
+        String author = map.get("author").toString();
 
         Notification notification = new Notification();
         notification.setNoticeId(UUID.randomUUID().toString());
+        notification.setTitle(title);
+        notification.setAuthor(author);
         notification.setText(text);
         notification.setForTop(forTop);
         Date date = new Date();
@@ -57,11 +61,15 @@ public class NotificationServiceImpl implements NotificationService {
         String text = map.get("text").toString();
         String forTop = map.get("forTop").toString();
         String noticeId = map.get("noticeId").toString();
+        String title = map.get("title").toString();
+        String author = map.get("author").toString();
 
         Notification notification = new Notification();
         notification.setNoticeId(noticeId);
         notification.setText(text);
         notification.setForTop(forTop);
+        notification.setTitle(title);
+        notification.setAuthor(author);
         Date date = new Date();
         notification.setNoticeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
 

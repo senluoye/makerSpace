@@ -5,6 +5,7 @@ import com.qks.makerSpace.dao.NewEnterpriseDao;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
+import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.ChangeUtils;
@@ -35,7 +36,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     /**
      *
      * @param token
-     * @param map
+     * @param str
      * @param picture
      * @param representCard
      * @param certificate
@@ -45,142 +46,137 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @throws ServiceException
      */
     @Override
-    public Map<String, Object> newRegister(String token,
-                                           JSONObject map,
+    public Map<String, Object> updateNewEnterprise(String token,
+                                           String str,
                                            MultipartFile picture,
                                            MultipartFile representCard,
                                            MultipartFile certificate,
-                                           MultipartFile[] intellectualFile) throws IOException, ServiceException {
-        //数据处理
-        String userId = JWTUtils.parser(token).get("userId").toString();
-        String creditCode = map.getString("creditCode");
+                                           MultipartFile[] intellectualFile) throws Exception {
+
+        String userId = JWTUtils.parser(token).get("useId").toString();
+        User user = newEnterpriseDao.getUserByUserId(userId);
+        if (user == null) return  MyResponseUtil.getResultMap(null,-1,"用户不存在");
+
+        JSONObject map = JSONObject.parseObject(str);
 
         News news = NewParserUtils.newsParser(map);
-        news.setNewId(UUID.randomUUID().toString());
+        String creditCode = news.getCreditCode();
 
-        //picture：名称预核准通知书    representCard：法人身份证复印件     certificate:  教室需要上传教师资格证/学生需要上传学生证
+        List<String> userIds = newEnterpriseDao.selectUserIdByCreditCode(creditCode);
+        if (userIds.size() != 0 && !userIds.get(0).equals(userId))
+            throw new ServiceException("该社会信用代码已被其他用户填报");
+
+        List<UserCompany> users = newEnterpriseDao.selectUserCompany(userId);
+        if (users.size() != 0) {
+            newEnterpriseDao.updateUserCompany(userId, creditCode);
+            List<String> auditIds = oldEnterpriseDao.selectAuditIdByCreditCode(users.get(0).getCreditCode());
+            List<String> newsIds = newEnterpriseDao.selectNewIdByCreditCode(users.get(0).getCreditCode());
+            for (String newId : newsIds)
+                newEnterpriseDao.updateNewCreditCode(newId, creditCode);
+            for (String auditId: auditIds)
+                newEnterpriseDao.updateAuditCreditCode(auditId, creditCode);
+        }
+        else {
+            newEnterpriseDao.insertUserCompany(userId, creditCode);
+        }
+
+        String nature = news.getNature();
+        if (nature.equals("大学生创业企业") || nature.equals("高校教师创业企业")) {
+            try {
+                news.setCertificate(certificate.getBytes());
+            } catch (Exception e) {
+                throw new ServiceException("请提供与拟注册企业性质对应的文件");
+            }
+        }
         news.setPicture(picture.getBytes());
         news.setRepresentCard(representCard.getBytes());
-        news.setCertificate(certificate.getBytes());
+        news.setState("未审核");
 
-        Date date = new Date();
-        news.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-
+        NewDemand newDemand = NewParserUtils.newDemandParser(map.getString("newDemand"));
+        List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.getJSONArray("newShareholder"));
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.getJSONArray("newMainPerson"));
         List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.getJSONArray("newProject"));
         List<NewIntellectual> newIntellectuals = NewParserUtils.NewIntellectualParser(map.getJSONArray("newIntellectual"));
-        List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.getJSONArray("newShareholder"));
 
-        NewDemand newDemand = JSONObject.parseObject(map.getString("newDemand"),NewDemand.class);
-        newDemand.setId(UUID.randomUUID().toString());
-        String newDemandId = UUID.randomUUID().toString();
-        newDemand.setNewDemandId(newDemandId);
-        news.setNewDemandId(newDemandId);
-        newDemand.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
-
+        news.setNewDemandId(newDemand.getNewDemandId());
         news.setNewShareholderId(newShareholders.get(0).getNewShareholderId());
         news.setNewMainpersonId(newMainPeople.get(0).getNewMainpersonId());
         news.setNewProjectId(newProjects.get(0).getNewProjectId());
-        news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
 
-        for (int i = 0; i <intellectualFile.length; i++) {
-            try {
+        if (newIntellectuals.size() != 0) {
+            news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
+            if (newIntellectuals.size() != intellectualFile.length)
+                return MyResponseUtil.getResultMap(null,-1,"知识产权数量不足");
+            for (int i = 0; i < newIntellectuals.size(); i++) {
                 newIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
-            } catch (ArrayIndexOutOfBoundsException e) {
-                throw new ServiceException("读取文件发生错误，请重新上传");
             }
         }
 
-        //插入数据
-        newEnterpriseDao.newRegister(news);
-        newEnterpriseDao.addNewDemand(newDemand);
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        news.setSubmitTime(time);
+
+        if (newEnterpriseDao.insertNew(news) <= 0)
+            throw new ServiceException("信息插入失败：news");
+
+        if (newEnterpriseDao.addNewDemand(newDemand) <= 0)
+            throw new ServiceException("信息插入失败：房租");
         for (NewMainPerson newMainPerson : newMainPeople) {
-            if (newEnterpriseDao.insertNewMainPerson(newMainPerson) <= 0) {
-                throw new ServiceException("信息插入失败:newMainPeople");
-            }
+            if (newEnterpriseDao.insertNewMainPerson(newMainPerson) <= 0)
+                throw new ServiceException("信息插入失败：主要成员");
+        }
+        for (NewProject newProject : newProjects) {
+            if (newEnterpriseDao.insertNewProject(newProject) <= 0)
+                throw new ServiceException("信息插入失败：科技项目");
         }
         for (NewShareholder newShareholder : newShareholders) {
             if (newEnterpriseDao.insertNewShareholder(newShareholder) <= 0) {
-                throw new ServiceException("信息插入失败:newShareholder");
-            }
-        }
-        for (NewProject newProject : newProjects) {
-            if (newEnterpriseDao.insertNewProject(newProject) <= 0) {
-                throw new ServiceException("信息插入失败:newProject");
+                throw new ServiceException("信息插入失败：股东");
             }
         }
         for (NewIntellectual newIntellectual : newIntellectuals) {
-            if (newEnterpriseDao.insertNewIntellectual(newIntellectual) <= 0) {
-                throw new ServiceException("信息插入失败:newIntellectual");
-            }
+            if (newEnterpriseDao.insertNewIntellectual(newIntellectual) <= 0)
+                throw new ServiceException("信息插入失败：知识产权");
         }
 
-
-        //更新 Audit
         Audit audit = new Audit();
-        audit.setAuditId(creditCode);
+        audit.setAuditId(UUID.randomUUID().toString());
+        audit.setCreditCode(creditCode);
         audit.setAdministratorAudit("未审核");
         audit.setLeadershipAudit("未审核");
         audit.setDescribe("科技园");
+        audit.setSubmitTime(time);
 
-        if (oldEnterpriseDao.insertAudit(audit) <= 0)
-            throw new ServiceException("信息插入失败:audit");
+        if (newEnterpriseDao.insertAudit(audit) <= 0)
+            throw new ServiceException("信息插入失败：audit");
 
-        if (oldEnterpriseDao.selectUserCompany(creditCode) != null) {
-            oldEnterpriseDao.updateUserCompany(userId,creditCode);
-        } else {
-            oldEnterpriseDao.insertUserCompany(userId, creditCode);
-        }
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("creditCode", creditCode);
-        return MyResponseUtil.getResultMap(data,0,"success");
+        Map<String, Object> forMap = new HashMap<>();
+        forMap.put("creditCode",creditCode);
+        return MyResponseUtil.getResultMap(forMap,0,"success");
     }
 
     /**
-     * 信息状态展示
+     * 获取上一次入园申请
      * @return
      */
     @Override
-    public Map<String, Object> getNewEnterprise() {
-        List<Map<String, Object>> data = new ArrayList<>();
-        List<News> newsList = newEnterpriseDao.getAllNew();
+    public Map<String, Object> getNewEnterprise(String token) {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        String creditCode;
 
-        newsList.forEach(x ->{
-            try {
-                data.add(ChangeUtils.getObjectToMap(x));
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+        if (creditCodes.size() != 0) {
+            creditCode = creditCodes.get(0);
+            List<TechnologyApplyingRes> technologyApplyingRes = newEnterpriseDao.selectAuditByCreditCode(creditCode);
+            List<String> name = newEnterpriseDao.selectNewNameByCredit(creditCode);
+            List<String> suggestion = newEnterpriseDao.getSuggestionByCreditCode(creditCode);
+            for (TechnologyApplyingRes i : technologyApplyingRes) {
+                i.setName(name.get(0));
+                i.setSuggestion(suggestion.get(0));
             }
-        });
+            return MyResponseUtil.getResultMap(technologyApplyingRes,0,"success");
+        }
+        return MyResponseUtil.getResultMap(null,0,"success");
 
-        newsList.forEach(x->{
-            List<NewDemand> newDemands = newEnterpriseDao.getNewDemandById(x.getNewDemandId());
-            List<NewMainPerson> newMainPeople = newEnterpriseDao.getNewMainPerson(x.getNewMainpersonId());
-            List<NewIntellectual> newIntellectuals = newEnterpriseDao.getNewIntellectual(x.getNewIntellectualId());
-            List<NewProject> newProjects = newEnterpriseDao.getNewProject(x.getNewProjectId());
-            List<NewShareholder> newShareholders = newEnterpriseDao.getNewShareholder(x.getNewShareholderId());
-
-            Map<String, Object> temp = NewParserUtils.NewGetReponse(x);
-            temp.put("newDemand",newDemands);
-            temp.put("newShareholder",newShareholders);
-            temp.put("newMainPerson",newMainPeople);
-            temp.put("newProject",newProjects);
-            temp.put("newIntellectual",newIntellectuals);
-            data.add(temp);
-        });
-
-        return MyResponseUtil.getResultMap(data,0,"success");
-    }
-
-    /**
-     * 租赁缴费
-     * @param map
-     * @return
-     */
-    @Override
-    public Map<String, Object> newEnterprisePay(Map<String, Object> map) {
-        return null;
     }
 
     /**
@@ -191,10 +187,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     @Override
     public Map<String, Object> getFormByCreditCode(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
-        String creditCode = newEnterpriseDao.selectCreditCodeByUserId(userId);
-
-        if (creditCode == null)
-            throw new ServiceException("您并没有填写入驻申请表");
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        String creditCode = creditCodes.get(0);
 
         List<FormDetails> data = newEnterpriseDao.getAllFormDetails(creditCode);
 

@@ -730,8 +730,6 @@ map部分：
 
 
 
-
-
 ## 获取以往入园申请记录
 
 **简要描述：**
@@ -933,7 +931,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/new/newRegister`
+- `/api/new/newEnterprise`
 
 **请求方式：**
 
@@ -1079,13 +1077,11 @@ map部分：
 }
 ~~~
 
-
-
-## 获取最新入园申请信息
+## 获取上一次入园申请记录
 
 **简要描述：**
 
-展示最新已填入园申请信息（含审核状态）
+获取上一次入园申请信息(详细版)记录
 
 **请求URL：**
 
@@ -1203,12 +1199,48 @@ map部分：
 		    
 		    "suggestion":"<String>",								//科技园意见
 		    "note":"<String>",    								//备注
-	    "state":"<String>"
+	    	"state":"<String>"
 	    }],
 	  "code":0,
 	  "msg":"success"
 }   
 ~~~
+
+
+
+## 获取以往入园申请记录
+
+**简要描述：**
+
+获取以往已填入园申请信息(缩略版)，含审核状态
+
+**请求URL：**
+
+- `/api/new/newEnterprise/applying`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+		"name":"<String>",					// 公司名称
+        "submitTime":"<String>",			// 表单提交时间
+        "administratorAudit":"<String>",	// 管理员审核情况
+        "leadershipAudit":"<String>",		// 领导审核情况
+        "suggestion":"<String>"				//科技园意见
+    },
+    ......       
+    ],
+    "code":"0",
+    "msg":"success"
+}
+~~~
+
+
 
 ## 续约管理
 
@@ -3065,6 +3097,8 @@ map部分：
 
 ~~~json
 {
+    "title":"<String>",					 //题目
+    "author":"<String>",			 //作者
     "text":"<String>",					//通知内容
    	"forTop":"<String>"				 //置顶情况
 }
@@ -3099,6 +3133,8 @@ map部分：
 ~~~json
 {
         "noticeId":"<String>",			 //通知表唯一id
+    	"title":"<String>",					 //题目
+    	"author":"<String>",			 //作者
     	"text":"<String>",					//通知内容
         "forTop":"<String>"				 //置顶情况
 }
@@ -3155,16 +3191,22 @@ map部分：
 ```json
 {
     "data":[{
-        "noticeId":"<String>",					//通知表唯一id
-        "text":"<String>",						   //通知内容
+        "noticeId":"<String>",			 		//通知表唯一id
+        "title":"<String>",					 		//题目
+    	"author":"<String>",					 //作者
+   		"forTop":"<String>",				 	//置顶情况
         "noticeTime":"<String>"				 //通知发布时间
     },{
-        "noticeId":"<String>",					//通知表唯一id
-        "text":"<String>",						   //通知内容
+        "noticeId":"<String>",			 		//通知表唯一id
+        "title":"<String>",					 		//题目
+    	"author":"<String>",					 //作者
+   		"forTop":"<String>",				 	//置顶情况
         "noticeTime":"<String>"				 //通知发布时间
     },{
-        "noticeId":"<String>",					//通知表唯一id
-        "text":"<String>",						   //通知内容
+        "noticeId":"<String>",			 		//通知表唯一id
+        "title":"<String>",					 		//题目
+    	"author":"<String>",					 //作者
+   		"forTop":"<String>",				 	//置顶情况
         "noticeTime":"<String>"				 //通知发布时间
     },
             ...
@@ -3200,8 +3242,11 @@ map部分：
 ~~~json
 {
     "data":{
-        "noticeId":"<String>",					//通知表唯一id
-        "text":"<String>",						   //通知内容
+        "noticeId":"<String>",			 		//通知表唯一id
+        "title":"<String>",					 		//题目
+    	"author":"<String>",					 //作者
+    	"text":"<String>",							//通知内容
+   		"forTop":"<String>",				 	//置顶情况
         "noticeTime":"<String>"				 //通知发布时间
     },
     "code":0,

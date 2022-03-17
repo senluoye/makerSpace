@@ -13,11 +13,11 @@ import java.util.List;
 @Repository
 public interface NotificationDao {
 
-    @Insert("insert into notification(notice_id, text, for_top, notice_time) " +
-            "values (#{noticeId}, #{text}, #{forTop}, #{noticeTime})")
+    @Insert("insert into notification(notice_id, title, author, text, for_top, notice_time) " +
+            "values (#{noticeId}, #{title}, #{author}, #{text}, #{forTop}, #{noticeTime})")
     Integer addNotification(Notification notification);
 
-    @Update("update notification set text = #{text}, for_top = #{forTop}, notice_time = #{noticeTime} " +
+    @Update("update notification set text = #{text}, title = #{title}, author = #{author}, for_top = #{forTop}, notice_time = #{noticeTime} " +
             "where notice_id = #{noticeId}")
     Integer updateNotification(Notification notification);
 

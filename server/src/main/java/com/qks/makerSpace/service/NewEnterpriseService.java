@@ -9,15 +9,15 @@ import java.util.Map;
 
 public interface NewEnterpriseService {
 
-    Map<String, Object> getNewEnterprise();
-    Map<String, Object> newEnterprisePay(Map<String, Object> map);
     Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
     Map<String, Object> newEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException;
 
-    Map<String, Object> newRegister(String token,
-                                    JSONObject map,
+    Map<String, Object> updateNewEnterprise(String token,
+                                    String str,
                                     MultipartFile picture,
                                     MultipartFile representCard,
                                     MultipartFile certificate,
-                                    MultipartFile[] intellectualFile) throws IOException, ServiceException;
+                                    MultipartFile[] intellectualFile) throws Exception;
+
+    Map<String, Object> getNewEnterprise(String token);
 }

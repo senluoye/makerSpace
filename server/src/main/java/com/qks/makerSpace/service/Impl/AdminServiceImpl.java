@@ -489,22 +489,6 @@ public class AdminServiceImpl implements AdminService {
     }
 
 
-        if (list.size() != 0) {
-            Iterator<BriefFormReq> iterator = list.iterator();
-            while (iterator.hasNext()) {
-                BriefFormReq briefFormReq = iterator.next();
-                if (briefFormReq.getAdminAudit().equals("0")) briefFormReq.setAdminAudit("待审核");
-                else if (briefFormReq.getAdminAudit().equals("1")) briefFormReq.setAdminAudit("未通过");
-                else briefFormReq.setAdminAudit("已通过");
-
-                if (briefFormReq.getLeaderAudit().equals("0")) briefFormReq.setLeaderAudit("待审核");
-                else if (briefFormReq.getLeaderAudit().equals("1")) briefFormReq.setLeaderAudit("未通过");
-                else briefFormReq.setLeaderAudit("已通过");
-            }
-            return MyResponseUtil.getResultMap(list,0,"success");
-        } else throw new ServiceException("该企业未提交过季度报表");
-    }
-
     /**
      * 删除企业的季度报表
      * @param map
@@ -530,6 +514,21 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getFormByCompany(JSONObject map) throws ServiceException {
         String creditCode = map.getString("creditCode");
         List<BriefFormReq> list = adminDao.getCompanyForm(creditCode);
+        if (list.size() != 0) {
+            Iterator<BriefFormReq> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                BriefFormReq briefFormReq = iterator.next();
+                if (briefFormReq.getAdminAudit().equals("0")) briefFormReq.setAdminAudit("待审核");
+                else if (briefFormReq.getAdminAudit().equals("1")) briefFormReq.setAdminAudit("未通过");
+                else briefFormReq.setAdminAudit("已通过");
+
+                if (briefFormReq.getLeaderAudit().equals("0")) briefFormReq.setLeaderAudit("待审核");
+                else if (briefFormReq.getLeaderAudit().equals("1")) briefFormReq.setLeaderAudit("未通过");
+                else briefFormReq.setLeaderAudit("已通过");
+            }
+            return MyResponseUtil.getResultMap(list,0,"success");
+        } else throw new ServiceException("该企业未提交过季度报表");
+    }
 
     /**
      * 获取导出表的信息

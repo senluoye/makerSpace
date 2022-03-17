@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.entity.database.*;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class NewParserUtils {
@@ -11,6 +12,7 @@ public class NewParserUtils {
     public static News newsParser(JSONObject map) {
         News news = new News();
 
+        news.setNewId(UUID.randomUUID().toString());
         news.setCreditCode(map.getString("creditCode"));
         news.setName(map.getString("name"));
         news.setRepresent(map.getString("represent"));
@@ -116,6 +118,15 @@ public class NewParserUtils {
         return resultList;
     }
 
+    public static NewDemand newDemandParser(String obj) {
+        NewDemand newDemand = JSONObject.parseObject(obj,NewDemand.class);
+        newDemand.setId(UUID.randomUUID().toString());
+        newDemand.setNewDemandId(UUID.randomUUID().toString());
+        newDemand.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+
+        return newDemand;
+    }
+
     public static Map<String, Object> NewGetReponse(News news) {
         Map<String, Object> result = new HashMap<>();
         result.put("registerCapital",news.getRegisterCapital());
@@ -130,5 +141,4 @@ public class NewParserUtils {
 
         return result;
     }
-
 }
