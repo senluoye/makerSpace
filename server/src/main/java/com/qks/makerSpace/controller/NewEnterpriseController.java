@@ -25,42 +25,43 @@ public class NewEnterpriseController {
         this.newEnterpriseService = newEnterpriseService;
     }
 
-    /**
-     * 信息状态展示
-     * @param
-     * @return
-     */
-    @RequestMapping(value = "newEnterprise", method = RequestMethod.GET)
-    private Map<String, Object> getNewEnterprise() {
-        return newEnterpriseService.getNewEnterprise();
-    }
 
     /**
-     * 注册
+     * 入园申请（含租赁）
      * @param httpServletRequest
-     * @param map
+     * @param str
      * @param picture
      * @param representCard
      * @param certificate
      * @param intellectualFile
      * @return
-     * @throws Exception
      */
-    @RequestMapping(value = "newRegister", method = RequestMethod.POST)
-    private Map<String, Object> newRegister(HttpServletRequest httpServletRequest,
-                                            @RequestParam("map") String map,
-                                            @RequestParam(value = "picture") MultipartFile picture,
-                                            @RequestParam(value = "representCard") MultipartFile representCard,
-                                            @RequestParam(value = "certificate") MultipartFile certificate,
-                                            @RequestParam(value = "intellectualFile", required = false) MultipartFile[] intellectualFile) throws Exception {
-        return newEnterpriseService.newRegister(
+    @RequestMapping(value = "newEnterprise", method = RequestMethod.POST)
+    private Map<String, Object> updateNewEnterprise(HttpServletRequest httpServletRequest,
+                                                    @RequestPart("map") String str,
+                                                    @RequestPart("picture") MultipartFile picture,
+                                                    @RequestPart("representCard") MultipartFile representCard,
+                                                    @RequestPart("certificate") MultipartFile certificate,
+                                                    @RequestPart("intellectualFile") MultipartFile[] intellectualFile) throws Exception {
+        return newEnterpriseService.updateNewEnterprise(
                 httpServletRequest.getHeader("token"),
-                JSONObject.parseObject(map),
+                str,
                 picture,
                 representCard,
                 certificate,
                 intellectualFile);
     }
+
+    /**
+     * 获取上一次入园申请
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "newEnterprise", method = RequestMethod.GET)
+    private Map<String, Object> getNewEnterprise(HttpServletRequest httpServletRequest) {
+        return newEnterpriseService.getNewEnterprise(httpServletRequest.getHeader("token"));
+    }
+
 
     /**
      * 续约

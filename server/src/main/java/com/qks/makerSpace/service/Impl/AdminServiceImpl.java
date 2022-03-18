@@ -5,6 +5,8 @@ import com.qks.makerSpace.dao.AdminDao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
+import com.qks.makerSpace.entity.request.BriefFormReq;
+import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllSpace;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.annotation.ElementType;
 import java.util.*;
 
 @Service
@@ -371,21 +374,161 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 科技园企业季度报表审核通过
+     * 同意季度报表
      * @param map
      * @return
      * @throws ServiceException
      */
     @Override
-    public Map<String, Object> agreeTechnologyFormById(JSONObject map) throws ServiceException {
-        Map<String, Object> data = new HashMap<>();
-        String creditCode = map.getString("creditCode");
-
-
-
-        return MyResponseUtil.getResultMap(data, 0, "success");
+    public Map<String, Object> agreeFormById(JSONObject map) throws ServiceException {
+        String formId = map.getString("formId");
+        if (adminDao.agreeForm(formId) > 0) {
+            return MyResponseUtil.getResultMap(null,0,"success");
+        } else throw new ServiceException("同意操作异常");
     }
 
+    /**
+     * 不同意季度报表
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> disagreeFormById(JSONObject map) throws ServiceException {
+        String formId = map.getString("formId");
+        if (adminDao.disagreeForm(formId) > 0) {
+            return MyResponseUtil.getResultMap(null,0,"success");
+        } else throw new ServiceException("不同意操作异常");
+    }
+
+    //---季度报表从此处---
+    /**
+     * 获取全部未通过的季度报表
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> getFormToAudit() throws ServiceException {
+        List<BriefFormReq> list = adminDao.getDoubleAudit();
+
+        if (list.size() != 0) {
+            Iterator<BriefFormReq> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                BriefFormReq briefFormReq = iterator.next();
+                if (briefFormReq.getAdminAudit().equals("0")) briefFormReq.setAdminAudit("待审核");
+                else briefFormReq.setAdminAudit("未通过");
+
+                if (briefFormReq.getLeaderAudit().equals("0")) briefFormReq.setLeaderAudit("待审核");
+                else briefFormReq.setLeaderAudit("未通过");
+            }
+            return MyResponseUtil.getResultMap(list,0,"success");
+        }
+        else throw new ServiceException("没有需要审核的季度报表");
+
+
+
+    }
+
+    /**
+     * 获取领导未通过的季度报表
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> getFormLeaderAudit() throws ServiceException {
+        List<BriefFormReq> list = adminDao.getLeaderAudit();
+
+        if (list.size() != 0){
+            Iterator<BriefFormReq> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                BriefFormReq briefFormReq = iterator.next();
+                briefFormReq.setAdminAudit("已通过");
+                if (briefFormReq.getLeaderAudit().equals("0")) briefFormReq.setLeaderAudit("待审核");
+                else briefFormReq.setLeaderAudit("未通过");
+            }
+            return MyResponseUtil.getResultMap(list,0,"success");
+        }
+        else throw new ServiceException("没有需要领导审核的季度报表");
+    }
+
+    /**
+     * 获取全部已通过的季度报表
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> getAudited() throws ServiceException {
+        List<BriefFormReq> list = adminDao.getAudited();
+
+        if (list.size() != 0) {
+            Iterator<BriefFormReq> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                BriefFormReq briefFormReq = iterator.next();
+                briefFormReq.setAdminAudit("已通过");
+                briefFormReq.setLeaderAudit("已通过");
+            }
+            return MyResponseUtil.getResultMap(list,0,"sucess");
+        }
+        else throw new ServiceException("没有通过的审核的季度报表");
+    }
+
+    /**
+     * 获取某个企业最新的季度报表
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> getFormDetail(JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+        String getTime = map.getString("getTime");
+
+        FormReq formReq = adminDao.getDetailForm(creditCode, getTime);
+        if (formReq == null) throw new ServiceException("该数据不存在，请刷新重试");
+        else return MyResponseUtil.getResultMap(formReq,0,"success");
+    }
+
+
+    /**
+     * 删除企业的季度报表
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> deleteForm(JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+        String getTime = map.getString("getTime");
+
+        if (adminDao.deleteForm(creditCode,getTime) > 0) return MyResponseUtil.getResultMap(null,0,"success");
+        else throw new ServiceException("删除数据失败");
+    }
+
+    /**
+     * 获取某个企业的历史季度报表
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> getFormByCompany(JSONObject map) throws ServiceException {
+        String creditCode = map.getString("creditCode");
+        List<BriefFormReq> list = adminDao.getCompanyForm(creditCode);
+        if (list.size() != 0) {
+            Iterator<BriefFormReq> iterator = list.iterator();
+            while (iterator.hasNext()) {
+                BriefFormReq briefFormReq = iterator.next();
+                if (briefFormReq.getAdminAudit().equals("0")) briefFormReq.setAdminAudit("待审核");
+                else if (briefFormReq.getAdminAudit().equals("1")) briefFormReq.setAdminAudit("未通过");
+                else briefFormReq.setAdminAudit("已通过");
+
+                if (briefFormReq.getLeaderAudit().equals("0")) briefFormReq.setLeaderAudit("待审核");
+                else if (briefFormReq.getLeaderAudit().equals("1")) briefFormReq.setLeaderAudit("未通过");
+                else briefFormReq.setLeaderAudit("已通过");
+            }
+            return MyResponseUtil.getResultMap(list,0,"success");
+        } else throw new ServiceException("该企业未提交过季度报表");
+    }
 
     /**
      * 获取导出表的信息

@@ -801,8 +801,6 @@ map部分：
 
 
 
-
-
 ## 获取以往入园申请记录
 
 **简要描述：**
@@ -1004,7 +1002,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/new/newRegister`
+- `/api/new/newEnterprise`
 
 **请求方式：**
 
@@ -1150,13 +1148,11 @@ map部分：
 }
 ~~~
 
-
-
-## 获取最新入园申请信息
+## 获取上一次入园申请记录
 
 **简要描述：**
 
-展示最新已填入园申请信息（含审核状态）
+获取上一次入园申请信息(详细版)记录
 
 **请求URL：**
 
@@ -1274,12 +1270,48 @@ map部分：
 		    
 		    "suggestion":"<String>",								//科技园意见
 		    "note":"<String>",    								//备注
-	    "state":"<String>"
+	    	"state":"<String>"
 	    }],
 	  "code":0,
 	  "msg":"success"
 }   
 ~~~
+
+
+
+## 获取以往入园申请记录
+
+**简要描述：**
+
+获取以往已填入园申请信息(缩略版)，含审核状态
+
+**请求URL：**
+
+- `/api/new/newEnterprise/applying`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+		"name":"<String>",					// 公司名称
+        "submitTime":"<String>",			// 表单提交时间
+        "administratorAudit":"<String>",	// 管理员审核情况
+        "leadershipAudit":"<String>",		// 领导审核情况
+        "suggestion":"<String>"				//科技园意见
+    },
+    ......       
+    ],
+    "code":"0",
+    "msg":"success"
+}
+~~~
+
+
 
 ## 续约管理
 
@@ -1548,6 +1580,7 @@ map部分：
 | product_expenditure  |   String   |           科技活动经费支出总额——新产品开发经费支出           |
 |   government_grant   |   String   |                科技活动经费支出总额——政府拨款                |
 |     self_raised      |   String   |                科技活动经费支出总额——企业自筹                |
+|       get_time       |   String   |                           提交时间                           |
 
 ### 表名：form_high_enterprise
 
@@ -1792,7 +1825,7 @@ map部分：
         "represent":"<String>",
         "representPhone":"<String>",
         "representEmail":"<String>",
-        "getTime":"<String>",
+        "getTime":"<String>"
     ],
             ...
     },
@@ -2559,6 +2592,314 @@ map部分：
 
 
 
+### 季度报表类
+
+#### 获取全部未通过的季度报表
+
+**简要描述：**显示季度报表（管理员和领导都未通过）的部分信息
+
+**请求URL：**
+
+- `/api/admin/form/doubleAudit`
+
+**请求方式:**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },{
+         "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+#### 获取领导未通过的季度报表
+
+**简要描述：**显示季度报表（领导未通过）的部分信息
+
+**请求URL：**
+
+- `/api/admin/form/leaderAudit`
+
+**请求方式:**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },{
+         "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+#### 获取全部已通过的季度报表
+
+**简要描述：**显示季度报表（领导和管理都通过）的部分信息
+
+**请求URL：**
+
+- `/api/admin/form/audited`
+
+**请求方式:**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },{
+         "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+#### 获取某个企业最新的季度报表
+
+**简要描述：**通过 creditCode 和 getTime 获取某个季度报表的详细信息
+
+**请求URL：**
+
+- `/api/admin/form/detail`
+
+**请求方式:**
+
+- POST（带token）
+
+**参数：**
+
+~~~json
+{
+    "creditCode":"<String>",				
+    "getTime":"<String>"						//提交时间
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":{
+        "time": "<String>", 							// 季度(值为年份加月，例如2021/3表示第一季度)
+		"teamName": "<String>", 				 //企业名称
+		"creditCode": "<String>", 				   //统一社会信用代码或组织机构代码
+		"registerTime": "<String>", 			  //企业注册时间
+    	"joinTime":"<String>",						// 企业入驻科技园时间
+		"registerCapital": "<String>",     		 //注册资金			
+		"registerKind": "<String>", 			  //企业登记注册类型
+		"industryKind": "<String>", 			 //行业类别
+		"field": "<String>",						   //企业所属技术领域
+		"graduatedEnterprise": "<String>", //是否是毕业企业
+        "graduatedTime": "<String>", 		 //毕业时间
+		"highEnterprise": "<String>", 		   //是否高新技术企业
+		"highEnterpriseData": { 				   //关于这部分对像，是高新技术企业就填具体数据，不是就填null
+			"getTime": "<String>",			      //高企证书获取时间
+			"certificateCode": "<String>"      //高企证书编号
+		},
+		"mediumSized": "<String>", 			 //是否是科技型中小企业
+		"mentorRelationship": "<String>", //是否与创业导师建立辅导关系
+		"headerKind": "<String>", 				//企业主要负责人创业特征
+		"serialEntrepreneur": "<String>", 	//企业主要负责人是否为连续创业者
+        "headerGender": "<String>", 		//企业主要负责人性别
+		"taxKind": "<String>", 					  //企业纳税人类型
+		"header": "<String>", 					  //企业负责人
+		"statisticHeader": "<String>", 		  //统计负责人
+		"submitHeader": "<String>",		    //填报人
+		"submitPhone": "<String>", 			//填报人电话
+		"submitTime": "<String>",			 //填报日期
+		"riskInvestment": "<String>", 		//获天使或风险投资额
+		"area": "<String>", 					  //占用孵化器场地面积（通过其他表导出）
+		"institutions": "<String>", 		  //研发机构
+		"totalTransformation": "<String>", //成果转化总数
+		"relying": "<String>",					 //成果转化总数 --->依托高校数量
+		"winning": "<String>", 					//成果转化总数 --->获奖成果
+		"result": "<String>", 					   //成果转化总数 --->产出成果
+		"incubateIncome": "<String>",     //在孵企业总收入
+		"incubateProduct": "<String>",    //在孵企业工业总产值
+		"incubateProfit": "<String>", 		 //在孵企业净利润
+		"incubateTax": "<String>", 			 //在孵企业上缴税额
+		"incubateOut": "<String>",		    //在孵企业出口总额
+		"employee": "<String>", 			 //在孵企业从业人员
+		"doctor": "<String>", 					//在孵企业从业人员--->博士
+		"master": "<String>",				   //在孵企业从业人员--->硕士
+		"graduate": "<String>", 			 //在孵企业从业人员--->研究生学历
+		"bachelor": "<String>", 			  //在孵企业从业人员--->本科学历
+		"college": "<String>", 					//在孵企业从业人员--->大专学历
+		"tecSecondary": "<String>", 		//在孵企业从业人员--->中专学历
+		"tecActivists": "<String>", 			//在孵企业从业人员--->科技活动人员
+		"radNumber": "<String>",			 //在孵企业从业人员--->研究与试验发展(R&D)人员
+		"returnees": "<String>",				 //在孵企业从业人员--->留学回国人员
+		"talents": "<String>", 					//在孵企业从业人员--->千人计划人数
+		"trainee": "<String>", 					//接纳大学生、研究生实习人员
+		"employment": "<String>", 		//接纳应届毕业生就业人员
+		"applications": "<String>",			 //当年知识产权申请数
+		"applicationsPatent": "<String>", //当年知识产权申请数--->发明专利
+		"granted": "<String>", 				//当年知识产权授权数
+		"grantedPatent": "<String>", 	//当年知识产权授权数---->发明专利
+		"valid": "<String>", 					//拥有有效知识产权数
+		"validPatent": "<String>",			 //拥有有效知识产权数----->发明专利
+		"softCopyright": "<String>", 		//拥有有效知识产权数----->软件著作权
+		"plantVariety": "<String>", 			//拥有有效知识产权数----->植物新品种
+		"icLayout": "<String>",					 //拥有有效知识产权数----->集成电路布图
+		"foreignPatents": "<String>", 		//购买国外技术专利
+		"contractTransaction": "<String>",		 //技术合同交易数量
+		"contractUrnover": "<String>", 		//技术合同交易额
+		"projectNum": "<String>", 			//当年承担国家级科技计划项目数
+		"totalAwards": "<String>", 			//当年参赛获奖情况
+		"provinceAwards": "<String>", 	//当年参赛获奖情况--->省级以上
+		"underProjects": "<String>", 		//承担各类计划项目
+		"nationalProject": "<String>", 		//承担各类计划项目---->国家级项目
+		"schoolProject": "<String>", 		//校企联合申报项目
+		"declarationName": "<String>", //联合申报项目名称
+		"declarationNum": "<String>", 	//联合申报项目金额
+		"expenditure": "<String>", 			//科技活动经费支出总额
+		"radExpenditure": "<String>", 		//科技活动经费支出总额---->研究与试验发展（R&D）经费支出
+		"productExpenditure": "<String>", //科技活动经费支出总额---->新产品开发经费支出
+		"governmentGrant": "<String>", //科技活动经费支出总额---->政府拨款
+		"selfRaised": "<String>" 				//科技活动经费支出总额---->企业自筹
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+#### 获取某个企业的历史季度报表
+
+**简要描述：**获取某个企业的所有季度报表部分信息
+
+**请求URL：**
+
+- `/api/admin/form/company`
+
+**请求方式:**
+
+- POST（带token）
+
+**参数：**
+
+~~~json
+{
+    "creditCode":"<String>"
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },{
+         "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+#### 删除企业的季度报表
+
+**简要描述：**将不需要的季度报表删除
+
+**请求URL：**
+
+- `/api/admin/form/delete`
+
+**请求方式:**
+
+- DELETE
+
+**参数：**
+
+~~~json
+{
+    "creditCode":"<String>",
+    "getTime":"<String>"					//提交时间
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
 ### 缴费设置
 
 
@@ -2724,21 +3065,21 @@ map部分：
 
 **简要描述：**
 
-科技园企业季度报表通过审核
+季度报表通过审核
 
 **请求URL：**
 
-- `/api/admin/technology/notarize/form`
+- `/api/admin/form/agree`
 
 **请求方式：**
 
-- POST
+- POST（带token）
 
 **参数：**
 
 ```json
 {
-    "creditCode":"<String>"
+    "formId":"<String>"
 }
 ```
 
@@ -2746,9 +3087,39 @@ map部分：
 
 ```json
 {
-    "data":{
-        "creditCode":"<String>"
-    },
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+```
+
+### 季度报表审核不通过
+
+**简要描述：**
+
+季度报表不通过审核
+
+**请求URL：**
+
+- `/api/admin/form/disagree`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+```json
+{
+    "formId":"<String>"
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":null,
     "code":0,
     "msg":"success"
 }
@@ -2797,6 +3168,8 @@ map部分：
 
 ~~~json
 {
+    "title":"<String>",					 //题目
+    "author":"<String>",			 //作者
     "text":"<String>",					//通知内容
    	"forTop":"<String>"				 //置顶情况
 }
@@ -2831,6 +3204,8 @@ map部分：
 ~~~json
 {
         "noticeId":"<String>",			 //通知表唯一id
+    	"title":"<String>",					 //题目
+    	"author":"<String>",			 //作者
     	"text":"<String>",					//通知内容
         "forTop":"<String>"				 //置顶情况
 }
@@ -2887,16 +3262,22 @@ map部分：
 ```json
 {
     "data":[{
-        "noticeId":"<String>",					//通知表唯一id
-        "text":"<String>",						   //通知内容
+        "noticeId":"<String>",			 		//通知表唯一id
+        "title":"<String>",					 		//题目
+    	"author":"<String>",					 //作者
+   		"forTop":"<String>",				 	//置顶情况
         "noticeTime":"<String>"				 //通知发布时间
     },{
-        "noticeId":"<String>",					//通知表唯一id
-        "text":"<String>",						   //通知内容
+        "noticeId":"<String>",			 		//通知表唯一id
+        "title":"<String>",					 		//题目
+    	"author":"<String>",					 //作者
+   		"forTop":"<String>",				 	//置顶情况
         "noticeTime":"<String>"				 //通知发布时间
     },{
-        "noticeId":"<String>",					//通知表唯一id
-        "text":"<String>",						   //通知内容
+        "noticeId":"<String>",			 		//通知表唯一id
+        "title":"<String>",					 		//题目
+    	"author":"<String>",					 //作者
+   		"forTop":"<String>",				 	//置顶情况
         "noticeTime":"<String>"				 //通知发布时间
     },
             ...
@@ -2932,8 +3313,11 @@ map部分：
 ~~~json
 {
     "data":{
-        "noticeId":"<String>",					//通知表唯一id
-        "text":"<String>",						   //通知内容
+        "noticeId":"<String>",			 		//通知表唯一id
+        "title":"<String>",					 		//题目
+    	"author":"<String>",					 //作者
+    	"text":"<String>",							//通知内容
+   		"forTop":"<String>",				 	//置顶情况
         "noticeTime":"<String>"				 //通知发布时间
     },
     "code":0,
@@ -3609,6 +3993,267 @@ map部分：
 	  "msg":"success"
 }   
 ~~~
+
+## 获取领导未通过的季度报表
+
+**简要描述：**显示季度报表（领导未通过）的部分信息
+
+**请求URL：**
+
+- `/api/leader/form/leaderAudit`
+
+**请求方式:**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },{
+         "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 获取某个企业最新的季度报表
+
+**简要描述：**通过 creditCode 和 getTime 获取某个季度报表的详细信息
+
+**请求URL：**
+
+- `/api/leader/form/detail`
+
+**请求方式:**
+
+- POST（带token）
+
+**参数：**
+
+~~~json
+{
+    "creditCode":"<String>",				
+    "getTime":"<String>"						//提交时间
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":{
+        "time": "<String>", 							// 季度(值为年份加月，例如2021/3表示第一季度)
+		"teamName": "<String>", 				 //企业名称
+		"creditCode": "<String>", 				   //统一社会信用代码或组织机构代码
+		"registerTime": "<String>", 			  //企业注册时间
+    	"joinTime":"<String>",						// 企业入驻科技园时间
+		"registerCapital": "<String>",     		 //注册资金			
+		"registerKind": "<String>", 			  //企业登记注册类型
+		"industryKind": "<String>", 			 //行业类别
+		"field": "<String>",						   //企业所属技术领域
+		"graduatedEnterprise": "<String>", //是否是毕业企业
+        "graduatedTime": "<String>", 		 //毕业时间
+		"highEnterprise": "<String>", 		   //是否高新技术企业
+		"highEnterpriseData": { 				   //关于这部分对像，是高新技术企业就填具体数据，不是就填null
+			"getTime": "<String>",			      //高企证书获取时间
+			"certificateCode": "<String>"      //高企证书编号
+		},
+		"mediumSized": "<String>", 			 //是否是科技型中小企业
+		"mentorRelationship": "<String>", //是否与创业导师建立辅导关系
+		"headerKind": "<String>", 				//企业主要负责人创业特征
+		"serialEntrepreneur": "<String>", 	//企业主要负责人是否为连续创业者
+        "headerGender": "<String>", 		//企业主要负责人性别
+		"taxKind": "<String>", 					  //企业纳税人类型
+		"header": "<String>", 					  //企业负责人
+		"statisticHeader": "<String>", 		  //统计负责人
+		"submitHeader": "<String>",		    //填报人
+		"submitPhone": "<String>", 			//填报人电话
+		"submitTime": "<String>",			 //填报日期
+		"riskInvestment": "<String>", 		//获天使或风险投资额
+		"area": "<String>", 					  //占用孵化器场地面积（通过其他表导出）
+		"institutions": "<String>", 		  //研发机构
+		"totalTransformation": "<String>", //成果转化总数
+		"relying": "<String>",					 //成果转化总数 --->依托高校数量
+		"winning": "<String>", 					//成果转化总数 --->获奖成果
+		"result": "<String>", 					   //成果转化总数 --->产出成果
+		"incubateIncome": "<String>",     //在孵企业总收入
+		"incubateProduct": "<String>",    //在孵企业工业总产值
+		"incubateProfit": "<String>", 		 //在孵企业净利润
+		"incubateTax": "<String>", 			 //在孵企业上缴税额
+		"incubateOut": "<String>",		    //在孵企业出口总额
+		"employee": "<String>", 			 //在孵企业从业人员
+		"doctor": "<String>", 					//在孵企业从业人员--->博士
+		"master": "<String>",				   //在孵企业从业人员--->硕士
+		"graduate": "<String>", 			 //在孵企业从业人员--->研究生学历
+		"bachelor": "<String>", 			  //在孵企业从业人员--->本科学历
+		"college": "<String>", 					//在孵企业从业人员--->大专学历
+		"tecSecondary": "<String>", 		//在孵企业从业人员--->中专学历
+		"tecActivists": "<String>", 			//在孵企业从业人员--->科技活动人员
+		"radNumber": "<String>",			 //在孵企业从业人员--->研究与试验发展(R&D)人员
+		"returnees": "<String>",				 //在孵企业从业人员--->留学回国人员
+		"talents": "<String>", 					//在孵企业从业人员--->千人计划人数
+		"trainee": "<String>", 					//接纳大学生、研究生实习人员
+		"employment": "<String>", 		//接纳应届毕业生就业人员
+		"applications": "<String>",			 //当年知识产权申请数
+		"applicationsPatent": "<String>", //当年知识产权申请数--->发明专利
+		"granted": "<String>", 				//当年知识产权授权数
+		"grantedPatent": "<String>", 	//当年知识产权授权数---->发明专利
+		"valid": "<String>", 					//拥有有效知识产权数
+		"validPatent": "<String>",			 //拥有有效知识产权数----->发明专利
+		"softCopyright": "<String>", 		//拥有有效知识产权数----->软件著作权
+		"plantVariety": "<String>", 			//拥有有效知识产权数----->植物新品种
+		"icLayout": "<String>",					 //拥有有效知识产权数----->集成电路布图
+		"foreignPatents": "<String>", 		//购买国外技术专利
+		"contractTransaction": "<String>",		 //技术合同交易数量
+		"contractUrnover": "<String>", 		//技术合同交易额
+		"projectNum": "<String>", 			//当年承担国家级科技计划项目数
+		"totalAwards": "<String>", 			//当年参赛获奖情况
+		"provinceAwards": "<String>", 	//当年参赛获奖情况--->省级以上
+		"underProjects": "<String>", 		//承担各类计划项目
+		"nationalProject": "<String>", 		//承担各类计划项目---->国家级项目
+		"schoolProject": "<String>", 		//校企联合申报项目
+		"declarationName": "<String>", //联合申报项目名称
+		"declarationNum": "<String>", 	//联合申报项目金额
+		"expenditure": "<String>", 			//科技活动经费支出总额
+		"radExpenditure": "<String>", 		//科技活动经费支出总额---->研究与试验发展（R&D）经费支出
+		"productExpenditure": "<String>", //科技活动经费支出总额---->新产品开发经费支出
+		"governmentGrant": "<String>", //科技活动经费支出总额---->政府拨款
+		"selfRaised": "<String>" 				//科技活动经费支出总额---->企业自筹
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 获取某个企业的历史季度报表
+
+**简要描述：**获取某个企业的所有季度报表部分信息
+
+**请求URL：**
+
+- `/api/leader/form/company`
+
+**请求方式:**
+
+- POST（带token）
+
+**参数：**
+
+~~~json
+{
+    "creditCode":"<String>"
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },{
+         "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+## 季度报表审核通过
+
+**简要描述：**
+
+季度报表通过审核
+
+**请求URL：**
+
+- `/api/leader/form/agree`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+```json
+{
+    "formId":"<String>"
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+```
+
+## 季度报表审核不通过
+
+**简要描述：**
+
+季度报表不通过审核
+
+**请求URL：**
+
+- `/api/leader/form/disagree`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+```json
+{
+    "formId":"<String>"
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+```
+
+
 
 # 场地
 

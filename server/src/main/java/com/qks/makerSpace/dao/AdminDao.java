@@ -3,9 +3,12 @@ package com.qks.makerSpace.dao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
+import com.qks.makerSpace.entity.request.BriefFormReq;
+import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllTechnology;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -179,4 +182,36 @@ public interface AdminDao {
     @Update("update old set suggestion = #{suggestion}, note = #{note} " +
             "where credit_code = #{creditCode}")
     Integer updateOldSuggestion(AdminSuggestion adminSuggestion);
+
+
+//----季度报表操作从此处-----
+    @Select("select time, team_name, credit_code, get_time, admin_audit, leader_audit " +
+            "from form where get_time in (select max(get_time) from form " +
+            "group by credit_code) and admin_audit <> '2'")
+    List<BriefFormReq> getDoubleAudit();
+
+    @Select("select time, team_name, credit_code, get_time get_time, admin_audit, leader_audit " +
+            "from form where get_time in (select max(get_time) from form " +
+            "group by credit_code) and admin_audit = '2' and leader_audit <> '2' ")
+    List<BriefFormReq> getLeaderAudit();
+
+    @Select("select time, team_name, credit_code, get_time get_time, admin_audit, leader_audit " +
+            "from form where get_time in (select max(get_time) from form" +
+            "group by credit_code) and admin_audit = '2' and leader_audit = '2' ")
+    List<BriefFormReq> getAudited();
+
+    @Select("select * from form where credit_code = #{creditCode} and get_time = #{getTime}")
+    FormReq getDetailForm(String creditCode, String getTime);
+
+    @Select("select time, team_name, credit_code, get_time, admin_audit, leader_audit from form where credit_code = #{creditCode}")
+    List<BriefFormReq> getCompanyForm(String creditCode);
+
+    @Delete("delete from form where credit_code = #{creditCode} and get_time = #{getTime}")
+    Integer deleteForm(String creditCode, String getTime);
+
+    @Update("update form set admin_audit = '2' where form_id = #{formId}")
+    Integer agreeForm(String formId);
+
+    @Update("update form set admin_audit = '1' where form_id = #{formId}")
+    Integer disagreeForm(String formId);
 }
