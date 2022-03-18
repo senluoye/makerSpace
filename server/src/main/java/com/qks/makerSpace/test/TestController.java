@@ -47,6 +47,11 @@ public class TestController {
     @Autowired
     FormService formService;
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    private String testasd() {
+        return "宁已经连上了";
+    }
+
     @RequestMapping(value = "", method = RequestMethod.POST)
     private void getOldForm(@RequestBody JSONObject jsonObject) {
 

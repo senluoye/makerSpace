@@ -25,7 +25,7 @@ public class OldEnterpriseController {
      * @param str
      * @return
      */
-    @RequestMapping(value = "old/oldEnterprise", method = RequestMethod.PUT)
+    @RequestMapping(value = "old/oldEnterprise", method = RequestMethod.POST)
     private Map<String, Object> updateOldEnterprise(HttpServletRequest httpServletRequest,
                                                     @RequestPart("map") String str,
                                                     @RequestPart(value = "license", required = false) MultipartFile license,

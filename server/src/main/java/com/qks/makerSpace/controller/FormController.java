@@ -28,14 +28,22 @@ public class FormController {
     @RequestMapping(value = "technology", method = RequestMethod.POST)
     private Map<String, Object> setTechnologyForm(
                                 HttpServletRequest httpServletRequest,
-                                @RequestParam("map") String map,
-                                @RequestParam(value = "mediumFile", required = false) MultipartFile mediumFile,
-                                @RequestParam(value = "highEnterpriseFile", required = false) MultipartFile highEnterpriseFile,
-                                @RequestParam(value = "headerFile", required = false) MultipartFile headerFile,
-                                @RequestParam("contractFile") MultipartFile[] contractFile,
-                                @RequestParam("awardsFile") MultipartFile[] awardsFile
+                                @RequestPart("map") String map,
+                                @RequestPart(value = "mediumFile", required = false) MultipartFile mediumFile,
+                                @RequestPart(value = "highEnterpriseFile", required = false) MultipartFile highEnterpriseFile,
+                                @RequestPart(value = "headerFile", required = false) MultipartFile headerFile,
+                                @RequestPart("contractFile") MultipartFile[] contractFile,
+                                @RequestPart("awardsFile") MultipartFile[] awardsFile
                                 ) throws ServiceException, IOException {
-
+        System.out.println("-------------------1--1-------------------");
+        System.out.println(map);
+        System.out.println(highEnterpriseFile);
+        System.out.println(mediumFile);
+        System.out.println(highEnterpriseFile);
+        System.out.println(headerFile);
+        System.out.println(contractFile.length);
+        System.out.println(awardsFile.length);
+        System.out.println("----------------------------------------");
         return formService.setTechnologyForm(
                 httpServletRequest.getHeader("token"),
                 JSONObject.parseObject(map),

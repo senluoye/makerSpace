@@ -49,7 +49,14 @@ public class FormServiceImpl implements FormService {
                                                  MultipartFile headerFile,
                                                  MultipartFile[] contractFile,
                                                  MultipartFile[] awardsFile) throws ServiceException, IOException {
-
+        System.out.println("----------------2--2----------------------");
+        System.out.println(highEnterpriseFile);
+        System.out.println(mediumFile);
+        System.out.println(highEnterpriseFile);
+        System.out.println(headerFile);
+        System.out.println(contractFile.length);
+        System.out.println(awardsFile.length);
+        System.out.println("----------------------------------------");
         // 先判断有没有填写入驻申请
         String userId = JWTUtils.parser(token).get("userId").toString();
         if (formDao.getCompanyByUserId(userId) == null)
@@ -135,6 +142,7 @@ public class FormServiceImpl implements FormService {
                 throw new ServiceException("请提交对应数量的入职合同");
             }
         }
+
         // 当年 参赛获奖情况 不为 0 时
         if (Integer.parseInt(form.getTotalAwards()) != 0) {
             if (awardsFile.length != 0 && awardsFile.length == Integer.parseInt(form.getTotalAwards())) {
