@@ -12,7 +12,7 @@
 
 
 
-# 开始工作
+# 登陆
 
 ## 领导登录
 
@@ -112,6 +112,8 @@ token 保存时间待定
 
 
 
+
+
 ## 普通用户登录
 
 **请求URL：**
@@ -161,6 +163,10 @@ token 保存时间待定
 
 
 
+# 用户
+
+
+
 ## 主页信息
 
 **简要描述：**
@@ -181,9 +187,9 @@ token 保存时间待定
 {
     "data":{
         "name":"<String>",				// 公司名
-        "describe":"<String>",			// 企业性质（科技园new/old、众创空间）
+        "describe":"int",				// 企业性质(2表示科技园new，3表示科技园old，4表示众创空间)
         "submit_time":"<String>", 		// 入驻日期
-        ""
+        "demand_time":"<String>"		// 上次缴费日期
     },
     "code":0,
     "msg":"success"
@@ -201,6 +207,73 @@ token 保存时间待定
     "msg":"用户不存在或密码错误"
 }
 ~~~
+
+
+
+## 管理员修改邮箱
+
+**请求URL：**
+
+- `/api/user/admin/email`
+
+**请求方式：**
+
+- PUT(带token)
+
+**参数：**
+
+~~~json
+{
+    "email":"<String>",							//管理员邮箱
+    "authorizationCode":"<String>"				//QQ邮箱授权码
+}
+~~~
+
+**返回值：**
+
+```json
+{
+    "data":{
+    	"email":"<String>",							
+    	"authorizationCode":"<String>"				
+	},
+    "code":0,
+    "msg":"succecss"
+}
+```
+
+
+
+## 管理员修改用户名密码
+
+**请求URL：**
+
+- `/api/user/admin/`
+
+**请求方式：**
+
+- PUT(带token)
+
+**参数：**
+
+~~~json
+{
+    "name":"<String>",					//管理员用户名
+    "password":"<String>"				//密码
+}
+~~~
+
+**返回值：**
+
+```json
+{
+    "data":{
+    	"name":"<String>",					//管理员用户名		
+	},
+    "code":0,
+    "msg":"succecss"
+}
+```
 
 
 
@@ -1932,7 +2005,8 @@ map部分：
 {
     "name":"<String>",						// 公司名
     "password":"<String>",					// 密码
-    ”email“:"<String>"						// 目标公司邮箱
+    "email":"<String>",						// 目标公司邮箱
+    "userDescribe":"int"					// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
 }
 ~~~
 

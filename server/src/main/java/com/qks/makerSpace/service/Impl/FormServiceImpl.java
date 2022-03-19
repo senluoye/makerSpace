@@ -49,7 +49,14 @@ public class FormServiceImpl implements FormService {
                                                  MultipartFile headerFile,
                                                  MultipartFile[] contractFile,
                                                  MultipartFile[] awardsFile) throws ServiceException, IOException {
-
+        System.out.println("----------------2--2----------------------");
+        System.out.println(highEnterpriseFile);
+        System.out.println(mediumFile);
+        System.out.println(highEnterpriseFile);
+        System.out.println(headerFile);
+        System.out.println(contractFile.length);
+        System.out.println(awardsFile.length);
+        System.out.println("----------------------------------------");
         // 先判断有没有填写入驻申请
         String userId = JWTUtils.parser(token).get("userId").toString();
         if (formDao.getCompanyByUserId(userId) == null)

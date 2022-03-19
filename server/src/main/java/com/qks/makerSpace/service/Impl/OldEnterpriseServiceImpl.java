@@ -131,6 +131,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 oldIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
             }
         }
+
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         // 存放表单提交时间
         old.setSubmitTime(time);
