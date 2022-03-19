@@ -6,6 +6,8 @@ import com.auth0.jwt.impl.JWTParser;
 import com.qks.makerSpace.dao.UserDao;
 import com.qks.makerSpace.entity.database.EmailAuth;
 import com.qks.makerSpace.entity.database.User;
+import com.qks.makerSpace.entity.database.UserAccountApplying;
+import com.qks.makerSpace.entity.response.HomePageRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.UserService;
 import com.qks.makerSpace.util.JWTUtils;
@@ -24,10 +26,23 @@ public class UserServiceImpl implements UserService {
         this.userDao = userDao;
     }
 
+    /**
+     * 用户获取主页信息
+     * @return
+     */
     @Override
-    public Map<String, Object> getHomepage(HttpServletRequest httpServletRequest) {
-        Map<String, Object> data = new HashMap<>();
-        return MyResponseUtil.getResultMap(data, 0, null);
+    public Map<String, Object> getHomepage(String token) {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<User> users = userDao.getUserByUserId(userId);
+        if (users.size() < 1)
+            return MyResponseUtil.getResultMap(null, -1, "还未向管理员提交账号申请");
+
+        /**
+         *  首先要看之前有没有填写过入驻申请
+         */
+//        List<String> data = userDao.getNameByCreditCode(creditCodes.get(0));
+
+        return MyResponseUtil.getResultMap(null, 0, null);
     }
 
     /**
@@ -55,5 +70,20 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("修改邮箱失败");
 
         return MyResponseUtil.getResultMap(emailAuth, 0, "success");
+    }
+
+    /**
+     * 用户申请账号
+     * @param token
+     * @param jsonObject
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> userApplyForAccount(JSONObject jsonObject) throws ServiceException {
+        UserAccountApplying userAccountApplying = JSONObject.parseObject(String.valueOf(jsonObject), UserAccountApplying.class);
+//        userDao.addUserAccountApplying(userAccountApplying);
+
+        return null;
     }
 }

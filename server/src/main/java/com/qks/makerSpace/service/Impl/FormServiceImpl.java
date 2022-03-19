@@ -142,7 +142,6 @@ public class FormServiceImpl implements FormService {
                 throw new ServiceException("请提交对应数量的入职合同");
             }
         }
-
         // 当年 参赛获奖情况 不为 0 时
         if (Integer.parseInt(form.getTotalAwards()) != 0) {
             if (awardsFile.length != 0 && awardsFile.length == Integer.parseInt(form.getTotalAwards())) {

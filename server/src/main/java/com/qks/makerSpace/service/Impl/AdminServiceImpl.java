@@ -53,20 +53,13 @@ public class AdminServiceImpl implements AdminService {
         /**
          * 获取公司名称和密码
          */
-        String name = map.getString("name");
-        String password = map.getString("password");
-        String email = map.getString("email");
-        User user = new User();
+        User user = JSONObject.parseObject(String.valueOf(map), User.class);
         user.setUserId(UUID.randomUUID().toString());
-        user.setName(name);
-        user.setPassword(password);
-        user.setUserDescribe(2);
-        user.setEmail(email);
-
+        System.out.println(user);
         /**
          * 如果用户存在，则修改密码，否则增加新用户
          */
-        List<User> users = adminDao.getUserByName(name);
+        List<User> users = adminDao.getUserByName(user.getName());
         if (users.size() == 0) {
             adminDao.addNewUser(user);
         } else {

@@ -30,7 +30,7 @@ public class UserController {
      */
     @RequestMapping(value = "homepage", method = RequestMethod.GET)
     private Map<String, Object> getHomepage(HttpServletRequest httpServletRequest) throws ServiceException {
-        return userService.getHomepage(httpServletRequest);
+        return userService.getHomepage(httpServletRequest.getHeader("token"));
     }
 
     /**
@@ -43,5 +43,15 @@ public class UserController {
                                                  @RequestBody JSONObject jsonObject) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         return userService.changeAdminEmail(token, jsonObject);
+    }
+
+    /**
+     * 用户申请账号
+     * @param Hashmap
+     * @return Hashmap
+     */
+    @RequestMapping(value = "/account", method = RequestMethod.POST)
+    private Map<String, Object> userApplyForAccount(@RequestBody JSONObject jsonObject) throws ServiceException {
+        return userService.userApplyForAccount(jsonObject);
     }
 }
