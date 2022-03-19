@@ -53,7 +53,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                                            MultipartFile certificate,
                                            MultipartFile[] intellectualFile) throws Exception {
 
-        String userId = JWTUtils.parser(token).get("useId").toString();
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        System.out.println(userId);
         User user = newEnterpriseDao.getUserByUserId(userId);
         if (user == null) return  MyResponseUtil.getResultMap(null,-1,"用户不存在");
 
