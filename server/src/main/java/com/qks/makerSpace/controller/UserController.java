@@ -45,13 +45,13 @@ public class UserController {
         return userService.changeAdminEmail(token, jsonObject);
     }
 
-    /**
-     * 用户申请账号
-     * @param Hashmap
-     * @return Hashmap
-     */
-    @RequestMapping(value = "/account", method = RequestMethod.POST)
-    private Map<String, Object> userApplyForAccount(@RequestBody JSONObject jsonObject) throws ServiceException {
-        return userService.userApplyForAccount(jsonObject);
-    }
+//    /**
+//     * 用户申请账号
+//     * @param Hashmap
+//     * @return Hashmap
+//     */
+//    @RequestMapping(value = "/account", method = RequestMethod.POST)
+//    private Map<String, Object> userApplyForAccount(@RequestBody JSONObject jsonObject) throws ServiceException {
+//        return userService.userApplyForAccount(jsonObject);
+//    }
 }

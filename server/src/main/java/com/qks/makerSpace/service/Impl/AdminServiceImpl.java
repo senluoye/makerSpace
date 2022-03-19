@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.annotation.ElementType;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -55,7 +56,9 @@ public class AdminServiceImpl implements AdminService {
          */
         User user = JSONObject.parseObject(String.valueOf(map), User.class);
         user.setUserId(UUID.randomUUID().toString());
+        user.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss").format(new Date()));
         System.out.println(user);
+
         /**
          * 如果用户存在，则修改密码，否则增加新用户
          */

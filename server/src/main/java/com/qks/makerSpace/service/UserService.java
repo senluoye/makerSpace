@@ -11,5 +11,4 @@ public interface UserService {
 
     Map<String, Object> getHomepage(String token);
     Map<String, Object> changeAdminEmail(String token, JSONObject json) throws ServiceException;
-    Map<String, Object> userApplyForAccount(JSONObject jsonObject) throws ServiceException;
 }

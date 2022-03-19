@@ -187,7 +187,7 @@ token 保存时间待定
 {
     "data":{
         "name":"<String>",				// 公司名
-        "describe":"<String>",			// 企业性质（科技园new、科技园old、众创空间）
+        "describe":"int",				// 企业性质(2表示科技园new，3表示科技园old，4表示众创空间)
         "submit_time":"<String>", 		// 入驻日期
         "demand_time":"<String>"		// 上次缴费日期
     },
