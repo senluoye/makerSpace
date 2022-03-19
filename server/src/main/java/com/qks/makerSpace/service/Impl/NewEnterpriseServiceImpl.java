@@ -52,7 +52,13 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                                            MultipartFile representCard,
                                            MultipartFile certificate,
                                            MultipartFile[] intellectualFile) throws Exception {
-
+        System.out.println("----------------2--2----------------------");
+        System.out.println(str);
+        System.out.println(picture);
+        System.out.println(representCard);
+        System.out.println(certificate);
+        System.out.println(intellectualFile.length);
+        System.out.println("----------------------------------------");
         String userId = JWTUtils.parser(token).get("useId").toString();
         User user = newEnterpriseDao.getUserByUserId(userId);
         if (user == null) return  MyResponseUtil.getResultMap(null,-1,"用户不存在");
@@ -88,6 +94,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                 throw new ServiceException("请提供与拟注册企业性质对应的文件");
             }
         }
+
         news.setPicture(picture.getBytes());
         news.setRepresentCard(representCard.getBytes());
         news.setState("未审核");
