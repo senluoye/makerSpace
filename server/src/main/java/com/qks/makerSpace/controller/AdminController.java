@@ -44,7 +44,7 @@ public class AdminController {
     }
 
     /**
-     * 获取全部科技园企业的部分信息
+     * 获取全部已审核科技园企业的部分信息
      */
     @RequestMapping(value = "/technology/all", method = RequestMethod.GET)
     private Map<String, Object> getTechnologyAllDetails() throws ServiceException {
@@ -52,7 +52,8 @@ public class AdminController {
     }
 
     /**
-     * 获取全部众创空间企业的申请信息
+     * 获取全部已入园审核科技园企业部分信息
+     * @return
      */
     @RequestMapping(value = "/space/all", method = RequestMethod.GET)
     private Map<String, Object> getSpaceAllDetails() {

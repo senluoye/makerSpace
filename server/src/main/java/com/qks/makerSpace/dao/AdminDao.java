@@ -76,24 +76,25 @@ public interface AdminDao {
     @Select("select old.credit_code as creditCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
             "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position, " +
-            "audit.administrator_audit as administratorAudit " +
+            "audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
             "from old, old_demand, audit " +
             "where old.old_demand_id = old_demand.old_demand_id " +
-            "and audit.audit_id = old.credit_code")
+            "and audit.credit_code = old.credit_code and audit.administrator_audit = '通过'")
     List<AllTechnology> getAllOldDetails();
 
     @Select("select new.credit_code as creditCode, " +
             "new.name as name, new.represent as represent, new.represent_phone as representPhone, " +
             "new.represent_email as representEmail, new_demand.floor as floor, new_demand.position as position, " +
-            "audit.administrator_audit as administratorAudit " +
+            "audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
             "from new, new_demand, audit " +
             "where new.new_demand_id = new_demand.new_demand_id " +
-            "and audit.audit_id = new.credit_code")
+            "and audit.credit_code = new.credit_code and administrator_audit = '通过'")
     List<AllTechnology> getAllNewDetails();
 
     @Select("select in_apply_id, create_name, apply_time, team_number, " +
-            "`describe`, help " +
-            "from space")
+            "space.`describe`, help, space_id " +
+            "from space, audit " +
+            "where audit.credit_code = space.in_apply_id and audit.administrator_audit = '通过'")
     List<Space> getAllSpaceDetails();
 
     @Select("select * from space_person where in_apply_id = #{inApplyId}")
@@ -176,8 +177,8 @@ public interface AdminDao {
     @Update("update audit set administrator_audit = #{disagree} where credit_code = #{inApplyId}")
     Integer disagreeById(String inApplyId, String disagree);
 
-    @Select("select * from audit where audit_id = #{id}")
-    Audit getAuditById(String id);
+    @Select("select * from audit where credit_code = #{id}")
+    Audit getAuditByCreditCode(String id);
 
     @Select("select credit_code from new where credit_code = #{creditCode}")
     List<String> selectCreditCodeFromNewByCreditCode(String creditCode);

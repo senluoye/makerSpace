@@ -12,6 +12,7 @@ public class AllTechnology {
     private String representPhone;
     private String representEmail;
     private String administratorAudit;
+    private String leadershipAudit;
 //    private String state;
     private String position;
     private String floor;

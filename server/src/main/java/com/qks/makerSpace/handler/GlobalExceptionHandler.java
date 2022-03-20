@@ -28,6 +28,7 @@ public class GlobalExceptionHandler {
     private Map<String, Object> exceptionHandler(HttpServletRequest req, Exception e) {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         logger.info("最新的请求: " + df.format(new Date()));
+        logger.info(req.getRequestURI());
         logger.info(String.valueOf(e));
 
 

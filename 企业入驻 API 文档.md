@@ -290,9 +290,8 @@ token 保存时间待定
 ~~~json
 {
     "name":"<String>",					// 公司名
-    "password":"<String>",				// 密码
     "email":"<String>",					// 邮箱
-    "describe":int				// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
+    "describe":"<String>"				// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
 }
 ~~~
 
@@ -2092,11 +2091,11 @@ map部分：
 
 
 
-### 获取全部科技园企业部分信息
+### 获取全部已入园审核科技园企业部分信息
 
 **简要描述：**
 
-获取全部科技园企业部分信息
+获取全部已入园审核科技园企业部分信息
 
 **请求URL：**
 
@@ -2111,25 +2110,26 @@ map部分：
 ~~~json
 {
     "data":[{
-        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
-    	"organizationCode":"<String>",									//组织机构代码
-        "companyKind":"<String>",											//代表企业类型，old/new
-        "name":"<String>",														//申请入驻企业名称
-    	"represent":"<String>",												  //法人代表
-    	"representPhone":"<String>",									 //法人代表联系电话
+        "creditCode":"<String>",                    //统一社会信用代码（18位字符）
+        "companyKind":"<String>",					//代表企业类型，old/new
+        "name":"<String>",							//申请入驻企业名称
+    	"represent":"<String>",						 //法人代表
+    	"representPhone":"<String>",				//法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "administratorAudit":"<String>",								//领导审核状态
-        "floor":"<String>" 												//楼层需求
+        "administratorAudit":"<String>",								//管理员审核状态
+        "leadershipAudit":"<String>",			// 领导审核状态
+        "floor":"<String>", 												//楼层需求
         "position":"<String>" 											// 位置需求
     },{
         "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
-    	"organizationCode":"<String>",									//组织机构代码
-        "name":"<String>",														//申请入驻企业名称
+        "companyKind":"<String>",					//代表企业类型，old/new
+        "name":"<String>",							//申请入驻企业名称
     	"represent":"<String>",												  //法人代表
     	"representPhone":"<String>",									 //法人代表联系电话
     	"representEmail":"<String>",											//法人代表邮箱地址
-        "administratorAudit":"<String>",								//领导审核状态
-        "floor":"<String>" 												//楼层需求
+        "administratorAudit":"<String>",								//管理员审核状态
+        "leadershipAudit":"<String>",			// 领导审核状态
+        "floor":"<String>", 												//楼层需求
         "position":"<String>" 											// 位置需求
     },
            ......
@@ -2141,11 +2141,11 @@ map部分：
 
 
 
-### 获取全部众创空间企业信息
+### 获取全部已审核入园众创空间企业信息
 
 **简要描述：**
 
-获取全部未审核的科技园企业信息
+获取全部已入园审核的科技园企业信息
 
 **请求URL：**
 
@@ -2161,7 +2161,8 @@ map部分：
 {
     "data":[{
         "inApplyId":"<String>",					// 众创空间申请表Id
-        "administratorAudit":"<boolean>",		// 管理员是否通过审核
+        "administratorAudit":"<String>",		// 管理员是否通过审核
+        "leadershipAudit":"<String>",			// 领导审核状态
   		"createName": "<String>",			  // 项目/创意名称
   		"applyTime": "<String>",            // 申请日期
   		"teamNumber": "<String>",			  // 成员数量

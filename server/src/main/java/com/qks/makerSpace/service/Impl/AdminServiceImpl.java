@@ -161,13 +161,12 @@ public class AdminServiceImpl implements AdminService {
 
         List<AllTechnology> dataTwo = adminDao.getAllNewDetails();
         System.out.println(dataTwo.toString());
+
         for (AllTechnology allTechnology : dataTwo) {
             allTechnology.setCompanyKind("new");
         }
-
         List<AllTechnology> data = new ArrayList<>(dataOne);
         data.addAll(dataTwo);
-
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -226,7 +225,7 @@ public class AdminServiceImpl implements AdminService {
         Space space = adminDao.getSpaceById(inApplyId);
         Map<String, Object> data = ChangeUtils.getObjectToMap(space);
         List<SpacePerson> spacePersons = adminDao.getPersonListByInApplyId(inApplyId);
-        Audit audit = adminDao.getAuditById(inApplyId);
+        Audit audit = adminDao.getAuditByCreditCode(inApplyId);
         String administratorAudit = audit.getAdministratorAudit();
 
         data.put("person", spacePersons);
@@ -235,21 +234,23 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
-     * 获取全部众创空间企业的申请信息
+     * 获取全部已入园审核众创空间企业部分信息
+     * @return
      */
     @Override
     public Map<String, Object> getAllSpaceDetails() {
         List<Space> spaces = adminDao.getAllSpaceDetails();
         List<AllSpace> allSpaces = new ArrayList<>();
-        System.out.println(spaces);
+
         for (Space space : spaces) {
             AllSpace allSpace = new AllSpace();
-            Audit audit= adminDao.getAuditById(space.getInApplyId());
             String inApplyId = space.getInApplyId();
+            Audit audit= adminDao.getAuditByCreditCode(inApplyId);
             List<SpacePerson> spacePeople = adminDao.getSpacePeopleById(inApplyId);
 
             allSpace.setInApplyId(inApplyId);
             allSpace.setAdministratorAudit(audit.getAdministratorAudit());
+            allSpace.setLeadershipAudit(audit.getLeadershipAudit());
             allSpace.setCreateName(space.getCreateName());
             allSpace.setApplyTime(space.getApplyTime());
             allSpace.setTeamNumber(space.getTeamNumber());
