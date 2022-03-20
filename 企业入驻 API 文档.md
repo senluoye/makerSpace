@@ -248,7 +248,7 @@ token 保存时间待定
 
 **请求URL：**
 
-- `/api/user/admin/`
+- `/api/user/admin`
 
 **请求方式：**
 
@@ -274,6 +274,41 @@ token 保存时间待定
     "msg":"succecss"
 }
 ```
+
+## 用户申请账号
+
+**请求URL：**
+
+- `/api/user/account`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "name":"<String>",					// 公司名
+    "password":"<String>",				// 密码
+    "email":"<String>",					// 邮箱
+    "describe":int				// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
+}
+~~~
+
+**返回值：**
+
+```json
+{
+    "data":{
+    	"name":"<String>",					// 公司名
+	},
+    "code":0,
+    "msg":"succecss"
+}
+```
+
+
 
 
 
@@ -1985,6 +2020,37 @@ map部分：
 
 ## 基础操作
 
+### 获取所有未分配用户账号申请
+
+**描述**：
+
+获取所有未分配用户账号申请
+
+**请求URL：**
+
+- `/api/admin/register`
+
+**请求方式：**
+
+- GET(带token)
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+    "name":"<String>",						// 公司名
+    "password":"<String>",					// 密码
+    "email":"<String>",						// 目标公司邮箱
+    "userDescribe":"int"					// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
+	},
+            ...
+    ],
+	"code":"0",
+	"msg":"success"
+}
+~~~
+
 ### 分配账号
 
 **描述**：
@@ -1997,16 +2063,13 @@ map部分：
 
 **请求方式：**
 
-- POST
+- POST（带token）
 
 **参数：**
 
 ~~~json
 {
-    "name":"<String>",						// 公司名
-    "password":"<String>",					// 密码
-    "email":"<String>",						// 目标公司邮箱
-    "userDescribe":"int"					// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
+	"userAccountId":"<String>"					// 用户申请记录对应的id
 }
 ~~~
 

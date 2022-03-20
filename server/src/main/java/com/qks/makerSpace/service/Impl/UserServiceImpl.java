@@ -11,8 +11,7 @@ import com.qks.makerSpace.service.UserService;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -103,18 +102,34 @@ public class UserServiceImpl implements UserService {
         return MyResponseUtil.getResultMap(emailAuth, 0, "success");
     }
 
-//    /**
-//     * 用户申请账号
-//     * @param token
-//     * @param jsonObject
-//     * @return
-//     * @throws ServiceException
-//     */
-//    @Override
-//    public Map<String, Object> userApplyForAccount(JSONObject jsonObject) throws ServiceException {
-//        UserAccountApplying userAccountApplying = JSONObject.parseObject(String.valueOf(jsonObject), UserAccountApplying.class);
-////        userDao.addUserAccountApplying(userAccountApplying);
-//
-//        return null;
-//    }
+    /**
+     * 用户申请账号
+     * @param token
+     * @param jsonObject
+     * @return
+     */
+    @Override
+    public Map<String, Object> userApplyForAccount(JSONObject jsonObject) {
+        UserAccountApplying userAccountApplying = new UserAccountApplying();
+
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        userAccountApplying.setUserAccountId(UUID.randomUUID().toString());
+        userAccountApplying.setName(jsonObject.getString("name"));
+        userAccountApplying.setPassword(jsonObject.getString("password"));
+        userAccountApplying.setEmail(jsonObject.getString("email"));
+        userAccountApplying.setSubmitTime(time);
+        userAccountApplying.setAdministratorAudit(false);
+        userAccountApplying.setDescribe(Integer.parseInt(jsonObject.getString("describe")));
+
+        List<UserAccountApplying> userAccountApplyings = userDao.getUserAccountApplyingByName(userAccountApplying.getName());
+        if (userAccountApplyings.size() != 0) {
+            userDao.updateUserAccountApplying(userAccountApplying);
+        } else {
+            userDao.addUserAccountApplying(userAccountApplying);
+        }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("name", userAccountApplying.getName());
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
 }

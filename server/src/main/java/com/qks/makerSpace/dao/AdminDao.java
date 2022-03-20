@@ -17,6 +17,12 @@ import java.util.List;
 @Repository
 public interface AdminDao {
 
+    @Select("select * from user_account_applying where user_account_id = #{userId}")
+    UserAccountApplying getUserFormApplyingById(String userId);
+
+    @Select("select * from user_account_applying where administrator_audit = 0")
+    List<UserAccountApplying> getUserAccountApplying();
+
     /**
      * 根据名称查找用户
      * @param name
@@ -39,6 +45,9 @@ public interface AdminDao {
             "email = #{email} " +
             "where user_id = #{userId}")
     Integer UpdateUser(User user);
+
+    @Delete("delete from user_account_applying where user_account_id = #{userId}")
+    Integer deleteUserAccountApplying(String userId);
 
     /**
      *  获取最新所有未审核科技园入园申请

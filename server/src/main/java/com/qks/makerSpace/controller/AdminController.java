@@ -26,6 +26,15 @@ public class AdminController {
     }
 
     /**
+     * 管理员获取用户的账号申请
+     * @return Hashmap
+     */
+    @RequestMapping(value = "register", method = RequestMethod.GET)
+    private Map<String, Object> getRegister(HttpServletRequest httpServletRequest) throws ServiceException {
+        return adminService.getRegister();
+    }
+
+    /**
      * 管理员分配公司账号
      * @return Hashmap
      */

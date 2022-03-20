@@ -46,19 +46,38 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
+     * 管理员获取用户的账号申请
+     * @return Hashmap
+     */
+    @Override
+    public Map<String, Object> getRegister() {
+        List<UserAccountApplying> data = adminDao.getUserAccountApplying();
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
      * 管理员分配公司账号
      * @return Hashmap
      */
     @Override
-    public Map<String, Object> addNewUser(JSONObject map) {
+    public Map<String, Object> addNewUser(JSONObject map) throws ServiceException {
         /**
          * 获取公司名称和密码
          */
-        User user = JSONObject.parseObject(String.valueOf(map), User.class);
-        user.setUserId(UUID.randomUUID().toString());
-        user.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss").format(new Date()));
-        System.out.println(user);
+        String userAccountId = map.getString("userAccountId");
+        UserAccountApplying userAccountApplying = adminDao.getUserFormApplyingById(userAccountId);
+        System.out.println(userAccountApplying);
+        if (userAccountApplying == null) throw new ServiceException("分配的用户对象不存在");
 
+        User user = new User();
+        user.setUserId(userAccountId);
+        user.setName(userAccountApplying.getName());
+        user.setPassword(userAccountApplying.getPassword());
+        user.setUserDescribe(userAccountApplying.getDescribe());
+        user.setEmail(userAccountApplying.getEmail());
+        user.setSubmitTime(userAccountApplying.getSubmitTime());
+        System.out.println(user);
         /**
          * 如果用户存在，则修改密码，否则增加新用户
          */
@@ -70,17 +89,25 @@ public class AdminServiceImpl implements AdminService {
             adminDao.UpdateUser(user);
         }
 
+        // 同时删除申请表中对应用户的申请记录
+        adminDao.deleteUserAccountApplying(userAccountId);
+
         String text = "公司名称：" + user.getName() + "\n" + "公司密码：" + user.getPassword();
 
         /**
          * 发送邮箱
          */
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(user.getEmail());//收信人
-        message.setSubject("公司账号密码");//主题
-        message.setText(text);//内容
-        message.setFrom(from);//发信人
-        mailSender.send(message);
+
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(user.getEmail());//收信人
+            message.setSubject("公司账号密码");//主题
+            message.setText(text);//内容
+            message.setFrom(from);//发信人
+            mailSender.send(message);
+        } catch (Exception e) {
+            throw new ServiceException("发送邮件失败");
+        }
 
         user.setPassword(null); // 去掉密码
         return MyResponseUtil.getResultMap(user, 0, "success");
