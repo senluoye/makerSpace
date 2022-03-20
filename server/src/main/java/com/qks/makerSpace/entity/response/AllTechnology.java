@@ -6,7 +6,6 @@ import lombok.Data;
 public class AllTechnology {
 
     private String creditCode;
-    private String organizationCode;
     private String companyKind;
     private String name;
     private String represent;

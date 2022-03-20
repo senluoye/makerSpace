@@ -2,6 +2,7 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.HomePageRes;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -50,16 +51,22 @@ public interface UserDao {
             "and submit_time = (select max(submit_time) from space where in_apply_id = #{id})")
     Space getLastSpaceById(String id);
 
-//    @Insert("insert into user_account_applying(user_account_id, name, `describe`, password, submit_time) " +
-//            "VALUES (#{})")
-//    Integer addUserAccountApplying(UserAccountApplying userAccountApplying);
-
     @Select("select credit_code from user_company where user_id = #{userId}")
     List<String> getCreditCodeByUserId(String userId);
 
-    List<String> getNameByCreditCode();
-
     // 获取用户主页信息
 //    @Select()
-    List<HomePageRes> getHomePages(String creditCode);
+//    List<HomePageRes> getHomePages(String creditCode);
+
+    @Select("select * from user_account_applying where name = #{name}")
+    List<UserAccountApplying> getUserAccountApplyingByName(String name);
+
+    @Insert("insert into user_account_applying (user_account_id, name, `describe`, password, submit_time, email, administrator_audit) " +
+            "VALUES (#{userAccountId}, #{name}, #{describe}, #{password}, #{submitTime}, #{email}, #{administratorAudit})")
+    Integer addUserAccountApplying(UserAccountApplying userAccountApplying);
+
+    @Update("update user_account_applying set password = #{password}, `describe` = #{describe}, email = #{email}, " +
+            "administrator_audit = #{administratorAudit}, submit_time = #{submitTime} " +
+            "where name = #{name}")
+    Integer updateUserAccountApplying(UserAccountApplying userAccountApplying);
 }

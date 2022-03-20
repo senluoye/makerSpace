@@ -68,7 +68,7 @@ public interface NewEnterpriseDao {
     @Select("select new_id from new where credit_code = #{creditCode}")
     List<String> selectNewIdByCreditCode(String creditCode);
 
-    @Update("update new set credit_code = #{creditCode} where audit_id = #{auditId}")
+    @Update("update new set credit_code = #{creditCode} where new_id = #{newId}")
     void updateNewCreditCode(String newId, String creditCode);
 
     @Update("update audit set credit_code = #{creditCode} where audit_id = #{auditId}")

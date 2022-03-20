@@ -17,6 +17,12 @@ import java.util.List;
 @Repository
 public interface AdminDao {
 
+    @Select("select * from user_account_applying where user_account_id = #{userId}")
+    UserAccountApplying getUserFormApplyingById(String userId);
+
+    @Select("select * from user_account_applying where administrator_audit = 0")
+    List<UserAccountApplying> getUserAccountApplying();
+
     /**
      * 根据名称查找用户
      * @param name
@@ -39,6 +45,9 @@ public interface AdminDao {
             "email = #{email} " +
             "where user_id = #{userId}")
     Integer UpdateUser(User user);
+
+    @Delete("delete from user_account_applying where user_account_id = #{userId}")
+    Integer deleteUserAccountApplying(String userId);
 
     /**
      *  获取最新所有未审核科技园入园申请
@@ -64,7 +73,7 @@ public interface AdminDao {
     List<String> getSpaceNameByCreditCode(String inApplyId);
 
 
-    @Select("select old.credit_code as creditCode, old.organization_code as organizationCode, " +
+    @Select("select old.credit_code as creditCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
             "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position, " +
             "audit.administrator_audit as administratorAudit " +
@@ -73,7 +82,7 @@ public interface AdminDao {
             "and audit.audit_id = old.credit_code")
     List<AllTechnology> getAllOldDetails();
 
-    @Select("select new.credit_code as creditCode, new.organization_code as organizationCode, " +
+    @Select("select new.credit_code as creditCode, " +
             "new.name as name, new.represent as represent, new.represent_phone as representPhone, " +
             "new.represent_email as representEmail, new_demand.floor as floor, new_demand.position as position, " +
             "audit.administrator_audit as administratorAudit " +

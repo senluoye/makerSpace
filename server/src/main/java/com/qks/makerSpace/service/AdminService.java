@@ -9,7 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 public interface AdminService {
-    Map<String, Object> addNewUser(JSONObject jsonObject);
+    Map<String, Object> getRegister();
+    Map<String, Object> addNewUser(JSONObject jsonObject) throws ServiceException;
 
     Map<String, Object> getAllDetails() throws ServiceException;
     Map<String, Object> getNewTechnologyById(String id) throws ServiceException;

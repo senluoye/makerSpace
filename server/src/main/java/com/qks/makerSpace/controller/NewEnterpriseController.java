@@ -41,8 +41,8 @@ public class NewEnterpriseController {
                                                     @RequestPart("map") String str,
                                                     @RequestPart("picture") MultipartFile picture,
                                                     @RequestPart("representCard") MultipartFile representCard,
-                                                    @RequestPart("certificate") MultipartFile certificate,
-                                                    @RequestPart("intellectualFile") MultipartFile[] intellectualFile) throws Exception {
+                                                    @RequestPart(value = "certificate", required = false) MultipartFile certificate,
+                                                    @RequestPart(value = "intellectualFile", required = false) MultipartFile[] intellectualFile) throws Exception {
         return newEnterpriseService.updateNewEnterprise(
                 httpServletRequest.getHeader("token"),
                 str,
