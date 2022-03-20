@@ -76,7 +76,7 @@ public class NotificationController {
      * @return
      * @throws ServiceException
      */
-    @RequestMapping(value = "admin/notice",method = RequestMethod.GET)
+    @RequestMapping(value = "admin/notice",method = RequestMethod.POST)
     public Map<String, Object> getInformation(@RequestBody Map<String, Object> map) throws ServiceException {
         return notificationService.getInformation(map);
     }
