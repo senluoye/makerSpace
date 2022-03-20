@@ -1169,16 +1169,26 @@ map部分：
 ~~~json
 {
 	    "data":[{
-	        "registerCapital":"<String>",							//拟注册资本（万元）
-		    "realCapital":"<String>",									//实际募集资本（万元）
-		    "originNumber":"<String>",								//初始入园人数
-		    "registerTime":"<String>",									//预计注册日期
-		    "nature":"<String>",									//企业性质
-		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
-		    "involved":"<String>",									//企业性质
-		    "mainBusiness":"<String>",									//主营业务
-		    "way":"<String>",									//入园方式
-		    "business":"<String>",									//入园业务
+	        "creditCode":"<String>",
+    		"name":"<String>",									  //新设立企业名称
+            "picture":"<File>",										//提供名称预核准通知书
+    		"represent":"<String>",								//企业法人代表
+            "representCard":"<File>",						  //企业法人身法
+    		"representPerson":"<String>",				   //负责人名字
+    		"representPhone":"<String>",				  //负责人电话号码
+    		"representEmail":"<String>",					//负责人邮箱
+    		"agent":"<String>",									  //经办人
+    		"agentPhone":"<String>",					   //经办人电话
+    		"agentEmail":"<String>",					     //经办人邮箱
+    		"registerCapital":"<String>",					 //拟注册资本（万元）
+   		 	"realCapital":"<String>",						   //实际募集资本（万元）
+    		"originNumber":"<String>",					  //初始入园人数
+    		"registerTime":"<String>",						 //预计注册日期
+    		"nature":"<String>",								 //企业性质
+            "certificate":"<File>",								   //教师需要上传教师资格证/学生需要上传学生证
+   		 	"involved":"<String>",							   //所属行业
+    		"mainBusiness":"<String>",					   //主营业务
+    		"business":"<String>",							  //入园业务
 		    
 		    "newDemand":[{
 		        "leaseArea":"<String>",									//租赁面积（平方米）
@@ -3300,7 +3310,7 @@ map部分：
 
 **请求方式：**
 
-- GET
+- POST
 
 **参数：**
 

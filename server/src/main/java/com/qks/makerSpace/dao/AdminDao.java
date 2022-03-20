@@ -64,7 +64,7 @@ public interface AdminDao {
     List<String> getSpaceNameByCreditCode(String inApplyId);
 
 
-    @Select("select old.credit_code as creditCode, old.organization_code as organizationCode, " +
+    @Select("select old.credit_code as creditCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
             "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position, " +
             "audit.administrator_audit as administratorAudit " +
@@ -73,7 +73,7 @@ public interface AdminDao {
             "and audit.audit_id = old.credit_code")
     List<AllTechnology> getAllOldDetails();
 
-    @Select("select new.credit_code as creditCode, new.organization_code as organizationCode, " +
+    @Select("select new.credit_code as creditCode, " +
             "new.name as name, new.represent as represent, new.represent_phone as representPhone, " +
             "new.represent_email as representEmail, new_demand.floor as floor, new_demand.position as position, " +
             "audit.administrator_audit as administratorAudit " +

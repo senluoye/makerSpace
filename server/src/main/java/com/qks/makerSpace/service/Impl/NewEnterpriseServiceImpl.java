@@ -59,19 +59,21 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         System.out.println(certificate);
         System.out.println(intellectualFile.length);
         System.out.println("----------------------------------------");
-        String userId = JWTUtils.parser(token).get("useId").toString();
+
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        System.out.println(userId);
         User user = newEnterpriseDao.getUserByUserId(userId);
         if (user == null) return  MyResponseUtil.getResultMap(null,-1,"用户不存在");
-
+        System.out.println("------------------1----------------------");
         JSONObject map = JSONObject.parseObject(str);
 
         News news = NewParserUtils.newsParser(map);
         String creditCode = news.getCreditCode();
-
+        System.out.println("-------------------2---------------------");
         List<String> userIds = newEnterpriseDao.selectUserIdByCreditCode(creditCode);
         if (userIds.size() != 0 && !userIds.get(0).equals(userId))
             throw new ServiceException("该社会信用代码已被其他用户填报");
-
+        System.out.println("-------------------3---------------------");
         List<UserCompany> users = newEnterpriseDao.selectUserCompany(userId);
         if (users.size() != 0) {
             newEnterpriseDao.updateUserCompany(userId, creditCode);
@@ -85,7 +87,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         else {
             newEnterpriseDao.insertUserCompany(userId, creditCode);
         }
-
+        System.out.println("------------------4----------------------");
         String nature = news.getNature();
         if (nature.equals("大学生创业企业") || nature.equals("高校教师创业企业")) {
             try {
@@ -94,31 +96,35 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                 throw new ServiceException("请提供与拟注册企业性质对应的文件");
             }
         }
-
+        System.out.println("-----------------5-----------------------");
         news.setPicture(picture.getBytes());
         news.setRepresentCard(representCard.getBytes());
         news.setState("未审核");
-
+        System.out.println("-------------------6---------------------");
         NewDemand newDemand = NewParserUtils.newDemandParser(map.getString("newDemand"));
         List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.getJSONArray("newShareholder"));
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.getJSONArray("newMainPerson"));
         List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.getJSONArray("newProject"));
         List<NewIntellectual> newIntellectuals = NewParserUtils.NewIntellectualParser(map.getJSONArray("newIntellectual"));
-
+        System.out.println("---------------------7-------------------");
         news.setNewDemandId(newDemand.getNewDemandId());
         news.setNewShareholderId(newShareholders.get(0).getNewShareholderId());
         news.setNewMainpersonId(newMainPeople.get(0).getNewMainpersonId());
         news.setNewProjectId(newProjects.get(0).getNewProjectId());
-
+        System.out.println("-------------------8---------------------");
         if (newIntellectuals.size() != 0) {
             news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
-            if (newIntellectuals.size() != intellectualFile.length)
+            if (newIntellectuals.size() != intellectualFile.length){
+                System.out.println(newIntellectuals.size());
+                System.out.println(intellectualFile.length);
                 return MyResponseUtil.getResultMap(null,-1,"知识产权数量不足");
+
+            }
             for (int i = 0; i < newIntellectuals.size(); i++) {
                 newIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
             }
         }
-
+        System.out.println("-------------------10---------------------");
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         news.setSubmitTime(time);
 
@@ -144,7 +150,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             if (newEnterpriseDao.insertNewIntellectual(newIntellectual) <= 0)
                 throw new ServiceException("信息插入失败：知识产权");
         }
-
+        System.out.println("----------------11------------------------");
         Audit audit = new Audit();
         audit.setAuditId(UUID.randomUUID().toString());
         audit.setCreditCode(creditCode);
@@ -155,7 +161,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
         if (newEnterpriseDao.insertAudit(audit) <= 0)
             throw new ServiceException("信息插入失败：audit");
-
+        System.out.println("------------------12----------------------");
         Map<String, Object> forMap = new HashMap<>();
         forMap.put("creditCode",creditCode);
         return MyResponseUtil.getResultMap(forMap,0,"success");

@@ -65,10 +65,10 @@ public interface NewEnterpriseDao {
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> selectUserCompany(String userId);
 
-    @Select("select new_id = new where credit_code = #{creditCode}")
+    @Select("select new_id from new where credit_code = #{creditCode}")
     List<String> selectNewIdByCreditCode(String creditCode);
 
-    @Update("update new set credit_code = #{creditCode} where audit_id = #{auditId}")
+    @Update("update new set credit_code = #{creditCode} where new_id = #{newId}")
     void updateNewCreditCode(String newId, String creditCode);
 
     @Update("update audit set credit_code = #{creditCode} where audit_id = #{auditId}")
@@ -87,7 +87,7 @@ public interface NewEnterpriseDao {
             "new(new_id, credit_code, name, picture, represent, represent_card, represent_person, represent_phone," +
             "represent_email, agent, agent_phone, agent_email, register_capital, real_capital, origin_number," +
             "register_time, nature, certificate, involved, main_business, business, new_demand_id, new_shareholder_id, new_mainperson_id," +
-            "new_project_id, new_intellectual_id, cooperation, submit_time) " +
+            "new_project_id, new_intellectual_id, cooperation, suggestion, note, state, submit_time) " +
             "VALUES (#{newId}, #{creditCode}, #{name}, #{picture}, #{represent}, #{representCard}," +
             "#{representPerson}, #{representPhone}, #{representEmail}, #{agent}, #{agentPhone}," +
             "#{agentEmail}, #{registerCapital}, #{realCapital}, #{originNumber}, #{registerTime}, " +
