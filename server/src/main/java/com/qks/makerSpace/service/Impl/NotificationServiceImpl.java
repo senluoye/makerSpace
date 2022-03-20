@@ -11,10 +11,7 @@ import org.apache.xmlbeans.impl.regex.REUtil;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class NotificationServiceImpl implements NotificationService {
@@ -89,37 +86,37 @@ public class NotificationServiceImpl implements NotificationService {
     public Map<String, Object> noticeRead(Map<String, Object> map) throws ServiceException {
         String noticeId = map.get("noticeId").toString();
         String name = map.get("name").toString();
-        System.out.println(name);
-        System.out.println(noticeId);
 
         Notification notification = notificationDao.getDetailNotice(noticeId);
         if (notification == null) {
             throw new ServiceException("该通知不存在");
         }
-        if (notificationDao.noticeRead(UUID.randomUUID().toString(),noticeId,name) > 0){
+        ;
+        if (notificationDao.selectByNameAndNoticeId(noticeId, name) == null) {
+            if (notificationDao.noticeRead(UUID.randomUUID().toString(),noticeId,name) > 0){
+                return MyResponseUtil.getResultMap(notification,0,"success");
+            } else throw new ServiceException("出现一点小问题");
+        } else {
             return MyResponseUtil.getResultMap(notification,0,"success");
-        } else throw new ServiceException("出现一点小问题");
-
+        }
     }
 
     @Override
-    public Map<String, Object> noRead(Map<String, Object> map) throws ServiceException {
+    public Map<String, Object> getInformation(Map<String, Object> map) throws ServiceException {
         String noticeId = map.get("noticeId").toString();
-        List<NoticeResponse> list = notificationDao.noRead(noticeId);
 
-        if (list.size() != 0) {
-            return MyResponseUtil.getResultMap(list,0,"success");
-        } else throw new ServiceException("未查寻到结果");
-    }
+        Notification notification = notificationDao.getDetailNotice(noticeId);
+        if (notification == null) throw new ServiceException("查询通知失败，请重试");
 
-    @Override
-    public Map<String, Object> alreadyRead(Map<String, Object> map) throws ServiceException {
-        String noticeId = map.get("noticeId").toString();
-        List<NoticeResponse> list = notificationDao.alreadyRead(noticeId);
-        System.out.println(list);
+        List<NoticeResponse> read = notificationDao.alreadyRead(noticeId);
+        List<NoticeResponse> user = notificationDao.selectUserName();
+        user.removeAll(read);
 
-        if (list.size() != 0) {
-            return MyResponseUtil.getResultMap(list,0,"success");
-        } else throw new ServiceException("未查寻到结果");
+        Map<String, Object> data = new HashMap<>();
+        data.put("notice",notification);
+        data.put("read",read);
+        data.put("noRead",user);
+
+        return MyResponseUtil.getResultMap(data,0,"success");
     }
 }

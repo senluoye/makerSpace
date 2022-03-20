@@ -10,6 +10,5 @@ public interface NotificationService {
     Map<String, Object> updateNotice(Map<String, Object> map) throws ServiceException;
     Map<String, Object> deleteNotice(String noticeId) throws ServiceException;
     Map<String, Object> noticeRead(Map<String, Object> map) throws ServiceException;
-    Map<String, Object> noRead(Map<String, Object> map) throws ServiceException;
-    Map<String, Object> alreadyRead(Map<String, Object> map) throws ServiceException;
+    Map<String, Object> getInformation(Map<String, Object> map) throws ServiceException;
 }
