@@ -97,7 +97,6 @@ public class AdminServiceImpl implements AdminService {
         /**
          * 发送邮箱
          */
-
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(user.getEmail());//收信人
