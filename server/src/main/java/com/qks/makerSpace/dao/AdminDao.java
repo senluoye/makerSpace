@@ -8,6 +8,7 @@ import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllTechnology;
+import com.qks.makerSpace.entity.response.UserAccountApplyingRes;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -17,11 +18,16 @@ import java.util.List;
 @Repository
 public interface AdminDao {
 
-    @Select("select * from user_account_applying where user_account_id = #{userId}")
-    UserAccountApplying getUserFormApplyingById(String userId);
+    @Select("select * from user_account_applying where name = #{name}")
+    UserAccountApplying getUserFormApplyingByName(String name);
 
-    @Select("select * from user_account_applying where administrator_audit = 0")
-    List<UserAccountApplying> getUserAccountApplying();
+    /**
+     * 根据时间获取所有用户账号申请
+     * @return
+     */
+    @Select("select user_account_id, name, email, `describe`, submit_time " +
+            "from user_account_applying where administrator_audit = 0 order by submit_time")
+    List<UserAccountApplyingRes> getUserAccountApplying();
 
     /**
      * 根据名称查找用户
@@ -72,14 +78,13 @@ public interface AdminDao {
     @Select("select create_name name from space where in_apply_id = #{in_apply_id}")
     List<String> getSpaceNameByCreditCode(String inApplyId);
 
-
     @Select("select old.credit_code as creditCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
             "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position, " +
             "audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
             "from old, old_demand, audit " +
             "where old.old_demand_id = old_demand.old_demand_id " +
-            "and audit.credit_code = old.credit_code and audit.administrator_audit = '通过'")
+            "and audit.credit_code = old.credit_code")
     List<AllTechnology> getAllOldDetails();
 
     @Select("select new.credit_code as creditCode, " +
@@ -88,13 +93,13 @@ public interface AdminDao {
             "audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
             "from new, new_demand, audit " +
             "where new.new_demand_id = new_demand.new_demand_id " +
-            "and audit.credit_code = new.credit_code and administrator_audit = '通过'")
+            "and audit.credit_code = new.credit_code ")
     List<AllTechnology> getAllNewDetails();
 
     @Select("select in_apply_id, create_name, apply_time, team_number, " +
             "space.`describe`, help, space_id " +
             "from space, audit " +
-            "where audit.credit_code = space.in_apply_id and audit.administrator_audit = '通过'")
+            "where audit.credit_code = space.in_apply_id ")
     List<Space> getAllSpaceDetails();
 
     @Select("select * from space_person where in_apply_id = #{inApplyId}")

@@ -109,18 +109,23 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Map<String, Object> userApplyForAccount(JSONObject jsonObject) {
+    public Map<String, Object> userApplyForAccount(JSONObject jsonObject) throws ServiceException {
         UserAccountApplying userAccountApplying = new UserAccountApplying();
+        String name = jsonObject.getString("name");
+
+        // 先看看user表里有没有这位用户
+        if (userDao.getUserByName(name).size() != 0)
+            throw new ServiceException("该用户账号已经已经存在，不可重复申请");
 
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         userAccountApplying.setUserAccountId(UUID.randomUUID().toString());
-        userAccountApplying.setName(jsonObject.getString("name"));
-        userAccountApplying.setPassword(jsonObject.getString("password"));
+        userAccountApplying.setName(name);
         userAccountApplying.setEmail(jsonObject.getString("email"));
+        userAccountApplying.setDescribe(Integer.parseInt(jsonObject.getString("describe")));
         userAccountApplying.setSubmitTime(time);
         userAccountApplying.setAdministratorAudit(false);
-        userAccountApplying.setDescribe(Integer.parseInt(jsonObject.getString("describe")));
 
+        // 如果重复申请，则修改申请表内的信息，否则增加
         List<UserAccountApplying> userAccountApplyings = userDao.getUserAccountApplyingByName(userAccountApplying.getName());
         if (userAccountApplyings.size() != 0) {
             userDao.updateUserAccountApplying(userAccountApplying);

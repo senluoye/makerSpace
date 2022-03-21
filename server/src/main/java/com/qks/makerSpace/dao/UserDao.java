@@ -16,6 +16,9 @@ public interface UserDao {
     @Select("select * from user where user_id = #{userId}")
     List<User> getUserByUserId(String userId);
 
+    @Select("select * from user where name = #{name}")
+    List<User> getUserByName(String name);
+
     @Update("update user set email = #{email} where user_id = #{userId}")
     Integer changeUserEmail(String userId, String email);
 

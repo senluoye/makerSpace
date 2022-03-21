@@ -7,10 +7,7 @@ import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
 import com.qks.makerSpace.entity.request.BriefFormReq;
 import com.qks.makerSpace.entity.request.FormReq;
-import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
-import com.qks.makerSpace.entity.response.AdminSuggestion;
-import com.qks.makerSpace.entity.response.AllSpace;
-import com.qks.makerSpace.entity.response.AllTechnology;
+import com.qks.makerSpace.entity.response.*;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.ChangeUtils;
@@ -51,8 +48,7 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getRegister() {
-        List<UserAccountApplying> data = adminDao.getUserAccountApplying();
-
+        List<UserAccountApplyingRes> data = adminDao.getUserAccountApplying();
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
@@ -65,42 +61,41 @@ public class AdminServiceImpl implements AdminService {
         /**
          * 获取公司名称和密码
          */
+        String name = map.getString("name");
+        String password = map.getString("password");
         String userAccountId = map.getString("userAccountId");
-        UserAccountApplying userAccountApplying = adminDao.getUserFormApplyingById(userAccountId);
-        System.out.println(userAccountApplying);
-        if (userAccountApplying == null) throw new ServiceException("分配的用户对象不存在");
+
+        // 首先看看申请表里有没有这位用户
+        UserAccountApplying userAccountApplying = adminDao.getUserFormApplyingByName(name);
+        if (userAccountApplying == null) throw new ServiceException("分配的用户信息不存在");
+
+        /**
+         * 如果user表中没有该用户，则修改密码并向user表中添加用户，否则报错
+         */
+        List<User> users = adminDao.getUserByName(name);
+        if (users.size() != 0) throw new ServiceException("用户已存在，不需要重新分配");
 
         User user = new User();
         user.setUserId(userAccountId);
         user.setName(userAccountApplying.getName());
-        user.setPassword(userAccountApplying.getPassword());
+        user.setPassword(password);
         user.setUserDescribe(userAccountApplying.getDescribe());
         user.setEmail(userAccountApplying.getEmail());
         user.setSubmitTime(userAccountApplying.getSubmitTime());
-        System.out.println(user);
-        /**
-         * 如果用户存在，则修改密码，否则增加新用户
-         */
-        List<User> users = adminDao.getUserByName(user.getName());
-        if (users.size() == 0) {
-            adminDao.addNewUser(user);
-        } else {
-            user.setUserId(users.get(0).getUserId());
-            adminDao.UpdateUser(user);
-        }
+        adminDao.addNewUser(user);
 
-        // 同时删除申请表中对应用户的申请记录
+        // 之后删除申请表中对应用户的申请记录
         adminDao.deleteUserAccountApplying(userAccountId);
 
         String text = "公司名称：" + user.getName() + "\n" + "公司密码：" + user.getPassword();
 
         /**
-         * 发送邮箱
+         * 最后发送用户邮箱
          */
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             message.setTo(user.getEmail());//收信人
-            message.setSubject("公司账号密码");//主题
+            message.setSubject("公司账号与密码");//主题
             message.setText(text);//内容
             message.setFrom(from);//发信人
             mailSender.send(message);
@@ -110,6 +105,7 @@ public class AdminServiceImpl implements AdminService {
 
         user.setPassword(null); // 去掉密码
         return MyResponseUtil.getResultMap(user, 0, "success");
+
     }
 
     /**

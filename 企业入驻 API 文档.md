@@ -2040,11 +2040,11 @@ map部分：
 ~~~json
 {
     "data":[{
-    "userAccountId":"<String>",				// 申请记录的id
-    "name":"<String>",						// 公司名
-    "password":"<String>",					// 密码
-    "email":"<String>",						// 目标公司邮箱
-    "userDescribe":"int"					// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
+        "userAccountId":"<String>",				// 默认账号
+        "name":"<String>",						// 公司名
+        "email":"<String>",						// 目标公司邮箱
+        "describe":"int",					// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
+        "submitTime":"<String>"					// 申请时间
 	},
             ...
     ],
@@ -2057,7 +2057,7 @@ map部分：
 
 **描述**：
 
-管理员分配账号，再次调用即为修改密码。
+管理员分配账号
 
 **请求URL：**
 
@@ -2071,7 +2071,9 @@ map部分：
 
 ~~~json
 {
-	"userAccountId":"<String>"					// 用户申请记录对应的id
+    "name":"<String>",							// 公司名
+	"userAccountId":"<String>",					// 管理员新分配的账号
+    "password":"<String>"						// 公司密码
 }
 ~~~
 
