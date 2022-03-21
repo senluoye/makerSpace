@@ -54,4 +54,14 @@ public class UserController {
     private Map<String, Object> userApplyForAccount(@RequestBody JSONObject jsonObject) throws ServiceException {
         return userService.userApplyForAccount(jsonObject);
     }
+
+    /**
+     * 用户修改账号信息
+     * @param Hashmap
+     * @return Hashmap
+     */
+    @RequestMapping(value = "/account", method = RequestMethod.PUT)
+    private Map<String, Object> changeUserDetail(@RequestBody JSONObject jsonObject) throws ServiceException {
+        return userService.changeUserDetail(jsonObject);
+    }
 }

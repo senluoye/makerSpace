@@ -27,6 +27,11 @@ public interface UserDao {
             "where user_id = #{userId}")
     Integer changeEmailAuth(EmailAuth emailAuth);
 
+    @Update("update user " +
+            "set name = #{name}, password = #{password}, email = #{email} " +
+            "where user_id = #{userId}")
+    Integer changeUser(User user);
+
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> getUserCompanyByUserId(String userId);
 

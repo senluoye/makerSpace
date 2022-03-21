@@ -104,7 +104,6 @@ public class UserServiceImpl implements UserService {
 
     /**
      * 用户申请账号
-     * @param token
      * @param jsonObject
      * @return
      */
@@ -135,6 +134,44 @@ public class UserServiceImpl implements UserService {
 
         Map<String, Object> data = new HashMap<>();
         data.put("name", userAccountApplying.getName());
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 修改用户信息
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> changeUserDetail(JSONObject map) throws ServiceException {
+        String userId = map.getString("userAccountId");
+        String name = map.getString("name");
+        String password = map.getString("password");
+        String email = map.getString("email");
+
+        /**
+         * 首先看新修改的名称是不是已有的
+         */
+        // 首先确保账号存在
+        List<User> users = userDao.getUserByUserId(userId);
+        if (users.size() == 0) throw new ServiceException("该账号不存在");
+        // 然后新名字是否被占用
+        String oldName = users.get(0).getName();
+        // 如果新旧名字不同，并且新名字已经在使用
+        if (!name.equals(oldName) && userDao.getUserByName(name).size() != 0)
+            throw new ServiceException("该公司名已经存在");
+
+        User user = new User();
+        user.setUserId(userId);
+        user.setName(name);
+        user.setPassword(password);
+        user.setEmail(email);
+
+        if (userDao.changeUser(user) < 1) throw new ServiceException("修改用户信息失败");
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("userAccountId", userId);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 }

@@ -307,6 +307,43 @@ token 保存时间待定
 }
 ```
 
+## 用户修改账号信息
+
+**描述：**
+
+用户修改公司名称、账号、邮箱等信息。
+
+**请求URL：**
+
+- `/api/user/account`
+
+**请求方式：**
+
+- PUT
+
+**参数：**
+
+~~~json
+{
+    "userAccountId":"<String>",			// 账号
+    "name":"<String>",					// 新公司名
+    "password":"<String>",				// 新密码
+    "email":"<String>",					// 新邮箱
+}
+~~~
+
+**返回值：**
+
+```json
+{
+    "data":{
+    	"userAccountId":"<String>",					// 账号
+	},
+    "code":0,
+    "msg":"succecss"
+}
+```
+
 
 
 
@@ -2071,8 +2108,8 @@ map部分：
 
 ~~~json
 {
-    "name":"<String>",							// 公司名
-	"userAccountId":"<String>",					// 管理员新分配的账号
+    "name":"<String>",							// 公司名(这个名称应当是不可修改的)
+	"userAccountId":"<String>",					// 新分配的账号
     "password":"<String>"						// 公司密码
 }
 ~~~

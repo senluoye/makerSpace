@@ -32,8 +32,6 @@ public class AdminServiceImpl implements AdminService {
     private final AdminDao adminDao;
     private final JavaMailSender mailSender;
 
-    private final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
-
     @Value("${spring.mail.username}")
     private String from;
 
