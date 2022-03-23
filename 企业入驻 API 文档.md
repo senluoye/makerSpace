@@ -1865,28 +1865,11 @@ map部分：
 ```json
 {
     "data":{
-          "teamName": "<String>", //企业名称
-          "creditCode": "<String>", //统一社会信用代码或组织机构代码
-          "joinTime":"<String>",	// 企业入驻科技园时间
-          "registerCapital": "<String>", //注册资金
-          "industryKind": "<String>", //行业类别
-          "field": "<String>", //企业所属技术领域
-          "header": "<String>", //企业负责人
-          "submitHeader": "<String>", //填报人
-          "submitPhone": "<String>", //填报人电话
-          "submitTime": "<String>", //填报日期
-          "applications": "<String>", //当年知识产权申请数
-          "applicationsPatent": "<String>", //当年知识产权申请数--->发明专利
-          "granted": "<String>", //当年知识产权授权数
-          "grantedPatent": "<String>", //当年知识产权授权数---->发明专利
-          "valid": "<String>", //拥有有效知识产权数
-          "validPatent": "<String>", //拥有有效知识产权数----->发明专利
-          "softCopyright": "<String>", //拥有有效知识产权数----->软件著作权
-          "plantVariety": "<String>", //拥有有效知识产权数----->植物新品种
-          "icLayout": "<String>", //拥有有效知识产权数----->集成电路布图
-          "projectNum": "<String>", //当年承担国家级科技计划项目数
-          "totalAwards": "<String>", //当年参赛获奖情况
-          "provinceAwards": "<String>" //当年参赛获奖情况--->省级以上
+		"teamName": "<String>", //企业名称
+ 		"creditCode": "<String>", //统一社会信用代码或组织机构代码
+  		"joinTime":"<String>",	// 企业入驻科技园时间
+  		"registerCapital": "<String>", //注册资金
+  		"header": "<String>", //企业负责人
     },
     "code":0,
     "msg":"success"

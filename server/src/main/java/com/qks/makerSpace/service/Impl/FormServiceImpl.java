@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.time.temporal.TemporalAccessor;
 import java.util.*;
 
 @Service
@@ -199,16 +200,27 @@ public class FormServiceImpl implements FormService {
     public Map<String, Object> getTechnologyBasic(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         User user = formDao.getUserByUserId(userId);
+        List<UserCompany> userCompany = formDao.getCompanyByUserId(userId);
+        if (userCompany.size() == 0) throw new ServiceException("该用户还未入驻");
 
         // 判断用户类型
-        if (user.getUserDescribe() == 2) { // new
-
-        } else { // old
-
-        }
-
+        String creditCode = userCompany.get(0).getCreditCode();
         TecBasicRes tecBasicRes = new TecBasicRes();
-
+        if (user.getUserDescribe() == 2) { // new
+            News news = formDao.getLastNewByCreditCode(creditCode);
+            tecBasicRes.setCreditCode(creditCode);
+            tecBasicRes.setTeamName(news.getName());
+            tecBasicRes.setHeader(news.getRepresent());
+            tecBasicRes.setJoinTime(news.getSubmitTime());
+            tecBasicRes.setRegisterCapital(news.getRealCapital());
+        } else { // old
+            Old old = formDao.getLastOldByCreditCode(creditCode);
+            tecBasicRes.setCreditCode(creditCode);
+            tecBasicRes.setTeamName(old.getName());
+            tecBasicRes.setHeader(old.getRepresent());
+            tecBasicRes.setJoinTime(old.getSubmitTime());
+            tecBasicRes.setRegisterCapital(old.getRealCapital());
+        }
 
         return MyResponseUtil.getResultMap(tecBasicRes, 0, "success");
     }

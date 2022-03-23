@@ -24,6 +24,13 @@ public interface FormDao {
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> getCompanyByUserId(String userId);
 
+    @Select("select * from new " +
+            "where credit_code = #{creditCode} " +
+            "and submit_time = (" +
+            "   select max(submit_time) from new where credit_code = #{creditCode} " +
+            ")")
+    News getLastNewByCreditCode(String creditCode);
+
     @Select("select * from form where get_time = (select max(get_time) from form where credit_code = #{creditCode}) and credit_code = #{creditCode}")
     Form getLastFormByCreditCode(String creditCode);
 
