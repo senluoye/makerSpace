@@ -1350,10 +1350,8 @@ map部分：
 		    }
 				......
 			],
-		    
-		    "suggestion":"<String>",								//科技园意见
-		    "note":"<String>",    								//备注
-	    	"state":"<String>"
+		    "cooperation":"<String>",								
+		   
 	    }],
 	  "code":0,
 	  "msg":"success"

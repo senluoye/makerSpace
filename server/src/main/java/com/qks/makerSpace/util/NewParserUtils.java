@@ -127,8 +127,19 @@ public class NewParserUtils {
         return newDemand;
     }
 
-    public static Map<String, Object> NewGetReponse(News news) {
+    public static Map<String, Object> NewGetResponse(News news) {
         Map<String, Object> result = new HashMap<>();
+
+        result.put("name",news.getName());
+        result.put("picture",news.getPicture());
+        result.put("represent",news.getRepresent());
+        result.put("representCard",news.getRepresentCard());
+        result.put("representPerson",news.getRepresentPerson());
+        result.put("representPhone",news.getRepresentPhone());
+        result.put("representEmail",news.getRepresentEmail());
+        result.put("agent",news.getAgent());
+        result.put("agentPhone",news.getAgentPhone());
+        result.put("agentEmail",news.getAgentEmail());
         result.put("registerCapital",news.getRegisterCapital());
         result.put("realCapital",news.getRealCapital());
         result.put("originNumber",news.getOriginNumber());
@@ -138,6 +149,8 @@ public class NewParserUtils {
         result.put("involved",news.getInvolved());
         result.put("mainBusiness",news.getMainBusiness());
         result.put("business",news.getBusiness());
+        result.put("cooperation",news.getCooperation());
+
 
         return result;
     }

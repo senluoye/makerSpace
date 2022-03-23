@@ -7,6 +7,7 @@ import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.print.attribute.standard.PageRanges;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -60,6 +61,11 @@ public class NewEnterpriseController {
     @RequestMapping(value = "newEnterprise", method = RequestMethod.GET)
     private Map<String, Object> getNewEnterprise(HttpServletRequest httpServletRequest) {
         return newEnterpriseService.getNewEnterprise(httpServletRequest.getHeader("token"));
+    }
+
+    @RequestMapping(value = "newEnterprise/applying",method = RequestMethod.GET)
+    private Map<String, Object> getNewEnterpriseApplying(HttpServletRequest httpServletRequest) {
+        return newEnterpriseService.getNewEnterpriseApplying(httpServletRequest.getHeader("token"));
     }
 
 

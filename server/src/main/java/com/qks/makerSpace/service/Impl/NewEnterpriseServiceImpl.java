@@ -167,6 +167,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         return MyResponseUtil.getResultMap(forMap,0,"success");
     }
 
+
+
     /**
      * 获取上一次入园申请
      * @return
@@ -175,20 +177,25 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     public Map<String, Object> getNewEnterprise(String token) {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
-        String creditCode;
+        String creditCode = creditCodes.get(0);
 
-        if (creditCodes.size() != 0) {
-            creditCode = creditCodes.get(0);
-            List<TechnologyApplyingRes> technologyApplyingRes = newEnterpriseDao.selectAuditByCreditCode(creditCode);
-            List<String> name = newEnterpriseDao.selectNewNameByCredit(creditCode);
-            List<String> suggestion = newEnterpriseDao.getSuggestionByCreditCode(creditCode);
-            for (TechnologyApplyingRes i : technologyApplyingRes) {
-                i.setName(name.get(0));
-                i.setSuggestion(suggestion.get(0));
-            }
-            return MyResponseUtil.getResultMap(technologyApplyingRes,0,"success");
-        }
-        return MyResponseUtil.getResultMap(null,0,"success");
+        News news = newEnterpriseDao.getNew(creditCode);
+
+        List<NewDemand> newDemands = newEnterpriseDao.getNewDemandById(news.getNewDemandId());
+        List<NewMainPerson> newMainPeople = newEnterpriseDao.getNewMainPeopleById(news.getNewMainpersonId());
+        List<NewProject> newProjects = newEnterpriseDao.getNewProjectById(news.getNewProjectId());
+        List<NewIntellectual> newIntellectuals = newEnterpriseDao.getNewIntellectualById(news.getNewIntellectualId());
+        List<NewShareholder> newShareholders = newEnterpriseDao.getNewShareholderById(news.getNewShareholderId());
+
+        Map<String, Object> temp = NewParserUtils.NewGetResponse(news);
+
+        temp.put("newDemand",newDemands);
+        temp.put("newMainPerson",newMainPeople);
+        temp.put("newProject",newProjects);
+        temp.put("newIntellectual",newIntellectuals);
+        temp.put("newShareholder",newShareholders);
+
+        return MyResponseUtil.getResultMap(temp,0,"success");
 
     }
 
@@ -239,5 +246,30 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             throw new ServiceException("续约失败");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
+    }
+
+    /**
+     * 获取以往所有入园申请记录
+     * @param token
+     * @return
+     */
+    @Override
+    public Map<String, Object> getNewEnterpriseApplying(String token) {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        String creditCode;
+
+        if (creditCodes.size() != 0) {
+            creditCode = creditCodes.get(0);
+            List<TechnologyApplyingRes> technologyApplyingRes = newEnterpriseDao.selectAuditByCreditCode(creditCode);
+            List<String> name = newEnterpriseDao.selectNewNameByCredit(creditCode);
+            List<String> suggestion = newEnterpriseDao.getSuggestionByCreditCode(creditCode);
+            for (TechnologyApplyingRes i : technologyApplyingRes) {
+                i.setName(name.get(0));
+                i.setSuggestion(suggestion.get(0));
+            }
+            return MyResponseUtil.getResultMap(technologyApplyingRes,0,"success");
+        }
+        return MyResponseUtil.getResultMap(null,0,"success");
     }
 }
