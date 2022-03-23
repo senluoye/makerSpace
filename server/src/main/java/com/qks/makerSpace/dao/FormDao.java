@@ -14,12 +14,22 @@ import java.util.List;
 
 @Repository
 public interface FormDao {
+    @Select("select * from user where user_id = #{userId}")
+    User getUserByUserId(String userId);
+
     //从数据空中那数据，没有考虑图片，所以可以直接全拿，在工具类中会忽略没有用的字段值
     @Select("select * from form where credit_code = #{creditCode} order by get_time desc limit 1")
     Form getAllInformation(String creditCode);
 
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> getCompanyByUserId(String userId);
+
+    @Select("select * from new " +
+            "where credit_code = #{creditCode} " +
+            "and submit_time = (" +
+            "   select max(submit_time) from new where credit_code = #{creditCode} " +
+            ")")
+    News getLastNewByCreditCode(String creditCode);
 
     @Select("select * from form where get_time = (select max(get_time) from form where credit_code = #{creditCode}) and credit_code = #{creditCode}")
     Form getLastFormByCreditCode(String creditCode);
@@ -79,7 +89,7 @@ public interface FormDao {
     Integer addAwardsFile(FormAwards formAwards);
 
     @Select("select * from space where in_apply_id = #{inApplyId}")
-Space selectSpace(String inApplyId);
+    Space selectSpace(String inApplyId);
 
     @Select("select * from space_person where in_apply_id = #{inApplyId}")
     List<SpacePerson> selectSpacePerson(String inApplyId);
@@ -113,7 +123,8 @@ Space selectSpace(String inApplyId);
             "new.represent_phone, new.represent_email, form.get_time " +
             "from new, form " +
             "where new.credit_code = form.credit_code " +
-            "and new.credit_code = #{creditCode}")
+            "and new.credit_code = #{creditCode} " +
+            "group by get_time order by get_time")
     List<AllForm> getFormByNewCreditCode(String creditCode);
 
     @Select("select credit_code from user_company where user_id = #{userId}")
