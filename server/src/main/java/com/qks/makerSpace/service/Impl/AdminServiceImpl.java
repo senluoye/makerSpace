@@ -171,11 +171,12 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getOldTechnologyById(String creditCode) throws ServiceException {
-        Old old = adminDao.getOld(creditCode);
-        if (old == null)
+        List<Old> olds = adminDao.getOld(creditCode);
+        if (olds.size() == 0)
             throw new ServiceException("数据不存在");
 
         Map<String, Object> data = new HashMap<>();
+        Old old = olds.get(0);
 
         data.put("old", old);
         data.put("oldDemand", adminDao.getOldDemandById(old.getOldDemandId()));
