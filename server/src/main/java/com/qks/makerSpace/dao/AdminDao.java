@@ -182,7 +182,9 @@ public interface AdminDao {
     @Update("update audit set administrator_audit = #{disagree} where credit_code = #{inApplyId}")
     Integer disagreeById(String inApplyId, String disagree);
 
-    @Select("select * from audit where credit_code = #{id}")
+    @Select("select * from audit where credit_code = #{id} and submit_time = (" +
+            "   select max(submit_time) from audit where credit_code = #{id}" +
+            ")")
     Audit getAuditByCreditCode(String id);
 
     @Select("select credit_code from new where credit_code = #{creditCode}")
