@@ -7,6 +7,7 @@ import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AllForm;
+import com.qks.makerSpace.entity.response.TecBasicRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
 import com.qks.makerSpace.util.*;
@@ -184,18 +185,32 @@ public class FormServiceImpl implements FormService {
         String creditCode = userCompanies.get(0).getCreditCode();
         Form form = formDao.getLastFormByCreditCode(creditCode);
 
-        if (form == null) {
-            // 如果之前没有提交过申请
-            Old old = formDao.getLastOldByCreditCode(creditCode);
-            data = FormParserUtils.FormMapParser(old);
-
-            return MyResponseUtil.getResultMap(data, 0, "success");
-        }
-
         HighEnterpriseData highEnterpriseData = formDao.getHighEnterpriseById(form.getHighEnterpriseId());
         data = FormParserUtils.FormMapParser(highEnterpriseData, form);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 获取季度报表中的固定部分
+     * @return
+     */
+    @Override
+    public Map<String, Object> getTechnologyBasic(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        User user = formDao.getUserByUserId(userId);
+
+        // 判断用户类型
+        if (user.getUserDescribe() == 2) { // new
+
+        } else { // old
+
+        }
+
+        TecBasicRes tecBasicRes = new TecBasicRes();
+
+
+        return MyResponseUtil.getResultMap(tecBasicRes, 0, "success");
     }
 
 
@@ -216,7 +231,7 @@ public class FormServiceImpl implements FormService {
     }
 
     /**
-     * @description 获取某一个企业的所有季度报表(用户)
+     * @description 获取某个企业的所有季度报表部分信息（用户）
      * @return Hashmap
      */
     @Override
@@ -224,16 +239,17 @@ public class FormServiceImpl implements FormService {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = formDao.getCreditCodeByUserId(userId);
         if (creditCodes.size() == 0) throw new ServiceException("您还未填写季度报表");
-        String creditCode = creditCodes.get(0);
 
+        String creditCode = creditCodes.get(0);
         List<Old> olds = formDao.getOldByCreditCode(creditCode);
+        System.out.println(olds);
         List<AllForm> data;
 
         if (olds.size() == 0)
             data = formDao.getFormByNewCreditCode(creditCode);
         else
             data = formDao.getFormByOldCreditCode(creditCode);
-
+        System.out.println(data);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 

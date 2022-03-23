@@ -21,6 +21,7 @@ public interface FormService {
             MultipartFile[] contractFile,
             MultipartFile[] awardsFile) throws ServiceException, IOException;
     Map<String, Object> getTechnologyForm(String token) throws ServiceException, IOException;
+    Map<String, Object> getTechnologyBasic(String token) throws ServiceException;
 
     Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException;
     void downLoadWord(HttpServletResponse response, Map<String, Object> map) throws Exception;

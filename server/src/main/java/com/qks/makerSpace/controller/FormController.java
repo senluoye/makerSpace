@@ -62,8 +62,17 @@ public class FormController {
     @RequestMapping(value = "technology", method = RequestMethod.GET)
     private Map<String, Object> getTechnologyForm(HttpServletRequest httpServletRequest)
             throws ServiceException, IOException {
-
         return formService.getTechnologyForm(httpServletRequest.getHeader("token"));
+    }
+
+    /**
+     * 获取季度报表中的固定部分
+     * @return
+     */
+    @RequestMapping(value = "technology/basic", method = RequestMethod.GET)
+    private Map<String, Object> getTechnologyBasic(HttpServletRequest httpServletRequest)
+            throws ServiceException, IOException {
+        return formService.getTechnologyBasic(httpServletRequest.getHeader("token"));
     }
 
     /**
@@ -76,7 +85,7 @@ public class FormController {
     }
 
     /**
-     * @description 获取某一个企业的最新季度报表(用户)
+     * @description 获取某个企业的所有季度报表部分信息（用户）
      * @return Hashmap
      */
     @RequestMapping(value = "user/technology", method = RequestMethod.GET)
