@@ -96,10 +96,12 @@ public class AdminController {
     private Map<String, Object> getAllApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
-            return adminService.getAllApplying();
+        if (name.equals("admin")){}
+//            return adminService.getAllApplying();
         else
             throw new ServiceException("请求主体非管理员");
+
+        return null;
     }
 
     /**
@@ -108,7 +110,7 @@ public class AdminController {
      */
     @RequestMapping(value = "oldTechnology/", method = RequestMethod.POST)
     private Map<String, Object> getOldTechnologyById(@PathVariable JSONObject map) throws ServiceException {
-        return adminService.getOldTechnologyById(map);
+        return adminService.getOldTechnologyById(String.valueOf(map));
     }
 
     /**

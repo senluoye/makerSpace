@@ -57,8 +57,9 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "old/oldEnterprise/{id}", method = RequestMethod.GET)
-    private Map<String, Object> getOldEnterprise(HttpServletRequest httpServletRequest) {
-        return oldEnterpriseService.getOldEnterprise(httpServletRequest.getHeader("token"));
+    private Map<String, Object> getOldEnterpriseById(HttpServletRequest httpServletRequest,
+                                                     @PathVariable("id") String id) {
+        return oldEnterpriseService.getOldEnterpriseById(httpServletRequest.getHeader("token"), id);
     }
 
     /**

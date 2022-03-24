@@ -52,14 +52,14 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         System.out.println(certificate);
         System.out.println(intellectualFile.length);
         System.out.println(representFile);
-        System.out.println("------------------2--2--------------------");
+
         /**
          * 首先验证用户是否存在
          */
         String userId = JWTUtils.parser(token).get("userId").toString();
         User user = oldEnterpriseDao.getUserByUserId(userId);
         if (user == null) return MyResponseUtil.getResultMap(null, -1, "用户不存在");
-        System.out.println("------------------2--3--------------------");
+
         /**
          * 提取数据
          */
@@ -75,7 +75,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         List<String> userIds = oldEnterpriseDao.selectUserIdByCreditCode(creditCode);
         if (userIds.size() != 0 && !userIds.get(0).equals(userId))
             throw new ServiceException("该社会信用代码已被其他用户填报");
-        System.out.println("------------------2--4--------------------");
+
         /**
          * 绑定用户和公司
          */
@@ -94,7 +94,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             // 为空则插入
             oldEnterpriseDao.insertUserCompany(userId, creditCode);
         }
-        System.out.println("------------------2--5--------------------");
+
         try {
             old.setLicense(license.getBytes());
         } catch (Exception e) {
@@ -110,25 +110,25 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             }
         }
         old.setState("未审核");
-        System.out.println("------------------2--6--------------------");
+
         // 租赁
         OldDemand oldDemand = OldParserUtils.OldDemandParser(map.getString("oldDemand"));
-        System.out.println("------------------2--6-1-------------------");
+
         // 股东
         List<OldShareholder> oldShareholders = OldParserUtils.OldShareholderParser(map.getJSONArray("oldShareholder"));
-        System.out.println("------------------2--6-1-------------------");
+
         // 主要人员
         List<OldMainPerson> oldMainPeoples =  OldParserUtils.OldMainPersonParser(map.getJSONArray("oldMainPerson"));
-        System.out.println("------------------2--6-1-------------------");
+
         // 入园项目
         List<OldProject> oldProjects = OldParserUtils.OldProjectsParser(map.getJSONArray("oldProject"));
-        System.out.println("------------------2--6-1-------------------");
+
         // 知识产权(非必要)
         List<OldIntellectual> oldIntellectuals = OldParserUtils.OldIntellectualParser(map.getJSONArray("oldIntellectual"));
-        System.out.println("------------------2--6-1-------------------");
+
         // 承担财政项目
         List<OldFunding> oldFundings = OldParserUtils.OldFundingParser(map.getJSONArray("oldFunding"));
-        System.out.println("------------------2--7--------------------");
+
         // 将子表id填入old表中
         old.setOldShareholderId(oldShareholders.get(0).getOldShareholderId());
         old.setOldMainpersonId(oldMainPeoples.get(0).getOldMainpersonId());
@@ -148,7 +148,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 oldIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
             }
         }
-        System.out.println("------------------2--8--------------------");
+
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         // 存放表单提交时间
         old.setSubmitTime(time);
@@ -158,7 +158,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
          */
         if (oldEnterpriseDao.insertOld(old) <= 0)
             throw new ServiceException("信息插入失败:old");
-        System.out.println("------------------2--9--------------------");
+
         /**
          * 其次向从表中插入数据
          */
@@ -184,7 +184,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             if (oldEnterpriseDao.insertOldShareholder(oldShareholder) <= 0)
                 throw new ServiceException("信息插入失败:股东");
         }
-        System.out.println("------------------2--10--------------------");
+
         /**
          * 向入园申请审核表中插入数据
          */
@@ -195,7 +195,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         audit.setLeadershipAudit("未审核");
         audit.setDescribe("科技园");
         audit.setSubmitTime(time);
-        System.out.println("------------------2--11--------------------");
+
         if (oldEnterpriseDao.insertAudit(audit) <= 0)
             throw new ServiceException("信息插入失败:audit");
 
@@ -236,6 +236,34 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
+     * 获取某一次入园申请
+     * @param
+     * @return
+     */
+    @Override
+    public Map<String, Object> getOldEnterpriseById(String token, String oldId) {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+
+        Old old = oldEnterpriseDao.getOldByOldId(oldId);
+        List<OldDemand> oldDemand = oldEnterpriseDao.getOldDemandById(old.getOldDemandId());
+        List<OldFunding> oldFunding = oldEnterpriseDao.getOldFundingById(old.getOldDemandId());
+        List<OldIntellectual> oldIntellectual = oldEnterpriseDao.getOldIntellectualById(old.getOldIntellectualId());
+        List<OldMainPerson> oldMainPerson = oldEnterpriseDao.getOldMainPeopleById(old.getOldMainpersonId());
+        List<OldProject> oldProject = oldEnterpriseDao.getOldProjectById(old.getOldProjectId());
+
+        Map<String, Object> temp = OldParserUtils.OldGetResponse(old);
+
+        temp.put("oldDemand", oldDemand);
+        temp.put("oldMainPerson", oldFunding);
+        temp.put("oldProject", oldIntellectual);
+        temp.put("oldFunding", oldMainPerson);
+        temp.put("oldShareholder", oldMainPerson);
+        temp.put("oldIntellectual", oldProject);
+
+        return MyResponseUtil.getResultMap(temp, 0, "success");
+    }
+
+    /**
      * 获取以往所有入园申请记录
      * @param
      * @return
@@ -252,15 +280,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         if (creditCodes.size() != 0) {
             creditCode = creditCodes.get(0);
             List<TechnologyApplyingRes> technologyApplyIngResList = oldEnterpriseDao.selectAuditByCreditCode(creditCode);
-            List<String> name = oldEnterpriseDao.selectOldNameByCreditCode(creditCode);
-            List<String> suggestion = oldEnterpriseDao.getSuggestionByCreditCode(creditCode);
-            for (TechnologyApplyingRes i : technologyApplyIngResList) {
-                i.setName(name.get(0));
-                i.setSuggestion(suggestion.get(0));
-            }
             return MyResponseUtil.getResultMap(technologyApplyIngResList, 0, "success");
         }
-
         return MyResponseUtil.getResultMap(new ArrayList<>(), 0, "success");
     }
 
