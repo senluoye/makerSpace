@@ -24,6 +24,17 @@ public interface OldEnterpriseDao {
     @Select("select user_id from user_company where credit_code = #{creditCode}")
     List<String> selectUserIdByCreditCode(String creditCode);
 
+    @Select("select * from old where old_id = #{oldId}")
+    Old getOldByOldId(String oldId);
+
+    @Select("select credit_code from user_company where user_id = #{userId}")
+    List<String> getUserCompanyByUserId(String userId);
+
+    @Insert("insert into contract " +
+            "set contract_id = #{contractId}, credit_code = #{creditCode}, " +
+            "voucher = #{voucher}, submit_time = #{submitTime}")
+    Integer addContract(Contract contract);
+
     /**
      * 向old表中插入一条记录
      * @param old
@@ -126,12 +137,6 @@ public interface OldEnterpriseDao {
     @Select("select old_id from old where credit_code = #{creditCode}")
     List<String> selectOldIdByCreditCode(String creditCode);
 
-    @Select("select name from old where credit_code = #{creditCode}")
-    List<String> selectOldNameByCreditCode(String creditCode);
-
-    @Select("select suggestion from old where credit_code = #{creditCode}")
-    List<String> getSuggestionByCreditCode(String creditCode);
-
     @Select("select audit_id from audit where credit_code = #{creditCode}")
     List<String> selectAuditIdByCreditCode(String creditCode);
 
@@ -158,8 +163,11 @@ public interface OldEnterpriseDao {
     @Select("select credit_code from user_company where user_id = #{userId}")
     List<String> selectCreditCodeByUserId(String userId);
 
-    @Select("select administrator_audit, leadership_audit, submit_time " +
-            "from audit where credit_code = #{creditCode} " +
+    @Select("select old.old_id id, old.name, old.suggestion, audit.administrator_audit, audit.leadership_audit, audit.submit_time " +
+            "from old, audit " +
+            "where old.credit_code = #{creditCode} " +
+            "and audit.credit_code = old.credit_code " +
+            "and audit.submit_time = old.submit_time " +
             "order by submit_time desc")
     List<TechnologyApplyingRes> selectAuditByCreditCode(String creditCode);
 

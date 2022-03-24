@@ -7,6 +7,7 @@ import lombok.Data;
  */
 @Data
 public class TechnologyApplyingRes {
+    private String id;
     private String name;
     private String submitTime;
     private String administratorAudit;

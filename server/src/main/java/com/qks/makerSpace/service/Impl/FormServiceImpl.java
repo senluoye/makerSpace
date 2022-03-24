@@ -193,6 +193,19 @@ public class FormServiceImpl implements FormService {
     }
 
     /**
+     * 获取某一次科技园季度报表
+     * @return
+     */
+    @Override
+    public Map<String, Object> getTechnologyFormById(String token, String formId) {
+        Form form = formDao.getFormByFormId(formId);
+        form.setHeaderFile(null);
+        form.setMediumFile(null);
+
+        return MyResponseUtil.getResultMap(form, 0, "success");
+    }
+
+    /**
      * 获取季度报表中的固定部分
      * @return
      */
@@ -253,15 +266,14 @@ public class FormServiceImpl implements FormService {
         if (creditCodes.size() == 0) throw new ServiceException("您还未填写季度报表");
 
         String creditCode = creditCodes.get(0);
-        List<Old> olds = formDao.getOldByCreditCode(creditCode);
-        System.out.println(olds);
+        List<String> olds = formDao.getOldByCreditCode(creditCode);
         List<AllForm> data;
 
         if (olds.size() == 0)
             data = formDao.getFormByNewCreditCode(creditCode);
         else
             data = formDao.getFormByOldCreditCode(creditCode);
-        System.out.println(data);
+
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 

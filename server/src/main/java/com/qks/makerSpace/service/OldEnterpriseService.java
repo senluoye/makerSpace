@@ -12,6 +12,7 @@ import java.util.Map;
 public interface OldEnterpriseService {
 
     Map<String, Object> getOldEnterprise(String token);
+    Map<String, Object> getOldEnterpriseById(String token, String oldId);
     Map<String, Object> getOldEnterpriseApplying(String token);
     Map<String, Object> updateOldEnterprise(String token,
                                             String map,
@@ -20,5 +21,6 @@ public interface OldEnterpriseService {
                                             MultipartFile[] intellectualFile,
                                             MultipartFile representFile) throws Exception;
     Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
-    Map<String, Object> oldEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException;
+    Map<String, Object> oldEnterpriseContract(String token, MultipartFile voucher) throws ServiceException, IOException;
+    Map<String, Object> getOldEnterpriseContract(String token);
 }

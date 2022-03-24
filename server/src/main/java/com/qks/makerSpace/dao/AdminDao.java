@@ -106,7 +106,7 @@ public interface AdminDao {
     List<SpacePerson> getSpacePeopleById(String inApplyId);
 
     @Select("select * from old where credit_code = #{creditCode}")
-    Old getOld(String creditCode);
+    List<Old> getOld(String creditCode);
 
     @Select("select old_id from old where credit_code = #{creditCode}")
     String getOldId(String creditCode);

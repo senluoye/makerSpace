@@ -52,6 +52,17 @@ public class OldEnterpriseController {
     }
 
     /**
+     * 获取某一次入园申请
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "old/oldEnterprise/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getOldEnterpriseById(HttpServletRequest httpServletRequest,
+                                                     @PathVariable("id") String id) {
+        return oldEnterpriseService.getOldEnterpriseById(httpServletRequest.getHeader("token"), id);
+    }
+
+    /**
      * 获取以往所有入园申请记录
      * @param
      * @return
@@ -66,15 +77,24 @@ public class OldEnterpriseController {
      * @param map
      * @return
      */
-    @RequestMapping(value = "old/demand", method = RequestMethod.PUT)
-    private Map<String, Object> oldEnterprisePay(@RequestPart("map") String json,
+    @RequestMapping(value = "old/demand", method = RequestMethod.POST)
+    private Map<String, Object> oldEnterprisePay(HttpServletRequest httpServletRequest,
                                                  @RequestPart("paymentVoucher") MultipartFile voucher) throws ServiceException, IOException {
         if (voucher == null)
             throw new ServiceException("缺少缴费凭证");
 
-        return oldEnterpriseService.oldEnterpriseContract(json, voucher);
+        return oldEnterpriseService.oldEnterpriseContract(httpServletRequest.getHeader("token"), voucher);
     }
 
+    /**
+     * 获取以往缴费信息
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "old/demand", method = RequestMethod.GET)
+    private Map<String, Object> getOldEnterprisePay(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
+        return oldEnterpriseService.getOldEnterpriseContract(httpServletRequest.getHeader("token"));
+    }
 
     /**
      * 获取某个企业的所有季度报表

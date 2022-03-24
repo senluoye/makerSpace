@@ -46,7 +46,7 @@ public class AdminController {
     /**
      * 获取全部已审核科技园企业的部分信息
      */
-    @RequestMapping(value = "/technology/all", method = RequestMethod.GET)
+    @RequestMapping(value = "technology/all", method = RequestMethod.GET)
     private Map<String, Object> getTechnologyAllDetails() throws ServiceException {
         return adminService.getAllDetails();
     }
@@ -55,7 +55,7 @@ public class AdminController {
      * 获取全部已入园审核科技园企业部分信息
      * @return
      */
-    @RequestMapping(value = "/space/all", method = RequestMethod.GET)
+    @RequestMapping(value = "space/all", method = RequestMethod.GET)
     private Map<String, Object> getSpaceAllDetails() {
         return adminService.getAllSpaceDetails();
     }
@@ -64,7 +64,7 @@ public class AdminController {
      * 获取最新所有未审核科技园入园申请
      * @return
      */
-    @RequestMapping(value = "/applying/technology", method = RequestMethod.GET)
+    @RequestMapping(value = "applying/technology", method = RequestMethod.GET)
     private Map<String, Object> getAllTechnologyApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         String name = JWTUtils.parser(token).get("name").toString();
@@ -78,7 +78,7 @@ public class AdminController {
      * 获取最新所有未审核众创空间入园申请
      * @return
      */
-    @RequestMapping(value = "/applying/space", method = RequestMethod.GET)
+    @RequestMapping(value = "applying/space", method = RequestMethod.GET)
     private Map<String, Object> getAllSpaceApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         String name = JWTUtils.parser(token).get("name").toString();
@@ -89,12 +89,28 @@ public class AdminController {
     }
 
     /**
+     * 获取所有科技园入园申请信息缩略版（包含审核与未审核）
+     * @return
+     */
+    @RequestMapping(value = "applying/all", method = RequestMethod.GET)
+    private Map<String, Object> getAllApplying(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("admin")){}
+//            return adminService.getAllApplying();
+        else
+            throw new ServiceException("请求主体非管理员");
+
+        return null;
+    }
+
+    /**
      * 获取某一个旧企业入园申请
      * @return HashMap
      */
-    @RequestMapping(value = "oldTechnology/{creditCode}", method = RequestMethod.GET)
-    private Map<String, Object> getOldTechnologyById(@PathVariable String creditCode) throws ServiceException {
-        return adminService.getOldTechnologyById(creditCode);
+    @RequestMapping(value = "oldTechnology/", method = RequestMethod.POST)
+    private Map<String, Object> getOldTechnologyById(@PathVariable JSONObject map) throws ServiceException {
+        return adminService.getOldTechnologyById(String.valueOf(map));
     }
 
     /**
