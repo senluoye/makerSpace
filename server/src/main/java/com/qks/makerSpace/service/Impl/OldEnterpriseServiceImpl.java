@@ -209,7 +209,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return Hashmap
      */
     @Override
-    public Map<String, Object> getOldEnterprise(String token) {
+    public Map<String, Object> getOldEnterprise(String token)   {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
         String creditCode = creditCodes.get(0);
@@ -245,20 +245,25 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         String userId = JWTUtils.parser(token).get("userId").toString();
 
         Old old = oldEnterpriseDao.getOldByOldId(oldId);
+
+        old.setLicense(null);
+        old.setCertificate(null);
+        System.out.println(old);
         List<OldDemand> oldDemand = oldEnterpriseDao.getOldDemandById(old.getOldDemandId());
-        List<OldFunding> oldFunding = oldEnterpriseDao.getOldFundingById(old.getOldDemandId());
+        List<OldFunding> oldFunding = oldEnterpriseDao.getOldFundingById(old.getOldFundingId());
         List<OldIntellectual> oldIntellectual = oldEnterpriseDao.getOldIntellectualById(old.getOldIntellectualId());
         List<OldMainPerson> oldMainPerson = oldEnterpriseDao.getOldMainPeopleById(old.getOldMainpersonId());
         List<OldProject> oldProject = oldEnterpriseDao.getOldProjectById(old.getOldProjectId());
+        List<OldShareholder> oldShareholder = oldEnterpriseDao.getOldShareholderById(old.getOldShareholderId());
 
         Map<String, Object> temp = OldParserUtils.OldGetResponse(old);
 
         temp.put("oldDemand", oldDemand);
-        temp.put("oldMainPerson", oldFunding);
-        temp.put("oldProject", oldIntellectual);
-        temp.put("oldFunding", oldMainPerson);
-        temp.put("oldShareholder", oldMainPerson);
-        temp.put("oldIntellectual", oldProject);
+        temp.put("oldMainPerson", oldMainPerson);
+        temp.put("oldProject", oldProject);
+        temp.put("oldFunding", oldFunding);
+        temp.put("oldShareholder", oldShareholder);
+        temp.put("oldIntellectual", oldIntellectual);
 
         return MyResponseUtil.getResultMap(temp, 0, "success");
     }
