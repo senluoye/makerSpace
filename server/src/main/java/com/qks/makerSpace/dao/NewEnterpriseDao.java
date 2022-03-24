@@ -109,4 +109,27 @@ public interface NewEnterpriseDao {
 
     @Select("select suggestion from new where credit_code = #{creditCode}")
     List<String> getSuggestionByCreditCode(String creditCode);
+
+    @Select("select * from new " +
+            "where submit_time = (" +
+            "   select max(submit_time) " +
+            "   from new " +
+            "   where credit_code = #{creditCode}" +
+            ")")
+    News getNew(String creditCode);
+
+    @Select("select * from new_demand where new_demand_id = #{id}")
+    List<NewDemand> getNewDemandById(String id);
+
+    @Select("select * from new_mainperson where new_mainperson_id = #{id}")
+    List<NewMainPerson> getNewMainPeopleById(String id);
+
+    @Select("select * from new_project where new_project_id = #{id}")
+    List<NewProject> getNewProjectById(String id);
+
+    @Select("select * from new_intellectual where new_intellectual_id = #{id}")
+    List<NewIntellectual> getNewIntellectualById(String id);
+
+    @Select("select * from new_shareholder where new_shareholder_id = #{id}")
+    List<NewShareholder> getNewShareholderById(String id);
 }
