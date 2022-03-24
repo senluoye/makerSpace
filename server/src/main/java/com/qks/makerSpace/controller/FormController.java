@@ -35,15 +35,6 @@ public class FormController {
                                 @RequestPart("contractFile") MultipartFile[] contractFile,
                                 @RequestPart("awardsFile") MultipartFile[] awardsFile
                                 ) throws ServiceException, IOException {
-        System.out.println("-------------------1--1-------------------");
-        System.out.println(map);
-        System.out.println(highEnterpriseFile);
-        System.out.println(mediumFile);
-        System.out.println(highEnterpriseFile);
-        System.out.println(headerFile);
-        System.out.println(contractFile.length);
-        System.out.println(awardsFile.length);
-        System.out.println("----------------------------------------");
         return formService.setTechnologyForm(
                 httpServletRequest.getHeader("token"),
                 JSONObject.parseObject(map),
@@ -66,6 +57,17 @@ public class FormController {
     }
 
     /**
+     * 获取某一次科技园季度报表
+     * @return
+     */
+    @RequestMapping(value = "technology/{formId}", method = RequestMethod.GET)
+    private Map<String, Object> getTechnologyFormById(HttpServletRequest httpServletRequest,
+                                                  @PathVariable("formId") String formId)
+            throws ServiceException, IOException {
+        return formService.getTechnologyFormById(httpServletRequest.getHeader("token"), formId);
+    }
+
+    /**
      * 获取季度报表中的固定部分
      * @return
      */
@@ -76,7 +78,7 @@ public class FormController {
     }
 
     /**
-     * @description 获取所有企业的最新季度报表(管理员)
+     * @description 获取所有企业最新的季度报表(管理员)
      * @return Hashmap
      */
     @RequestMapping(value = "admin/technology", method = RequestMethod.GET)

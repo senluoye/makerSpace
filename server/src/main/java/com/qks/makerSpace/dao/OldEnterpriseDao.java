@@ -27,6 +27,14 @@ public interface OldEnterpriseDao {
     @Select("select * from old where old_id = #{oldId}")
     Old getOldByOldId(String oldId);
 
+    @Select("select credit_code from user_company where user_id = #{userId}")
+    List<String> getUserCompanyByUserId(String userId);
+
+    @Insert("insert into contract " +
+            "set contract_id = #{contractId}, credit_code = #{creditCode}, " +
+            "voucher = #{voucher}, submit_time = #{submitTime}")
+    Integer addContract(Contract contract);
+
     /**
      * 向old表中插入一条记录
      * @param old

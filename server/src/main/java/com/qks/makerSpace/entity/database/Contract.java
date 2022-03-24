@@ -7,5 +7,5 @@ public class Contract {
     private String contractId;
     private String creditCode;
     private byte[] voucher;
-    private String time;
+    private String submitTime;
 }

@@ -77,13 +77,13 @@ public class OldEnterpriseController {
      * @param map
      * @return
      */
-    @RequestMapping(value = "old/demand", method = RequestMethod.PUT)
-    private Map<String, Object> oldEnterprisePay(@RequestPart("map") String json,
+    @RequestMapping(value = "old/demand", method = RequestMethod.POST)
+    private Map<String, Object> oldEnterprisePay(HttpServletRequest httpServletRequest,
                                                  @RequestPart("paymentVoucher") MultipartFile voucher) throws ServiceException, IOException {
         if (voucher == null)
             throw new ServiceException("缺少缴费凭证");
 
-        return oldEnterpriseService.oldEnterpriseContract(json, voucher);
+        return oldEnterpriseService.oldEnterpriseContract(httpServletRequest.getHeader("token"), voucher);
     }
 
 

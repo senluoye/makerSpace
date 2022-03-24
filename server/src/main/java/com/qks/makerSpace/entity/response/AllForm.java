@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class AllForm {
+    private String formId;
     private String creditCode;
     private String name;
     private String represent;

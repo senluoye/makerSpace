@@ -1047,7 +1047,7 @@ map部分：
 
 ## 续约管理
 
-**简要描述：**旧企业科技园场地续约
+**简要描述：**旧企业科技园场地续约，这部分就上传一个表单，里面放个文件就可以了
 
 **请求URL：**
 
@@ -1055,25 +1055,9 @@ map部分：
 
 **请求方式：**
 
-- PUT（带token）
+- POST（带token）
 
 **参数：**
-
-map部分：
-
-```json
-{
-    "creditCode":"<String>",						//统一社会信用代码	
-	"leaseArea":"<String>",							//租赁面积(平方米)
-    "position":"<String>",							//位置需求
-    "lease":"<String>",								//租期(年)
-   	"floor":"<String>",								//楼层需求
-    "electric":"<String>",							//电力需求
-    "water":"<String>",								//给排水需求
-    "web":"<String>",								//网络需求
-    "others":"<String>"								//其他需求
-}
-```
 
 文件部分：
 
@@ -2170,7 +2154,86 @@ map部分：
 ~~~json
 {
     "data":{
-        
+        "time": "111111",
+        "teamName": "111111",
+        "creditCode": "111",
+        "registerTime": "",
+        "joinTime": "2022-02-09",
+        "registerCapital": "0987",
+        "registerKind": "国有及国有控股企业",
+        "industryKind": "0987",
+        "field": "0987",
+        "graduatedEnterprise": "否",
+        "graduatedTime": "",
+        "highEnterprise": "否",
+        "highEnterpriseId": null,
+        "mediumSized": "是",
+        "mediumFile": null,
+        "mentorRelationship": "否",
+        "headerKind": "0987",
+        "headerFile": null,
+        "serialEntrepreneur": "是",
+        "headerGender": "女",
+        "taxKind": "一般纳税人",
+        "header": "0987",
+        "statisticHeader": "0987",
+        "submitHeader": "0987",
+        "submitPhone": "0987",
+        "submitTime": "",
+        "riskInvestment": "0987",
+        "area": "0987",
+        "institutions": "0987",
+        "totalTransformation": "0987",
+        "relying": "0987",
+        "winning": "0987",
+        "result": "0987",
+        "incubateIncome": "0987",
+        "incubateProduct": "0987",
+        "incubateProfit": "0987",
+        "incubateTax": "0987",
+        "incubateOut": "0987",
+        "employee": "1",
+        "doctor": "0",
+        "master": "0",
+        "graduate": "0",
+        "bachelor": "0",
+        "college": "0",
+        "tecSecondary": "0",
+        "tecActivists": "0",
+        "radNumber": "0",
+        "returnees": "0",
+        "talents": "0",
+        "trainee": "0",
+        "employment": "1",
+        "employmentId": "a5d65311-4736-4272-a620-a2e729e3f1d0",
+        "applications": "0987",
+        "applicationsPatent": "0987",
+        "granted": "0987",
+        "grantedPatent": "0987",
+        "valid": "0987",
+        "validPatent": "0987",
+        "softCopyright": "0987",
+        "plantVariety": "0987",
+        "icLayout": "0987",
+        "foreignPatents": "0987",
+        "contractTransaction": "0987",
+        "contractUrnover": "0987",
+        "projectNum": "0987",
+        "totalAwards": "1",
+        "awardsId": "b0b0cf11-aae2-4036-a96c-a014f49efe37",
+        "provinceAwards": "0987",
+        "underProjects": "0987",
+        "nationalProject": "0987",
+        "schoolProject": "0987",
+        "declarationName": "0987",
+        "declarationNum": "0987",
+        "expenditure": "0987",
+        "radExpenditure": "0987",
+        "productExpenditure": "0987",
+        "governmentGrant": "0987",
+        "selfRaised": "0987",
+        "formId": "905f7493-147a-455b-837c-cc42b9a94339",
+        "getTime": "2022-03-24 17:49:15"
     },
    	"code":0,
     "msg":"success"
@@ -2213,11 +2276,11 @@ map部分：
 
 
 
-## 获取所有科技园企业的所有季度报表信息（管理员）
+## 获取所有科技园企业的最新的季度报表部分信息（管理员）
 
 **简要描述：**
 
-获取所有科技园企业的所有季度报表部分信息（管理员）
+获取所有科技园企业最新的季度报表部分信息（管理员）
 
 **请求URL：**
 
@@ -2231,29 +2294,27 @@ map部分：
 
 ~~~json
 {
-    "data":{[
+    "data":[{
         "formId":"<String>",				// 唯一凭证
 		"creditCode":"<String>",
         "name":"<String>",
         "represent":"<String>",
         "representPhone":"<String>",
         "representEmail":"<String>",
-        "getTime":"<String>"
-    ],
-            ...
+        "getTime":"<String>"				// 提交时间
     },
+            ...
+    ],
     "code":0,
     "msg":"success"
 }
 ~~~
 
-## 获取某一个科技园企业的所有季度报表（管理员）
+## 获取某一个科技园企业的某一个季度报表（管理员）
 
 **简要描述：**
 
-获取所有科技园企业的最新季度报表（管理员）
-
-- 没写，有需求再补上
+获取所有科技园企业的某一个季度报表（管理员）
 
 **请求URL：**
 
@@ -2268,7 +2329,86 @@ map部分：
 ~~~json
 {
     "data":{
-        
+        "time": "111111",
+        "teamName": "111111",
+        "creditCode": "111",
+        "registerTime": "",
+        "joinTime": "2022-02-09",
+        "registerCapital": "0987",
+        "registerKind": "国有及国有控股企业",
+        "industryKind": "0987",
+        "field": "0987",
+        "graduatedEnterprise": "否",
+        "graduatedTime": "",
+        "highEnterprise": "否",
+        "highEnterpriseId": null,
+        "mediumSized": "是",
+        "mediumFile": null,
+        "mentorRelationship": "否",
+        "headerKind": "0987",
+        "headerFile": null,
+        "serialEntrepreneur": "是",
+        "headerGender": "女",
+        "taxKind": "一般纳税人",
+        "header": "0987",
+        "statisticHeader": "0987",
+        "submitHeader": "0987",
+        "submitPhone": "0987",
+        "submitTime": "",
+        "riskInvestment": "0987",
+        "area": "0987",
+        "institutions": "0987",
+        "totalTransformation": "0987",
+        "relying": "0987",
+        "winning": "0987",
+        "result": "0987",
+        "incubateIncome": "0987",
+        "incubateProduct": "0987",
+        "incubateProfit": "0987",
+        "incubateTax": "0987",
+        "incubateOut": "0987",
+        "employee": "1",
+        "doctor": "0",
+        "master": "0",
+        "graduate": "0",
+        "bachelor": "0",
+        "college": "0",
+        "tecSecondary": "0",
+        "tecActivists": "0",
+        "radNumber": "0",
+        "returnees": "0",
+        "talents": "0",
+        "trainee": "0",
+        "employment": "1",
+        "employmentId": "a5d65311-4736-4272-a620-a2e729e3f1d0",
+        "applications": "0987",
+        "applicationsPatent": "0987",
+        "granted": "0987",
+        "grantedPatent": "0987",
+        "valid": "0987",
+        "validPatent": "0987",
+        "softCopyright": "0987",
+        "plantVariety": "0987",
+        "icLayout": "0987",
+        "foreignPatents": "0987",
+        "contractTransaction": "0987",
+        "contractUrnover": "0987",
+        "projectNum": "0987",
+        "totalAwards": "1",
+        "awardsId": "b0b0cf11-aae2-4036-a96c-a014f49efe37",
+        "provinceAwards": "0987",
+        "underProjects": "0987",
+        "nationalProject": "0987",
+        "schoolProject": "0987",
+        "declarationName": "0987",
+        "declarationNum": "0987",
+        "expenditure": "0987",
+        "radExpenditure": "0987",
+        "productExpenditure": "0987",
+        "governmentGrant": "0987",
+        "selfRaised": "0987",
+        "formId": "905f7493-147a-455b-837c-cc42b9a94339",
+        "getTime": "2022-03-24 17:49:15"
     },
     "code":0,
     "msg":"success"

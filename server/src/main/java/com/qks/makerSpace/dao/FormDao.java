@@ -7,7 +7,6 @@ import com.qks.makerSpace.entity.response.AllForm;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -100,7 +99,7 @@ public interface FormDao {
             "   select max(get_time) get_time, credit_code, form_id " +
             "   from form group by credit_code" +
             "   ) temp " +
-            "where old.credit_code = temp.credit_code;")
+            "where old.credit_code = temp.credit_code group by old.credit_code")
     List<AllForm> getOldForm();
 
     @Select("select new.credit_code, new.name, new.represent, " +
@@ -109,29 +108,35 @@ public interface FormDao {
             "   select max(get_time) get_time, credit_code, form_id " +
             "   from form group by credit_code" +
             "   ) temp " +
-            "where new.credit_code = temp.credit_code;")
+            "where new.credit_code = temp.credit_code group by new.credit_code")
     List<AllForm> getNewForm();
 
-    @Select("select old.credit_code, old.name, old.represent, " +
+    @Select("select form.form_id, old.credit_code, old.name, old.represent, " +
             "old.represent_phone, old.represent_email, form.get_time " +
             "from old, form " +
             "where old.credit_code = form.credit_code " +
-            "and old.credit_code = #{creditCode}")
+            "and old.credit_code = #{creditCode} " +
+            "and old.submit_time = form.submit_time " +
+            "order by get_time")
     List<AllForm> getFormByOldCreditCode(String creditCode);
 
-    @Select("select new.credit_code, new.name, new.represent, " +
+    @Select("select form.form_id, new.credit_code, new.name, new.represent, " +
             "new.represent_phone, new.represent_email, form.get_time " +
             "from new, form " +
             "where new.credit_code = form.credit_code " +
             "and new.credit_code = #{creditCode} " +
+            "and new.submit_time = form.submit_time " +
             "group by get_time order by get_time")
     List<AllForm> getFormByNewCreditCode(String creditCode);
 
     @Select("select credit_code from user_company where user_id = #{userId}")
     List<String> getCreditCodeByUserId(String userId);
 
-    @Select("select * from old where credit_code = #{creditCode}")
-    List<Old> getOldByCreditCode(String creditCode);
+    @Select("select credit_code from old where credit_code = #{creditCode}")
+    List<String> getOldByCreditCode(String creditCode);
+
+    @Select("select * from form where form_id = #{formId}")
+    Form getFormByFormId(String formId);
 
     @Select("select * " +
             "from old " +

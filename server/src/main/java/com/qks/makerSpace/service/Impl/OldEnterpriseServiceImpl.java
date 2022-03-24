@@ -46,13 +46,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                                                    MultipartFile certificate,
                                                    MultipartFile[] intellectualFile,
                                                    MultipartFile representFile) throws Exception {
-        System.out.println("----------------1--2----------------------");
-        System.out.println(str);
-        System.out.println(license);
-        System.out.println(certificate);
-        System.out.println(intellectualFile.length);
-        System.out.println(representFile);
-
         /**
          * 首先验证用户是否存在
          */
@@ -295,34 +288,21 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return Hashmap
      */
     @Override
-    public Map<String, Object> oldEnterpriseContract(String json, MultipartFile file) throws ServiceException, IOException {
-        JSONObject jsonObject = JSONObject.parseObject(json);
-        OldDemand oldDemand = JSONObject.parseObject(json, OldDemand.class);
-        String creditCode = jsonObject.getString("creditCode");
+    public Map<String, Object> oldEnterpriseContract(String token, MultipartFile file) throws ServiceException, IOException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) throw new ServiceException("您还没有填写入园申请表");
 
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
-        String submitTime = dateFormat.format(new Date());
+        String creditCode = creditCodes.get(0);
+        String submitTime = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss").format(new Date());
 
-        String oldDemandId = oldEnterpriseDao.demandExit(creditCode);
-        if (oldEnterpriseDao.selectDemandByOldDemandId(oldDemandId).size() == 0)
-            throw new ServiceException("请先递交入驻申请书");
+        Contract contract = new Contract();
+        contract.setContractId(UUID.randomUUID().toString());
+        contract.setCreditCode(creditCode);
+        contract.setVoucher(file.getBytes());
+        contract.setSubmitTime(submitTime);
 
-        String oldDemandFormId = UUID.randomUUID().toString();
-        String id = UUID.randomUUID().toString();
-        oldDemand.setId(oldDemandFormId);
-        oldDemand.setTime(submitTime);
-        oldDemand.setOldDemandId(oldDemandId);
-
-        byte[] bytes;
-        try {
-            bytes = file.getBytes();
-        } catch (Exception e) {
-            throw new ServiceException("读取文件发生错误，请重新上传");
-        }
-
-        if (oldEnterpriseDao.addOldDemand(oldDemand) < 1 &&
-                oldEnterpriseDao.addOldDemandContract(id, creditCode, file.getBytes(), submitTime) < 1)
-            throw new ServiceException("续约失败");
+        if (oldEnterpriseDao.addContract(contract) < 1) throw new ServiceException("上传缴费凭证失败，请重新上传");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
@@ -336,12 +316,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> getFormByCreditCode(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) throw new ServiceException("您并没有填写入驻申请表");
+
         String creditCode = creditCodes.get(0);
-
-
-//        if (creditCode == null)
-//            throw new ServiceException("您并没有填写入驻申请表");
-
         List<FormDetails> data = oldEnterpriseDao.getAllFormDetails(creditCode);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
