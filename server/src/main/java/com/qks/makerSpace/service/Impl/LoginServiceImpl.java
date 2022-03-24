@@ -77,14 +77,20 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String username = map.get("name").toString();
         String password = map.get("password").toString();
         String userId = loginDao.commonLogin(username, password);
+        int alive = loginDao.selectAlive(username, password);
 
         Map<String, Object> data = new HashMap<>();
 
         if (userId != null) {
-            Map<String, Object> user = new HashMap<>();
-            user.put("name",username);
-            user.put("userId", userId);
-            data.put("token", JWTUtils.createToken(user));
+            if (alive == 1) {
+                Map<String, Object> user = new HashMap<>();
+                user.put("name",username);
+                user.put("userId", userId);
+                data.put("token", JWTUtils.createToken(user));
+            } else {
+                throw new ServiceException("该账户以注销");
+            }
+
         } else throw new ServiceException("用户不存在或密码错误");
 
         return MyResponseUtil.getResultMap(data,0,"success");

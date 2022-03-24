@@ -58,11 +58,16 @@ public class NewEnterpriseController {
      * @param
      * @return
      */
-    @RequestMapping(value = "newEnterprise", method = RequestMethod.GET)
-    private Map<String, Object> getNewEnterprise(HttpServletRequest httpServletRequest) {
-        return newEnterpriseService.getNewEnterprise(httpServletRequest.getHeader("token"));
+    @RequestMapping(value = "newEnterprise/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getNewEnterprise(@PathVariable String id) {
+        return newEnterpriseService.getNewEnterprise(id);
     }
 
+    /**
+     * 获取以往入园申请记录
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping(value = "newEnterprise/applying",method = RequestMethod.GET)
     private Map<String, Object> getNewEnterpriseApplying(HttpServletRequest httpServletRequest) {
         return newEnterpriseService.getNewEnterpriseApplying(httpServletRequest.getHeader("token"));

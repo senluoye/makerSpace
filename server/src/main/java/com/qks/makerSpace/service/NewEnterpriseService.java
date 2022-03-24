@@ -19,5 +19,5 @@ public interface NewEnterpriseService {
                                     MultipartFile certificate,
                                     MultipartFile[] intellectualFile) throws Exception;
 
-    Map<String, Object> getNewEnterprise(String token);
+    Map<String, Object> getNewEnterprise(String id);
 }

@@ -958,6 +958,26 @@ map部分：
 
 
 
+**简要描述：**科技园退租申请填报
+
+**请求URL：**
+
+- `/api/old/quit`
+
+**请求参数：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    ""
+}
+~~~
+
+
+
 ------
 
 
@@ -1229,7 +1249,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/new/newEnterprise`
+- `/api/new/newEnterprise/{id}`
 
 **请求方式：**
 
@@ -1379,6 +1399,7 @@ map部分：
 ~~~json
 {
     "data":[{
+        "id":"<String>",						//申请唯一id
 		"name":"<String>",					// 公司名称
         "submitTime":"<String>",			// 表单提交时间
         "administratorAudit":"<String>",	// 管理员审核情况
@@ -1436,6 +1457,8 @@ map部分：
     "msg":"success"
 }
 ```
+
+
 
 
 
@@ -1989,7 +2012,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/form/statistical/{creditCode}`
+- `/api/form/statistical/{id}`
 
 **请求方式：**
 
@@ -2000,7 +2023,7 @@ map部分：
 ```json
 {
     "data":{
-    	"creditCode":"<String>",						//这里传统一社会信用代码或组织机构代码
+    	"id":"<String>",						//formId
 	}
 }
 ```
@@ -2871,8 +2894,7 @@ map部分：
 
 ~~~json
 {
-    "creditCode":"<String>",				
-    "getTime":"<String>"						//提交时间
+    "id":"<String>"
 }
 ~~~
 
@@ -4532,6 +4554,307 @@ map部分：
     "creditCode":"<String>"
 }
 ~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+# 科技园退租
+
+## 数据表
+
+|    字段名     |  类型  |                          说明                           |
+| :-----------: | :----: | :-----------------------------------------------------: |
+|      id       | String |                         唯一id                          |
+|     name      | String |                         企业名                          |
+|     time      | String |                        申请日期                         |
+|     room      | String |                          房号                           |
+|     agent     | String |                         经办人                          |
+|     phone     | String |                        联系方式                         |
+|    reason     | String |                        退租原因                         |
+|   real_time   | String |                      申请退租日期                       |
+|   username    | String |                          户名                           |
+|    account    | String |                          账号                           |
+| opening_bank  | String |                         开户行                          |
+| quit_describe | String | 企业类型(2表示科技园new，3表示科技园old，4表示众创空间) |
+|  admin_audit  | String |                     管理员授权情况                      |
+|  submit_time  | String |                        提交时间                         |
+
+
+
+## 企业退租审核
+
+**简要描述：**包含新企业、旧企业、众创空间
+
+**请求URL：**
+
+- `/api/user/quit`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "name":"<String>",									//企业名
+    "time":"<String>",									  //申请日期
+    "room":"<String>",									//房号
+    "agent":"<String>",									//经办人
+    "phone":"<String>",								   //联系方式
+    "reason":"<String>",							   //退租原因
+    "realTime":"<String>",							  //申请退租日期
+    "username":"<String>",							//退款账户明细 -> 户名
+    "account":"<String>",							  //退款账户明细 -> 账户
+    "openingBank":"<String>"					 //退款账户明细 -> 开发行
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+## 获取某个企业最新的退租审核表
+
+**简要描述：**获取某个企业最新的退租审核表（包含审核情况）
+
+**请求URL：**
+
+- `/api/quit`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "name":"<String>"							//企业名
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":{
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 管理员获取所有未审核退租审核表
+
+**简要描述：**获取某个企业最新的退租审核表（包含审核情况）
+
+**请求URL：**
+
+- `/api/admin/quit`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },
+	...
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 管理员获取获取所有审核表（按时间排序）
+
+**简要描述：**管理员获取获取所有审核表（按时间排序）
+
+**请求URL：**
+
+- `/api/admin/allQuit`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },
+	...
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 管理员同意退租
+
+**简要描述：**管理员获取获取所有审核表（按时间排序）
+
+**请求URL：**
+
+- `/api/admin/agreeQuit`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+~~~json
+{
+    "id":"<String>"
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 管理员不同意退租
+
+**简要描述：**管理员获取获取所有审核表（按时间排序）
+
+**请求URL：**
+
+- `/api/admin/disagreeQuit`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+~~~json
+{
+    "id":
+}
+~~~
+
+
 
 **返回值：**
 

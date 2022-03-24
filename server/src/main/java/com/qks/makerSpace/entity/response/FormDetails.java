@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class FormDetails {
+    private String  formId;
     private String	teamName;
     private String	creditCode;
     private String	registerTime;

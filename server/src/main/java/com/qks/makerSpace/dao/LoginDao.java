@@ -22,4 +22,6 @@ public interface LoginDao {
             "and password = #{password}")
     String commonLogin(String username, String password);
 
+    @Select("select alive from user where name = #{username} and password = #{password}")
+    int selectAlive(String username, String password);
 }

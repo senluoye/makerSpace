@@ -17,8 +17,8 @@ public interface FormDao {
     User getUserByUserId(String userId);
 
     //从数据空中那数据，没有考虑图片，所以可以直接全拿，在工具类中会忽略没有用的字段值
-    @Select("select * from form where credit_code = #{creditCode} order by get_time desc limit 1")
-    Form getAllInformation(String creditCode);
+    @Select("select * from form where form_id = #{formId}")
+    Form getAllInformation(String formId);
 
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> getCompanyByUserId(String userId);
@@ -93,7 +93,7 @@ public interface FormDao {
     @Select("select * from space_person where in_apply_id = #{inApplyId}")
     List<SpacePerson> selectSpacePerson(String inApplyId);
 
-    @Select("select old.credit_code, old.name, old.represent, " +
+    @Select("select old.old_id as id, old.credit_code, old.name, old.represent, " +
             "old.represent_phone, old.represent_email, temp.get_time, temp.form_id " +
             "from old, (" +
             "   select max(get_time) get_time, credit_code, form_id " +
@@ -102,7 +102,7 @@ public interface FormDao {
             "where old.credit_code = temp.credit_code group by old.credit_code")
     List<AllForm> getOldForm();
 
-    @Select("select new.credit_code, new.name, new.represent, " +
+    @Select("select new.new_id as id, new.credit_code, new.name, new.represent, " +
             "new.represent_phone, new.represent_email, temp.get_time, temp.form_id " +
             "from new, (" +
             "   select max(get_time) get_time, credit_code, form_id " +
