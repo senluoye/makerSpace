@@ -52,6 +52,16 @@ public class OldEnterpriseController {
     }
 
     /**
+     * 获取某一次入园申请
+     * @param
+     * @return
+     */
+    @RequestMapping(value = "old/oldEnterprise/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getOldEnterprise(HttpServletRequest httpServletRequest) {
+        return oldEnterpriseService.getOldEnterprise(httpServletRequest.getHeader("token"));
+    }
+
+    /**
      * 获取以往所有入园申请记录
      * @param
      * @return

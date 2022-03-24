@@ -1034,7 +1034,7 @@ map部分：
         "submitTime":"<String>",			// 表单提交时间
         "administratorAudit":"<String>",	// 管理员审核情况
         "leadershipAudit":"<String>",		// 领导审核情况
-        "suggestion":"<String>"				//科技园意见
+        "suggestion":"<String>"				// 科技园意见
     },
     ......       
     ],
