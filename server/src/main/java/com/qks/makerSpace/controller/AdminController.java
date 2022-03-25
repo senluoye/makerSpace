@@ -52,7 +52,7 @@ public class AdminController {
     }
 
     /**
-     * 获取全部已入园审核科技园企业部分信息
+     * 获取全部已入园审核科技园企业部分信息（没用到）
      * @return
      */
     @RequestMapping(value = "space/all", method = RequestMethod.GET)
@@ -89,6 +89,22 @@ public class AdminController {
     }
 
     /**
+     * 获取最新所有已审核科技园入园申请
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "applied/technology", method = RequestMethod.GET)
+    private Map<String, Object> getApplied(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("admin"))
+            return adminService.getAllTechnologyApplied();
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
+
+    /**
      * 获取所有科技园入园申请信息缩略版（包含审核与未审核）
      * @return
      */
@@ -96,30 +112,27 @@ public class AdminController {
     private Map<String, Object> getAllApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin")){}
-//            return adminService.getAllApplying();
-        else
-            throw new ServiceException("请求主体非管理员");
-
-        return null;
+        if (name.equals("admin"))
+            return adminService.getAllApplying();
+        else throw new ServiceException("请求主体非管理员");
     }
 
     /**
      * 获取某一个旧企业入园申请
      * @return HashMap
      */
-    @RequestMapping(value = "oldTechnology/", method = RequestMethod.POST)
-    private Map<String, Object> getOldTechnologyById(@PathVariable JSONObject map) throws ServiceException {
-        return adminService.getOldTechnologyById(String.valueOf(map));
+    @RequestMapping(value = "oldTechnology/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getOldTechnologyById(@PathVariable String id) throws ServiceException {
+        return adminService.getOldTechnologyById(id);
     }
 
     /**
      * 获取某一个新企业入园申请
      * @return HashMap
      */
-    @RequestMapping(value = "newTechnology/{creditCode}", method = RequestMethod.GET)
-    private Map<String, Object> getNewTechnologyById(@PathVariable String creditCode) throws ServiceException {
-        return adminService.getNewTechnologyById(creditCode);
+    @RequestMapping(value = "newTechnology/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getNewTechnologyById(@PathVariable String id) throws ServiceException {
+        return adminService.getNewTechnologyById(id);
     }
 
     /**

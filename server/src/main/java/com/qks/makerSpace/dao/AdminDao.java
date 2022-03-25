@@ -59,10 +59,21 @@ public interface AdminDao {
      *  获取最新所有未审核科技园入园申请
      * @return
      */
-    @Select("select credit_code, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
+    @Select("select credit_code, administrator_audit administratorAudit, leadership_audit leadershipAudit, `describe`, max(submit_time) submitTime " +
             "from (select * from audit where `describe` = '科技园' and administrator_audit = '未审核') temp " +
             "group by credit_code")
     List<AdminTechnologyApplyingReq> getAllTechnologyApplying();
+
+    @Select("select credit_code, administrator_audit administratorAudit, leadership_audit leadershipAudit, `describe`, max(submit_time) submitTime " +
+            "from (select * from audit where `describe` = '科技园') temp " +
+            "group by credit_code")
+    List<AdminTechnologyApplyingReq> getAllApplying();
+
+    @Select("select credit_code, administrator_audit administratorAudit, leadership_audit leadershipAudit, `describe`, max(submit_time) submitTime " +
+            "from (select * from audit where `describe` = '科技园' and administrator_audit = '通过') temp " +
+            "group by credit_code")
+    List<AdminTechnologyApplyingReq> getAllApplied();
+
 
     @Select("select credit_code inApplyId, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
             "from (select * from audit where `describe` = '众创空间' and administrator_audit = '未审核') temp " +
@@ -70,7 +81,7 @@ public interface AdminDao {
     List<AdminSpaceApplyingReq> getAllSpaceApplying();
 
     @Select("select name from old where credit_code = #{creditCode}")
-    List<String> getOldNameByCreditCode(String creditCode);
+    List<String> getOldNameByCreditCode(String id);
 
     @Select("select name from new where credit_code = #{creditCode}")
     List<String> getNewNameByCreditCode(String creditCode);
@@ -105,8 +116,8 @@ public interface AdminDao {
     @Select("select * from space_person where in_apply_id = #{inApplyId}")
     List<SpacePerson> getSpacePeopleById(String inApplyId);
 
-    @Select("select * from old where credit_code = #{creditCode}")
-    List<Old> getOld(String creditCode);
+    @Select("select * from old where old_id = #{id}")
+    Old getOld(String id);
 
     @Select("select old_id from old where credit_code = #{creditCode}")
     String getOldId(String creditCode);
@@ -129,7 +140,7 @@ public interface AdminDao {
     @Select("select * from old_intellectual where old_intellectual_id = #{id}")
     List<OldIntellectual> getOldIntellectualById(String id);
 
-    @Select("select * from new where credit_code = #{id}")
+    @Select("select * from new where new_id = #{id}")
     News getNew(String id);
 
     @Select(" select * from new_demand where new_demand_id = #{newDemandId}")
@@ -204,7 +215,7 @@ public interface AdminDao {
 //----季度报表操作从此处-----
     @Select("select form_id as id, time, team_name, credit_code, get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
-            "group by credit_code) and admin_audit <> '2'")
+            "group by credit_code) and admin_audit <>getAllTechnologyApplying '2'")
     List<BriefFormReq> getDoubleAudit();
 
     @Select("select form_id as id, time, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
@@ -231,4 +242,10 @@ public interface AdminDao {
 
     @Update("update form set admin_audit = '1' where form_id = #{formId}")
     Integer disagreeForm(String formId);
+
+    @Select("select old_id from old where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String selectOldIdByTimeAndCreditCode(String creditCode, String submitTime);
+
+    @Select("select new_id from new where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String selectNewIdByTimeAndCreditCode(String creditCode, String submitTime);
 }

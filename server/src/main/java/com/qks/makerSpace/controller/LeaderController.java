@@ -22,17 +22,70 @@ public class LeaderController {
     }
 
     /**
-     * 获取最新入园申请(科技园部分)
+     * 获取最新所有未审核科技园入园申请
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
      */
-    @RequestMapping(value = "authorization/technology", method = RequestMethod.GET)
-    private Map<String, Object> authorizationTechnology(HttpServletRequest httpServletRequest) throws ServiceException {
+    @RequestMapping(value = "applying/technology", method = RequestMethod.GET)
+    private Map<String, Object> getAllTechnologyApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         String name = JWTUtils.parser(token).get("name").toString();
         if (name.equals("leader"))
-            return leaderService.authorizationTechnology();
+            return leaderService.getAllTechnologyApplying();
         else
-            throw new ServiceException("请求主体非管理员");
+            throw new ServiceException("请求主体非领导");
     }
+
+    /**
+     * 获取最新所有已审核科技园入园申请
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "applied/technology" , method = RequestMethod.GET)
+    private Map<String, Object> getApplied(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.getAllTechnologyApplied();
+        else
+            throw new ServiceException("请求主体非领导");
+    }
+
+    /**
+     * 获取所有科技园入园申请信息缩略版（包含审核与未审核）
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "applying/all", method = RequestMethod.GET)
+    private Map<String, Object> getAllApplying(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.getAllApplying();
+        else throw new ServiceException("请求主体非领导");
+    }
+
+    /**
+     * 获取某一个旧企业入园申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "oldTechnology/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getOldTechnologyById(@PathVariable String id) throws ServiceException {
+        return leaderService.getOldTechnologyById(id);
+    }
+
+    /**
+     * 获取某一个新企业入园申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "newTechnology/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getNewTechnologyById(@PathVariable String id) throws ServiceException {
+        return leaderService.getNewTechnologyById(id);
+    }
+
 
     /**
      * 获取最新入园申请(众创空间部分)
@@ -47,33 +100,6 @@ public class LeaderController {
             throw new ServiceException("请求主体非管理员");
     }
 
-
-    /**
-     * 获取全部迁入和独立注册企业的基本信息
-     */
-    @RequestMapping(value = "old", method = RequestMethod.GET)
-    private Map<String, Object> getStatisticalForm() {
-        return MyResponseUtil.getResultMap(leaderService.getAllOldDetails(), 0, "success");
-    }
-
-    /**
-     * 获取某一个迁入和独立注册企业入园申请
-     * @return
-     */
-    @RequestMapping(value = "old/{id}", method = RequestMethod.GET)
-    private Map<String, Object> getOldById(@RequestParam("id") String id) {
-        return MyResponseUtil.getResultMap(leaderService.getOldById(id), 0, "success");
-    }
-
-    /**
-     * 删除某一个迁入和独立注册企业入园申请
-     * @return
-     */
-    @RequestMapping(value = "old", method = RequestMethod.DELETE)
-    private Map<String, Object> deleteOldById(@RequestBody JSONObject map) {
-        return MyResponseUtil.getResultMap(leaderService.deleteOldById(map), 0, "success");
-    }
-
     /**
      * 增加管理员
      * @param map
@@ -81,7 +107,7 @@ public class LeaderController {
      */
     @RequestMapping(value = "authorization/admin", method = RequestMethod.POST)
     private Map<String, Object> addAdmin(@RequestBody JSONObject map) {
-        return MyResponseUtil.getResultMap(leaderService.deleteOldById(map), 0, "success");
+        return null;
     }
 
     /**

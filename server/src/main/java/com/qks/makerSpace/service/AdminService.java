@@ -23,6 +23,8 @@ public interface AdminService {
 
     //获取最新的入园审核
     Map<String, Object> getAllTechnologyApplying();
+    Map<String, Object> getAllApplying();
+    Map<String, Object> getAllTechnologyApplied();
     Map<String, Object> getAllSpaceApplying();
 
     // 相关服务
@@ -44,4 +46,6 @@ public interface AdminService {
 
     Map<String, Object> getDownLoadForm();
     void downLoadWord(HttpServletResponse response, Map<String , Object> map) throws Exception;
+
+
 }

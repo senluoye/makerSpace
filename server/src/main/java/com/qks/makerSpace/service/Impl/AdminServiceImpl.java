@@ -114,14 +114,76 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getAllTechnologyApplying() {
         List<AdminTechnologyApplyingReq> lists = adminDao.getAllTechnologyApplying();
         for (AdminTechnologyApplyingReq applyingReq : lists) {
+            String id;
             // 首先看看该公司在不在旧企业表中
             List<String> oldNameList = adminDao.getOldNameByCreditCode(applyingReq.getCreditCode());
-            if (oldNameList.size() > 0) // 不为0，在旧企业中
+            if (oldNameList.size() > 0) { // 不为0，在旧企业中
+                id = adminDao.selectOldIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
+                else applyingReq.setDescribe("4");
                 applyingReq.setName(oldNameList.get(0));
-            else {
+            } else {
                 List<String> newNameList = adminDao.getNewNameByCreditCode(applyingReq.getCreditCode());
+                id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                else applyingReq.setDescribe("4");
                 applyingReq.setName(newNameList.get(0));
             }
+            applyingReq.setId(id);
+        }
+        return MyResponseUtil.getResultMap(lists, 0, "success");
+    }
+
+    /**
+     * 获取最新所有已审核科技园入园申请
+     * @return
+     */
+    public Map<String, Object> getAllTechnologyApplied() {
+        List<AdminTechnologyApplyingReq> lists = adminDao.getAllApplied();
+        for (AdminTechnologyApplyingReq applyingReq : lists) {
+            String id;
+            // 首先看看该公司在不在旧企业表中
+            List<String> oldNameList = adminDao.getOldNameByCreditCode(applyingReq.getCreditCode());
+            if (oldNameList.size() > 0) { // 不为0，在旧企业中
+                id = adminDao.selectOldIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(oldNameList.get(0));
+            } else {
+                List<String> newNameList = adminDao.getNewNameByCreditCode(applyingReq.getCreditCode());
+                id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(newNameList.get(0));
+            }
+            applyingReq.setId(id);
+        }
+        return MyResponseUtil.getResultMap(lists, 0, "success");
+    }
+
+    /**
+     * 获取所有科技园入园申请信息缩略版（包含审核与未审核）
+     * @return
+     */
+    public Map<String, Object> getAllApplying() {
+        List<AdminTechnologyApplyingReq> lists = adminDao.getAllApplying();
+        for (AdminTechnologyApplyingReq applyingReq : lists) {
+            String id;
+            // 首先看看该公司在不在旧企业表中
+            List<String> oldNameList = adminDao.getOldNameByCreditCode(applyingReq.getCreditCode());
+            if (oldNameList.size() > 0) { // 不为0，在旧企业中
+                id = adminDao.selectOldIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(oldNameList.get(0));
+            } else {
+                List<String> newNameList = adminDao.getNewNameByCreditCode(applyingReq.getCreditCode());
+                id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(newNameList.get(0));
+            }
+            applyingReq.setId(id);
         }
         return MyResponseUtil.getResultMap(lists, 0, "success");
     }
@@ -174,13 +236,12 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getOldTechnologyById(String creditCode) throws ServiceException {
-        List<Old> olds = adminDao.getOld(creditCode);
-        if (olds.size() == 0)
+    public Map<String, Object> getOldTechnologyById(String id) throws ServiceException {
+        Old old = adminDao.getOld(id);
+        if (old == null)
             throw new ServiceException("数据不存在");
 
         Map<String, Object> data = new HashMap<>();
-        Old old = olds.get(0);
 
         data.put("old", old);
         data.put("oldDemand", adminDao.getOldDemandById(old.getOldDemandId()));
@@ -198,8 +259,8 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getNewTechnologyById(String creditCode) throws ServiceException {
-        News news = adminDao.getNew(creditCode);
+    public Map<String, Object> getNewTechnologyById(String id) throws ServiceException {
+        News news = adminDao.getNew(id);
         if (news == null)
             throw new ServiceException("数据不存在");
 
