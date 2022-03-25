@@ -5,15 +5,13 @@ import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
 import com.qks.makerSpace.entity.request.BriefFormReq;
 import com.qks.makerSpace.entity.request.FormReq;
-import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
-import com.qks.makerSpace.entity.response.AdminSuggestion;
-import com.qks.makerSpace.entity.response.AllTechnology;
-import com.qks.makerSpace.entity.response.UserAccountApplyingRes;
+import com.qks.makerSpace.entity.response.*;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface AdminDao {
@@ -60,7 +58,11 @@ public interface AdminDao {
      * @return
      */
     @Select("select credit_code, administrator_audit administratorAudit, `describe`, max(submit_time) submitTime " +
-            "from (select * from audit where `describe` = '科技园' and administrator_audit = '未审核') temp " +
+            "from (" +
+            "   select * " +
+            "   from audit " +
+            "   where `describe` = '科技园' " +
+            "   and administrator_audit = '未审核') temp " +
             "group by credit_code")
     List<AdminTechnologyApplyingReq> getAllTechnologyApplying();
 
@@ -68,6 +70,13 @@ public interface AdminDao {
             "from (select * from audit where `describe` = '众创空间' and administrator_audit = '未审核') temp " +
             "group by credit_code ")
     List<AdminSpaceApplyingReq> getAllSpaceApplying();
+
+    @Select("select old_id id, name, max(submit_time) submit_time, credit_code from old group by credit_code")
+    List<AllTechnologyApplyingRes> getTechnologyApplying();
+
+    @Select("select credit_code, administrator_audit, max(submit_time) from audit group by credit_code")
+    @MapKey("credit_code")
+    Map<String, Map<String, Object>> getAudit();
 
     @Select("select name from old where credit_code = #{creditCode}")
     List<String> getOldNameByCreditCode(String creditCode);
@@ -172,8 +181,24 @@ public interface AdminDao {
             "and old.credit_code = #{creditCode}")
     Integer deleteOldByCreditCode(String creditCode);
 
-    @Update("update audit set administrator_audit = #{agree} where credit_code = #{inApplyId}")
-    Integer agreeById(String inApplyId, String agree);
+    @Update("update audit set administrator_audit = #{agree} where audit_id = #{id}")
+    Integer agreeById(String id, String agree);
+
+    @Select("select credit_code from old where old_id = #{oldId}")
+    List<String> getOldCreditCodeById(String oldId);
+
+    @Select("select credit_code from new where new_id = #{newId}")
+    List<String> getNewCreditCodeById(String newId);
+
+    @Select("select * " +
+            "from audit " +
+            "where credit_code = #{creditCode} " +
+            "and submit_time = (" +
+            "   select max(submit_time) " +
+            "   from audit " +
+            "   where credit_code = #{creditCode} " +
+            ")")
+    Audit getLastAuditByCreditCode(String creditCode);
 
     @Update("update space set office_opinion = #{officeOpinion}, leader_opinion = #{leaderOpinion} " +
             "where in_apply_id = #{inApplyId}")
@@ -182,10 +207,18 @@ public interface AdminDao {
     @Update("update audit set administrator_audit = #{disagree} where credit_code = #{inApplyId}")
     Integer disagreeById(String inApplyId, String disagree);
 
-    @Select("select * from audit where credit_code = #{id} and submit_time = (" +
+    @Select("select * from audit " +
+            "where credit_code = #{id} " +
+            "and submit_time = (" +
             "   select max(submit_time) from audit where credit_code = #{id}" +
             ")")
     Audit getAuditByCreditCode(String id);
+
+    @Select("select * from old where old_id = #{oldId}")
+    List<Old> getOldById(String oldId);
+
+    @Select("select * from new where new_id = #{newId}")
+    List<News> getNewById(String newId);
 
     @Select("select credit_code from new where credit_code = #{creditCode}")
     List<String> selectCreditCodeFromNewByCreditCode(String creditCode);

@@ -96,30 +96,27 @@ public class AdminController {
     private Map<String, Object> getAllApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
         String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin")){}
-//            return adminService.getAllApplying();
-        else
-            throw new ServiceException("请求主体非管理员");
+        if (!name.equals("admin")) throw new ServiceException("请求主体非管理员");
 
-        return null;
+        return adminService.getAllApplying();
     }
 
     /**
      * 获取某一个旧企业入园申请
      * @return HashMap
      */
-    @RequestMapping(value = "oldTechnology/", method = RequestMethod.POST)
-    private Map<String, Object> getOldTechnologyById(@PathVariable JSONObject map) throws ServiceException {
-        return adminService.getOldTechnologyById(String.valueOf(map));
+    @RequestMapping(value = "oldTechnology/{id}", method = RequestMethod.POST)
+    private Map<String, Object> getOldTechnologyById(@PathVariable("id") String id) throws ServiceException {
+        return adminService.getOldTechnologyById(id);
     }
 
     /**
      * 获取某一个新企业入园申请
      * @return HashMap
      */
-    @RequestMapping(value = "newTechnology/{creditCode}", method = RequestMethod.GET)
-    private Map<String, Object> getNewTechnologyById(@PathVariable String creditCode) throws ServiceException {
-        return adminService.getNewTechnologyById(creditCode);
+    @RequestMapping(value = "newTechnology/{id}", method = RequestMethod.GET)
+    private Map<String, Object> getNewTechnologyById(@PathVariable("id") String id) throws ServiceException {
+        return adminService.getNewTechnologyById(id);
     }
 
     /**

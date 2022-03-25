@@ -11,8 +11,10 @@ import com.qks.makerSpace.entity.response.*;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.ChangeUtils;
+import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
 import org.mybatis.logging.Logger;
 import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -143,6 +145,24 @@ public class AdminServiceImpl implements AdminService {
     }
 
     /**
+     * 获取所有科技园入园申请信息缩略版（包含审核与未审核）
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAllApplying() {
+        // 获取科技园表中所有公司的最新入园申请信息
+        List<AllTechnologyApplyingRes> lists = adminDao.getTechnologyApplying();
+
+        for (AllTechnologyApplyingRes i : lists) {
+            Audit audit = adminDao.getAuditByCreditCode(i.getCreditCode());
+            if (audit != null) i.setAdministratorAudit(audit.getAdministratorAudit());
+            i.setDescribe("科技园");
+        }
+
+        return MyResponseUtil.getResultMap(lists, 0, "success");
+    }
+
+    /**
      * 获取全部科技园企业的部分信息
      */
     @Override
@@ -170,8 +190,8 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getOldTechnologyById(String creditCode) throws ServiceException {
-        List<Old> olds = adminDao.getOld(creditCode);
+    public Map<String, Object> getOldTechnologyById(String id) throws ServiceException {
+        List<Old> olds = adminDao.getOldById(id);
         if (olds.size() == 0)
             throw new ServiceException("数据不存在");
 
@@ -194,12 +214,13 @@ public class AdminServiceImpl implements AdminService {
      * @return HashMap
      */
     @Override
-    public Map<String, Object> getNewTechnologyById(String creditCode) throws ServiceException {
-        News news = adminDao.getNew(creditCode);
-        if (news == null)
+    public Map<String, Object> getNewTechnologyById(String id) throws ServiceException {
+        List<News> newsList = adminDao.getNewById(id);
+        if (newsList == null)
             throw new ServiceException("数据不存在");
 
         Map<String, Object> data = new HashMap<>();
+        News news = newsList.get(0);
 
         data.put("news", news);
         data.put("newDemand", adminDao.getNewDemandById(news.getNewDemandId()));
@@ -291,59 +312,79 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException {
-        String creditCode = map.getString("creditCode");
+        String id = map.getString("id");
+        String creditCode;
+        int flag;
 
+        // 首先判断用户是新企业还是旧企业
+        if (adminDao.getOldById(id).size() != 0) { // 是旧企业
+            creditCode = adminDao.getOldCreditCodeById(id).get(0);
+            flag = 0;
+        } else if (adminDao.getNewById(id).size() != 0){ // 是新企业
+            creditCode = adminDao.getNewCreditCodeById(id).get(0);
+            flag = 1;
+        } else throw new ServiceException("该企业不存在");
+
+        // 初始化数据
         AdminSuggestion adminSuggestion = new AdminSuggestion();
         adminSuggestion.setCreditCode(creditCode);
         adminSuggestion.setSuggestion(map.getString("suggestion"));
         adminSuggestion.setNote(map.getString("note"));
 
-        if (adminDao.agreeById(creditCode, "通过") < 1) {
+        Audit audit = adminDao.getLastAuditByCreditCode(creditCode);
+        if (adminDao.agreeById(audit.getAuditId(), "通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
-            // 更新old/new表中的剩余两个字段
-            if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode).size() != 0) {
-                if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
-                    throw new ServiceException("更新new失败");
-            } else if (adminDao.selectCreditCodeFromOldByCreditCode(creditCode).size() != 0) {
+            if (flag == 0) {
                 if (adminDao.updateOldSuggestion(adminSuggestion) < 0)
-                    throw new ServiceException("更新old失败");
+                    throw new ServiceException("更新失败");
+            } else {
+                if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
+                    throw new ServiceException("更新失败");
             }
-            else throw new ServiceException("表中不存在该信息");
         }
 
-        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+        return MyResponseUtil.getResultMap(id, 0, "success");
     }
-
     /**
      * 取消某一个企业科技园申请
      * @return HashMap
      */
     @Override
     public Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException {
-        String creditCode = map.getString("creditCode");
+        String id = map.getString("id");
+        String creditCode;
+        int flag;
 
+        // 首先判断用户是新企业还是旧企业
+        if (adminDao.getOldById(id).size() != 0) { // 是旧企业
+            creditCode = adminDao.getOldCreditCodeById(id).get(0);
+            flag = 0;
+        } else if (adminDao.getNewById(id).size() != 0){ // 是新企业
+            creditCode = adminDao.getNewCreditCodeById(id).get(0);
+            flag = 1;
+        } else throw new ServiceException("该企业不存在");
+
+        // 初始化数据
         AdminSuggestion adminSuggestion = new AdminSuggestion();
-
         adminSuggestion.setCreditCode(creditCode);
         adminSuggestion.setSuggestion(map.getString("suggestion"));
         adminSuggestion.setNote(map.getString("note"));
 
-        if (adminDao.disagreeById(creditCode, "不通过") < 1) {
+        Audit audit = adminDao.getLastAuditByCreditCode(creditCode);
+        if (adminDao.agreeById(audit.getAuditId(), "未通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
-            if (adminDao.selectCreditCodeFromNewByCreditCode(creditCode) != null) {
-                if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
-                    throw new ServiceException("更新new失败");
-            }
-            else if (adminDao.selectCreditCodeFromOldByCreditCode(creditCode) != null) {
+            if (flag == 0) {
                 if (adminDao.updateOldSuggestion(adminSuggestion) < 0)
-                    throw new ServiceException("更新old失败");
+                    throw new ServiceException("更新失败");
+            } else {
+                if (adminDao.updateNewSuggestion(adminSuggestion) < 0)
+                    throw new ServiceException("更新失败");
             }
-            else throw new ServiceException("表中不存在该信息");
         }
 
-        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+        return MyResponseUtil.getResultMap(id, 0, "success");
     }
 
     /**

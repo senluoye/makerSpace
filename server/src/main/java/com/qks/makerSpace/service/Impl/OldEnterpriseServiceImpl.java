@@ -314,8 +314,14 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return
      */
     @Override
-    public Map<String, Object> getOldEnterpriseContract(String token) {
-        List<OldContractRes> data = new ArrayList<>();
+    public Map<String, Object> getOldEnterpriseContract(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) throw new ServiceException("您并没有填写入驻申请表");
+
+        String creditCode = creditCodes.get(0);
+
+        List<Contract> data = oldEnterpriseDao.getOldContractList(creditCode);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }

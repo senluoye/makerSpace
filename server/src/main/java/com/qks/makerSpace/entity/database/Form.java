@@ -4,7 +4,8 @@ import lombok.Data;
 
 @Data
 public class Form {
-    private String  time;
+    private String  year;
+    private String  quarter;
     private String	teamName;
     private String	creditCode;
     private String	registerTime;

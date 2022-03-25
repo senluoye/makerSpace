@@ -24,6 +24,7 @@ public interface AdminService {
     //获取最新的入园审核
     Map<String, Object> getAllTechnologyApplying();
     Map<String, Object> getAllSpaceApplying();
+    Map<String, Object> getAllApplying();
 
     // 相关服务
     Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException;
