@@ -13,7 +13,8 @@ public class FormParserUtils {
     public static FormReq parser(JSONObject map) {
         FormReq form  = new FormReq();
 
-        form.setTime(map.getString("time"));
+        form.setYear(map.getString("time").split("/")[0]);
+        form.setQuarter(map.getString("time").split("/")[1]);
         form.setTeamName(map.getString("teamName"));
         form.setCreditCode(map.getString("creditCode"));
         form.setRegisterTime(map.getString("registerTime"));
@@ -93,7 +94,8 @@ public class FormParserUtils {
     public static Map<String, Object> FormMapParser(HighEnterpriseData highEnterpriseData, Form form) {
         Map<String, Object> data = new HashMap<>();
 
-        data.put("time", form.getTime());
+        data.put("year", form.getYear());
+        data.put("quarter", form.getQuarter());
         data.put("teamName", form.getTeamName());
         data.put("creditCode", form.getCreditCode());
         data.put("registerTime", form.getRegisterTime());

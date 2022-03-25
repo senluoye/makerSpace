@@ -972,7 +972,17 @@ map部分：
 
 ~~~json
 {
+<<<<<<< HEAD
+    "data":[{
+        
+    }, 
+	...
+	],
+	"code":0,
+	"msg":"success"
+=======
     ""
+>>>>>>> dccdc486d9f932015c694b885460bfd6e74d2cf0
 }
 ~~~
 
@@ -1605,7 +1615,8 @@ map部分：
 
 |         字段         |    类型    |                             说明                             |
 | :------------------: | :--------: | :----------------------------------------------------------: |
-|         time         |   String   |          季度(值为年份加月，例如2021/3表示第一季度)          |
+|         year         |   String   |                      年份加月，例如2021                      |
+|       quarter        |   String   |                         季度，例如1                          |
 |      team_name       |   String   |                           企业名称                           |
 |     credit_code      |   String   |            统一社会信用代码或组织机构代码（主键）            |
 |    register_time     |   String   |                         企业注册时间                         |
@@ -2432,7 +2443,44 @@ map部分：
 
 
 
+<<<<<<< HEAD
+### 获取所有科技园入园申请信息缩略版（包含审核与未审核）
 
+**简要描述：**
+
+获取所有科技园入园申请信息缩略版（包含审核与未审核）
+
+**请求URL：**
+
+- `/api/admin/applying/all`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<Strng>",							// 入园申请表唯一ID
+        "creditCode":"<String>",				
+        "name":"<String>",						// 名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
+    },
+    	......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+> 如果administrator_audit为null，
+=======
+
+>>>>>>> dccdc486d9f932015c694b885460bfd6e74d2cf0
 
 ### 获取某一个旧企业入园申请
 
@@ -2708,7 +2756,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/admin/space/{inApplyId}`
+- `/api/admin/space/{id}`
 
 **请求方式：**
 
@@ -3174,8 +3222,8 @@ map部分：
 
 ```json
 {
-    "creditCode":"<String>",
-    "suggestion":"<String>",								//科技园意见
+    "id":"<String>",									// 科技园企业的表的唯一id
+    "suggestion":"<String>",							//科技园意见
     "note":"<String>"    								//备注
 }
 ```

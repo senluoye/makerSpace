@@ -2,6 +2,7 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
+import com.qks.makerSpace.entity.response.OldContractRes;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -29,6 +30,9 @@ public interface OldEnterpriseDao {
 
     @Select("select credit_code from user_company where user_id = #{userId}")
     List<String> getUserCompanyByUserId(String userId);
+
+    @Select("select * from contract where credit_code = #{creditCode}")
+    List<Contract> getOldContractList(String creditCode);
 
     @Insert("insert into contract " +
             "set contract_id = #{contractId}, credit_code = #{creditCode}, " +

@@ -131,7 +131,7 @@ public class AdminController {
      * @return HashMap
      */
     @RequestMapping(value = "newTechnology/{id}", method = RequestMethod.GET)
-    private Map<String, Object> getNewTechnologyById(@PathVariable String id) throws ServiceException {
+    private Map<String, Object> getNewTechnologyById(@PathVariable("id") String id) throws ServiceException {
         return adminService.getNewTechnologyById(id);
     }
 
