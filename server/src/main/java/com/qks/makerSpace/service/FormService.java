@@ -24,7 +24,7 @@ public interface FormService {
     Map<String, Object> getTechnologyFormById(String token, String formId);
     Map<String, Object> getTechnologyBasic(String token) throws ServiceException;
 
-    Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException;
+    Map<String, Object> getDownLoadForm(String formId) throws IllegalAccessException;
     void downLoadWord(HttpServletResponse response, Map<String, Object> map) throws Exception;
     Map<String, Object> adminGetTechnologyForm(String token) throws ServiceException;
     Map<String, Object> userGetTechnologyForm(String token) throws ServiceException;

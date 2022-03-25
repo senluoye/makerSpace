@@ -110,9 +110,9 @@ public class FormController {
      * @param
      * @return
      */
-    @RequestMapping(value = "situation/{creditCode}", method = RequestMethod.GET)
-    private void getSituationForm(HttpServletResponse response,@PathVariable String creditCode) throws Exception {
-        formService.downLoadWord(response, formService.getDownLoadForm(creditCode));
+    @RequestMapping(value = "situation/{id}", method = RequestMethod.GET)
+    private void getSituationForm(HttpServletResponse response,@PathVariable String formId) throws Exception {
+        formService.downLoadWord(response, formService.getDownLoadForm(formId));
     }
 
     @RequestMapping(value = "space/{inApplyId}", method = RequestMethod.GET)

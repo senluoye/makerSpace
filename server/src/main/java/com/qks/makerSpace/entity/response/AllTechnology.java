@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class AllTechnology {
 
+    private String id;
     private String creditCode;
     private String companyKind;
     private String name;
@@ -16,5 +17,6 @@ public class AllTechnology {
 //    private String state;
     private String position;
     private String floor;
+    private int alive;
 //    private String describe;
 }

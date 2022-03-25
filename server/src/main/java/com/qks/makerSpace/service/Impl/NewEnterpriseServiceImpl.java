@@ -34,7 +34,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     }
 
     /**
-     *
+     *入园申请（含租赁）
      * @param token
      * @param str
      * @param picture
@@ -155,12 +155,9 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @return
      */
     @Override
-    public Map<String, Object> getNewEnterprise(String token) {
-        String userId = JWTUtils.parser(token).get("userId").toString();
-        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
-        String creditCode = creditCodes.get(0);
+    public Map<String, Object> getNewEnterprise(String id) {
 
-        News news = newEnterpriseDao.getNew(creditCode);
+        News news = newEnterpriseDao.getNew(id);
 
         List<NewDemand> newDemands = newEnterpriseDao.getNewDemandById(news.getNewDemandId());
         List<NewMainPerson> newMainPeople = newEnterpriseDao.getNewMainPeopleById(news.getNewMainpersonId());
@@ -186,7 +183,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @return
      */
     @Override
-    public Map<String, Object> getFormByCreditCode(String token) throws ServiceException {
+    public Map<String, Object> getFormByCreditCode(String token) {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
         String creditCode = creditCodes.get(0);
@@ -243,11 +240,17 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         if (creditCodes.size() != 0) {
             creditCode = creditCodes.get(0);
             List<TechnologyApplyingRes> technologyApplyingRes = newEnterpriseDao.selectAuditByCreditCode(creditCode);
-            List<String> name = newEnterpriseDao.selectNewNameByCredit(creditCode);
-            List<String> suggestion = newEnterpriseDao.getSuggestionByCreditCode(creditCode);
+//            List<String> name = newEnterpriseDao.selectNewNameByCredit(creditCode);
+//            List<String> suggestion = newEnterpriseDao.getSuggestionByCreditCode(creditCode);
+//            List<String> id = newEnterpriseDao.getNewIdByCreditCode(creditCode);
             for (TechnologyApplyingRes i : technologyApplyingRes) {
-                i.setName(name.get(0));
-                i.setSuggestion(suggestion.get(0));
+                String submitTime = i.getSubmitTime();
+                String id = newEnterpriseDao.getNewIdByCreditCodeAndTime(creditCode, submitTime);
+                String name = newEnterpriseDao.getNewNameByCreditCodeAndTime(creditCode, submitTime);
+                String suggestion = newEnterpriseDao.getNewSuggestionByCreditCodeAndTime(creditCode, submitTime);
+                i.setName(name);
+                i.setSuggestion(suggestion);
+                i.setId(id);
             }
             return MyResponseUtil.getResultMap(technologyApplyingRes,0,"success");
         }

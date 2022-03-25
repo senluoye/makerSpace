@@ -167,21 +167,25 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllDetails() {
+        List<AllTechnology> data = new ArrayList<>();
         List<AllTechnology> dataOne = adminDao.getAllOldDetails();
 
         for (AllTechnology allTechnology : dataOne) {
-            allTechnology.setCompanyKind("old");
+            if (allTechnology.getAlive() == 1) {
+                allTechnology.setCompanyKind("old");
+                data.add(allTechnology);
+            }
         }
 
         List<AllTechnology> dataTwo = adminDao.getAllNewDetails();
         System.out.println(dataTwo.toString());
 
         for (AllTechnology allTechnology : dataTwo) {
-            allTechnology.setCompanyKind("new");
+            if (allTechnology.getAlive() == 1) {
+                allTechnology.setCompanyKind("new");
+                data.add(allTechnology);
+            }
         }
-        List<AllTechnology> data = new ArrayList<>(dataOne);
-        data.addAll(dataTwo);
-
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
@@ -469,9 +473,16 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getFormToAudit() throws ServiceException {
         List<BriefFormReq> list = adminDao.getDoubleAudit();
+        List<BriefFormReq> realList = new ArrayList<>();
 
-        if (list.size() != 0) {
-            Iterator<BriefFormReq> iterator = list.iterator();
+        for(BriefFormReq briefFormReq : list) {
+            if (briefFormReq.getAlive() == 1) {
+                realList.add(briefFormReq);
+            }
+        }
+
+        if (realList.size() != 0) {
+            Iterator<BriefFormReq> iterator = realList.iterator();
             while (iterator.hasNext()) {
                 BriefFormReq briefFormReq = iterator.next();
                 if (briefFormReq.getAdminAudit().equals("0")) briefFormReq.setAdminAudit("待审核");
@@ -480,7 +491,7 @@ public class AdminServiceImpl implements AdminService {
                 if (briefFormReq.getLeaderAudit().equals("0")) briefFormReq.setLeaderAudit("待审核");
                 else briefFormReq.setLeaderAudit("未通过");
             }
-            return MyResponseUtil.getResultMap(list,0,"success");
+            return MyResponseUtil.getResultMap(realList,0,"success");
         }
         else throw new ServiceException("没有需要审核的季度报表");
 
@@ -496,16 +507,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getFormLeaderAudit() throws ServiceException {
         List<BriefFormReq> list = adminDao.getLeaderAudit();
+        List<BriefFormReq> realList = new ArrayList<>();
 
-        if (list.size() != 0){
-            Iterator<BriefFormReq> iterator = list.iterator();
+        for(BriefFormReq briefFormReq : list) {
+            if (briefFormReq.getAlive() == 1) {
+                realList.add(briefFormReq);
+            }
+        }
+
+        if (realList.size() != 0){
+            Iterator<BriefFormReq> iterator = realList.iterator();
             while (iterator.hasNext()) {
                 BriefFormReq briefFormReq = iterator.next();
                 briefFormReq.setAdminAudit("已通过");
                 if (briefFormReq.getLeaderAudit().equals("0")) briefFormReq.setLeaderAudit("待审核");
                 else briefFormReq.setLeaderAudit("未通过");
             }
-            return MyResponseUtil.getResultMap(list,0,"success");
+            return MyResponseUtil.getResultMap(realList,0,"success");
         }
         else throw new ServiceException("没有需要领导审核的季度报表");
     }
@@ -518,15 +536,22 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> getAudited() throws ServiceException {
         List<BriefFormReq> list = adminDao.getAudited();
+        List<BriefFormReq> realList = new ArrayList<>();
 
-        if (list.size() != 0) {
-            Iterator<BriefFormReq> iterator = list.iterator();
+        for(BriefFormReq briefFormReq : list) {
+            if (briefFormReq.getAlive() == 1) {
+                realList.add(briefFormReq);
+            }
+        }
+
+        if (realList.size() != 0) {
+            Iterator<BriefFormReq> iterator = realList.iterator();
             while (iterator.hasNext()) {
                 BriefFormReq briefFormReq = iterator.next();
                 briefFormReq.setAdminAudit("已通过");
                 briefFormReq.setLeaderAudit("已通过");
             }
-            return MyResponseUtil.getResultMap(list,0,"sucess");
+            return MyResponseUtil.getResultMap(realList,0,"sucess");
         }
         else throw new ServiceException("没有通过的审核的季度报表");
     }
@@ -539,10 +564,9 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getFormDetail(JSONObject map) throws ServiceException {
-        String creditCode = map.getString("creditCode");
-        String getTime = map.getString("getTime");
+        String id =map.getString("id");
 
-        FormReq formReq = adminDao.getDetailForm(creditCode, getTime);
+        FormReq formReq = adminDao.getDetailForm(id);
         if (formReq == null) throw new ServiceException("该数据不存在，请刷新重试");
         else return MyResponseUtil.getResultMap(formReq,0,"success");
     }

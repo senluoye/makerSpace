@@ -872,142 +872,6 @@ map部分：
 }   
 ```
 
-## 获取某一次入园申请记录
-
-**简要描述：**
-
-获取某一次入园申请信息(详细版)记录
-
-**请求URL：**
-
-- `/api/old/oldEnterprise/{id}`
-
-**请求方式：**
-
-- GET（带token）
-
-**返回值：**
-
-```json
-{
-	"data":[{
-        "creditCode":"<String>",                    //统一社会信用代码（18位字符）
-        "name":"<String>",							//申请入驻企业名称
-        "charge":"<String>",						//企业负责人
-        "represent":"<String>",						//法人代表
-        "representPhone":"<String>",				//联系电话
-        "representEmail":"<String>",				//邮箱地址
-        "agent":"<String>",							//经办人
-        "agentPhone":"<String>1",					//经办人电话
-        "agentEmail":"<String>",					//经办人地址
-        "registerAddress":"<String>",				//注册地址
-        "registerCapital":"<String>",				//注册资本（万元）
-        "realAddress":"<String>",					//实际经营地址
-        "realCapital":"<String>",					//实收资本（万元）
-        "lastIncome":"<String>",					//上年度经营收入
-        "lastTax":"<String>",						//上年度税收
-        "employees":"<String>",						//员工人数
-        "originNumber":"<String>",					//初始入园人数
-        "setDate":"<String>",						//成立日期
-        "nature":"<String>",						//企业性质
-        "involved":"<String>",						//企业性质
-        "mainBusiness":"<String>",					//主营业务
-        "way":"<String>",							//入园方式
-        "business":"<String>",						//入园业务
-        "oldDemand":{								//园区场地租赁需求
-            "leaseArea":"<String>",							//租赁面积(平方米)
-            "position":"<String>",							//位置需求
-            "lease":"<String>",								//租期(年)
-            "floor":"<String>",								//楼层需求
-            "electric":"<String>",							//电力需求
-            "water":"<String>",								//给排水需求
-            "web":"<String>",								//网络需求
-            "others":"<String>"								//其他需求
-        },						
-        "oldShareholder":[{
-            "name":"<String>",						//股东姓名或名称
-            "stake":"<String>",						//股份比例
-            "nature":"<String>"						//股东性质
-        },{
-            "name":"<String>",
-            "stake":"<String>",
-            "nature":"<String>"
-        }
-            ......
-        ],
-        "oldMainPerson":[{
-            "name":"<String>",						//姓名
-            "born":"<String>",						//出生年月
-            "job":"<String>",						//职务
-            "school":"<String>",					//毕业学校
-            "title":"<String>",						//职称
-            "background":"<String>",				//学历
-            "professional":"<String>"				//专业
-        },{
-            "name":"<String>",
-            "born":"<String>",
-            "job":"<String>",
-            "school":"<String>",
-            "title":"<String>",
-            "background":"<String>",
-            "professional":"<String>"
-        }
-            ......              
-        ],
-       "oldProject":[{
-            "projectBrief":"<String>",				//项目简介
-            "advantage":"<String>",					//竞争优势分析
-            "market":"<String>",					//市场前景分析
-            "energy":"<String>",					//能耗分析
-            "pollution":"<String>",					//污染分析
-            "noise":"<String>",						//噪音分析
-            "others":"<String>"						//其他分析
-        },{
-            "projectBrief":"<String>",
-            "advantage":"<String>",
-            "market":"<String>",
-            "energy":"<String>",
-            "pollution":"<String>",
-            "noise":"<String>",
-            "others":"<String>"
-        }
-             ......     
-        ],
-        "oldIntellectual":[{						//知识产权情况，没有就传空数组
-            "name":"<String>",						//名称
-            "kind":"<String>",						//类别
-            "applyTime":"<String>",					//申请时间
-            "approvalTime":"<String>"				//批准时间
-        },{
-            "name":"<String>",
-            "kind":"<String>",
-            "applyTime":"<String>",
-            "approvalTime":"<String>"
-        }
-            ......
-        ],
-        "oldFunding":[{
-            "name":"<String>",						//项目奖项名称
-            "level":"<String>",						//级别
-            "time":"<String>",						//时间
-            "grants":"<String>",					//获得政府资助金额
-            "award":"<String>"						//颁奖部门/时间
-        },{
-            "name":"<String>",
-            "level":"<String>",
-            "time":"<String>",
-            "grants":"<String>",
-            "award":"<String>"
-        }
-            ......
-        ],
-        "cooperation":"<String>"					//以往和桂电的合作情况
-    },
-	"code":0,
-    "msg":"success"
-}   
-```
-
 
 
 ## 获取以往入园申请记录
@@ -1029,12 +893,11 @@ map部分：
 ~~~json
 {
     "data":[{
-        "id":"<String>",					// old表记录唯一id
 		"name":"<String>",					// 公司名称
         "submitTime":"<String>",			// 表单提交时间
         "administratorAudit":"<String>",	// 管理员审核情况
         "leadershipAudit":"<String>",		// 领导审核情况
-        "suggestion":"<String>"				// 科技园意见
+        "suggestion":"<String>"				//科技园意见
     },
     ......       
     ],
@@ -1047,7 +910,7 @@ map部分：
 
 ## 续约管理
 
-**简要描述：**旧企业科技园场地续约，这部分就上传一个表单，里面放个文件就可以了
+**简要描述：**旧企业科技园场地续约
 
 **请求URL：**
 
@@ -1055,9 +918,25 @@ map部分：
 
 **请求方式：**
 
-- POST（带token）
+- PUT（带token）
 
 **参数：**
+
+map部分：
+
+```json
+{
+    "creditCode":"<String>",						//统一社会信用代码	
+	"leaseArea":"<String>",							//租赁面积(平方米)
+    "position":"<String>",							//位置需求
+    "lease":"<String>",								//租期(年)
+   	"floor":"<String>",								//楼层需求
+    "electric":"<String>",							//电力需求
+    "water":"<String>",								//给排水需求
+    "web":"<String>",								//网络需求
+    "others":"<String>"								//其他需求
+}
+```
 
 文件部分：
 
@@ -1079,22 +958,21 @@ map部分：
 
 
 
-## 查看以往续费信息
-
-**简要描述：**旧企业查看以往缴费信息
+**简要描述：**科技园退租申请填报
 
 **请求URL：**
 
-- `/api/old/demand`
+- `/api/old/quit`
 
-**请求方式：**
+**请求参数：**
 
-- GET（带token）
+- POST
 
-**返回值：**
+**参数：**
 
-```json
+~~~json
 {
+<<<<<<< HEAD
     "data":[{
         
     }, 
@@ -1102,8 +980,11 @@ map部分：
 	],
 	"code":0,
 	"msg":"success"
+=======
+    ""
+>>>>>>> dccdc486d9f932015c694b885460bfd6e74d2cf0
 }
-```
+~~~
 
 
 
@@ -1378,7 +1259,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/new/newEnterprise`
+- `/api/new/newEnterprise/{id}`
 
 **请求方式：**
 
@@ -1507,145 +1388,6 @@ map部分：
 }   
 ~~~
 
-## 获取某一次入园申请记录
-
-**简要描述：**
-
-获取某一次入园申请信息(详细版)记录
-
-**请求URL：**
-
-- `/api/new/newEnterprise/{id}`
-
-**请求方式：**
-
-- GET（带token）
-
-**返回值：**
-
-~~~json
-{
-	    "data":[{
-	        "creditCode":"<String>",
-    		"name":"<String>",									  //新设立企业名称
-            "picture":"<File>",										//提供名称预核准通知书
-    		"represent":"<String>",								//企业法人代表
-            "representCard":"<File>",						  //企业法人身法
-    		"representPerson":"<String>",				   //负责人名字
-    		"representPhone":"<String>",				  //负责人电话号码
-    		"representEmail":"<String>",					//负责人邮箱
-    		"agent":"<String>",									  //经办人
-    		"agentPhone":"<String>",					   //经办人电话
-    		"agentEmail":"<String>",					     //经办人邮箱
-    		"registerCapital":"<String>",					 //拟注册资本（万元）
-   		 	"realCapital":"<String>",						   //实际募集资本（万元）
-    		"originNumber":"<String>",					  //初始入园人数
-    		"registerTime":"<String>",						 //预计注册日期
-    		"nature":"<String>",								 //企业性质
-            "certificate":"<File>",								   //教师需要上传教师资格证/学生需要上传学生证
-   		 	"involved":"<String>",							   //所属行业
-    		"mainBusiness":"<String>",					   //主营业务
-    		"business":"<String>",							  //入园业务
-		    
-		    "newDemand":[{
-		        "leaseArea":"<String>",									//租赁面积（平方米）
-		        "position":"<String>",									//位置需求
-		        "lease":"<String>",									//租期（年）
-		        "floor":"<String>",									//楼层需求
-		        "electric":"<String>",									//电力需求
-		        "water":"<String>",									//给排水需求
-		        "web":"<String>",									//网络需求
-		        "others":"<String>",									//其他需求
-		    },{
-		        "leaseArea":"<String>",
-		        "position":"<String>",
-		        "lease":"<String>",
-		        "floor":"<String>",
-		        "electric":"<String>",
-		        "water":"<String>",
-		        "web":"<String>",
-		        "others":"<String>",
-		    }
-		    	 ......
-		    ],
-		    
-		    "newShareholder":[{
-		        "name":"<String>",									//股东姓名或名称
-		        "stake":"<String>",									//股份比例
-		        "nature":"<String>",									//股东性质
-			},{
-		        "name":"<String>",
-		        "stake":"<String>",
-		        "nature":"<String>",
-			}
-		    	......
-		    ],
-		     
-		    "newMainPerson":[{
-		        "name":"<String>",									//姓名
-		        "born":"<String>",									//出生年月
-		        "job":"<String>",									//职务
-		        "school":"<String>",									//毕业学校
-		        "title":"<String>",									//职称
-		        "background":"<String>",									//学历
-		        "professional":"<String>",									//专业
-		    },{
-		        "name":"<String>",
-		        "born":"<String>",
-		        "job":"<String>",
-		        "school":"<String>",
-		        "title":"<String>",
-		        "background":"<String>",
-		        "professional":"<String>",
-		    }
-		    	......              
-		    ],
-		
-		   "newProject":[{
-		        "projectBrief":"<String>",									//项目简介
-		        "advantage":"<String>",									//竞争优势分析
-		        "market":"<String>",									//市场前景分析
-		        "energy":"<String>",									//能耗分析
-		        "pollution":"<String>",									//污染分析
-		        "noise":"<String>",									//噪音分析
-       	 "others":"<String>",									//其他分析
-		    },{
-		        "projectBrief":"<String>",
-		        "advantage":"<String>",
-		        "market":"<String>",
-		        "energy":"<String>",
-		        "pollution":"<String>",
-		        "noise":"<String>",
-		        "others":"<String>",
-		    }
-		         ......     
-		    ],
-		       
-			"newIntellectual":[{
-		        "name":"<String>",									//名称
-		        "kind":"<String>",									//类别
-		        "applyTime":"<String>",									//申请时间
-		        "approvalTime":"<String>",									//批准时间
-		        "intellectualFile":"<File>",								//知识产权证书等扫描文件
-		    },{
-		        "name":"<String>",
-		        "kind":"<String>",
-		        "applyTime":"<String>",
-		        "approvalTime":"<String>",
-		        "intellectualFile":"<File>",
-		    }
-				......
-			],
-		    
-		    "suggestion":"<String>",								//科技园意见
-		    "note":"<String>",    								//备注
-	    	"state":"<String>"
-	    }],
-	  "code":0,
-	  "msg":"success"
-}   
-~~~
-
 
 
 ## 获取以往入园申请记录
@@ -1667,12 +1409,12 @@ map部分：
 ~~~json
 {
     "data":[{
-        "id":"<String>",					// new表记录唯一id
+        "id":"<String>",						//申请唯一id
 		"name":"<String>",					// 公司名称
         "submitTime":"<String>",			// 表单提交时间
         "administratorAudit":"<String>",	// 管理员审核情况
         "leadershipAudit":"<String>",		// 领导审核情况
-        "suggestion":"<String>"				// 科技园意见
+        "suggestion":"<String>"				//科技园意见
     },
     ......       
     ],
@@ -1725,6 +1467,8 @@ map部分：
     "msg":"success"
 }
 ```
+
+
 
 
 
@@ -2164,111 +1908,6 @@ map部分：
 }
 ```
 
-## 获取某个科技园企业的某一次季度报表全部信息（用户）
-
-**简要描述：**
-
-获取某个企业的所有季度报表部分信息（用户）
-
-**请求URL：**
-
-- `/api/form/user/technology/{formId}`
-
-**请求方式：**
-
-- GET(带token)
-
-**返回值：**
-
-~~~json
-{
-    "data":{
-        "time": "111111",
-        "teamName": "111111",
-        "creditCode": "111",
-        "registerTime": "",
-        "joinTime": "2022-02-09",
-        "registerCapital": "0987",
-        "registerKind": "国有及国有控股企业",
-        "industryKind": "0987",
-        "field": "0987",
-        "graduatedEnterprise": "否",
-        "graduatedTime": "",
-        "highEnterprise": "否",
-        "highEnterpriseId": null,
-        "mediumSized": "是",
-        "mediumFile": null,
-        "mentorRelationship": "否",
-        "headerKind": "0987",
-        "headerFile": null,
-        "serialEntrepreneur": "是",
-        "headerGender": "女",
-        "taxKind": "一般纳税人",
-        "header": "0987",
-        "statisticHeader": "0987",
-        "submitHeader": "0987",
-        "submitPhone": "0987",
-        "submitTime": "",
-        "riskInvestment": "0987",
-        "area": "0987",
-        "institutions": "0987",
-        "totalTransformation": "0987",
-        "relying": "0987",
-        "winning": "0987",
-        "result": "0987",
-        "incubateIncome": "0987",
-        "incubateProduct": "0987",
-        "incubateProfit": "0987",
-        "incubateTax": "0987",
-        "incubateOut": "0987",
-        "employee": "1",
-        "doctor": "0",
-        "master": "0",
-        "graduate": "0",
-        "bachelor": "0",
-        "college": "0",
-        "tecSecondary": "0",
-        "tecActivists": "0",
-        "radNumber": "0",
-        "returnees": "0",
-        "talents": "0",
-        "trainee": "0",
-        "employment": "1",
-        "employmentId": "a5d65311-4736-4272-a620-a2e729e3f1d0",
-        "applications": "0987",
-        "applicationsPatent": "0987",
-        "granted": "0987",
-        "grantedPatent": "0987",
-        "valid": "0987",
-        "validPatent": "0987",
-        "softCopyright": "0987",
-        "plantVariety": "0987",
-        "icLayout": "0987",
-        "foreignPatents": "0987",
-        "contractTransaction": "0987",
-        "contractUrnover": "0987",
-        "projectNum": "0987",
-        "totalAwards": "1",
-        "awardsId": "b0b0cf11-aae2-4036-a96c-a014f49efe37",
-        "provinceAwards": "0987",
-        "underProjects": "0987",
-        "nationalProject": "0987",
-        "schoolProject": "0987",
-        "declarationName": "0987",
-        "declarationNum": "0987",
-        "expenditure": "0987",
-        "radExpenditure": "0987",
-        "productExpenditure": "0987",
-        "governmentGrant": "0987",
-        "selfRaised": "0987",
-        "formId": "905f7493-147a-455b-837c-cc42b9a94339",
-        "getTime": "2022-03-24 17:49:15"
-    },
-   	"code":0,
-    "msg":"success"
-}
-~~~
-
 ## 获取某个科技园企业的所有季度报表部分信息（用户）
 
 **简要描述：**
@@ -2288,7 +1927,6 @@ map部分：
 ~~~json
 {
     "data":[{
-        "formId":"<String>",						// form表记录唯一id
         "creditCode":"<String>",
         "name":"<String>",
         "represent":"<String>",
@@ -2303,13 +1941,11 @@ map部分：
 }
 ~~~
 
-
-
-## 获取所有科技园企业的最新的季度报表部分信息（管理员）
+## 获取所有科技园企业的所有季度报表信息（管理员）
 
 **简要描述：**
 
-获取所有科技园企业最新的季度报表部分信息（管理员）
+获取所有科技园企业的所有季度报表部分信息（管理员）
 
 **请求URL：**
 
@@ -2323,121 +1959,54 @@ map部分：
 
 ~~~json
 {
-    "data":[{
+    "data":{[
         "formId":"<String>",				// 唯一凭证
 		"creditCode":"<String>",
         "name":"<String>",
         "represent":"<String>",
         "representPhone":"<String>",
         "representEmail":"<String>",
-        "getTime":"<String>"				// 提交时间
-    },
-            ...
+        "getTime":"<String>"
     ],
+            ...
+    },
     "code":0,
     "msg":"success"
 }
 ~~~
 
-## 获取某一个科技园企业的某一个季度报表（管理员）
+## 获取某一个科技园企业的所有季度报表（管理员）
 
 **简要描述：**
 
-获取所有科技园企业的某一个季度报表（管理员）
+获取所有科技园企业的最新季度报表（管理员）
+
+- 没写，有需求再补上
 
 **请求URL：**
 
-- `/api/form/admin/technology/{formId}`
+- `/api/form/admin/technology`
 
 **请求方式：**
 
 - POST(带token)
+
+**参数**：
+
+```json
+{
+    "data":{
+    	"creditCode":"<String>",
+	}
+}
+```
 
 **返回值：**
 
 ~~~json
 {
     "data":{
-        "time": "111111",
-        "teamName": "111111",
-        "creditCode": "111",
-        "registerTime": "",
-        "joinTime": "2022-02-09",
-        "registerCapital": "0987",
-        "registerKind": "国有及国有控股企业",
-        "industryKind": "0987",
-        "field": "0987",
-        "graduatedEnterprise": "否",
-        "graduatedTime": "",
-        "highEnterprise": "否",
-        "highEnterpriseId": null,
-        "mediumSized": "是",
-        "mediumFile": null,
-        "mentorRelationship": "否",
-        "headerKind": "0987",
-        "headerFile": null,
-        "serialEntrepreneur": "是",
-        "headerGender": "女",
-        "taxKind": "一般纳税人",
-        "header": "0987",
-        "statisticHeader": "0987",
-        "submitHeader": "0987",
-        "submitPhone": "0987",
-        "submitTime": "",
-        "riskInvestment": "0987",
-        "area": "0987",
-        "institutions": "0987",
-        "totalTransformation": "0987",
-        "relying": "0987",
-        "winning": "0987",
-        "result": "0987",
-        "incubateIncome": "0987",
-        "incubateProduct": "0987",
-        "incubateProfit": "0987",
-        "incubateTax": "0987",
-        "incubateOut": "0987",
-        "employee": "1",
-        "doctor": "0",
-        "master": "0",
-        "graduate": "0",
-        "bachelor": "0",
-        "college": "0",
-        "tecSecondary": "0",
-        "tecActivists": "0",
-        "radNumber": "0",
-        "returnees": "0",
-        "talents": "0",
-        "trainee": "0",
-        "employment": "1",
-        "employmentId": "a5d65311-4736-4272-a620-a2e729e3f1d0",
-        "applications": "0987",
-        "applicationsPatent": "0987",
-        "granted": "0987",
-        "grantedPatent": "0987",
-        "valid": "0987",
-        "validPatent": "0987",
-        "softCopyright": "0987",
-        "plantVariety": "0987",
-        "icLayout": "0987",
-        "foreignPatents": "0987",
-        "contractTransaction": "0987",
-        "contractUrnover": "0987",
-        "projectNum": "0987",
-        "totalAwards": "1",
-        "awardsId": "b0b0cf11-aae2-4036-a96c-a014f49efe37",
-        "provinceAwards": "0987",
-        "underProjects": "0987",
-        "nationalProject": "0987",
-        "schoolProject": "0987",
-        "declarationName": "0987",
-        "declarationNum": "0987",
-        "expenditure": "0987",
-        "radExpenditure": "0987",
-        "productExpenditure": "0987",
-        "governmentGrant": "0987",
-        "selfRaised": "0987",
-        "formId": "905f7493-147a-455b-837c-cc42b9a94339",
-        "getTime": "2022-03-24 17:49:15"
+        
     },
     "code":0,
     "msg":"success"
@@ -2454,11 +2023,21 @@ map部分：
 
 **请求URL：**
 
-- `/api/form/statistical/{formId}`
+- `/api/form/statistical/{id}`
 
 **请求方式：**
 
-- GET（带token）
+- GET
+
+**参数**：
+
+```json
+{
+    "data":{
+    	"id":"<String>",						//formId
+	}
+}
+```
 
 **返回值：**
 
@@ -2486,7 +2065,17 @@ map部分：
 
 **请求方式：**
 
-- GET（带token）
+- GET
+
+**参数**：
+
+```json
+{
+    "data":{
+    	"inApplyId":"<String>",						//这里传众创空间申请表的id
+	}
+}
+```
 
 **返回值：**
 
@@ -2599,11 +2188,11 @@ map部分：
 
 
 
-### 获取全部已入园并审核通过的科技园企业部分信息
+### 获取全部已入园审核科技园企业部分信息
 
 **简要描述：**
 
-获取全部已入园并审核通过的科技园企业部分信息
+获取全部已入园审核科技园企业部分信息
 
 **请求URL：**
 
@@ -2649,11 +2238,11 @@ map部分：
 
 
 
-### 获取全部已入园并审核通过众创空间企业信息
+### 获取全部已审核入园众创空间企业信息
 
 **简要描述：**
 
-获取全部已入园并审核通过众创空间企业信息
+获取全部已入园审核的科技园企业信息
 
 **请求URL：**
 
@@ -2784,6 +2373,7 @@ map部分：
 
 
 
+<<<<<<< HEAD
 ### 获取所有科技园入园申请信息缩略版（包含审核与未审核）
 
 **简要描述：**
@@ -2818,6 +2408,9 @@ map部分：
 ~~~
 
 > 如果administrator_audit为null，
+=======
+
+>>>>>>> dccdc486d9f932015c694b885460bfd6e74d2cf0
 
 ### 获取某一个旧企业入园申请
 
@@ -3349,8 +2942,7 @@ map部分：
 
 ~~~json
 {
-    "creditCode":"<String>",				
-    "getTime":"<String>"						//提交时间
+    "id":"<String>"
 }
 ~~~
 
@@ -3521,11 +3113,7 @@ map部分：
 
 
 
-## 续约相关
-
-### 查看所有公司的最新缴费情况
-
-
+### 缴费设置
 
 
 
@@ -3534,6 +3122,8 @@ map部分：
 
 
 ------
+
+
 
 ## 授权类操作
 
@@ -5012,6 +4602,307 @@ map部分：
     "creditCode":"<String>"
 }
 ~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+# 科技园退租
+
+## 数据表
+
+|    字段名     |  类型  |                          说明                           |
+| :-----------: | :----: | :-----------------------------------------------------: |
+|      id       | String |                         唯一id                          |
+|     name      | String |                         企业名                          |
+|     time      | String |                        申请日期                         |
+|     room      | String |                          房号                           |
+|     agent     | String |                         经办人                          |
+|     phone     | String |                        联系方式                         |
+|    reason     | String |                        退租原因                         |
+|   real_time   | String |                      申请退租日期                       |
+|   username    | String |                          户名                           |
+|    account    | String |                          账号                           |
+| opening_bank  | String |                         开户行                          |
+| quit_describe | String | 企业类型(2表示科技园new，3表示科技园old，4表示众创空间) |
+|  admin_audit  | String |                     管理员授权情况                      |
+|  submit_time  | String |                        提交时间                         |
+
+
+
+## 企业退租审核
+
+**简要描述：**包含新企业、旧企业、众创空间
+
+**请求URL：**
+
+- `/api/user/quit`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "name":"<String>",									//企业名
+    "time":"<String>",									  //申请日期
+    "room":"<String>",									//房号
+    "agent":"<String>",									//经办人
+    "phone":"<String>",								   //联系方式
+    "reason":"<String>",							   //退租原因
+    "realTime":"<String>",							  //申请退租日期
+    "username":"<String>",							//退款账户明细 -> 户名
+    "account":"<String>",							  //退款账户明细 -> 账户
+    "openingBank":"<String>"					 //退款账户明细 -> 开发行
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+## 获取某个企业最新的退租审核表
+
+**简要描述：**获取某个企业最新的退租审核表（包含审核情况）
+
+**请求URL：**
+
+- `/api/quit`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "name":"<String>"							//企业名
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":{
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 管理员获取所有未审核退租审核表
+
+**简要描述：**获取某个企业最新的退租审核表（包含审核情况）
+
+**请求URL：**
+
+- `/api/admin/quit`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },
+	...
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 管理员获取获取所有审核表（按时间排序）
+
+**简要描述：**管理员获取获取所有审核表（按时间排序）
+
+**请求URL：**
+
+- `/api/admin/allQuit`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },{
+        "id":"<String>",
+        "name":"<String>",									//企业名
+    	"time":"<String>",									  //申请日期
+    	"room":"<String>",									//房号
+    	"agent":"<String>",									//经办人
+    	"phone":"<String>",								   //联系方式
+    	"reason":"<String>",							   //退租原因
+    	"realTime":"<String>",							  //申请退租日期
+    	"username":"<String>",							//退款账户明细 -> 户名
+    	"account":"<String>",							  //退款账户明细 -> 账户
+    	"openingBank":"<String>",					 //退款账户明细 -> 开发行
+        "quitDescribe":"<String>",						//企业类型
+        "adminAudit":"<String>"							//管理员审核情况
+    },
+	...
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 管理员同意退租
+
+**简要描述：**管理员获取获取所有审核表（按时间排序）
+
+**请求URL：**
+
+- `/api/admin/agreeQuit`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+~~~json
+{
+    "id":"<String>"
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":null,
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+## 管理员不同意退租
+
+**简要描述：**管理员获取获取所有审核表（按时间排序）
+
+**请求URL：**
+
+- `/api/admin/disagreeQuit`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+~~~json
+{
+    "id":
+}
+~~~
+
+
 
 **返回值：**
 

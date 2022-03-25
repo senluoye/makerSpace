@@ -104,19 +104,17 @@ public interface NewEnterpriseDao {
             "order by submit_time desc")
     List<TechnologyApplyingRes> selectAuditByCreditCode(String creditCode);
 
-    @Select("select name from new where credit_code = #{creditCode}")
+    @Select("select name from new where credit_code = #{creditCode} order by submit_time desc")
     List<String> selectNewNameByCredit(String creditCode);
 
-    @Select("select suggestion from new where credit_code = #{creditCode}")
+    @Select("select suggestion from new where credit_code = #{creditCode} order by submit_time desc")
     List<String> getSuggestionByCreditCode(String creditCode);
 
-    @Select("select * from new " +
-            "where submit_time = (" +
-            "   select max(submit_time) " +
-            "   from new " +
-            "   where credit_code = #{creditCode}" +
-            ")")
-    News getNew(String creditCode);
+    @Select("select new_id from new where credit_code = #{creditCode} order by submit_time desc")
+    List<String> getNewIdByCreditCode(String creditCode);
+
+    @Select("select * from new where new_id = #{id}")
+    News getNew(String id);
 
     @Select("select * from new_demand where new_demand_id = #{id}")
     List<NewDemand> getNewDemandById(String id);
@@ -132,4 +130,13 @@ public interface NewEnterpriseDao {
 
     @Select("select * from new_shareholder where new_shareholder_id = #{id}")
     List<NewShareholder> getNewShareholderById(String id);
+
+    @Select("select new_id from new where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String getNewIdByCreditCodeAndTime(String creditCode, String submitTime);
+
+    @Select("select name from new where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String getNewNameByCreditCodeAndTime(String creditCode, String submitTime);
+
+    @Select("select suggestion from new where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String getNewSuggestionByCreditCodeAndTime(String creditCode, String submitTime);
 }

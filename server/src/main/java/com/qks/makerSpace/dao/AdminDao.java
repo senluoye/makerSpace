@@ -87,19 +87,19 @@ public interface AdminDao {
     @Select("select create_name name from space where in_apply_id = #{in_apply_id}")
     List<String> getSpaceNameByCreditCode(String inApplyId);
 
-    @Select("select old.credit_code as creditCode, " +
+    @Select("select old.old_id as id, old.credit_code as creditCode, " +
             "old.name as name, old.represent as represent, old.represent_phone as representPhone, " +
             "old.represent_email as representEmail, old_demand.floor as floor, old_demand.position as position, " +
-            "audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
+            "old.alive as alive, audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
             "from old, old_demand, audit " +
             "where old.old_demand_id = old_demand.old_demand_id " +
             "and audit.credit_code = old.credit_code")
     List<AllTechnology> getAllOldDetails();
 
-    @Select("select new.credit_code as creditCode, " +
+    @Select("select new.new_id as id, new.credit_code as creditCode, " +
             "new.name as name, new.represent as represent, new.represent_phone as representPhone, " +
             "new.represent_email as representEmail, new_demand.floor as floor, new_demand.position as position, " +
-            "audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
+            "new.alive as alive, audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
             "from new, new_demand, audit " +
             "where new.new_demand_id = new_demand.new_demand_id " +
             "and audit.credit_code = new.credit_code ")
@@ -235,23 +235,23 @@ public interface AdminDao {
 
 
 //----季度报表操作从此处-----
-    @Select("select time, team_name, credit_code, get_time, admin_audit, leader_audit " +
+    @Select("select form_id as id, time, team_name, credit_code, get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
             "group by credit_code) and admin_audit <> '2'")
     List<BriefFormReq> getDoubleAudit();
 
-    @Select("select time, team_name, credit_code, get_time get_time, admin_audit, leader_audit " +
+    @Select("select form_id as id, time, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
             "group by credit_code) and admin_audit = '2' and leader_audit <> '2' ")
     List<BriefFormReq> getLeaderAudit();
 
-    @Select("select time, team_name, credit_code, get_time get_time, admin_audit, leader_audit " +
+    @Select("select form_id as id, time, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form" +
             "group by credit_code) and admin_audit = '2' and leader_audit = '2' ")
     List<BriefFormReq> getAudited();
 
-    @Select("select * from form where credit_code = #{creditCode} and get_time = #{getTime}")
-    FormReq getDetailForm(String creditCode, String getTime);
+    @Select("select * from form where form_id = id")
+    FormReq getDetailForm(String id);
 
     @Select("select time, team_name, credit_code, get_time, admin_audit, leader_audit from form where credit_code = #{creditCode}")
     List<BriefFormReq> getCompanyForm(String creditCode);

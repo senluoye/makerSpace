@@ -276,8 +276,8 @@ public class FormServiceImpl implements FormService {
      * @return
      */
     @Override
-    public Map<String, Object> getDownLoadForm(String creditCode) throws IllegalAccessException {
-        Form form = formDao.getAllInformation(creditCode);
+    public Map<String, Object> getDownLoadForm(String formId) throws IllegalAccessException {
+        Form form = formDao.getAllInformation(formId);
         Map<String, Object> map = ChangeUtils.getObjectToMap(form);
         Map<String, Object> hashMap = new HashMap<>();
         hashMap.put("${year}",String.valueOf(Calendar.getInstance().get(Calendar.YEAR)) + "年度");
