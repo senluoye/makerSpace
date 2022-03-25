@@ -2177,7 +2177,7 @@ map部分：
 
 
 
-### 获取全部已入园审核科技园企业部分信息
+### 获取全部已入园审核科技园企业部分信息（暂时没用）
 
 **简要描述：**
 
@@ -2196,6 +2196,7 @@ map部分：
 ~~~json
 {
     "data":[{
+        "id":"<String>",
         "creditCode":"<String>",                    //统一社会信用代码（18位字符）
         "companyKind":"<String>",					//代表企业类型，old/new
         "name":"<String>",							//申请入驻企业名称
@@ -2207,6 +2208,7 @@ map部分：
         "floor":"<String>", 												//楼层需求
         "position":"<String>" 											// 位置需求
     },{
+        "id":"<String>",
         "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
         "companyKind":"<String>",					//代表企业类型，old/new
         "name":"<String>",							//申请入驻企业名称
@@ -2225,9 +2227,111 @@ map部分：
 }
 ~~~
 
+### 
+
+### 获取最新所有未审核科技园入园申请
+
+**简要描述：**
+
+获取最新所有未审核科技园入园申请（概览）
+
+**请求URL：**
+
+- `/api/admin/applying/technology`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "creditCode":"<Strng>",					// 社会信用代码
+        "name":"<String>",						// 公司名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "leadership_audit":"<String>",		// 领导审核状态
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+### 获取最新所有已审核科技园入园申请
+**简要描述：**
+
+获取最新所有已审核科技园入园申请（概览）
+
+**请求URL：**
+
+- `/api/admin/applied/technology`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "creditCode":"<Strng>",					// 社会信用代码
+        "name":"<String>",						// 公司名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "leadership_audit":"<String>",		// 领导审核状态
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
 
 
-### 获取全部已审核入园众创空间企业信息
+### 获取所有科技园入园申请信息缩略版（包含审核与未审核）
+**简要描述：**
+
+获取所有科技园入园申请信息缩略版（包含审核与未审核）
+
+**请求URL：**
+
+- `/api/admin/applying/all`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "creditCode":"<Strng>",					// 社会信用代码
+        "name":"<String>",						// 公司名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "leadership_audit":"<String>",		// 领导审核状态
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+### 
+
+### （众创空间）获取全部已审核入园众创空间企业信息
 
 **简要描述：**
 
@@ -2294,41 +2398,7 @@ map部分：
 
 
 
-### 获取最新所有未审核科技园入园申请
-
-**简要描述：**
-
-获取最新所有未审核科技园入园申请（概览）
-
-**请求URL：**
-
-- `/api/admin/applying/technology`
-
-**请求方式：**
-
-- GET（带token）
-
-**返回值：**
-
-~~~json
-{
-    "data":[{
-        "creditCode":"<Strng>",					// 社会信用代码
-        "name":"<String>",						// 公司名称
-        "submitTime":"<String>",				// 申请递交的时间
-        "administrator_audit":"<String>",		// 管理员审核状态
-        "describe":"<String>"					// 企业描述(科技园/众创空间)
-    },
-    ......
-    ],
-    "code":0,
-    "msg":"success"
-}
-~~~
-
-
-
-### 获取最新所有未审核众创空间入园申请
+### （众创空间）获取最新所有未审核众创空间入园申请
 
 **简要描述：**
 
@@ -2372,7 +2442,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/admin/oldTechnology/{creditCode}`
+- `/api/admin/oldTechnology/{id}`
 
 **请求方式：**
 
@@ -2509,7 +2579,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/admin/newTechnology/{creditCode}`
+- `/api/admin/newTechnology/{id}`
 
 **请求方式：**
 
@@ -2777,6 +2847,7 @@ map部分：
 ~~~json
 {
     "data":[{
+        "formId":"<String>",
         "time":"<String>",										//季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
@@ -2784,6 +2855,7 @@ map部分：
         "adminAudit":"<String>",						 //管理员审核状态
         "leaderAudit":"<String>"						  //领导审核状态
     },{
+        "formId":"<String>",
          "time":"<String>",										//季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
@@ -2815,6 +2887,7 @@ map部分：
 ~~~json
 {
     "data":[{
+        "formId":"<String>",
         "time":"<String>",										//季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
@@ -2822,6 +2895,7 @@ map部分：
         "adminAudit":"<String>",						 //管理员审核状态
         "leaderAudit":"<String>"						  //领导审核状态
     },{
+        "formId":"<String>",
          "time":"<String>",										//季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
@@ -2855,6 +2929,7 @@ map部分：
 ~~~json
 {
     "data":[{
+        "formId":"<String>",
         "time":"<String>",										//季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
@@ -2862,6 +2937,7 @@ map部分：
         "adminAudit":"<String>",						 //管理员审核状态
         "leaderAudit":"<String>"						  //领导审核状态
     },{
+        "formId":"<String>",
          "time":"<String>",										//季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
@@ -2903,6 +2979,7 @@ map部分：
 ~~~json
 {
     "data":{
+        "formId":"<String>",
         "time": "<String>", 							// 季度(值为年份加月，例如2021/3表示第一季度)
 		"teamName": "<String>", 				 //企业名称
 		"creditCode": "<String>", 				   //统一社会信用代码或组织机构代码
@@ -3694,11 +3771,59 @@ map部分：
 
 # 领导（leader）
 
-## **数据表：**
+## 获取全部已入园审核科技园企业部分信息
+
+**简要描述：**
+
+获取全部已入园审核科技园企业部分信息
+
+**请求URL：**
+
+- `/api/leader/technology/all`
+
+**请求方式：**
+
+- GET(token)
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "creditCode":"<String>",                    //统一社会信用代码（18位字符）
+        "companyKind":"<String>",					//代表企业类型，old/new
+        "name":"<String>",							//申请入驻企业名称
+    	"represent":"<String>",						 //法人代表
+    	"representPhone":"<String>",				//法人代表联系电话
+    	"representEmail":"<String>",											//法人代表邮箱地址
+        "administratorAudit":"<String>",								//管理员审核状态
+        "leadershipAudit":"<String>",			// 领导审核状态
+        "floor":"<String>", 												//楼层需求
+        "position":"<String>" 											// 位置需求
+    },{
+        "id":"<String>",
+        "creditCode":"<String>",                                        //统一社会信用代码（18位字符）
+        "companyKind":"<String>",					//代表企业类型，old/new
+        "name":"<String>",							//申请入驻企业名称
+    	"represent":"<String>",												  //法人代表
+    	"representPhone":"<String>",									 //法人代表联系电话
+    	"representEmail":"<String>",											//法人代表邮箱地址
+        "administratorAudit":"<String>",								//管理员审核状态
+        "leadershipAudit":"<String>",			// 领导审核状态
+        "floor":"<String>", 												//楼层需求
+        "position":"<String>" 											// 位置需求
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
 
 
 
-## 获取入园申请
+## 获取最新所有未审核科技园入园申请
 
 **简要描述：**
 
@@ -3721,6 +3846,7 @@ map部分：
         "name":"<String>",						// 公司名称
         "submitTime":"<String>",				// 申请递交的时间
         "administrator_audit":"<String>",		// 管理员审核状态
+        "leadership_audit":"<String>",		// 领导审核状态
         "describe":"<String>"					// 企业描述(科技园/众创空间)
     },
     ......
@@ -3729,6 +3855,8 @@ map部分：
     "msg":"success"
 }
 ```
+
+
 
 **请求URL：**
 
@@ -3758,7 +3886,275 @@ map部分：
 
 
 
-## 获取全部迁入和独立注册企业
+## 获取某一个旧企业入园申请
+
+**简要描述：**
+
+获取一个旧企业的入园申请
+
+**请求URL：**
+
+- `/api/leader/oldTechnology/{id}`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "creditCode":"<String>",                                //统一社会信用代码（18位字符）
+    	"registerAddress":"<String>",							//注册地址
+    	"license":"<File>",										//新的营业执照上传
+    	"registerCapital":"<String>",							//注册资本（万元）
+    	"realAddress":"<String>",								//实际经营地址
+    	"realCapital":"<String>",								//实收资本（万元）
+    	"lastIncome":"<String>",								//上年度经营收入
+    	"lastTax":"<String>",									//上年度税收
+    	"employees":"<String>",									//员工人数
+    	"originNumber":"<String>",								//初始入园人数
+    	"setDate":"<String>",									//成立日期
+    	"nature":"<String>",									//企业性质
+    	"certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
+    	"involved":"<String>",									//企业性质
+    	"mainBusiness":"<String>",								//主营业务
+    	"way":"<String>",										//入园方式
+    	"business":"<String>",									//入园业务
+		
+        "oldDemand":[{
+		        "leaseArea":"<String>",									//租赁面积（平方米）
+		        "position":"<String>",									//位置需求
+		        "lease":"<String>",									//租期（年）
+		        "floor":"<String>",									//楼层需求
+		        "electric":"<String>",									//电力需求
+		        "water":"<String>",									//给排水需求
+		        "web":"<String>",									//网络需求
+		        "others":"<String>",									//其他需求
+		    },{
+		        "leaseArea":"<String>",
+		        "position":"<String>",
+		        "lease":"<String>",
+		        "floor":"<String>",
+		        "electric":"<String>",
+		        "water":"<String>",
+		        "web":"<String>",
+		        "others":"<String>",
+		    }
+		    	 ......
+		    ],
+		    
+		    "oldShareholder":[{
+		        "name":"<String>",									//股东姓名或名称
+		        "stake":"<String>",									//股份比例
+		        "nature":"<String>",									//股东性质
+			},{
+		        "name":"<String>",
+		        "stake":"<String>",
+		        "nature":"<String>",
+			}
+		    	......
+		    ],
+		     
+		    "oldMainPerson":[{
+		        "name":"<String>",									//姓名
+		        "born":"<String>",									//出生年月
+		        "job":"<String>",									//职务
+		        "school":"<String>",									//毕业学校
+		        "title":"<String>",									//职称
+		        "background":"<String>",									//学历
+		        "professional":"<String>",									//专业
+		    },{
+		        "name":"<String>",
+		        "born":"<String>",
+		        "job":"<String>",
+		        "school":"<String>",
+		        "title":"<String>",
+		        "background":"<String>",
+		        "professional":"<String>",
+		    }
+		    	......              
+		    ],
+		
+		   "oProject":[{
+		        "projectBrief":"<String>",									//项目简介
+		        "advantage":"<String>",									//竞争优势分析
+		        "market":"<String>",									//市场前景分析
+		        "energy":"<String>",									//能耗分析
+		        "pollution":"<String>",									//污染分析
+		        "noise":"<String>",									//噪音分析
+       	 "others":"<String>",									//其他分析
+		    },{
+		        "projectBrief":"<String>",
+		        "advantage":"<String>",
+		        "market":"<String>",
+		        "energy":"<String>",
+		        "pollution":"<String>",
+		        "noise":"<String>",
+		        "others":"<String>",
+		    }
+		         ......     
+		    ],
+		       
+			"newIntellectual":[{
+		        "name":"<String>",									//名称
+		        "kind":"<String>",									//类别
+		        "applyTime":"<String>",									//申请时间
+		        "approvalTime":"<String>",									//批准时间
+		        "intellectualFile":"<File>",								//知识产权证书等扫描文件
+		    },{
+		        "name":"<String>",
+		        "kind":"<String>",
+		        "applyTime":"<String>",
+		        "approvalTime":"<String>",
+		        "intellectualFile":"<File>",
+		    }
+				......
+			],
+		    
+		    "suggestion":"<String>",								//科技园意见
+		    "note":"<String>"    								//备注
+	    	"state":"<String>"										//状态
+        	"room":"<String>"									//房间号                
+	    }],
+	  "code":0,
+	  "msg":"success"
+}   
+~~~
+
+## 获取某一个新企业入园申请
+
+**简要描述：**
+
+获取一个旧企业的入园申请
+
+**请求URL：**
+
+- `/api/leader/newTechnology/{id}`
+
+**请求方式：**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+	    "data":[{
+	        "registerCapital":"<String>",							//拟注册资本（万元）
+		    "realCapital":"<String>",									//实际募集资本（万元）
+		    "originNumber":"<String>",								//初始入园人数
+		    "registerTime":"<String>",									//预计注册日期
+		    "nature":"<String>",									//企业性质
+		    "certificate":"<File>",									//教师需要上传教师资格证/学生需要上传学生证
+		    "involved":"<String>",									//企业性质
+		    "mainBusiness":"<String>",									//主营业务
+		    "way":"<String>",									//入园方式
+		    "business":"<String>",									//入园业务
+		    
+		    "newDemand":[{
+		        "leaseArea":"<String>",									//租赁面积（平方米）
+		        "position":"<String>",									//位置需求
+		        "lease":"<String>",									//租期（年）
+		        "floor":"<String>",									//楼层需求
+		        "electric":"<String>",									//电力需求
+		        "water":"<String>",									//给排水需求
+		        "web":"<String>",									//网络需求
+		        "others":"<String>",									//其他需求
+		    },{
+		        "leaseArea":"<String>",
+		        "position":"<String>",
+		        "lease":"<String>",
+		        "floor":"<String>",
+		        "electric":"<String>",
+		        "water":"<String>",
+		        "web":"<String>",
+		        "others":"<String>",
+		    }
+		    	 ......
+		    ],
+		    
+		    "newShareholder":[{
+		        "name":"<String>",									//股东姓名或名称
+		        "stake":"<String>",									//股份比例
+		        "nature":"<String>",									//股东性质
+			},{
+		        "name":"<String>",
+		        "stake":"<String>",
+		        "nature":"<String>",
+			}
+		    	......
+		    ],
+		     
+		    "newMainPerson":[{
+		        "name":"<String>",									//姓名
+		        "born":"<String>",									//出生年月
+		        "job":"<String>",									//职务
+		        "school":"<String>",									//毕业学校
+		        "title":"<String>",									//职称
+		        "background":"<String>",									//学历
+		        "professional":"<String>",									//专业
+		    },{
+		        "name":"<String>",
+		        "born":"<String>",
+		        "job":"<String>",
+		        "school":"<String>",
+		        "title":"<String>",
+		        "background":"<String>",
+		        "professional":"<String>",
+		    }
+		    	......              
+		    ],
+		
+		   "newProject":[{
+		        "projectBrief":"<String>",									//项目简介
+		        "advantage":"<String>",									//竞争优势分析
+		        "market":"<String>",									//市场前景分析
+		        "energy":"<String>",									//能耗分析
+		        "pollution":"<String>",									//污染分析
+		        "noise":"<String>",									//噪音分析
+       	 "others":"<String>",									//其他分析
+		    },{
+		        "projectBrief":"<String>",
+		        "advantage":"<String>",
+		        "market":"<String>",
+		        "energy":"<String>",
+		        "pollution":"<String>",
+		        "noise":"<String>",
+		        "others":"<String>",
+		    }
+		         ......     
+		    ],
+		       
+			"newIntellectual":[{
+		        "name":"<String>",									//名称
+		        "kind":"<String>",									//类别
+		        "applyTime":"<String>",									//申请时间
+		        "approvalTime":"<String>",									//批准时间
+		        "intellectualFile":"<File>",								//知识产权证书等扫描文件
+		    },{
+		        "name":"<String>",
+		        "kind":"<String>",
+		        "applyTime":"<String>",
+		        "approvalTime":"<String>",
+		        "intellectualFile":"<File>",
+		    }
+				......
+			],
+		    
+		    "suggestion":"<String>",								//科技园意见
+		    "note":"<String>"    								//备注
+	    "state":"<String>"
+	    }],
+	  "code":0,
+	  "msg":"success"
+}     
+~~~
+
+## 
+
+### 获取全部迁入和独立注册企业
 
 **简要描述：**
 
@@ -3777,6 +4173,7 @@ map部分：
 ~~~json
 {
     "data":[{
+        "id":"<String>",
         "creditCode":"<String>",                                       	//统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
@@ -3786,6 +4183,7 @@ map部分：
         "state":"<String>",															//授权状态
         "room":"<String>",														//房间号
     },{
+        "id":"<String>",
         "creditCode":"<String>",                                                //统一社会信用代码（18位字符）
     	"organizationCode":"<String>",									//组织机构代码
         "name":"<String>",														//申请入驻企业名称
@@ -3804,7 +4202,7 @@ map部分：
 
 
 
-## 获取某一个迁入和独立注册企业
+### 获取某一个迁入和独立注册企业
 
 **简要描述：**
 
@@ -3957,7 +4355,7 @@ map部分：
 }
 ~~~
 
-## 获取全部新成立企业或非独立注册企业
+### 获取全部新成立企业或非独立注册企业
 
 **简要描述：**
 
@@ -4001,7 +4399,7 @@ map部分：
 
 
 
-## 获取某一个新成立企业或非独立注册企业
+### 获取某一个新成立企业或非独立注册企业
 
 **简要描述：**
 
@@ -4130,6 +4528,8 @@ map部分：
 	  "msg":"success"
 }   
 ~~~
+
+## 
 
 ## 获取领导未通过的季度报表
 
@@ -4324,9 +4724,81 @@ map部分：
 }
 ~~~
 
+## 授权类操作
 
+### 入园申请审核通过
 
-## 季度报表审核通过
+**简要描述：**
+
+科技园入驻通过审核
+
+**请求URL：**
+
+- `/api/admin/technology/notarize`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+```json
+{
+    "creditCode":"<String>",
+    "suggestion":"<String>",								//科技园意见
+    "note":"<String>"    								//备注
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>"
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+### 入园申请审核不通过
+
+**简要描述：**
+
+科技园入驻审核不通过
+
+**请求URL：**
+
+- `/api/admin/technology/countermand`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+```json
+{
+    "creditCode":"<String>",
+    "suggestion":"<String>",								//科技园意见
+    "note":"<String>"    								//备注
+}
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>"
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+### 季度报表审核通过
 
 **简要描述：**
 
@@ -4358,7 +4830,7 @@ map部分：
 }
 ```
 
-## 季度报表审核不通过
+### 季度报表审核不通过
 
 **简要描述：**
 
