@@ -2,12 +2,15 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.LeaderDao;
+import com.qks.makerSpace.entity.database.News;
+import com.qks.makerSpace.entity.database.Old;
 import com.qks.makerSpace.entity.request.*;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.LeaderService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -55,22 +58,6 @@ public class LeaderServiceImpl implements LeaderService {
         }
         return MyResponseUtil.getResultMap(lists, 0, "success");
     }
-
-    @Override
-    public Map<String, Object> getAllOldDetails() {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> getOldById(String id) {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> deleteOldById(JSONObject map) {
-        return null;
-    }
-
 
     /**
      * 同意季度报表
@@ -162,6 +149,115 @@ public class LeaderServiceImpl implements LeaderService {
             }
             return MyResponseUtil.getResultMap(list,0,"success");
         } else throw new ServiceException("该企业未提交过季度报表");
+    }
+
+    @Override
+    public Map<String, Object> getAllTechnologyApplying() {
+        List<LeaderTechnologyApplyingReq> lists = leaderDao.getAllTechnologyApplying();
+        for (LeaderTechnologyApplyingReq applyingReq : lists) {
+            String id;
+            List<String> oldNameList = leaderDao.getOldNameByCreditCode(applyingReq.getCreditCode());
+            if (oldNameList.size() > 0) {
+                id = leaderDao.selectOldIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(oldNameList.get(0));
+            } else {
+                List<String> newNameList = leaderDao.getNewNameByCreditCode(applyingReq.getCreditCode());
+                id = leaderDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(newNameList.get(0));
+            }
+            applyingReq.setId(id);
+        }
+
+        return MyResponseUtil.getResultMap(lists,0,"success");
+    }
+
+    @Override
+    public Map<String, Object> getAllTechnologyApplied() {
+        List<LeaderTechnologyApplyingReq> lists = leaderDao.getAllApplied();
+        for (LeaderTechnologyApplyingReq applyingReq : lists) {
+            String id;
+            List<String> oldNameList = leaderDao.getOldNameByCreditCode(applyingReq.getCreditCode());
+            if (oldNameList.size() > 0) {
+                id = leaderDao.selectOldIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(oldNameList.get(0));
+            } else {
+                List<String> newNameList = leaderDao.getNewNameByCreditCode(applyingReq.getCreditCode());
+                id = leaderDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(newNameList.get(0));
+            }
+            applyingReq.setId(id);
+        }
+
+        return MyResponseUtil.getResultMap(lists,0,"success");
+    }
+
+    @Override
+    public Map<String, Object> getAllApplying() {
+        List<LeaderTechnologyApplyingReq> lists = leaderDao.getAllApplying();
+        for (LeaderTechnologyApplyingReq applyingReq : lists) {
+            String id;
+            List<String> oldNameList = leaderDao.getOldNameByCreditCode(applyingReq.getCreditCode());
+            if (oldNameList.size() > 0) {
+                id = leaderDao.selectOldIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(oldNameList.get(0));
+            } else {
+                List<String> newNameList = leaderDao.getNewNameByCreditCode(applyingReq.getCreditCode());
+                id = leaderDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
+                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                else applyingReq.setDescribe("4");
+                applyingReq.setName(newNameList.get(0));
+            }
+            applyingReq.setId(id);
+        }
+
+        return MyResponseUtil.getResultMap(lists,0,"success");
+    }
+
+    @Override
+    public Map<String, Object> getOldTechnologyById(String id) throws ServiceException {
+        Old old = leaderDao.getOld(id);
+        if (old == null)
+            throw new ServiceException("数据不存在");
+
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("old", old);
+        data.put("oldDemand", leaderDao.getOldDemandById(old.getOldDemandId()));
+        data.put("oldShareholder", leaderDao.getOldShareholderById(old.getOldShareholderId()));
+        data.put("oldMainPerson", leaderDao.getOldMainPeopleById(old.getOldMainpersonId()));
+        data.put("oldProject", leaderDao.getOldProjectById(old.getOldProjectId()));
+        data.put("oldIntellectual", leaderDao.getOldIntellectualById(old.getOldIntellectualId()));
+        data.put("oldFunding", leaderDao.getOldFundingById(old.getOldFundingId()));
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    @Override
+    public Map<String, Object> getNewTechnologyById(String id) throws ServiceException {
+        News news = leaderDao.getNew(id);
+        if (news == null)
+            throw new ServiceException("数据不存在");
+
+        Map<String, Object> data = new HashMap<>();
+
+        data.put("news", news);
+        data.put("newDemand", leaderDao.getNewDemandById(news.getNewDemandId()));
+        data.put("newShareholder", leaderDao.getNewShareholder(news.getNewShareholderId()));
+        data.put("newMainPerson", leaderDao.getNewMainPerson(news.getNewMainpersonId()));
+        data.put("newProject", leaderDao.getNewProject(news.getNewProjectId()));
+        data.put("newIntellectual", leaderDao.getNewIntellectual(news.getNewIntellectualId()));
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
 

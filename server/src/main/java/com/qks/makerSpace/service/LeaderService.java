@@ -15,10 +15,6 @@ public interface LeaderService {
     Map<String, Object> authorizationTechnology();
     Map<String, Object> authorizationSpace();
 
-    Map<String, Object> getAllOldDetails();
-    Map<String, Object> getOldById(String id);
-    Map<String, Object> deleteOldById(JSONObject map);
-
     Map<String, Object> agreeFormById(JSONObject map) throws ServiceException;
     Map<String, Object> disagreeFormById(JSONObject map) throws ServiceException;
 
@@ -26,4 +22,13 @@ public interface LeaderService {
     Map<String, Object> getFormDetail(JSONObject map) throws ServiceException;
     Map<String, Object> getFormByCompany(JSONObject map) throws ServiceException;
 
+    Map<String, Object> getAllTechnologyApplying();
+
+    Map<String, Object> getAllTechnologyApplied();
+
+    Map<String, Object> getAllApplying();
+
+    Map<String, Object> getOldTechnologyById(String id) throws ServiceException;
+
+    Map<String, Object> getNewTechnologyById(String id) throws ServiceException;
 }
