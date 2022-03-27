@@ -168,16 +168,16 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     public Map<String, Object> getAllApplying() {
-<<<<<<< HEAD
         // 获取科技园表中所有公司的最新入园申请信息
-        List<AllTechnologyApplyingRes> lists = adminDao.getTechnologyApplying();
+//        List<AllTechnologyApplyingRes> lists = adminDao.getTechnologyApplying();
+//
+//        for (AllTechnologyApplyingRes i : lists) {
+//            Audit audit = adminDao.getAuditByCreditCode(i.getCreditCode());
+//            if (audit != null) i.setAdministratorAudit(audit.getAdministratorAudit());
+//            else i.setAdministratorAudit("未提交");
+//            i.setDescribe("科技园");
+//        }
 
-        for (AllTechnologyApplyingRes i : lists) {
-            Audit audit = adminDao.getAuditByCreditCode(i.getCreditCode());
-            if (audit != null) i.setAdministratorAudit(audit.getAdministratorAudit());
-            else i.setAdministratorAudit("未提交");
-            i.setDescribe("科技园");
-=======
         List<AdminTechnologyApplyingReq> lists = adminDao.getAllApplying();
         for (AdminTechnologyApplyingReq applyingReq : lists) {
             String id;
@@ -196,7 +196,6 @@ public class AdminServiceImpl implements AdminService {
                 applyingReq.setName(newNameList.get(0));
             }
             applyingReq.setId(id);
->>>>>>> 6852f7e0f52a451a282feebb78822297a85b9c8c
         }
         return MyResponseUtil.getResultMap(lists, 0, "success");
     }
