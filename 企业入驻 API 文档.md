@@ -2931,14 +2931,16 @@ map部分：
 ~~~json
 {
     "data":[{
-        "time":"<String>",										//季度
+        "formId":"<String>"
+        "time":"<String>",								//季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
-        "getTime":"<Sting>",								//提交时间
+        "getTime":"<Sting>",							//表单提交时间
         "adminAudit":"<String>",						 //管理员审核状态
         "leaderAudit":"<String>"						  //领导审核状态
     },{
-         "time":"<String>",										//季度
+        "formId":"<String>"
+        "time":"<String>",										//季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间

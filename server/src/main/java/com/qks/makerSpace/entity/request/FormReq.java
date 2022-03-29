@@ -83,4 +83,6 @@ public class FormReq {
     private String	selfRaised;
     private String  formId;
     private String  getTime; // 这个getTime用于区分表单提交时间，和 highEnterpriseData里面那个getTime不一样
+    private String  adminAudit;
+    private String  leaderAudit;
 }

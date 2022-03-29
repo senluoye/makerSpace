@@ -4,6 +4,7 @@ import lombok.Data;
 
 @Data
 public class Form {
+    private String  formId;
     private String  year;
     private String  quarter;
     private String	teamName;
@@ -83,6 +84,8 @@ public class Form {
     private String	productExpenditure;
     private String	governmentGrant;
     private String	selfRaised;
-    private String  formId;
     private String  getTime; // 这个getTime用于区分表单提交时间，和 highEnterpriseData里面那个getTime不一样
+    private String  alive;
+    private String  adminAudit;
+    private String  leaderAudit;
 }

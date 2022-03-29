@@ -6,7 +6,6 @@ import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
 import com.qks.makerSpace.entity.request.BriefFormReq;
 import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.*;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -212,12 +211,12 @@ public interface AdminDao {
     @Select("select distinct year from form")
     List<String> getTimeList();
 
-    @Select("select team_name, credit_code, get_time, admin_audit, leader_audit " +
+    @Select("select form_id, team_name, credit_code, get_time, admin_audit, leader_audit, concat(year, quarter) time " +
             "from form " +
             "where year = #{year} and quarter = #{quarter} "
 //            + "group by credit_code"
             )
-    List<Form> getFormListByTime(String year, String quarter);
+    List<TimeFormRes> getFormListByTime(String year, String quarter);
 
     @Update("update space set office_opinion = #{officeOpinion}, leader_opinion = #{leaderOpinion} " +
             "where in_apply_id = #{inApplyId}")

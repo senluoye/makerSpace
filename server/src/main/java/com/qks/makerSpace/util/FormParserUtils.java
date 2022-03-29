@@ -87,6 +87,8 @@ public class FormParserUtils {
         form.setProductExpenditure(map.getString("productExpenditure"));
         form.setGovernmentGrant(map.getString("governmentGrant"));
         form.setSelfRaised(map.getString("selfRaised"));
+        form.setAdminAudit("未审核");
+        form.setLeaderAudit("未审核");
 
         return form;
     }

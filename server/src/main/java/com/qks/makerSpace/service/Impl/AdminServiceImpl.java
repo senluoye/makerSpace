@@ -11,12 +11,8 @@ import com.qks.makerSpace.entity.response.*;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.ChangeUtils;
-import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.WordChangeUtils;
-import org.apache.xmlbeans.impl.xb.xsdschema.All;
-import org.mybatis.logging.Logger;
-import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -24,8 +20,6 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.annotation.ElementType;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -656,7 +650,7 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getFormList(JSONObject map) {
         String year = map.getString("year");
         String quarter = map.getString("quarter");
-        List<Form> data = adminDao.getFormListByTime(year, quarter);
+        List<TimeFormRes> data = adminDao.getFormListByTime(year, quarter);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
