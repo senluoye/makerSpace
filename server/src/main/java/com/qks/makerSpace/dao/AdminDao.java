@@ -100,7 +100,8 @@ public interface AdminDao {
             "old.alive as alive, audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
             "from old, old_demand, audit " +
             "where old.old_demand_id = old_demand.old_demand_id " +
-            "and audit.credit_code = old.credit_code")
+            "and audit.credit_code = old.credit_code " +
+            "group by old.credit_code")
     List<AllTechnology> getAllOldDetails();
 
     @Select("select new.new_id as id, new.credit_code as creditCode, " +
@@ -109,7 +110,8 @@ public interface AdminDao {
             "new.alive as alive, audit.administrator_audit as administratorAudit, audit.leadership_audit as leadershipAudit " +
             "from new, new_demand, audit " +
             "where new.new_demand_id = new_demand.new_demand_id " +
-            "and audit.credit_code = new.credit_code ")
+            "and audit.credit_code = new.credit_code " +
+            "group by new.credit_code")
     List<AllTechnology> getAllNewDetails();
 
     @Select("select in_apply_id, create_name, apply_time, team_number, " +

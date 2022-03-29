@@ -1,6 +1,8 @@
 package com.qks.makerSpace.handler;
 
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import com.qks.makerSpace.exception.ServiceException;
+import com.qks.makerSpace.util.MyResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -18,7 +20,58 @@ public class GlobalExceptionHandler {
     private final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
-     * 全局异常处理
+     * 自定义异常
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = ServiceException.class)
+    @ResponseBody
+    private Map<String, Object> ServiceExceptionHandler(HttpServletRequest req, Exception e) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        logger.info("最新的请求: " + df.format(new Date()));
+        logger.info(req.getRequestURI());
+        logger.info(String.valueOf(e));
+
+        return MyResponseUtil.getResultMap(null, -1, e.getMessage());
+    }
+
+    /**
+     * 空指针异常
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = NullPointerException.class)
+    @ResponseBody
+    private Map<String, Object> nullPointerExceptionHandler(HttpServletRequest req, Exception e) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        logger.info("最新的请求: " + df.format(new Date()));
+        logger.info(req.getRequestURI());
+        logger.info(String.valueOf(e));
+
+        return MyResponseUtil.getResultMap(null, -1, "空指针异常");
+    }
+
+    /**
+     * 数据库连接异常
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = CommunicationsException.class)
+    @ResponseBody
+    private Map<String, Object> CommunicationsExceptionHandler(HttpServletRequest req, Exception e) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        logger.info("最新的请求: " + df.format(new Date()));
+        logger.info(req.getRequestURI());
+        logger.info(String.valueOf(e));
+
+        return MyResponseUtil.getResultMap(null, -1, "数据库连接异常");
+    }
+
+    /**
+     * 其他异常
      * @param req
      * @param e
      * @return
@@ -31,18 +84,6 @@ public class GlobalExceptionHandler {
         logger.info(req.getRequestURI());
         logger.info(String.valueOf(e));
 
-
-
-        Map<String, Object> modelMap = new HashMap<>();
-        modelMap.put("data", null);
-        modelMap.put("code", -1);
-        modelMap.put("msg", e.getMessage());
-
-        if (e instanceof CommunicationsException)
-            modelMap.put("msg", "数据库连接超时");
-        else
-            modelMap.put("msg", e.getMessage());
-
-        return modelMap;
+        return MyResponseUtil.getResultMap(null, -1, e.getMessage());
     }
 }

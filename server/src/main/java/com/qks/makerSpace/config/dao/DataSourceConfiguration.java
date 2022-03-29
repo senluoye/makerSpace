@@ -29,6 +29,7 @@ public class DataSourceConfiguration {
         dataSource.setUser(jdbcUsername);
         dataSource.setPassword(jdbcPassword);
         dataSource.setAutoCommitOnClose(false);
+
         return dataSource;
     }
 }

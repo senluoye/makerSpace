@@ -111,12 +111,12 @@ public interface FormDao {
             "where new.credit_code = temp.credit_code group by new.credit_code")
     List<AllForm> getNewForm();
 
-    @Select("select form.form_id, old.credit_code, old.name, old.represent, " +
-            "old.represent_phone, old.represent_email, form.get_time " +
+    @Select("select form.form_id, form.get_time, old.credit_code, old.name, old.represent, " +
+            "old.represent_phone, old.represent_email " +
             "from old, form " +
-            "where old.credit_code = form.credit_code " +
-            "and old.credit_code = #{creditCode} " +
-            "and old.submit_time = form.submit_time " +
+            "where old.credit_code = #{creditCode} " +
+            "and form.credit_code = #{creditCode} " +
+            "group by form.get_time " +
             "order by get_time")
     List<AllForm> getFormByOldCreditCode(String creditCode);
 

@@ -2477,10 +2477,7 @@ map部分：
 }
 ~~~
 
-> 如果administrator_audit为null，
-=======
 
->>>>>>> dccdc486d9f932015c694b885460bfd6e74d2cf0
 
 ### 获取某一个旧企业入园申请
 
@@ -2541,7 +2538,7 @@ map部分：
 		    	 ......
 		    ],
 		    
-		    "oldShareholder":[{
+		"oldShareholder":[{
 		        "name":"<String>",									//股东姓名或名称
 		        "stake":"<String>",									//股份比例
 		        "nature":"<String>",									//股东性质
@@ -2553,7 +2550,7 @@ map部分：
 		    	......
 		    ],
 		     
-		    "oldMainPerson":[{
+		"oldMainPerson":[{
 		        "name":"<String>",									//姓名
 		        "born":"<String>",									//出生年月
 		        "job":"<String>",									//职务
@@ -2573,14 +2570,14 @@ map部分：
 		    	......              
 		    ],
 		
-		   "oProject":[{
+		"oProject":[{
 		        "projectBrief":"<String>",									//项目简介
 		        "advantage":"<String>",									//竞争优势分析
 		        "market":"<String>",									//市场前景分析
 		        "energy":"<String>",									//能耗分析
 		        "pollution":"<String>",									//污染分析
 		        "noise":"<String>",									//噪音分析
-       	 "others":"<String>",									//其他分析
+		"others":"<String>",									//其他分析
 		    },{
 		        "projectBrief":"<String>",
 		        "advantage":"<String>",
@@ -2593,7 +2590,7 @@ map部分：
 		         ......     
 		    ],
 		       
-			"newIntellectual":[{
+		"newIntellectual":[{
 		        "name":"<String>",									//名称
 		        "kind":"<String>",									//类别
 		        "applyTime":"<String>",									//申请时间

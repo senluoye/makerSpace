@@ -478,7 +478,7 @@ public class AdminServiceImpl implements AdminService {
         adminSpaceSuggestion.setLeaderOpinion(map.getString("officeOpinion"));
         adminSpaceSuggestion.setLeaderOpinion(map.getString("leaderOpinion"));
 
-        if (adminDao.disagreeById(inApplyId, "不通过") < 1)
+        if (adminDao.disagreeById(inApplyId, "未通过") < 1)
             throw new ServiceException("管理员审核失败");
 
         // 然后更新space表
@@ -546,9 +546,6 @@ public class AdminServiceImpl implements AdminService {
             return MyResponseUtil.getResultMap(realList,0,"success");
         }
         else throw new ServiceException("没有需要审核的季度报表");
-
-
-
     }
 
     /**

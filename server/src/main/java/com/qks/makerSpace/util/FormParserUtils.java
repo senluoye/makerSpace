@@ -13,8 +13,8 @@ public class FormParserUtils {
     public static FormReq parser(JSONObject map) {
         FormReq form  = new FormReq();
 
-        form.setYear(map.getString("time").split("/")[0]);
-        form.setQuarter(map.getString("time").split("/")[1]);
+        form.setYear(map.getString("time").split("-")[0]);
+        form.setQuarter(map.getString("time").split("-")[1]);
         form.setTeamName(map.getString("teamName"));
         form.setCreditCode(map.getString("creditCode"));
         form.setRegisterTime(map.getString("registerTime"));

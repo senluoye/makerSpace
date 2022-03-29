@@ -121,7 +121,7 @@ public class AdminController {
      * 获取某一个旧企业入园申请
      * @return HashMap
      */
-    @RequestMapping(value = "oldTechnology/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "oldT echnology/{id}", method = RequestMethod.GET)
     private Map<String, Object> getOldTechnologyById(@PathVariable String id) throws ServiceException {
         return adminService.getOldTechnologyById(id);
     }
@@ -222,7 +222,7 @@ public class AdminController {
      * @return
      * @throws ServiceException
      */
-    @RequestMapping(value = "form/timeform", method = RequestMethod.GET)
+    @RequestMapping(value = "form/timeform", method = RequestMethod.POST)
     private Map<String, Object> getFormList(HttpServletRequest httpServletRequest,
                                             @RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");

@@ -47,6 +47,10 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                                                    MultipartFile certificate,
                                                    MultipartFile[] intellectualFile,
                                                    MultipartFile representFile) throws Exception {
+        System.out.println(license);
+        System.out.println(certificate);
+        System.out.println(intellectualFile.length);
+        System.out.println(representFile);
         /**
          * 首先验证用户是否存在
          */
@@ -240,9 +244,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         Old old = oldEnterpriseDao.getOldByOldId(oldId);
 
-        old.setLicense(null);
-        old.setCertificate(null);
-        System.out.println(old);
         List<OldDemand> oldDemand = oldEnterpriseDao.getOldDemandById(old.getOldDemandId());
         List<OldFunding> oldFunding = oldEnterpriseDao.getOldFundingById(old.getOldFundingId());
         List<OldIntellectual> oldIntellectual = oldEnterpriseDao.getOldIntellectualById(old.getOldIntellectualId());
