@@ -2974,7 +2974,8 @@ map部分：
 {
     "data":[{
         "formId":"<String>",
-        "time":"<String>",										//季度
+        "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间
@@ -2982,7 +2983,8 @@ map部分：
         "leaderAudit":"<String>"						  //领导审核状态
     },{
         "formId":"<String>",
-         "time":"<String>",										//季度
+         "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间
@@ -3014,7 +3016,8 @@ map部分：
 {
     "data":[{
         "formId":"<String>",
-        "time":"<String>",										//季度
+        "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间
@@ -3022,7 +3025,8 @@ map部分：
         "leaderAudit":"<String>"						  //领导审核状态
     },{
         "formId":"<String>",
-         "time":"<String>",										//季度
+         "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间
@@ -3056,7 +3060,8 @@ map部分：
 {
     "data":[{
         "formId":"<String>",
-        "time":"<String>",										//季度
+        "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间
@@ -3064,7 +3069,8 @@ map部分：
         "leaderAudit":"<String>"						  //领导审核状态
     },{
         "formId":"<String>",
-         "time":"<String>",										//季度
+         "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间
@@ -3106,7 +3112,8 @@ map部分：
 {
     "data":{
         "formId":"<String>",
-        "time": "<String>", 							// 季度(值为年份加月，例如2021/3表示第一季度)
+        "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
 		"teamName": "<String>", 				 //企业名称
 		"creditCode": "<String>", 				   //统一社会信用代码或组织机构代码
 		"registerTime": "<String>", 			  //企业注册时间
@@ -3214,14 +3221,16 @@ map部分：
 ~~~json
 {
     "data":[{
-        "time":"<String>",										//季度
+        "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间
         "adminAudit":"<String>",						 //管理员审核状态
         "leaderAudit":"<String>"						  //领导审核状态
     },{
-         "time":"<String>",										//季度
+         "year":"<String>",										//年份
+        "quarter":"<String>",								  //季度
         "teamName":"<String>",							 //企业名称
         "creditCode":"<String>",						   //统一社会信用代码
         "getTime":"<Sting>",								//提交时间

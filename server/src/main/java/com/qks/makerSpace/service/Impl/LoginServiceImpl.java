@@ -77,11 +77,11 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String username = map.get("name").toString();
         String password = map.get("password").toString();
         String userId = loginDao.commonLogin(username, password);
-        int alive = loginDao.selectAlive(username, password);
 
         Map<String, Object> data = new HashMap<>();
 
         if (userId != null) {
+            int alive = loginDao.selectAlive(username, password);
             if (alive == 1) {
                 Map<String, Object> user = new HashMap<>();
                 user.put("name",username);
