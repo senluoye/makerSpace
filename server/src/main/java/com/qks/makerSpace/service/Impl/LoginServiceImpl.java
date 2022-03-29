@@ -88,7 +88,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
                 user.put("userId", userId);
                 data.put("token", JWTUtils.createToken(user));
             } else {
-                throw new ServiceException("该账户以注销");
+                throw new ServiceException("该账户已注销");
             }
 
         } else throw new ServiceException("用户不存在或密码错误");

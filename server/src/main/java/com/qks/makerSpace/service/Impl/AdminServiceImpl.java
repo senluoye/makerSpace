@@ -168,6 +168,16 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     public Map<String, Object> getAllApplying() {
+        // 获取科技园表中所有公司的最新入园申请信息
+//        List<AllTechnologyApplyingRes> lists = adminDao.getTechnologyApplying();
+//
+//        for (AllTechnologyApplyingRes i : lists) {
+//            Audit audit = adminDao.getAuditByCreditCode(i.getCreditCode());
+//            if (audit != null) i.setAdministratorAudit(audit.getAdministratorAudit());
+//            else i.setAdministratorAudit("未提交");
+//            i.setDescribe("科技园");
+//        }
+
         List<AdminTechnologyApplyingReq> lists = adminDao.getAllApplying();
         for (AdminTechnologyApplyingReq applyingReq : lists) {
             String id;
@@ -489,7 +499,7 @@ public class AdminServiceImpl implements AdminService {
         String formId = map.getString("formId");
         if (adminDao.agreeForm(formId) > 0) {
             return MyResponseUtil.getResultMap(null,0,"success");
-        } else throw new ServiceException("同意操作异常");
+        } else throw new ServiceException("操作异常");
     }
 
     /**
@@ -503,7 +513,7 @@ public class AdminServiceImpl implements AdminService {
         String formId = map.getString("formId");
         if (adminDao.disagreeForm(formId) > 0) {
             return MyResponseUtil.getResultMap(null,0,"success");
-        } else throw new ServiceException("不同意操作异常");
+        } else throw new ServiceException("操作异常");
     }
 
     //---季度报表从此处---
@@ -627,6 +637,30 @@ public class AdminServiceImpl implements AdminService {
 
         if (adminDao.deleteForm(creditCode,getTime) > 0) return MyResponseUtil.getResultMap(null,0,"success");
         else throw new ServiceException("删除数据失败");
+    }
+
+    /**
+     * 获取季度报表所包含的所有年份和季度
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> getFormTimeList() {
+        List<String> timeList = adminDao.getTimeList();
+        return MyResponseUtil.getResultMap(timeList, 0, "success");
+    }
+
+    /**
+     * 获取某年某个季度全部季度报表（包含未通过和通过）
+     * @param httpServletRequest
+     */
+    @Override
+    public Map<String, Object> getFormList(JSONObject map) {
+        String year = map.getString("year");
+        String quarter = map.getString("quarter");
+        List<Form> data = adminDao.getFormListByTime(year, quarter);
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     /**

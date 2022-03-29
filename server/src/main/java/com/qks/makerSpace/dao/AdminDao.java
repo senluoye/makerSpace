@@ -207,6 +207,16 @@ public interface AdminDao {
             ")")
     Audit getLastAuditByCreditCode(String creditCode);
 
+    @Select("select distinct year from form")
+    List<String> getTimeList();
+
+    @Select("select team_name, credit_code, get_time, admin_audit, leader_audit " +
+            "from form " +
+            "where year = #{year} and quarter = #{quarter} "
+//            + "group by credit_code"
+            )
+    List<Form> getFormListByTime(String year, String quarter);
+
     @Update("update space set office_opinion = #{officeOpinion}, leader_opinion = #{leaderOpinion} " +
             "where in_apply_id = #{inApplyId}")
     Integer updateSpaceBySuggestion(AdminSpaceSuggestion adminSpaceSuggestion);

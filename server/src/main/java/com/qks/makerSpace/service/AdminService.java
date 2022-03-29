@@ -42,7 +42,8 @@ public interface AdminService {
     Map<String, Object> getFormDetail(JSONObject map) throws ServiceException;
     Map<String, Object> getFormByCompany(JSONObject map) throws ServiceException;
     Map<String, Object> deleteForm(JSONObject map) throws ServiceException;
-
+    Map<String, Object> getFormTimeList();
+    Map<String, Object> getFormList(JSONObject map);
 
     Map<String, Object> getDownLoadForm();
     void downLoadWord(HttpServletResponse response, Map<String , Object> map) throws Exception;

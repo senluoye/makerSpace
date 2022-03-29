@@ -2878,6 +2878,87 @@ map部分：
 
 ### 季度报表类
 
+#### 获取季度报表所包含的所有年份
+
+**简要描述：**获取季度报表所包含的所有年份
+
+**请求URL：**
+
+- `/api/admin/form/timelist`
+
+**请求方式:**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[
+        2022,
+        2021,
+        ....
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+#### 获取某年某个季度全部季度报表（包含未通过和通过）
+
+**简要描述：**获取某年某个季度全部季度报表（包含未通过和通过）
+
+**请求URL：**
+
+- `/api/admin/form/timeform`
+
+**请求方式:**
+
+- POST（带token）
+
+**参数：**
+
+> 下面两个参数都是数字转字符串
+
+```json
+{
+    "year":"<String>",							// 年份
+    "quarter":"<String>"						// 季度
+}
+```
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },{
+         "time":"<String>",										//季度
+        "teamName":"<String>",							 //企业名称
+        "creditCode":"<String>",						   //统一社会信用代码
+        "getTime":"<Sting>",								//提交时间
+        "adminAudit":"<String>",						 //管理员审核状态
+        "leaderAudit":"<String>"						  //领导审核状态
+    },
+           ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+#### 
+
+
+
 #### 获取全部未通过的季度报表
 
 **简要描述：**显示季度报表（管理员和领导都未通过）的部分信息
@@ -3386,7 +3467,7 @@ map部分：
 
 ```json
 {
-    "data":null,
+    "data":formId,
     "code":0,
     "msg":"success"
 }
@@ -3418,7 +3499,7 @@ map部分：
 
 ```json
 {
-    "data":null,
+    "data":formId,
     "code":0,
     "msg":"success"
 }
