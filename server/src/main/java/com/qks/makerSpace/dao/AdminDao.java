@@ -242,17 +242,17 @@ public interface AdminDao {
 
 
 //----季度报表操作从此处-----
-    @Select("select form_id as id, time, team_name, credit_code, get_time, admin_audit, leader_audit, alive " +
+    @Select("select form_id as id, year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
-            "group by credit_code) and admin_audit <>getAllTechnologyApplying '2'")
+            "group by credit_code) and admin_audit <> '2'")
     List<BriefFormReq> getDoubleAudit();
 
-    @Select("select form_id as id, time, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
+    @Select("select form_id as id, year, quarter, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
             "group by credit_code) and admin_audit = '2' and leader_audit <> '2' ")
     List<BriefFormReq> getLeaderAudit();
 
-    @Select("select form_id as id, time, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
+    @Select("select form_id as id, year, quarter, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form" +
             "group by credit_code) and admin_audit = '2' and leader_audit = '2' ")
     List<BriefFormReq> getAudited();
@@ -260,7 +260,7 @@ public interface AdminDao {
     @Select("select * from form where form_id = id")
     FormReq getDetailForm(String id);
 
-    @Select("select time, team_name, credit_code, get_time, admin_audit, leader_audit from form where credit_code = #{creditCode}")
+    @Select("select year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit from form where credit_code = #{creditCode}")
     List<BriefFormReq> getCompanyForm(String creditCode);
 
     @Delete("delete from form where credit_code = #{creditCode} and get_time = #{getTime}")
