@@ -386,6 +386,7 @@ public class AdminServiceImpl implements AdminService {
         adminSuggestion.setCreditCode(creditCode);
         adminSuggestion.setSuggestion(map.getString("suggestion"));
         adminSuggestion.setNote(map.getString("note"));
+        adminSuggestion.setId(id);
 
         Audit audit = adminDao.getLastAuditByCreditCode(creditCode);
         if (adminDao.agreeById(audit.getAuditId(), "通过") < 1) {
@@ -426,6 +427,7 @@ public class AdminServiceImpl implements AdminService {
         adminSuggestion.setCreditCode(creditCode);
         adminSuggestion.setSuggestion(map.getString("suggestion"));
         adminSuggestion.setNote(map.getString("note"));
+        adminSuggestion.setId(id);
 
         Audit audit = adminDao.getLastAuditByCreditCode(creditCode);
         if (adminDao.agreeById(audit.getAuditId(), "未通过") < 1) {

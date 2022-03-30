@@ -197,10 +197,15 @@ public class FormServiceImpl implements FormService {
     @Override
     public Map<String, Object> getTechnologyFormById(String token, String formId) {
         Form form = formDao.getFormByFormId(formId);
-        form.setHeaderFile(null);
-        form.setMediumFile(null);
 
-        return MyResponseUtil.getResultMap(form, 0, "success");
+        Map<String, Object> data;
+        HighEnterpriseData highEnterpriseData = formDao.getHighEnterpriseById(form.getHighEnterpriseId());
+        List<EmploymentData> employmentData = formDao.getEmploymentById(form.getEmploymentId());
+        List<FormAwardsData> formAwardsData = formDao.getFormAwardsById(form.getAwardsId());
+        data = FormParserUtils.FormMapParser(highEnterpriseData, employmentData, formAwardsData, form);
+
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     /**

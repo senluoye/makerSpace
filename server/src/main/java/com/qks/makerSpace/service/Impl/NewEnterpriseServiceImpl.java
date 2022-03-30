@@ -248,9 +248,11 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                 String id = newEnterpriseDao.getNewIdByCreditCodeAndTime(creditCode, submitTime);
                 String name = newEnterpriseDao.getNewNameByCreditCodeAndTime(creditCode, submitTime);
                 String suggestion = newEnterpriseDao.getNewSuggestionByCreditCodeAndTime(creditCode, submitTime);
+                String note = newEnterpriseDao.getNewNoteByCreditCodeAndTime(creditCode, submitTime);
                 i.setName(name);
                 i.setSuggestion(suggestion);
                 i.setId(id);
+                i.setNote(note);
             }
             return MyResponseUtil.getResultMap(technologyApplyingRes,0,"success");
         }

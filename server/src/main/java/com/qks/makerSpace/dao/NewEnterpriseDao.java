@@ -139,4 +139,7 @@ public interface NewEnterpriseDao {
 
     @Select("select suggestion from new where credit_code = #{creditCode} and submit_time = #{submitTime}")
     String getNewSuggestionByCreditCodeAndTime(String creditCode, String submitTime);
+
+    @Select("select note from new where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String getNewNoteByCreditCodeAndTime(String creditCode, String submitTime);
 }

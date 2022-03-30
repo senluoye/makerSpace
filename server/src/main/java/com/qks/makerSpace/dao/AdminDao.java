@@ -247,11 +247,11 @@ public interface AdminDao {
     @Select("select credit_code from old where credit_code = #{creditCode}")
     List<String> selectCreditCodeFromOldByCreditCode(String creditCode);
 
-    @Update("update new set suggestion = #{suggestion}, note = #{note} where credit_code = #{creditCode}")
+    @Update("update new set suggestion = #{suggestion}, note = #{note} where new_id = #{id}")
     Integer updateNewSuggestion(AdminSuggestion adminSuggestion);
 
     @Update("update old set suggestion = #{suggestion}, note = #{note} " +
-            "where credit_code = #{creditCode}")
+            "where old_id = #{id}")
     Integer updateOldSuggestion(AdminSuggestion adminSuggestion);
 
 

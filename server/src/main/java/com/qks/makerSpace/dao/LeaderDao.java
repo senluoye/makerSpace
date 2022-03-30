@@ -110,7 +110,7 @@ public interface LeaderDao {
     @Select("select distinct year from form")
     List<String> getTimeList();
 
-    @Select("select team_name, credit_code, get_time, admin_audit, leader_audit " +
+    @Select("select form_id, team_name, credit_code, get_time, admin_audit, leader_audit, concat(year, quarter) time " +
             "from form " +
             "where year = #{year} and quarter = #{quarter} "
 //            + "group by credit_code"

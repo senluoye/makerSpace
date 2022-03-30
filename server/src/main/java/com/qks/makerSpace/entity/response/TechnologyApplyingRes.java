@@ -13,4 +13,5 @@ public class TechnologyApplyingRes {
     private String administratorAudit;
     private String leadershipAudit;
     private String suggestion;
+    private String note;
 }
