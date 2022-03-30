@@ -3,6 +3,8 @@ package com.qks.makerSpace.service.Impl;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.controller.UserController;
 import com.qks.makerSpace.dao.FormDao;
+import com.qks.makerSpace.entity.Temp.EmploymentData;
+import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.FormReq;
@@ -180,7 +182,10 @@ public class FormServiceImpl implements FormService {
         Form form = formDao.getLastFormByCreditCode(creditCode);
 
         HighEnterpriseData highEnterpriseData = formDao.getHighEnterpriseById(form.getHighEnterpriseId());
-        data = FormParserUtils.FormMapParser(highEnterpriseData, form);
+        List<EmploymentData> employmentData = formDao.getEmploymentById(form.getEmploymentId());
+        List<FormAwardsData> formAwardsData = formDao.getFormAwardsById(form.getAwardsId());
+        data = FormParserUtils.FormMapParser(highEnterpriseData, employmentData, formAwardsData, form);
+
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }

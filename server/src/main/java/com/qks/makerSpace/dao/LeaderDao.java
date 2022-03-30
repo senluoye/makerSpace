@@ -1,7 +1,11 @@
 package com.qks.makerSpace.dao;
 
+import com.qks.makerSpace.entity.Temp.EmploymentData;
+import com.qks.makerSpace.entity.Temp.FormAwardsData;
+import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.*;
+import com.qks.makerSpace.entity.response.TimeFormRes;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -47,15 +51,15 @@ public interface LeaderDao {
     @Update("update form set leader_audit = '1' where form_id = #{formId}")
     Integer disagreeForm(String formId);
 
-    @Select("select time, team_name, credit_code, get_time get_time, admin_audit, leader_audit " +
+    @Select("select year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit " +
             "from form where get_time in (select max(get_time) from form" +
             "group by credit_code) and admin_audit = '2' and leader_audit = '0' ")
     List<BriefFormReq> getLeaderAudit();
 
-    @Select("select * from form where credit_code = #{creditCode} and get_time = #{getTime}")
-    FormReq getDetailForm(String creditCode, String getTime);
+    @Select("select * from form where form_id = #{id}")
+    Form getDetailForm(String id);
 
-    @Select("select time, team_name, credit_code, get_time, admin_audit, leader_audit from form where credit_code = #{creditCode}")
+    @Select("select year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit from form where credit_code = #{creditCode}")
     List<BriefFormReq> getCompanyForm(String creditCode);
 
     @Select("select old_id from old where credit_code = #{creditCode} and submit_time = #{submitTime}")
@@ -102,4 +106,23 @@ public interface LeaderDao {
 
     @Select("select * from new_shareholder where new_shareholder_id = #{newShareholderId}")
     List<NewShareholder> getNewShareholder(String newShareholderId);
+
+    @Select("select distinct year from form")
+    List<String> getTimeList();
+
+    @Select("select team_name, credit_code, get_time, admin_audit, leader_audit " +
+            "from form " +
+            "where year = #{year} and quarter = #{quarter} "
+//            + "group by credit_code"
+    )
+    List<TimeFormRes> getFormListByTime(String year, String quarter);
+
+    @Select("select * from form_high_enterprise where high_enterprise_id = #{highEnterpriseId}")
+    HighEnterpriseData getHighEnterpriseById(String highEnterpriseId);
+
+    @Select("select * from form_employment where form_employment_id = #{employmentId}")
+    List<EmploymentData> getEmploymentById(String employmentId);
+
+    @Select("select * from form_awards where form_awards_id = #{awardsId}")
+    List<FormAwardsData> getFormAwardsById(String awardsId);
 }

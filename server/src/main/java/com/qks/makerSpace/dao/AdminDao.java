@@ -1,5 +1,8 @@
 package com.qks.makerSpace.dao;
 
+import com.qks.makerSpace.entity.Temp.EmploymentData;
+import com.qks.makerSpace.entity.Temp.FormAwardsData;
+import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
@@ -268,14 +271,14 @@ public interface AdminDao {
             "group by credit_code) and admin_audit = '2' and leader_audit = '2' ")
     List<BriefFormReq> getAudited();
 
-    @Select("select * from form where form_id = id")
-    FormReq getDetailForm(String id);
+    @Select("select * from form where form_id = #{id}")
+    Form getDetailForm(String id);
 
     @Select("select year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit from form where credit_code = #{creditCode}")
     List<BriefFormReq> getCompanyForm(String creditCode);
 
-    @Delete("delete from form where credit_code = #{creditCode} and get_time = #{getTime}")
-    Integer deleteForm(String creditCode, String getTime);
+    @Delete("delete from form where form_id = #{id}")
+    Integer deleteForm(String id);
 
     @Update("update form set admin_audit = '2' where form_id = #{formId}")
     Integer agreeForm(String formId);
@@ -288,4 +291,13 @@ public interface AdminDao {
 
     @Select("select new_id from new where credit_code = #{creditCode} and submit_time = #{submitTime}")
     String selectNewIdByTimeAndCreditCode(String creditCode, String submitTime);
+
+    @Select("select * from form_high_enterprise where high_enterprise_id = #{highEnterpriseId}")
+    HighEnterpriseData getHighEnterpriseById(String highEnterpriseId);
+
+    @Select("select * from form_employment where form_employment_id = #{employmentId}")
+    List<EmploymentData> getEmploymentById(String employmentId);
+
+    @Select("select * from form_awards where form_awards_id = #{awardsId}")
+    List<FormAwardsData> getFormAwardsById(String awardsId);
 }

@@ -3,6 +3,8 @@ package com.qks.makerSpace.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.entity.Temp.EmploymentData;
+import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.FormReq;
@@ -93,7 +95,10 @@ public class FormParserUtils {
         return form;
     }
 
-    public static Map<String, Object> FormMapParser(HighEnterpriseData highEnterpriseData, Form form) {
+    public static Map<String, Object> FormMapParser(HighEnterpriseData highEnterpriseData,
+                                                    List<EmploymentData> employmentData,
+                                                    List<FormAwardsData> formAwardsData,
+                                                    Form form) {
         Map<String, Object> data = new HashMap<>();
 
         data.put("year", form.getYear());
@@ -111,12 +116,14 @@ public class FormParserUtils {
         data.put("highEnterprise", form.getHighEnterprise());
         data.put("highEnterpriseData", JSON.toJSONString(highEnterpriseData));
         data.put("mediumSized", form.getMediumSized());
+        data.put("mediumFile", form.getMediumFile());
         data.put("mentorRelationship", form.getMentorRelationship());
         data.put("headerKind", form.getHeaderKind());
         data.put("serialEntrepreneur", form.getSerialEntrepreneur());
         data.put("headerGender", form.getHeaderGender());
         data.put("taxKind", form.getTaxKind());
         data.put("header", form.getHeader());
+        data.put("headerFile", form.getHeaderFile());
         data.put("statisticHeader", form.getStatisticHeader());
         data.put("submitHeader", form.getSubmitHeader());
         data.put("submitPhone", form.getSubmitPhone());
@@ -146,6 +153,7 @@ public class FormParserUtils {
         data.put("talents", form.getTalents());
         data.put("trainee", form.getTrainee());
         data.put("employment", form.getEmployment());
+        data.put("employmentData",employmentData);
         data.put("applications", form.getApplications());
         data.put("applicationsPatent", form.getApplicationsPatent());
         data.put("granted", form.getGranted());
@@ -160,6 +168,7 @@ public class FormParserUtils {
         data.put("contractUrnover", form.getContractUrnover());
         data.put("projectNum", form.getProjectNum());
         data.put("totalAwards", form.getTotalAwards());
+        data.put("awardsData", formAwardsData);
         data.put("provinceAwards", form.getProvinceAwards());
         data.put("underProjects", form.getUnderProjects());
         data.put("nationalProject", form.getNationalProject());
@@ -177,10 +186,6 @@ public class FormParserUtils {
 
     public static Map<String, Object> FormMapParser(Old old) {
         Map<String, Object> data = new HashMap<>();
-
-
-
-
         return data;
     }
 }

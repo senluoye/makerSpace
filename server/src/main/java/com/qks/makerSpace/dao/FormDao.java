@@ -1,5 +1,7 @@
 package com.qks.makerSpace.dao;
 
+import com.qks.makerSpace.entity.Temp.EmploymentData;
+import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.FormReq;
@@ -148,4 +150,9 @@ public interface FormDao {
             ") and credit_code = #{creditCode}")
     Old getLastOldByCreditCode(String creditCode);
 
+    @Select("select * from form_employment where form_employment_id = #{employmentId}")
+    List<EmploymentData> getEmploymentById(String employmentId);
+
+    @Select("select * from form_awards where form_awards_id = #{awardsId}")
+    List<FormAwardsData> getFormAwardsById(String awardsId);
 }

@@ -19,6 +19,7 @@ public class FormReq {
     private String	highEnterprise;
     private String	highEnterpriseId;
     private String	mediumSized;
+    private byte[] mediumFile;
     private String	mentorRelationship;
     private String	headerKind;
     private String	serialEntrepreneur;

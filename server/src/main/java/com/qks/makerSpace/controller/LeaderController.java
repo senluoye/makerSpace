@@ -194,4 +194,38 @@ public class LeaderController {
         else
             throw new ServiceException("请求主体非管理员");
     }
+
+    /**
+     * 获取季度报表所包含的所有年份和季度
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "form/timelist", method = RequestMethod.GET)
+    private Map<String, Object> getFormTimeList(HttpServletRequest httpServletRequest) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.getFormTimeList();
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
+
+    /**
+     * 获取某年某个季度全部季度报表（包含未通过和通过）
+     * @param httpServletRequest
+     * @param map
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "form/timeform", method = RequestMethod.GET)
+    private Map<String, Object> getFormList(HttpServletRequest httpServletRequest,
+                                            @RequestBody JSONObject map) throws ServiceException {
+        String token = httpServletRequest.getHeader("token");
+        String name = JWTUtils.parser(token).get("name").toString();
+        if (name.equals("leader"))
+            return leaderService.getFormList(map);
+        else
+            throw new ServiceException("请求主体非管理员");
+    }
 }

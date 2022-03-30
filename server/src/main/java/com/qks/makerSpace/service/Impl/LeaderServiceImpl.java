@@ -2,11 +2,17 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.LeaderDao;
+import com.qks.makerSpace.entity.Temp.EmploymentData;
+import com.qks.makerSpace.entity.Temp.FormAwardsData;
+import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
+import com.qks.makerSpace.entity.database.Form;
 import com.qks.makerSpace.entity.database.News;
 import com.qks.makerSpace.entity.database.Old;
 import com.qks.makerSpace.entity.request.*;
+import com.qks.makerSpace.entity.response.TimeFormRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.LeaderService;
+import com.qks.makerSpace.util.FormParserUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 
@@ -116,12 +122,19 @@ public class LeaderServiceImpl implements LeaderService {
      */
     @Override
     public Map<String, Object> getFormDetail(JSONObject map) throws ServiceException {
-        String creditCode = map.getString("creditCode");
-        String getTime = map.getString("getTime");
+        String id =map.getString("id");
 
-        FormReq formReq = leaderDao.getDetailForm(creditCode, getTime);
-        if (formReq == null) throw new ServiceException("该数据不存在，请刷新重试");
-        else return MyResponseUtil.getResultMap(formReq,0,"success");
+        Form form = leaderDao.getDetailForm(id);
+        if (form == null) throw new ServiceException("该数据不存在，请刷新重试");
+        else {
+            Map<String, Object> data;
+
+            HighEnterpriseData highEnterpriseData = leaderDao.getHighEnterpriseById(form.getHighEnterpriseId());
+            List<EmploymentData> employmentData = leaderDao.getEmploymentById(form.getEmploymentId());
+            List<FormAwardsData> formAwardsData = leaderDao.getFormAwardsById(form.getAwardsId());
+            data = FormParserUtils.FormMapParser(highEnterpriseData, employmentData, formAwardsData, form);
+            return MyResponseUtil.getResultMap(data,0,"success");
+        }
     }
 
     /**
@@ -257,6 +270,20 @@ public class LeaderServiceImpl implements LeaderService {
         data.put("newProject", leaderDao.getNewProject(news.getNewProjectId()));
         data.put("newIntellectual", leaderDao.getNewIntellectual(news.getNewIntellectualId()));
 
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    @Override
+    public Map<String, Object> getFormTimeList() {
+        List<String> timeList = leaderDao.getTimeList();
+        return MyResponseUtil.getResultMap(timeList,0,"success");
+    }
+
+    @Override
+    public Map<String, Object> getFormList(JSONObject map) {
+        String year = map.getString("year");
+        String quarter = map.getString("quarter");
+        List<TimeFormRes> data = leaderDao.getFormListByTime(year, quarter);
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
 

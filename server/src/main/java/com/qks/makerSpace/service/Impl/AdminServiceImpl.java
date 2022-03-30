@@ -2,6 +2,9 @@ package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.AdminDao;
+import com.qks.makerSpace.entity.Temp.EmploymentData;
+import com.qks.makerSpace.entity.Temp.FormAwardsData;
+import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
@@ -10,9 +13,10 @@ import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.*;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
-import com.qks.makerSpace.util.ChangeUtils;
-import com.qks.makerSpace.util.MyResponseUtil;
-import com.qks.makerSpace.util.WordChangeUtils;
+import com.qks.makerSpace.util.*;
+import org.apache.xmlbeans.impl.xb.xsdschema.All;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -20,6 +24,8 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.annotation.ElementType;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -472,7 +478,7 @@ public class AdminServiceImpl implements AdminService {
         adminSpaceSuggestion.setLeaderOpinion(map.getString("officeOpinion"));
         adminSpaceSuggestion.setLeaderOpinion(map.getString("leaderOpinion"));
 
-        if (adminDao.disagreeById(inApplyId, "未通过") < 1)
+        if (adminDao.disagreeById(inApplyId, "不通过") < 1)
             throw new ServiceException("管理员审核失败");
 
         // 然后更新space表
@@ -540,6 +546,9 @@ public class AdminServiceImpl implements AdminService {
             return MyResponseUtil.getResultMap(realList,0,"success");
         }
         else throw new ServiceException("没有需要审核的季度报表");
+
+
+
     }
 
     /**
@@ -609,9 +618,17 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getFormDetail(JSONObject map) throws ServiceException {
         String id =map.getString("id");
 
-        FormReq formReq = adminDao.getDetailForm(id);
-        if (formReq == null) throw new ServiceException("该数据不存在，请刷新重试");
-        else return MyResponseUtil.getResultMap(formReq,0,"success");
+        Form form = adminDao.getDetailForm(id);
+        if (form == null) throw new ServiceException("该数据不存在，请刷新重试");
+        else {
+            Map<String, Object> data;
+
+            HighEnterpriseData highEnterpriseData = adminDao.getHighEnterpriseById(form.getHighEnterpriseId());
+            List<EmploymentData> employmentData = adminDao.getEmploymentById(form.getEmploymentId());
+            List<FormAwardsData> formAwardsData = adminDao.getFormAwardsById(form.getAwardsId());
+            data = FormParserUtils.FormMapParser(highEnterpriseData, employmentData, formAwardsData, form);
+            return MyResponseUtil.getResultMap(data,0,"success");
+        }
     }
 
 
@@ -623,18 +640,15 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> deleteForm(JSONObject map) throws ServiceException {
-        String creditCode = map.getString("creditCode");
-        String getTime = map.getString("getTime");
+        String id = map.getString("id");
 
-        if (adminDao.deleteForm(creditCode,getTime) > 0) return MyResponseUtil.getResultMap(null,0,"success");
+        if (adminDao.deleteForm(id) > 0) return MyResponseUtil.getResultMap(null,0,"success");
         else throw new ServiceException("删除数据失败");
     }
 
     /**
      * 获取季度报表所包含的所有年份和季度
-     * @param httpServletRequest
      * @return
-     * @throws ServiceException
      */
     @Override
     public Map<String, Object> getFormTimeList() {
@@ -644,7 +658,8 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 获取某年某个季度全部季度报表（包含未通过和通过）
-     * @param httpServletRequest
+     * @param map
+     * @return
      */
     @Override
     public Map<String, Object> getFormList(JSONObject map) {

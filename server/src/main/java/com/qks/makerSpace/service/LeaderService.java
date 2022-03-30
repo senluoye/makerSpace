@@ -31,4 +31,8 @@ public interface LeaderService {
     Map<String, Object> getOldTechnologyById(String id) throws ServiceException;
 
     Map<String, Object> getNewTechnologyById(String id) throws ServiceException;
+
+    Map<String, Object> getFormTimeList();
+
+    Map<String, Object> getFormList(JSONObject map);
 }
