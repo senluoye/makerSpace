@@ -258,17 +258,17 @@ public interface AdminDao {
 //----季度报表操作从此处-----
     @Select("select form_id as id, year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
-            "group by credit_code) and admin_audit <> '2'")
+            "group by credit_code) and admin_audit <> '通过'")
     List<BriefFormReq> getDoubleAudit();
 
     @Select("select form_id as id, year, quarter, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
-            "group by credit_code) and admin_audit = '2' and leader_audit <> '2' ")
+            "group by credit_code) and admin_audit = '通过' and leader_audit <> '通过' ")
     List<BriefFormReq> getLeaderAudit();
 
     @Select("select form_id as id, year, quarter, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form" +
-            "group by credit_code) and admin_audit = '2' and leader_audit = '2' ")
+            "group by credit_code) and admin_audit = '通过' and leader_audit = '通过' ")
     List<BriefFormReq> getAudited();
 
     @Select("select * from form where form_id = #{id}")

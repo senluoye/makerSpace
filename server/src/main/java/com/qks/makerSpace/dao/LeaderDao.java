@@ -45,15 +45,15 @@ public interface LeaderDao {
     @Select("select create_name name from space where in_apply_id = #{in_apply_id}")
     List<String> getSpaceNameByCreditCode(String inApplyId);
 
-    @Update("update form set leader_audit = '2' where form_id = #{formId}")
+    @Update("update form set leader_audit = '通过' where form_id = #{formId}")
     Integer agreeForm(String formId);
 
-    @Update("update form set leader_audit = '1' where form_id = #{formId}")
+    @Update("update form set leader_audit = '未通过' where form_id = #{formId}")
     Integer disagreeForm(String formId);
 
     @Select("select year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit " +
             "from form where get_time in (select max(get_time) from form" +
-            "group by credit_code) and admin_audit = '2' and leader_audit = '0' ")
+            "group by credit_code) and admin_audit = '通过' and leader_audit = '未审核' ")
     List<BriefFormReq> getLeaderAudit();
 
     @Select("select * from form where form_id = #{id}")
