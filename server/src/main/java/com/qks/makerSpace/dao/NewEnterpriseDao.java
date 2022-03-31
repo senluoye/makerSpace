@@ -43,8 +43,7 @@ public interface NewEnterpriseDao {
     Integer insertNewProject(NewProject newProject);
 
     @Insert(" insert into new_intellectual (id, new_intellectual_id, name, kind, apply_time, approval_time, intellectual_file) " +
-            "values (#{id}, #{newIntellectualId}, #{name}, #{kind}, #{applyTime}, #{approvalTime}, #{inte" +
-            "llectualFile})")
+            "values (#{id}, #{newIntellectualId}, #{name}, #{kind}, #{applyTime}, #{approvalTime}, #{intellectualFile})")
     Integer insertNewIntellectual(NewIntellectual newIntellectual);
 
     @Select("select credit_code from user_company where user_id = #{userId}")
@@ -59,11 +58,14 @@ public interface NewEnterpriseDao {
     @Select("select * from user where user_id = #{userId}")
     User getUserByUserId(String userId);
 
-    @Select("select * from user where user_id = #{userId}")
+    @Select("select user_id from user_company where credit_code = #{creditCode}")
     List<String> selectUserIdByCreditCode(String creditCode);
 
     @Select("select * from user_company where user_id = #{userId}")
     List<UserCompany> selectUserCompany(String userId);
+
+    @Select("select audit_id from audit where credit_code = #{creditCode}")
+    List<String> selectAuditIdByCreditCode(String creditCode);
 
     @Select("select new_id from new where credit_code = #{creditCode}")
     List<String> selectNewIdByCreditCode(String creditCode);
