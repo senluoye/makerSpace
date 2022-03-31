@@ -49,19 +49,19 @@ public class UserServiceImpl implements UserService {
 
         // 之前已经提交过入园申请
         String creditCode = userCompany.get(0).getCreditCode();
-        if (user.getUserDescribe() == 3) { // 如果用户是new
+        if (user.getUserDescribe() == 2) { // 如果用户是new
             News news = userDao.getLastNewByCreditCode(creditCode);
             homePageRes.setSubmitTime(news.getSubmitTime());
             homePageRes.setName(news.getName());
             NewDemand newDemand = userDao.getLastNewDemandById(news.getNewDemandId());
             homePageRes.setDemandTime(newDemand.getTime());
-        } else if (user.getUserDescribe() == 4) { // 如果用户是old
+        } else if (user.getUserDescribe() == 3) { // 如果用户是old
             Old old = userDao.getLastOldByCreditCode(creditCode);
             homePageRes.setSubmitTime(old.getSubmitTime());
             homePageRes.setName(old.getName());
             OldDemand oldDemand = userDao.getLastOldDemandById(old.getOldDemandId());
             homePageRes.setDemandTime(oldDemand.getTime());
-        } else if (user.getUserDescribe() == 5) { // 如果用户是space
+        } else if (user.getUserDescribe() == 4) { // 如果用户是space
             Space space = userDao.getLastSpaceById(creditCode);
             homePageRes.setName(space.getCreateName());
             homePageRes.setSubmitTime(space.getSubmitTime());

@@ -801,118 +801,11 @@ map部分：
 
 ```json
 {
-	"data":[{
-        "creditCode":"<String>",                    //统一社会信用代码（18位字符）
-        "name":"<String>",							//申请入驻企业名称
-        "charge":"<String>",						//企业负责人
-        "represent":"<String>",						//法人代表
-        "representPhone":"<String>",				//联系电话
-        "representEmail":"<String>",				//邮箱地址
-        "agent":"<String>",							//经办人
-        "agentPhone":"<String>1",					//经办人电话
-        "agentEmail":"<String>",					//经办人地址
-        "registerAddress":"<String>",				//注册地址
-        "registerCapital":"<String>",				//注册资本（万元）
-        "realAddress":"<String>",					//实际经营地址
-        "realCapital":"<String>",					//实收资本（万元）
-        "lastIncome":"<String>",					//上年度经营收入
-        "lastTax":"<String>",						//上年度税收
-        "employees":"<String>",						//员工人数
-        "originNumber":"<String>",					//初始入园人数
-        "setDate":"<String>",						//成立日期
-        "nature":"<String>",						//企业性质
-        "involved":"<String>",						//企业性质
-        "mainBusiness":"<String>",					//主营业务
-        "way":"<String>",							//入园方式
-        "business":"<String>",						//入园业务
-        "oldDemand":{								//园区场地租赁需求
-            "leaseArea":"<String>",							//租赁面积(平方米)
-            "position":"<String>",							//位置需求
-            "lease":"<String>",								//租期(年)
-            "floor":"<String>",								//楼层需求
-            "electric":"<String>",							//电力需求
-            "water":"<String>",								//给排水需求
-            "web":"<String>",								//网络需求
-            "others":"<String>"								//其他需求
-        },						
-        "oldShareholder":[{
-            "name":"<String>",						//股东姓名或名称
-            "stake":"<String>",						//股份比例
-            "nature":"<String>"						//股东性质
-        },{
-            "name":"<String>",
-            "stake":"<String>",
-            "nature":"<String>"
-        }
-            ......
-        ],
-        "oldMainPerson":[{
-            "name":"<String>",						//姓名
-            "born":"<String>",						//出生年月
-            "job":"<String>",						//职务
-            "school":"<String>",					//毕业学校
-            "title":"<String>",						//职称
-            "background":"<String>",				//学历
-            "professional":"<String>"				//专业
-        },{
-            "name":"<String>",
-            "born":"<String>",
-            "job":"<String>",
-            "school":"<String>",
-            "title":"<String>",
-            "background":"<String>",
-            "professional":"<String>"
-        }
-            ......              
-        ],
-       "oldProject":[{
-            "projectBrief":"<String>",				//项目简介
-            "advantage":"<String>",					//竞争优势分析
-            "market":"<String>",					//市场前景分析
-            "energy":"<String>",					//能耗分析
-            "pollution":"<String>",					//污染分析
-            "noise":"<String>",						//噪音分析
-            "others":"<String>"						//其他分析
-        },{
-            "projectBrief":"<String>",
-            "advantage":"<String>",
-            "market":"<String>",
-            "energy":"<String>",
-            "pollution":"<String>",
-            "noise":"<String>",
-            "others":"<String>"
-        }
-             ......     
-        ],
-        "oldIntellectual":[{						//知识产权情况，没有就传空数组
-            "name":"<String>",						//名称
-            "kind":"<String>",						//类别
-            "applyTime":"<String>",					//申请时间
-            "approvalTime":"<String>"				//批准时间
-        },{
-            "name":"<String>",
-            "kind":"<String>",
-            "applyTime":"<String>",
-            "approvalTime":"<String>"
-        }
-            ......
-        ],
-        "oldFunding":[{
-            "name":"<String>",						//项目奖项名称
-            "level":"<String>",						//级别
-            "time":"<String>",						//时间
-            "grants":"<String>",					//获得政府资助金额
-            "award":"<String>"						//颁奖部门/时间
-        },{
-            "name":"<String>",
-            "level":"<String>",
-            "time":"<String>",
-            "grants":"<String>",
-            "award":"<String>"
-        }
-            ......
-        ],
-        "cooperation":"<String>"					//以往和桂电的合作情况
+	"data":{
+        "contractId": "<String>",
+        "creditCode": "<String>",
+	    "voucher":"<File>",
+        "submitTime":"<String>"
     },
 	"code":0,
     "msg":"success"
@@ -965,7 +858,7 @@ map部分：
 
 **请求方式：**
 
-- PUT（带token）
+- POST（带token）
 
 **参数：**
 
@@ -1003,35 +896,53 @@ map部分：
 }
 ```
 
+## 获取以往续约记录
 
-
-**简要描述：**科技园退租申请填报
+**简要描述：**旧企业科技园场地续约
 
 **请求URL：**
 
-- `/api/old/quit`
+- `/api/old/demand`
 
-**请求参数：**
+**请求方式：**
 
-- POST
+- GET（带token）
 
 **参数：**
 
-~~~json
+map部分：
+
+```json
 {
-<<<<<<< HEAD
-    "data":[{
-        
-    }, 
-	...
-	],
-	"code":0,
-	"msg":"success"
-=======
-    ""
->>>>>>> dccdc486d9f932015c694b885460bfd6e74d2cf0
+    "creditCode":"<String>",						//统一社会信用代码	
+	"leaseArea":"<String>",							//租赁面积(平方米)
+    "position":"<String>",							//位置需求
+    "lease":"<String>",								//租期(年)
+   	"floor":"<String>",								//楼层需求
+    "electric":"<String>",							//电力需求
+    "water":"<String>",								//给排水需求
+    "web":"<String>",								//网络需求
+    "others":"<String>"								//其他需求
 }
-~~~
+```
+
+文件部分：
+
+```json
+"paymentVoucher":"<File>"						// 缴费凭证
+```
+
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
+```
 
 
 
@@ -1482,7 +1393,7 @@ map部分：
 
 **请求方式：**
 
-- PUT（带token）
+- POST（带token）
 
 **参数：**
 
