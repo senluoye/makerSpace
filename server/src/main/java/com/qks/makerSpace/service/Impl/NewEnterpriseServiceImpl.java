@@ -98,8 +98,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         if (newIntellectuals.size() != 0) {
             news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
             if (newIntellectuals.size() != intellectualFile.length){
-                System.out.println(newIntellectuals.size());
-                System.out.println(intellectualFile.length);
                 return MyResponseUtil.getResultMap(null,-1,"知识产权数量不足");
 
             }
