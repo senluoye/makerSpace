@@ -14,14 +14,14 @@ public interface LoginDao {
     List<User> getAllUser(String admin);
 
     @Select("select * from user " +
-            "where name = #{name} and password = #{password} and user_describe = #{role}")
-    User adminOrLeaderLogin(String name, String password, int role);
+            "where name = #{id} and password = #{password} and user_describe = #{role}")
+    User adminOrLeaderLogin(String id, String password, int role);
 
-    @Select("select user_id from user " +
-            "where name = #{username} " +
+    @Select("select * from user " +
+            "where user_id = #{id} " +
             "and password = #{password}")
-    String commonLogin(String username, String password);
+    User commonLogin(String id, String password);
 
-    @Select("select alive from user where name = #{username} and password = #{password}")
-    int selectAlive(String username, String password);
+    @Select("select alive from user where user_id = #{id} and password = #{password}")
+    int selectAlive(String id, String password);
 }

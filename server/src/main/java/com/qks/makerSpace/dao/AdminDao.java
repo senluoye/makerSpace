@@ -42,8 +42,8 @@ public interface AdminDao {
      * @param user
      * @return
      */
-    @Insert("insert into user(user_id, name, password, user_describe, email) " +
-            "values (#{userId}, #{name}, #{password}, #{userDescribe}, #{email})")
+    @Insert("insert into user(user_id, name, password, user_describe, email, submit_time) " +
+            "values (#{userId}, #{name}, #{password}, #{userDescribe}, #{email}, #{submitTime})")
     Integer addNewUser(User user);
 
     @Update("update user " +
@@ -65,7 +65,7 @@ public interface AdminDao {
     List<AdminTechnologyApplyingReq> getAllTechnologyApplying();
 
     @Select("select credit_code, administrator_audit administratorAudit, leadership_audit leadershipAudit, `describe`, max(submit_time) submitTime " +
-            "from (select * from audit where `describe` = '科技园') temp " +
+            "from audit " +
             "group by credit_code")
     List<AdminTechnologyApplyingReq> getAllApplying();
 

@@ -23,23 +23,21 @@ public class LoginServiceImpl implements LoginService, Serializable {
 
     /**
      * 领导登陆
-     * @param Hashmap
+     * @param map
      * @return Hashmap
      */
     @Override
     public Map<String, Object> LeaderLogin(Map<String, Object> map) throws ServiceException {
-        String name = map.get("name").toString();
+        String id = map.get("id").toString();
         String password = map.get("password").toString();
-        User user = loginDao.adminOrLeaderLogin(name, password, 0);
+        User user = loginDao.adminOrLeaderLogin(id, password, 0);
+        if (user == null) throw new ServiceException("请输入正确的账号和密码");
 
-        Integer userDescribe = user.getUserDescribe();
         Map<String, Object> data = new HashMap<>();
-        if (userDescribe != null) {
-            Map<String, Object> userMap = new HashMap<>();
-            userMap.put("name",name);
-            userMap.put("userDescribe", userDescribe);
-            data.put("token", JWTUtils.createToken(userMap));
-        } else throw new ServiceException("用户不存在或密码错误");
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("name", user.getName());
+        userMap.put("userDescribe", user.getUserDescribe());
+        data.put("token", JWTUtils.createToken(userMap));
 
         return MyResponseUtil.getResultMap(data,0,"success");
     }
@@ -51,16 +49,15 @@ public class LoginServiceImpl implements LoginService, Serializable {
      */
     @Override
     public Map<String, Object> TecAdminLogin(Map<String, Object> map) throws ServiceException {
-        String name = map.get("name").toString();
+        String id = map.get("id").toString();
         String password = map.get("password").toString();
-        User user = loginDao.adminOrLeaderLogin(name, password, 11);
+        User user = loginDao.adminOrLeaderLogin(id, password, 11);
         if (user == null) throw new ServiceException("请输入正确的账号和密码");
 
-        Integer userDescribe = user.getUserDescribe();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> userMap = new HashMap<>();
-        userMap.put("name", name);
-        userMap.put("userDescribe", userDescribe);
+        userMap.put("name", user.getName());
+        userMap.put("userDescribe", user.getUserDescribe());
         data.put("token", JWTUtils.createToken(userMap));
 
         return MyResponseUtil.getResultMap(data,0,"success");
@@ -73,15 +70,15 @@ public class LoginServiceImpl implements LoginService, Serializable {
      */
     @Override
     public Map<String, Object> SpaceAdminLogin(Map<String, Object> map) throws ServiceException {
-        String name = map.get("name").toString();
+        String id = map.get("id").toString();
         String password = map.get("password").toString();
-        User user = loginDao.adminOrLeaderLogin(name, password, 12);
+        User user = loginDao.adminOrLeaderLogin(id, password, 12);
         if (user == null) throw new ServiceException("请输入正确的账号和密码");
 
         Integer userDescribe = user.getUserDescribe();
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> userMap = new HashMap<>();
-        userMap.put("name", name);
+        userMap.put("name", user.getName());
         userMap.put("userDescribe", userDescribe);
         data.put("token", JWTUtils.createToken(userMap));
 
@@ -96,26 +93,24 @@ public class LoginServiceImpl implements LoginService, Serializable {
      */
     @Override
     public Map<String, Object> CommonLogin(JSONObject map) throws ServiceException {
-        String username = map.get("name").toString();
+        String id = map.get("id").toString();
         String password = map.get("password").toString();
-        String userId = loginDao.commonLogin(username, password);
+        User user = loginDao.commonLogin(id, password);
 
+        System.out.println(user);
         Map<String, Object> data = new HashMap<>();
-        if (userId != null) {
-            int alive = loginDao.selectAlive(username, password);
-            if (alive == 1) {
-                Map<String, Object> user = new HashMap<>();
-                user.put("name",username);
-                user.put("userId", userId);
-                data.put("token", JWTUtils.createToken(user));
-            } else {
-                throw new ServiceException("该账户已注销");
-            }
-
+        if (user != null) {
+            if (user.getAlive()) {
+                Map<String, Object> userMap = new HashMap<>();
+                userMap.put("name", user.getName());
+                userMap.put("userId", user.getUserId());
+                userMap.put("userDescribe", user.getUserDescribe());
+                userMap.put("email", user.getEmail());
+                data.put("token", JWTUtils.createToken(userMap));
+            } else throw new ServiceException("该账户已注销");
         } else throw new ServiceException("用户不存在或密码错误");
 
-        return MyResponseUtil.getResultMap(data,0,"success");
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
-
 }
 

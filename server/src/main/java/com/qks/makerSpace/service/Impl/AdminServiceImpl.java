@@ -164,6 +164,7 @@ public class AdminServiceImpl implements AdminService {
      */
     public Map<String, Object> getAllApplying() throws ServiceException {
         List<AdminTechnologyApplyingReq> lists = adminDao.getAllApplying();
+        System.out.println(lists);
         for (AdminTechnologyApplyingReq applyingReq : lists) {
             String id;
             // 首先看看该公司在不在旧企业表中
