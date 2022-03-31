@@ -217,7 +217,7 @@ public class LeaderController {
      * @return
      * @throws ServiceException
      */
-    @RequestMapping(value = "form/timeform", method = RequestMethod.GET)
+    @RequestMapping(value = "form/timeform", method = RequestMethod.POST)
     private Map<String, Object> getFormList(HttpServletRequest httpServletRequest,
                                             @RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");

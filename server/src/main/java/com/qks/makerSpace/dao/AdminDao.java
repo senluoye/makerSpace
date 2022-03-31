@@ -280,10 +280,10 @@ public interface AdminDao {
     @Delete("delete from form where form_id = #{id}")
     Integer deleteForm(String id);
 
-    @Update("update form set admin_audit = '2' where form_id = #{formId}")
+    @Update("update form set admin_audit = '通过' where form_id = #{formId}")
     Integer agreeForm(String formId);
 
-    @Update("update form set admin_audit = '1' where form_id = #{formId}")
+    @Update("update form set admin_audit = '未通过' where form_id = #{formId}")
     Integer disagreeForm(String formId);
 
     @Select("select old_id from old where credit_code = #{creditCode} and submit_time = #{submitTime}")

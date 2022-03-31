@@ -65,7 +65,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         List<UserCompany> users = newEnterpriseDao.selectUserCompany(userId);
         if (users.size() != 0) {
             newEnterpriseDao.updateUserCompany(userId, creditCode);
-            List<String> auditIds = oldEnterpriseDao.selectAuditIdByCreditCode(users.get(0).getCreditCode());
+            List<String> auditIds = newEnterpriseDao.selectAuditIdByCreditCode(users.get(0).getCreditCode());
             List<String> newsIds = newEnterpriseDao.selectNewIdByCreditCode(users.get(0).getCreditCode());
             for (String newId : newsIds)
                 newEnterpriseDao.updateNewCreditCode(newId, creditCode);
@@ -98,8 +98,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         if (newIntellectuals.size() != 0) {
             news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
             if (newIntellectuals.size() != intellectualFile.length){
-                System.out.println(newIntellectuals.size());
-                System.out.println(intellectualFile.length);
                 return MyResponseUtil.getResultMap(null,-1,"知识产权数量不足");
 
             }
