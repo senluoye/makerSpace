@@ -101,16 +101,6 @@ public class LeaderController {
     }
 
     /**
-     * 增加管理员
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "authorization/admin", method = RequestMethod.POST)
-    private Map<String, Object> addAdmin(@RequestBody JSONObject map) {
-        return null;
-    }
-
-    /**
      * 同意某个季度报表
      * @param httpServletRequest
      * @param map

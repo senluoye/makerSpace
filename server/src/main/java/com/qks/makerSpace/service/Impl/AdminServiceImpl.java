@@ -354,7 +354,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException {
         String id = map.getString("id");
-        String creditCode;
+        String creditCode, submitTime;
         int flag;
 
         // 首先判断用户是新企业还是旧企业
@@ -362,11 +362,13 @@ public class AdminServiceImpl implements AdminService {
         if (oldList.size() != 0) { // 是旧企业
             creditCode = oldList.get(0).getCreditCode();
             flag = 0;
+            submitTime = oldList.get(0).getSubmitTime();
         } else {
             List<News> newList = adminDao.getNewById(id);
             if (newList.size() != 0) { // 是新企业
                 creditCode = newList.get(0).getCreditCode();
                 flag = 1;
+                submitTime = oldList.get(0).getSubmitTime();
             } else throw new ServiceException("该企业不存在");
         }
 
@@ -377,7 +379,7 @@ public class AdminServiceImpl implements AdminService {
         adminSuggestion.setNote(map.getString("note"));
         adminSuggestion.setId(id);
 
-        Audit audit = adminDao.getLastAuditByCreditCode(creditCode);
+        Audit audit = adminDao.getSameAuditByCreditCode(creditCode, submitTime);
         if (adminDao.agreeById(audit.getAuditId(), "通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
@@ -399,7 +401,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException {
         String id = map.getString("id");
-        String creditCode;
+        String creditCode, submitTime;
         int flag;
 
         // 首先判断用户是新企业还是旧企业
@@ -407,11 +409,13 @@ public class AdminServiceImpl implements AdminService {
         if (oldList.size() != 0) { // 是旧企业
             creditCode = oldList.get(0).getCreditCode();
             flag = 0;
+            submitTime = oldList.get(0).getSubmitTime();
         } else { // 是新企业
             List<News> newList = adminDao.getNewById(id) ;
             if (newList.size() != 0) {
                 creditCode = newList.get(0).getCreditCode();
                 flag = 1;
+                submitTime = oldList.get(0).getSubmitTime();
             } else throw new ServiceException("该企业不存在");
         }
 
@@ -422,7 +426,7 @@ public class AdminServiceImpl implements AdminService {
         adminSuggestion.setNote(map.getString("note"));
         adminSuggestion.setId(id);
 
-        Audit audit = adminDao.getLastAuditByCreditCode(creditCode);
+        Audit audit = adminDao.getSameAuditByCreditCode(creditCode, submitTime);
         if (adminDao.agreeById(audit.getAuditId(), "未通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {

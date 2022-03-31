@@ -3968,7 +3968,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/leader/authorization/technology`
+- `/api/leader/applying/technology`
 
 **请求方式：**
 

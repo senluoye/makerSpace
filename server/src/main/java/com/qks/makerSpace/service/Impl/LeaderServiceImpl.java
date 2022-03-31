@@ -297,42 +297,26 @@ public class LeaderServiceImpl implements LeaderService {
     @Override
     public Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException {
         String id = map.getString("id");
-        String creditCode;
-//        int flag;
+        String creditCode, submitTime;
 
         // 首先判断用户是新企业还是旧企业
         List<Old> oldList = leaderDao.getOldById(id);
         if (oldList.size() != 0) { // 是旧企业
             creditCode = oldList.get(0).getCreditCode();
-//            flag = 0;
+            submitTime = oldList.get(0).getSubmitTime();
         } else {
             List<News> newList = leaderDao.getNewById(id);
             if (newList.size() != 0) { // 是新企业
+                submitTime = oldList.get(0).getSubmitTime();
                 creditCode = newList.get(0).getCreditCode();
-//                flag = 1;
             } else throw new ServiceException("该企业不存在");
         }
 
-        // 初始化数据
-//        AdminSuggestion adminSuggestion = new AdminSuggestion();
-//        adminSuggestion.setCreditCode(creditCode);
-//        adminSuggestion.setSuggestion(map.getString("suggestion"));
-//        adminSuggestion.setNote(map.getString("note"));
-//        adminSuggestion.setId(id);
-
-        Audit audit = leaderDao.getLastAuditByCreditCode(creditCode);
+        // 根据creditCode和submitTime找到同一条记录
+        Audit audit = leaderDao.getSameAuditByCreditCode(creditCode, submitTime);
         if (leaderDao.agreeById(audit.getAuditId(), "通过") < 1) {
             throw new ServiceException("领导审核失败");
         }
-//        else {
-//            if (flag == 0) {
-//                if (leaderDao.updateOldSuggestion(adminSuggestion) < 0)
-//                    throw new ServiceException("更新失败");
-//            } else {
-//                if (leaderDao.updateNewSuggestion(adminSuggestion) < 0)
-//                    throw new ServiceException("更新失败");
-//            }
-//        }
 
         return MyResponseUtil.getResultMap(id, 0, "success");
     }
@@ -345,42 +329,25 @@ public class LeaderServiceImpl implements LeaderService {
     @Override
     public Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException {
         String id = map.getString("id");
-        String creditCode;
-//        int flag;
+        String creditCode, submitTime;
 
         // 首先判断用户是新企业还是旧企业
         List<Old> oldList = leaderDao.getOldById(id);
         if (oldList.size() != 0) { // 是旧企业
             creditCode = oldList.get(0).getCreditCode();
-//            flag = 0;
+            submitTime = oldList.get(0).getSubmitTime();
         } else { // 是新企业
             List<News> newList = leaderDao.getNewById(id) ;
             if (newList.size() != 0) {
                 creditCode = newList.get(0).getCreditCode();
-//                flag = 1;
+                submitTime = newList.get(0).getSubmitTime();
             } else throw new ServiceException("该企业不存在");
         }
 
-        // 初始化数据
-//        AdminSuggestion adminSuggestion = new AdminSuggestion();
-//        adminSuggestion.setCreditCode(creditCode);
-//        adminSuggestion.setSuggestion(map.getString("suggestion"));
-//        adminSuggestion.setNote(map.getString("note"));
-//        adminSuggestion.setId(id);
-
-        Audit audit = leaderDao.getLastAuditByCreditCode(creditCode);
+        Audit audit = leaderDao.getSameAuditByCreditCode(creditCode, submitTime);
         if (leaderDao.agreeById(audit.getAuditId(), "未通过") < 1) {
             throw new ServiceException("领导审核失败");
         }
-//        else {
-//            if (flag == 0) {
-//                if (leaderDao.updateOldSuggestion(adminSuggestion) < 0)
-//                    throw new ServiceException("更新失败");
-//            } else {
-//                if (leaderDao.updateNewSuggestion(adminSuggestion) < 0)
-//                    throw new ServiceException("更新失败");
-//            }
-//        }
 
         return MyResponseUtil.getResultMap(id, 0, "success");
     }

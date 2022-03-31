@@ -152,4 +152,7 @@ public interface LeaderDao {
     @Update("update old set suggestion = #{suggestion}, note = #{note} " +
             "where old_id = #{id}")
     Integer updateOldSuggestion(AdminSuggestion adminSuggestion);
+
+    @Select("select * from audit where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    Audit getSameAuditByCreditCode(String creditCode, String submitTime);
 }
