@@ -5,6 +5,7 @@ import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.dao.RecoverableDataAccessException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -68,6 +69,23 @@ public class GlobalExceptionHandler {
         logger.info(String.valueOf(e));
 
         return MyResponseUtil.getResultMap(null, -1, "数据库连接异常");
+    }
+
+    /**
+     * 数据库连接异常2
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = RecoverableDataAccessException.class)
+    @ResponseBody
+    private Map<String, Object> RecoverableDataAccessExceptionHandler(HttpServletRequest req, Exception e) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        logger.info("最新的请求: " + df.format(new Date()));
+        logger.info(req.getRequestURI());
+        logger.info(String.valueOf(e));
+
+        return MyResponseUtil.getResultMap(null, -1, "数据库连接异常，请重新提交");
     }
 
     /**

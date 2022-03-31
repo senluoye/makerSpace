@@ -167,6 +167,9 @@ public interface OldEnterpriseDao {
     @Select("select credit_code from user_company where user_id = #{userId}")
     List<String> selectCreditCodeByUserId(String userId);
 
+    @Select("select old_id from old where credit_code = #{creditCode}")
+    List<String> getOldIdList(String creditCode);
+
     @Select("select old.old_id id, old.name, old.suggestion, audit.administrator_audit, audit.leadership_audit, audit.submit_time " +
             "from old, audit " +
             "where old.credit_code = #{creditCode} " +

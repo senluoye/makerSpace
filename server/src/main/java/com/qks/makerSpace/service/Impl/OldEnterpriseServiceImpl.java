@@ -293,7 +293,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> oldEnterpriseContract(String token, MultipartFile file) throws ServiceException, IOException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
-        if (creditCodes.size() == 0) throw new ServiceException("您还没有填写入园申请表");
+        if (creditCodes.size() == 0) throw new ServiceException("您还没有申请账号");
+        List<String> oldIdList = oldEnterpriseDao.getOldIdList(creditCodes.get(0));
+        if (oldIdList.size() == 0) throw new ServiceException("您还没有填写入驻申请表");
 
         String creditCode = creditCodes.get(0);
         String submitTime = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss").format(new Date());

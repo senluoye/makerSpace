@@ -80,7 +80,7 @@ public class AdminServiceImpl implements AdminService {
         adminDao.addNewUser(user);
 
         // 之后删除申请表中对应用户的申请记录
-        adminDao.deleteUserAccountApplying(userAccountId);
+        adminDao.deleteUserAccountApplying(userId);
 
         String text = "公司名称：" + user.getName() + "\n" + "公司密码：" + user.getPassword();
 

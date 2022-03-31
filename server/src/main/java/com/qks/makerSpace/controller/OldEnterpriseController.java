@@ -82,7 +82,6 @@ public class OldEnterpriseController {
                                                  @RequestPart("paymentVoucher") MultipartFile voucher) throws ServiceException, IOException {
         if (voucher == null)
             throw new ServiceException("缺少缴费凭证");
-
         return oldEnterpriseService.oldEnterpriseContract(httpServletRequest.getHeader("token"), voucher);
     }
 
