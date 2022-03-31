@@ -12,4 +12,5 @@ public class User {
     private Integer userDescribe;
     private String email;
     private String submitTime; // 表示分配用户账号的时间
+    private Boolean alive; // 退出状态
 }

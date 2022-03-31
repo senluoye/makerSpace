@@ -53,6 +53,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                                            MultipartFile certificate,
                                            MultipartFile[] intellectualFile) throws Exception {
         String userId = JWTUtils.parser(token).get("userId").toString();
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
         User user = newEnterpriseDao.getUserByUserId(userId);
         if (user == null) return  MyResponseUtil.getResultMap(null,-1,"用户不存在");
         JSONObject map = JSONObject.parseObject(str);
@@ -135,7 +136,10 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         audit.setCreditCode(creditCode);
         audit.setAdministratorAudit("未审核");
         audit.setLeadershipAudit("未审核");
-        audit.setDescribe("科技园");
+        if (userDescribe.equals("2") || userDescribe.equals("3"))
+            audit.setDescribe("科技园");
+        else
+            audit.setDescribe("众创空间");
         audit.setSubmitTime(time);
 
         if (newEnterpriseDao.insertAudit(audit) <= 0)

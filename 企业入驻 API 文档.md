@@ -177,7 +177,7 @@ token 保存时间待定
 
 ~~~json
 {
-    "name":"<String>",						//公司名
+    "id":"<String>",						//账号
     "password":"<String>"					//密码
 }
 ~~~
