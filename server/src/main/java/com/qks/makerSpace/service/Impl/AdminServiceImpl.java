@@ -58,7 +58,7 @@ public class AdminServiceImpl implements AdminService {
          */
         String name = map.getString("name");
         String password = map.getString("password");
-        String userAccountId = map.getString("userAccountId");
+        String userId = map.getString("userAccountId");
 
         // 首先看看申请表里有没有这位用户
         UserAccountApplying userAccountApplying = adminDao.getUserFormApplyingByName(name);
@@ -67,11 +67,11 @@ public class AdminServiceImpl implements AdminService {
         /**
          * 如果user表中没有该用户，则修改密码并向user表中添加用户，否则报错
          */
-        List<User> users = adminDao.getUserByName(name);
+        List<User> users = adminDao.getUserById(userId);
         if (users.size() != 0) throw new ServiceException("用户已存在，不需要重新分配");
 
         User user = new User();
-        user.setUserId(userAccountId);
+        user.setUserId(userId);
         user.setName(userAccountApplying.getName());
         user.setPassword(password);
         user.setUserDescribe(userAccountApplying.getDescribe());
@@ -368,7 +368,7 @@ public class AdminServiceImpl implements AdminService {
             if (newList.size() != 0) { // 是新企业
                 creditCode = newList.get(0).getCreditCode();
                 flag = 1;
-                submitTime = oldList.get(0).getSubmitTime();
+                submitTime = newList.get(0).getSubmitTime();
             } else throw new ServiceException("该企业不存在");
         }
 
@@ -415,7 +415,7 @@ public class AdminServiceImpl implements AdminService {
             if (newList.size() != 0) {
                 creditCode = newList.get(0).getCreditCode();
                 flag = 1;
-                submitTime = oldList.get(0).getSubmitTime();
+                submitTime = newList.get(0).getSubmitTime();
             } else throw new ServiceException("该企业不存在");
         }
 

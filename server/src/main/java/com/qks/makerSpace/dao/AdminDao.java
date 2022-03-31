@@ -34,8 +34,8 @@ public interface AdminDao {
      * @param name
      * @return
      */
-    @Select("select * from user where name = #{name}")
-    List<User> getUserByName(String name);
+    @Select("select * from user where user_id = #{userId}")
+    List<User> getUserById(String userId);
 
     /**
      * 增加新用户

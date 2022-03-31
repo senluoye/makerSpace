@@ -307,7 +307,8 @@ public class LeaderServiceImpl implements LeaderService {
         } else {
             List<News> newList = leaderDao.getNewById(id);
             if (newList.size() != 0) { // 是新企业
-                submitTime = oldList.get(0).getSubmitTime();
+                System.out.println(newList);
+                submitTime = newList.get(0).getSubmitTime();
                 creditCode = newList.get(0).getCreditCode();
             } else throw new ServiceException("该企业不存在");
         }
