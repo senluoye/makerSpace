@@ -5,7 +5,6 @@ import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.*;
-import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.TimeFormRes;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Select;
@@ -46,15 +45,15 @@ public interface LeaderDao {
     @Select("select create_name name from space where in_apply_id = #{in_apply_id}")
     List<String> getSpaceNameByCreditCode(String inApplyId);
 
-    @Update("update form set leader_audit = '2' where form_id = #{formId}")
+    @Update("update form set leader_audit = '通过' where form_id = #{formId}")
     Integer agreeForm(String formId);
 
-    @Update("update form set leader_audit = '1' where form_id = #{formId}")
+    @Update("update form set leader_audit = '未通过' where form_id = #{formId}")
     Integer disagreeForm(String formId);
 
     @Select("select year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit " +
-            "from form where get_time in (select max(get_time) from form " +
-            "group by credit_code) and admin_audit = '2' and leader_audit = '0' ")
+            "from form where get_time in (select max(get_time) from form" +
+            "group by credit_code) and admin_audit = '通过' and leader_audit = '未审核' ")
     List<BriefFormReq> getLeaderAudit();
 
     @Select("select * from form where form_id = #{id}")
@@ -127,32 +126,15 @@ public interface LeaderDao {
     @Select("select * from form_awards where form_awards_id = #{awardsId}")
     List<FormAwardsData> getFormAwardsById(String awardsId);
 
+    @Select("select * from audit where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    Audit getSameAuditByCreditCode(String creditCode, String submitTime);
+
+    @Update("update audit set administrator_audit = #{agree} where audit_id = #{id}")
+    Integer agreeById(String id, String agree);
+
     @Select("select * from old where old_id = #{oldId}")
     List<Old> getOldById(String oldId);
 
     @Select("select * from new where new_id = #{newId}")
     List<News> getNewById(String newId);
-
-    @Select("select * " +
-            "from audit " +
-            "where credit_code = #{creditCode} " +
-            "and submit_time = (" +
-            "   select max(submit_time) " +
-            "   from audit " +
-            "   where credit_code = #{creditCode} " +
-            ")")
-    Audit getLastAuditByCreditCode(String creditCode);
-
-    @Update("update audit set leadership_audit = #{agree} where audit_id = #{id}")
-    Integer agreeById(String id, String agree);
-
-    @Update("update audit set leadership_audit = #{disagree} where credit_code = #{inApplyId}")
-    Integer disagreeById(String inApplyId, String disagree);
-
-    @Update("update old set suggestion = #{suggestion}, note = #{note} " +
-            "where old_id = #{id}")
-    Integer updateOldSuggestion(AdminSuggestion adminSuggestion);
-
-    @Select("select * from audit where credit_code = #{creditCode} and submit_time = #{submitTime}")
-    Audit getSameAuditByCreditCode(String creditCode, String submitTime);
 }
