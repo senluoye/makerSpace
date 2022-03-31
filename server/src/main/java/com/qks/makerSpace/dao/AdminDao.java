@@ -267,7 +267,7 @@ public interface AdminDao {
     List<BriefFormReq> getLeaderAudit();
 
     @Select("select form_id as id, year, quarter, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
-            "from form where get_time in (select max(get_time) from form" +
+            "from form where get_time in (select max(get_time) from form " +
             "group by credit_code) and admin_audit = '2' and leader_audit = '2' ")
     List<BriefFormReq> getAudited();
 

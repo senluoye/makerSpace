@@ -5,10 +5,12 @@ import com.qks.makerSpace.dao.LeaderDao;
 import com.qks.makerSpace.entity.Temp.EmploymentData;
 import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
+import com.qks.makerSpace.entity.database.Audit;
 import com.qks.makerSpace.entity.database.Form;
 import com.qks.makerSpace.entity.database.News;
 import com.qks.makerSpace.entity.database.Old;
 import com.qks.makerSpace.entity.request.*;
+import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.TimeFormRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.LeaderService;
@@ -285,6 +287,102 @@ public class LeaderServiceImpl implements LeaderService {
         String quarter = map.getString("quarter");
         List<TimeFormRes> data = leaderDao.getFormListByTime(year, quarter);
         return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 同意科技园入驻申请
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException {
+        String id = map.getString("id");
+        String creditCode;
+//        int flag;
+
+        // 首先判断用户是新企业还是旧企业
+        List<Old> oldList = leaderDao.getOldById(id);
+        if (oldList.size() != 0) { // 是旧企业
+            creditCode = oldList.get(0).getCreditCode();
+//            flag = 0;
+        } else {
+            List<News> newList = leaderDao.getNewById(id);
+            if (newList.size() != 0) { // 是新企业
+                creditCode = newList.get(0).getCreditCode();
+//                flag = 1;
+            } else throw new ServiceException("该企业不存在");
+        }
+
+        // 初始化数据
+//        AdminSuggestion adminSuggestion = new AdminSuggestion();
+//        adminSuggestion.setCreditCode(creditCode);
+//        adminSuggestion.setSuggestion(map.getString("suggestion"));
+//        adminSuggestion.setNote(map.getString("note"));
+//        adminSuggestion.setId(id);
+
+        Audit audit = leaderDao.getLastAuditByCreditCode(creditCode);
+        if (leaderDao.agreeById(audit.getAuditId(), "通过") < 1) {
+            throw new ServiceException("领导审核失败");
+        }
+//        else {
+//            if (flag == 0) {
+//                if (leaderDao.updateOldSuggestion(adminSuggestion) < 0)
+//                    throw new ServiceException("更新失败");
+//            } else {
+//                if (leaderDao.updateNewSuggestion(adminSuggestion) < 0)
+//                    throw new ServiceException("更新失败");
+//            }
+//        }
+
+        return MyResponseUtil.getResultMap(id, 0, "success");
+    }
+
+    /**
+     * 不同意科技园入驻申请
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException {
+        String id = map.getString("id");
+        String creditCode;
+//        int flag;
+
+        // 首先判断用户是新企业还是旧企业
+        List<Old> oldList = leaderDao.getOldById(id);
+        if (oldList.size() != 0) { // 是旧企业
+            creditCode = oldList.get(0).getCreditCode();
+//            flag = 0;
+        } else { // 是新企业
+            List<News> newList = leaderDao.getNewById(id) ;
+            if (newList.size() != 0) {
+                creditCode = newList.get(0).getCreditCode();
+//                flag = 1;
+            } else throw new ServiceException("该企业不存在");
+        }
+
+        // 初始化数据
+//        AdminSuggestion adminSuggestion = new AdminSuggestion();
+//        adminSuggestion.setCreditCode(creditCode);
+//        adminSuggestion.setSuggestion(map.getString("suggestion"));
+//        adminSuggestion.setNote(map.getString("note"));
+//        adminSuggestion.setId(id);
+
+        Audit audit = leaderDao.getLastAuditByCreditCode(creditCode);
+        if (leaderDao.agreeById(audit.getAuditId(), "未通过") < 1) {
+            throw new ServiceException("领导审核失败");
+        }
+//        else {
+//            if (flag == 0) {
+//                if (leaderDao.updateOldSuggestion(adminSuggestion) < 0)
+//                    throw new ServiceException("更新失败");
+//            } else {
+//                if (leaderDao.updateNewSuggestion(adminSuggestion) < 0)
+//                    throw new ServiceException("更新失败");
+//            }
+//        }
+
+        return MyResponseUtil.getResultMap(id, 0, "success");
     }
 
 

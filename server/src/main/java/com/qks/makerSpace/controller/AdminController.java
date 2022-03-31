@@ -1,19 +1,14 @@
 package com.qks.makerSpace.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.JWTUtils;
-import lombok.ToString;
 import org.springframework.web.bind.annotation.*;
-import java.util.Map;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -53,7 +48,7 @@ public class AdminController {
 
     /**
      * 获取全部已入园审核科技园企业部分信息（没用到）
-     * @return
+     * @return map
      */
     @RequestMapping(value = "space/all", method = RequestMethod.GET)
     private Map<String, Object> getSpaceAllDetails() {
@@ -62,13 +57,13 @@ public class AdminController {
 
     /**
      * 获取最新所有未审核科技园入园申请
-     * @return
+     * @return map
      */
     @RequestMapping(value = "applying/technology", method = RequestMethod.GET)
     private Map<String, Object> getAllTechnologyApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getAllTechnologyApplying();
         else
             throw new ServiceException("请求主体非管理员");
@@ -76,13 +71,13 @@ public class AdminController {
 
     /**
      * 获取最新所有未审核众创空间入园申请
-     * @return
+     * @return map
      */
     @RequestMapping(value = "applying/space", method = RequestMethod.GET)
     private Map<String, Object> getAllSpaceApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getAllSpaceApplying();
         else
             throw new ServiceException("请求主体非管理员");
@@ -91,14 +86,14 @@ public class AdminController {
     /**
      * 获取最新所有已审核科技园入园申请
      * @param httpServletRequest
-     * @return
+     * @return map
      * @throws ServiceException
      */
     @RequestMapping(value = "applied/technology", method = RequestMethod.GET)
     private Map<String, Object> getApplied(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getAllTechnologyApplied();
         else
             throw new ServiceException("请求主体非管理员");
@@ -111,8 +106,8 @@ public class AdminController {
     @RequestMapping(value = "applying/all", method = RequestMethod.GET)
     private Map<String, Object> getAllApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getAllApplying();
         else throw new ServiceException("请求主体非管理员");
     }
@@ -174,7 +169,7 @@ public class AdminController {
     }
 
     /**
-     * 取消某一个企业科技园申请
+     * 不同意某一个企业科技园申请
      * @return HashMap
      */
     @RequestMapping(value = "technology/countermand", method = RequestMethod.POST)
@@ -209,8 +204,8 @@ public class AdminController {
     @RequestMapping(value = "form/timelist", method = RequestMethod.GET)
     private Map<String, Object> getFormTimeList(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getFormTimeList();
         else
             throw new ServiceException("请求主体非管理员");
@@ -226,8 +221,8 @@ public class AdminController {
     private Map<String, Object> getFormList(HttpServletRequest httpServletRequest,
                                             @RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getFormList(map);
         else
             throw new ServiceException("请求主体非管理员");
@@ -242,8 +237,8 @@ public class AdminController {
     @RequestMapping(value = "form/doubleAudit", method = RequestMethod.GET)
     private Map<String, Object> getFormToAudit(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getFormToAudit();
         else
             throw new ServiceException("请求主体非管理员");
@@ -258,8 +253,8 @@ public class AdminController {
     @RequestMapping(value = "form/leaderAudit", method = RequestMethod.GET)
     private Map<String, Object> getFormLeaderAudit(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getFormLeaderAudit();
         else
             throw new ServiceException("请求主体非管理员");
@@ -274,8 +269,8 @@ public class AdminController {
     @RequestMapping(value = "form/audited", method = RequestMethod.GET)
     private Map<String, Object> getAudited(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getAudited();
         else
             throw new ServiceException("请求主体非管理员");
@@ -290,10 +285,9 @@ public class AdminController {
      */
     @RequestMapping(value = "form/detail", method = RequestMethod.POST)
     private Map<String, Object> getFormDetail(HttpServletRequest httpServletRequest,@RequestBody JSONObject map) throws ServiceException {
-
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getFormDetail(map);
         else
             throw new ServiceException("请求主体非管理员");
@@ -309,8 +303,8 @@ public class AdminController {
     @RequestMapping(value = "form/company", method = RequestMethod.POST)
     private Map<String, Object> getFormByCompany(HttpServletRequest httpServletRequest,@RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.getFormByCompany(map);
         else
             throw new ServiceException("请求主体非管理员");
@@ -326,8 +320,8 @@ public class AdminController {
     @RequestMapping(value = "form/delete", method = RequestMethod.DELETE)
     private Map<String, Object> deleteForm(HttpServletRequest httpServletRequest,@RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.deleteForm(map);
         else
             throw new ServiceException("请求主体非管理员");
@@ -351,8 +345,8 @@ public class AdminController {
     @RequestMapping(value = "/form/agree", method = RequestMethod.POST)
     private Map<String, Object> agreeForm(HttpServletRequest httpServletRequest, @RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.agreeFormById(map);
         else
             throw new ServiceException("请求主体非管理员");
@@ -368,8 +362,8 @@ public class AdminController {
     @RequestMapping(value = "form/disagree", method = RequestMethod.POST)
     private Map<String, Object> disagreeForm(HttpServletRequest httpServletRequest, @RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("11") || userDescribe.equals("12"))
             return adminService.disagreeFormById(map);
         else
             throw new ServiceException("请求主体非管理员");

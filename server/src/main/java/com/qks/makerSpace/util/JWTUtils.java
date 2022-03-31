@@ -40,7 +40,7 @@ public class JWTUtils {
      */
     public static Boolean verify(String token) {
         try {
-            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token);
         } catch (JwtException e) {
             return false;
         }
@@ -54,8 +54,9 @@ public class JWTUtils {
      * @return
      */
     public static Claims parser(String token){
-        return Jwts.parser()                // 创建解析对象
+        return Jwts.parserBuilder()                // 创建解析对象
                 .setSigningKey(secretKey)   // 设置安全密钥（生成签名所需的密钥和算法）
+                .build()
                 .parseClaimsJws(token)      // 解析token
                 .getBody();
     }
