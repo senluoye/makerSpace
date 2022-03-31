@@ -31,14 +31,24 @@ public class LoginController {
     }
 
     /**
-     * 管理员登陆
+     * 科技园管理员登陆
      * @param map
      * @return
      */
     @RequestMapping(value = "admin", method = RequestMethod.POST)
-    private Map<String, Object> AdminLogin(@RequestBody Map<String, Object> map) throws ServiceException {
-        return loginService.AdminLogin(map);
+    private Map<String, Object> TecAdminLogin(@RequestBody Map<String, Object> map) throws ServiceException {
+        return loginService.TecAdminLogin(map);
     }
+
+    /**
+     * 众创空间管理员登陆
+     * @param map
+     * @return
+     */
+//    @RequestMapping(value = "admin", method = RequestMethod.POST)
+//    private Map<String, Object> SpaceAdminLogin(@RequestBody Map<String, Object> map) throws ServiceException {
+//        return loginService.SpaceAdminLogin(map);
+//    }
 
     /**
      * 普通成员登陆

@@ -897,7 +897,7 @@ map部分：
         "submitTime":"<String>",			// 表单提交时间
         "administratorAudit":"<String>",	// 管理员审核情况
         "leadershipAudit":"<String>",		// 领导审核情况
-        "suggestion":"<String>"				//科技园意见
+        "suggestion":"<String>"				// 科技园意见
     },
     ......       
     ],
@@ -3466,7 +3466,7 @@ map部分：
 
 ```json
 {
-    "data":formId,
+    "data":"formId",
     "code":0,
     "msg":"success"
 }
@@ -3498,7 +3498,7 @@ map部分：
 
 ```json
 {
-    "data":formId,
+    "data":"formId",
     "code":0,
     "msg":"success"
 }
@@ -3968,7 +3968,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/leader/authorization/technology`
+- `/api/leader/applying/technology`
 
 **请求方式：**
 
@@ -4871,7 +4871,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/admin/technology/notarize`
+- `/api/leader/technology/notarize`
 
 **请求方式：**
 
@@ -4881,9 +4881,7 @@ map部分：
 
 ```json
 {
-    "creditCode":"<String>",
-    "suggestion":"<String>",								//科技园意见
-    "note":"<String>"    								//备注
+    "id":"<String>"									// 科技园企业的表的唯一id
 }
 ```
 
@@ -4907,7 +4905,7 @@ map部分：
 
 **请求URL：**
 
-- `/api/admin/technology/countermand`
+- `/api/leader/technology/countermand`
 
 **请求方式：**
 
@@ -4917,9 +4915,7 @@ map部分：
 
 ```json
 {
-    "creditCode":"<String>",
-    "suggestion":"<String>",								//科技园意见
-    "note":"<String>"    								//备注
+    "creditCode":"<String>"
 }
 ```
 
@@ -4934,6 +4930,8 @@ map部分：
     "msg":"success"
 }
 ```
+
+
 
 ### 季度报表审核通过
 

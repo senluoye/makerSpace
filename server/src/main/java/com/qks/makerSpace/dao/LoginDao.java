@@ -15,7 +15,7 @@ public interface LoginDao {
 
     @Select("select * from user " +
             "where name = #{name} and password = #{password} and user_describe = #{role}")
-    String adminOrLeaderLogin(String name, String password, int role);
+    User adminOrLeaderLogin(String name, String password, int role);
 
     @Select("select user_id from user " +
             "where name = #{username} " +

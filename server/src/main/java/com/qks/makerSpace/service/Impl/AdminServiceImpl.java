@@ -108,7 +108,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Map<String, Object> getAllTechnologyApplying() {
+    public Map<String, Object> getAllTechnologyApplying() throws ServiceException {
         List<AdminTechnologyApplyingReq> lists = adminDao.getAllTechnologyApplying();
         for (AdminTechnologyApplyingReq applyingReq : lists) {
             String id;
@@ -135,7 +135,7 @@ public class AdminServiceImpl implements AdminService {
      * 获取最新所有已审核科技园入园申请
      * @return
      */
-    public Map<String, Object> getAllTechnologyApplied() {
+    public Map<String, Object> getAllTechnologyApplied() throws ServiceException {
         List<AdminTechnologyApplyingReq> lists = adminDao.getAllApplied();
         for (AdminTechnologyApplyingReq applyingReq : lists) {
             String id;
@@ -162,17 +162,7 @@ public class AdminServiceImpl implements AdminService {
      * 获取所有科技园入园申请信息缩略版（包含审核与未审核）
      * @return
      */
-    public Map<String, Object> getAllApplying() {
-        // 获取科技园表中所有公司的最新入园申请信息
-//        List<AllTechnologyApplyingRes> lists = adminDao.getTechnologyApplying();
-//
-//        for (AllTechnologyApplyingRes i : lists) {
-//            Audit audit = adminDao.getAuditByCreditCode(i.getCreditCode());
-//            if (audit != null) i.setAdministratorAudit(audit.getAdministratorAudit());
-//            else i.setAdministratorAudit("未提交");
-//            i.setDescribe("科技园");
-//        }
-
+    public Map<String, Object> getAllApplying() throws ServiceException {
         List<AdminTechnologyApplyingReq> lists = adminDao.getAllApplying();
         for (AdminTechnologyApplyingReq applyingReq : lists) {
             String id;
@@ -200,7 +190,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Map<String, Object> getAllSpaceApplying() {
+    public Map<String, Object> getAllSpaceApplying() throws ServiceException {
         List<AdminSpaceApplyingReq> lists = adminDao.getAllSpaceApplying();
         for (AdminSpaceApplyingReq spaceApplyingReq : lists) {
             System.out.println(spaceApplyingReq);
@@ -364,17 +354,23 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException {
         String id = map.getString("id");
-        String creditCode;
+        String creditCode, submitTime;
         int flag;
 
         // 首先判断用户是新企业还是旧企业
-        if (adminDao.getOldById(id).size() != 0) { // 是旧企业
-            creditCode = adminDao.getOldCreditCodeById(id).get(0);
+        List<Old> oldList = adminDao.getOldById(id);
+        if (oldList.size() != 0) { // 是旧企业
+            creditCode = oldList.get(0).getCreditCode();
             flag = 0;
-        } else if (adminDao.getNewById(id).size() != 0){ // 是新企业
-            creditCode = adminDao.getNewCreditCodeById(id).get(0);
-            flag = 1;
-        } else throw new ServiceException("该企业不存在");
+            submitTime = oldList.get(0).getSubmitTime();
+        } else {
+            List<News> newList = adminDao.getNewById(id);
+            if (newList.size() != 0) { // 是新企业
+                creditCode = newList.get(0).getCreditCode();
+                flag = 1;
+                submitTime = oldList.get(0).getSubmitTime();
+            } else throw new ServiceException("该企业不存在");
+        }
 
         // 初始化数据
         AdminSuggestion adminSuggestion = new AdminSuggestion();
@@ -383,7 +379,7 @@ public class AdminServiceImpl implements AdminService {
         adminSuggestion.setNote(map.getString("note"));
         adminSuggestion.setId(id);
 
-        Audit audit = adminDao.getLastAuditByCreditCode(creditCode);
+        Audit audit = adminDao.getSameAuditByCreditCode(creditCode, submitTime);
         if (adminDao.agreeById(audit.getAuditId(), "通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
@@ -399,23 +395,29 @@ public class AdminServiceImpl implements AdminService {
         return MyResponseUtil.getResultMap(id, 0, "success");
     }
     /**
-     * 取消某一个企业科技园申请
+     * 不同意某一个企业科技园申请
      * @return HashMap
      */
     @Override
     public Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException {
         String id = map.getString("id");
-        String creditCode;
+        String creditCode, submitTime;
         int flag;
 
         // 首先判断用户是新企业还是旧企业
-        if (adminDao.getOldById(id).size() != 0) { // 是旧企业
-            creditCode = adminDao.getOldCreditCodeById(id).get(0);
+        List<Old> oldList = adminDao.getOldById(id);
+        if (oldList.size() != 0) { // 是旧企业
+            creditCode = oldList.get(0).getCreditCode();
             flag = 0;
-        } else if (adminDao.getNewById(id).size() != 0){ // 是新企业
-            creditCode = adminDao.getNewCreditCodeById(id).get(0);
-            flag = 1;
-        } else throw new ServiceException("该企业不存在");
+            submitTime = oldList.get(0).getSubmitTime();
+        } else { // 是新企业
+            List<News> newList = adminDao.getNewById(id) ;
+            if (newList.size() != 0) {
+                creditCode = newList.get(0).getCreditCode();
+                flag = 1;
+                submitTime = oldList.get(0).getSubmitTime();
+            } else throw new ServiceException("该企业不存在");
+        }
 
         // 初始化数据
         AdminSuggestion adminSuggestion = new AdminSuggestion();
@@ -424,7 +426,7 @@ public class AdminServiceImpl implements AdminService {
         adminSuggestion.setNote(map.getString("note"));
         adminSuggestion.setId(id);
 
-        Audit audit = adminDao.getLastAuditByCreditCode(creditCode);
+        Audit audit = adminDao.getSameAuditByCreditCode(creditCode, submitTime);
         if (adminDao.agreeById(audit.getAuditId(), "未通过") < 1) {
             throw new ServiceException("管理员审核失败");
         } else {
@@ -648,7 +650,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public Map<String, Object> getFormTimeList() {
+    public Map<String, Object> getFormTimeList() throws ServiceException {
         List<String> timeList = adminDao.getTimeList();
         return MyResponseUtil.getResultMap(timeList, 0, "success");
     }

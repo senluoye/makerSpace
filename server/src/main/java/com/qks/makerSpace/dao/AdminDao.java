@@ -228,6 +228,9 @@ public interface AdminDao {
     @Update("update audit set administrator_audit = #{disagree} where credit_code = #{inApplyId}")
     Integer disagreeById(String inApplyId, String disagree);
 
+    @Select("select * from audit where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    Audit getSameAuditByCreditCode(String creditCode, String submitTime);
+
     @Select("select * from audit " +
             "where credit_code = #{id} " +
             "and submit_time = (" +
@@ -258,17 +261,17 @@ public interface AdminDao {
 //----季度报表操作从此处-----
     @Select("select form_id as id, year, quarter, team_name, credit_code, get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
-            "group by credit_code) and admin_audit <> '通过'")
+            "group by credit_code) and admin_audit <> '2'")
     List<BriefFormReq> getDoubleAudit();
 
     @Select("select form_id as id, year, quarter, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
             "from form where get_time in (select max(get_time) from form " +
-            "group by credit_code) and admin_audit = '通过' and leader_audit <> '通过' ")
+            "group by credit_code) and admin_audit = '2' and leader_audit <> '2' ")
     List<BriefFormReq> getLeaderAudit();
 
     @Select("select form_id as id, year, quarter, team_name, credit_code, get_time get_time, admin_audit, leader_audit, alive " +
-            "from form where get_time in (select max(get_time) from form" +
-            "group by credit_code) and admin_audit = '通过' and leader_audit = '通过' ")
+            "from form where get_time in (select max(get_time) from form " +
+            "group by credit_code) and admin_audit = '2' and leader_audit = '2' ")
     List<BriefFormReq> getAudited();
 
     @Select("select * from form where form_id = #{id}")

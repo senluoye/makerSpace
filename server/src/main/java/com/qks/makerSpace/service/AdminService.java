@@ -22,10 +22,10 @@ public interface AdminService {
 
 
     //获取最新的入园审核
-    Map<String, Object> getAllTechnologyApplying();
-    Map<String, Object> getAllApplying();
-    Map<String, Object> getAllTechnologyApplied();
-    Map<String, Object> getAllSpaceApplying();
+    Map<String, Object> getAllTechnologyApplying() throws ServiceException;
+    Map<String, Object> getAllApplying() throws ServiceException;
+    Map<String, Object> getAllTechnologyApplied() throws ServiceException;
+    Map<String, Object> getAllSpaceApplying() throws ServiceException;
 
     // 相关服务
     Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException;
@@ -42,7 +42,7 @@ public interface AdminService {
     Map<String, Object> getFormDetail(JSONObject map) throws ServiceException;
     Map<String, Object> getFormByCompany(JSONObject map) throws ServiceException;
     Map<String, Object> deleteForm(JSONObject map) throws ServiceException;
-    Map<String, Object> getFormTimeList();
+    Map<String, Object> getFormTimeList() throws ServiceException;
     Map<String, Object> getFormList(JSONObject map);
 
     Map<String, Object> getDownLoadForm();

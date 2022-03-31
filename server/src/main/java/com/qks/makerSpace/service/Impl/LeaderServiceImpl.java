@@ -5,10 +5,12 @@ import com.qks.makerSpace.dao.LeaderDao;
 import com.qks.makerSpace.entity.Temp.EmploymentData;
 import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
+import com.qks.makerSpace.entity.database.Audit;
 import com.qks.makerSpace.entity.database.Form;
 import com.qks.makerSpace.entity.database.News;
 import com.qks.makerSpace.entity.database.Old;
 import com.qks.makerSpace.entity.request.*;
+import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.TimeFormRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.LeaderService;
@@ -285,6 +287,69 @@ public class LeaderServiceImpl implements LeaderService {
         String quarter = map.getString("quarter");
         List<TimeFormRes> data = leaderDao.getFormListByTime(year, quarter);
         return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 同意科技园入驻申请
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> agreeTechnologyById(JSONObject map) throws ServiceException {
+        String id = map.getString("id");
+        String creditCode, submitTime;
+
+        // 首先判断用户是新企业还是旧企业
+        List<Old> oldList = leaderDao.getOldById(id);
+        if (oldList.size() != 0) { // 是旧企业
+            creditCode = oldList.get(0).getCreditCode();
+            submitTime = oldList.get(0).getSubmitTime();
+        } else {
+            List<News> newList = leaderDao.getNewById(id);
+            if (newList.size() != 0) { // 是新企业
+                submitTime = oldList.get(0).getSubmitTime();
+                creditCode = newList.get(0).getCreditCode();
+            } else throw new ServiceException("该企业不存在");
+        }
+
+        // 根据creditCode和submitTime找到同一条记录
+        Audit audit = leaderDao.getSameAuditByCreditCode(creditCode, submitTime);
+        if (leaderDao.agreeById(audit.getAuditId(), "通过") < 1) {
+            throw new ServiceException("领导审核失败");
+        }
+
+        return MyResponseUtil.getResultMap(id, 0, "success");
+    }
+
+    /**
+     * 不同意科技园入驻申请
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> disagreeTechnologyById(JSONObject map) throws ServiceException {
+        String id = map.getString("id");
+        String creditCode, submitTime;
+
+        // 首先判断用户是新企业还是旧企业
+        List<Old> oldList = leaderDao.getOldById(id);
+        if (oldList.size() != 0) { // 是旧企业
+            creditCode = oldList.get(0).getCreditCode();
+            submitTime = oldList.get(0).getSubmitTime();
+        } else { // 是新企业
+            List<News> newList = leaderDao.getNewById(id) ;
+            if (newList.size() != 0) {
+                creditCode = newList.get(0).getCreditCode();
+                submitTime = newList.get(0).getSubmitTime();
+            } else throw new ServiceException("该企业不存在");
+        }
+
+        Audit audit = leaderDao.getSameAuditByCreditCode(creditCode, submitTime);
+        if (leaderDao.agreeById(audit.getAuditId(), "未通过") < 1) {
+            throw new ServiceException("领导审核失败");
+        }
+
+        return MyResponseUtil.getResultMap(id, 0, "success");
     }
 
 

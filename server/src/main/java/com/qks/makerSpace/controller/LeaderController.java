@@ -30,8 +30,8 @@ public class LeaderController {
     @RequestMapping(value = "applying/technology", method = RequestMethod.GET)
     private Map<String, Object> getAllTechnologyApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.getAllTechnologyApplying();
         else
             throw new ServiceException("请求主体非领导");
@@ -46,8 +46,8 @@ public class LeaderController {
     @RequestMapping(value = "applied/technology" , method = RequestMethod.GET)
     private Map<String, Object> getApplied(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.getAllTechnologyApplied();
         else
             throw new ServiceException("请求主体非领导");
@@ -62,8 +62,8 @@ public class LeaderController {
     @RequestMapping(value = "applying/all", method = RequestMethod.GET)
     private Map<String, Object> getAllApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.getAllApplying();
         else throw new ServiceException("请求主体非领导");
     }
@@ -93,21 +93,11 @@ public class LeaderController {
     @RequestMapping(value = "authorization/space", method = RequestMethod.GET)
     private Map<String, Object> authorizationSpace(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.authorizationSpace();
         else
-            throw new ServiceException("请求主体非管理员");
-    }
-
-    /**
-     * 增加管理员
-     * @param map
-     * @return
-     */
-    @RequestMapping(value = "authorization/admin", method = RequestMethod.POST)
-    private Map<String, Object> addAdmin(@RequestBody JSONObject map) {
-        return null;
+            throw new ServiceException("请求主体非领导");
     }
 
     /**
@@ -120,11 +110,11 @@ public class LeaderController {
     @RequestMapping(value = "/form/agree", method = RequestMethod.POST)
     private Map<String, Object> agreeForm(HttpServletRequest httpServletRequest, @RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.agreeFormById(map);
         else
-            throw new ServiceException("请求主体非管理员");
+            throw new ServiceException("请求主体非领导");
     }
 
     /**
@@ -137,11 +127,11 @@ public class LeaderController {
     @RequestMapping(value = "form/disagree", method = RequestMethod.POST)
     private Map<String, Object> disagreeForm(HttpServletRequest httpServletRequest, @RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.disagreeFormById(map);
         else
-            throw new ServiceException("请求主体非管理员");
+            throw new ServiceException("请求主体非领导");
     }
 
     /**
@@ -153,11 +143,11 @@ public class LeaderController {
     @RequestMapping(value = "form/leaderAudit", method = RequestMethod.GET)
     private Map<String, Object> getFormLeaderAudit(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.getFormLeaderAudit();
         else
-            throw new ServiceException("请求主体非管理员");
+            throw new ServiceException("请求主体非领导");
     }
 
     /**
@@ -169,13 +159,12 @@ public class LeaderController {
      */
     @RequestMapping(value = "form/detail", method = RequestMethod.POST)
     private Map<String, Object> getFormDetail(HttpServletRequest httpServletRequest,@RequestBody JSONObject map) throws ServiceException {
-
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.getFormDetail(map);
         else
-            throw new ServiceException("请求主体非管理员");
+            throw new ServiceException("请求主体非领导");
     }
 
     /**
@@ -188,11 +177,11 @@ public class LeaderController {
     @RequestMapping(value = "form/company", method = RequestMethod.POST)
     private Map<String, Object> getFormByCompany(HttpServletRequest httpServletRequest,@RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("admin"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.getFormByCompany(map);
         else
-            throw new ServiceException("请求主体非管理员");
+            throw new ServiceException("请求主体非领导");
     }
 
     /**
@@ -204,11 +193,11 @@ public class LeaderController {
     @RequestMapping(value = "form/timelist", method = RequestMethod.GET)
     private Map<String, Object> getFormTimeList(HttpServletRequest httpServletRequest) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.getFormTimeList();
         else
-            throw new ServiceException("请求主体非管理员");
+            throw new ServiceException("请求主体非领导");
     }
 
     /**
@@ -222,10 +211,28 @@ public class LeaderController {
     private Map<String, Object> getFormList(HttpServletRequest httpServletRequest,
                                             @RequestBody JSONObject map) throws ServiceException {
         String token = httpServletRequest.getHeader("token");
-        String name = JWTUtils.parser(token).get("name").toString();
-        if (name.equals("leader"))
+        String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
+        if (userDescribe.equals("0"))
             return leaderService.getFormList(map);
         else
-            throw new ServiceException("请求主体非管理员");
+            throw new ServiceException("请求主体非领导");
+    }
+
+    /**
+     * 同意某一个企业科技园申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "technology/notarize", method = RequestMethod.POST)
+    private Map<String, Object> agreeTechnologyById(@RequestBody JSONObject map) throws ServiceException {
+        return leaderService.agreeTechnologyById(map);
+    }
+
+    /**
+     * 不同意某一个企业科技园申请
+     * @return HashMap
+     */
+    @RequestMapping(value = "technology/countermand", method = RequestMethod.POST)
+    private Map<String, Object> disagreeTechnologyById(@RequestBody JSONObject map) throws ServiceException {
+        return leaderService.disagreeTechnologyById(map);
     }
 }
