@@ -63,11 +63,58 @@ token 保存时间待定
 
 
 
-## 管理员登录
+## 科技园管理员登录
 
 **请求URL：**
 
-- `/api/login/admin`
+- `/api/login/admin/tec`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+管理员唯一账号
+
+~~~json
+{
+    "username":"<String>",						//用户名
+    "password":"<String>"				//密码
+}
+~~~
+
+**返回值：**
+
+请求成功会返回一个唯一的授权凭证（Bearer Token）
+
+```json
+{
+    "data":{
+        "token":"<String>",
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+> token 保存时间一天
+
+**请求失败：**
+
+~~~json
+{
+    "data":null,
+    "code":-1,
+    "msg":"用户不存在或密码错误"
+}
+~~~
+
+## 众创空间管理员登录
+
+**请求URL：**
+
+- `/api/login/admin/space`
 
 **请求方式：**
 
@@ -2136,7 +2183,7 @@ map部分：
 {
     "data":[{
         "userAccountId":"<String>",				// 默认账号
-        "name":"<String>",						// 公司名
+        "name":"<String>",						// 公司名(不应当修改)
         "email":"<String>",						// 目标公司邮箱
         "describe":"int",					// 公司类型(2表示科技园new，3表示科技园old，4表示众创空间)
         "submitTime":"<String>"					// 申请时间

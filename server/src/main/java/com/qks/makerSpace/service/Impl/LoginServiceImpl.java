@@ -54,15 +54,14 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String name = map.get("name").toString();
         String password = map.get("password").toString();
         User user = loginDao.adminOrLeaderLogin(name, password, 11);
+        if (user == null) throw new ServiceException("请输入正确的账号和密码");
 
         Integer userDescribe = user.getUserDescribe();
         Map<String, Object> data = new HashMap<>();
-        if (userDescribe != null) {
-            Map<String, Object> userMap = new HashMap<>();
-            userMap.put("name", name);
-            userMap.put("userDescribe", userDescribe);
-            data.put("token", JWTUtils.createToken(userMap));
-        } else throw new ServiceException("用户不存在或密码错误");
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("name", name);
+        userMap.put("userDescribe", userDescribe);
+        data.put("token", JWTUtils.createToken(userMap));
 
         return MyResponseUtil.getResultMap(data,0,"success");
     }
@@ -77,15 +76,14 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String name = map.get("name").toString();
         String password = map.get("password").toString();
         User user = loginDao.adminOrLeaderLogin(name, password, 12);
+        if (user == null) throw new ServiceException("请输入正确的账号和密码");
 
         Integer userDescribe = user.getUserDescribe();
         Map<String, Object> data = new HashMap<>();
-        if (userDescribe != null) {
-            Map<String, Object> userMap = new HashMap<>();
-            userMap.put("name", name);
-            userMap.put("userDescribe", userDescribe);
-            data.put("token", JWTUtils.createToken(userMap));
-        } else throw new ServiceException("用户不存在或密码错误");
+        Map<String, Object> userMap = new HashMap<>();
+        userMap.put("name", name);
+        userMap.put("userDescribe", userDescribe);
+        data.put("token", JWTUtils.createToken(userMap));
 
         return MyResponseUtil.getResultMap(data,0,"success");
     }

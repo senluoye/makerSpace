@@ -35,7 +35,7 @@ public class LoginController {
      * @param map
      * @return
      */
-    @RequestMapping(value = "admin", method = RequestMethod.POST)
+    @RequestMapping(value = "admin/tec", method = RequestMethod.POST)
     private Map<String, Object> TecAdminLogin(@RequestBody Map<String, Object> map) throws ServiceException {
         return loginService.TecAdminLogin(map);
     }
@@ -45,10 +45,10 @@ public class LoginController {
      * @param map
      * @return
      */
-//    @RequestMapping(value = "admin", method = RequestMethod.POST)
-//    private Map<String, Object> SpaceAdminLogin(@RequestBody Map<String, Object> map) throws ServiceException {
-//        return loginService.SpaceAdminLogin(map);
-//    }
+    @RequestMapping(value = "admin/space", method = RequestMethod.POST)
+    private Map<String, Object> SpaceAdminLogin(@RequestBody Map<String, Object> map) throws ServiceException {
+        return loginService.SpaceAdminLogin(map);
+    }
 
     /**
      * 普通成员登陆
