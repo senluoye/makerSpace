@@ -66,7 +66,7 @@ public class FormServiceImpl implements FormService {
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
         String formId = UUID.randomUUID().toString();
-        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss").format(new Date());
         String creditCode = form.getCreditCode();
 
         form.setFormId(formId); // 注意，这个才是主键

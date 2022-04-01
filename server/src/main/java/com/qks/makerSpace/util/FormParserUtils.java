@@ -114,7 +114,11 @@ public class FormParserUtils {
         data.put("graduatedEnterprise", form.getGraduatedEnterprise());
         data.put("graduatedTime", form.getGraduatedTime());
         data.put("highEnterprise", form.getHighEnterprise());
-        data.put("highEnterpriseData", JSON.toJSONString(highEnterpriseData));
+
+//        data.put("highEnterpriseData", JSON.toJSONString(highEnterpriseData));
+        data.put("certificateCode", highEnterpriseData.getCertificateCode());
+        data.put("getTime", highEnterpriseData.getGetTime());
+
         data.put("mediumSized", form.getMediumSized());
         data.put("mediumFile", form.getMediumFile());
         data.put("mentorRelationship", form.getMentorRelationship());
