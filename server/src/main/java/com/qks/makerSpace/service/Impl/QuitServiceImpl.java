@@ -52,7 +52,7 @@ public class QuitServiceImpl implements QuitService {
         if (describe == 0) throw new ServiceException("未查询到该企业名对应的账号");
         quit.setQuitDescribe(describe);
         quit.setAdminAudit("待审核");
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
         quit.setSubmitTime(time);
 
         if (quitDao.insertQuit(quit) > 0)

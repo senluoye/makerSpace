@@ -121,7 +121,7 @@ public class UserServiceImpl implements UserService {
         if (userDao.getUserByName(name).size() != 0)
             throw new ServiceException("该用户账号已经已经存在，不可重复申请");
 
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
         userAccountApplying.setUserAccountId(UUID.randomUUID().toString());
         userAccountApplying.setName(name);
         userAccountApplying.setEmail(jsonObject.getString("email"));
