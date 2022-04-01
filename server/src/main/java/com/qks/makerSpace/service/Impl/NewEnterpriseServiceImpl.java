@@ -106,7 +106,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                 newIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
             }
         }
-        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         news.setSubmitTime(time);
 
         if (newEnterpriseDao.insertNew(news) <= 0)
@@ -204,28 +204,37 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @throws IOException
      */
     @Override
-    public Map<String, Object> newEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException {
-        JSONObject jsonObject = JSONObject.parseObject(json);
-        NewDemand newDemand = JSONObject.parseObject(json, NewDemand.class);
-        String creditCode = jsonObject.getString("creditCode");
+    public Map<String, Object> newEnterpriseContract(String token, MultipartFile file) throws ServiceException, IOException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) throw new ServiceException("您还没有申请账号");
+        List<String> oldIdList = newEnterpriseDao.getNewIdList(creditCodes.get(0));
+        if (oldIdList.size() == 0) throw new ServiceException("您还没有填写入驻申请表");
 
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
-        String submitTime = dateFormat.format(new Date());
+        String creditCode = creditCodes.get(0);
+        String submitTime = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss").format(new Date());
 
-        String newDemandId = newEnterpriseDao.demandExit(creditCode);
-        if (newEnterpriseDao.selectDemandByNewDemandId(newDemandId).size() == 0)
-            throw new ServiceException("请先递交入驻申请书");
+        Contract contract = new Contract();
+        contract.setContractId(UUID.randomUUID().toString());
+        contract.setCreditCode(creditCode);
+        contract.setVoucher(file.getBytes());
+        contract.setSubmitTime(submitTime);
 
-        String newDemandFormId = UUID.randomUUID().toString();
-        String id = UUID.randomUUID().toString();
-        newDemand.setId(newDemandFormId);
-        newDemand.setTime(submitTime);
-        newDemand.setNewDemandId(newDemandId);
-        if (newEnterpriseDao.addNewDemand(newDemand) < 1 &&
-                newEnterpriseDao.addNewDemandContract(id, creditCode, voucher.getBytes(), submitTime) < 1)
-            throw new ServiceException("续约失败");
+        if (oldEnterpriseDao.addContract(contract) < 1) throw new ServiceException("上传缴费凭证失败，请重新上传");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
+    }
+
+    @Override
+    public Map<String, Object> getNewEnterpriseContract(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) throw new ServiceException("您并没有填写入驻申请表");
+
+        String creditCode = creditCodes.get(0);
+        List<Contract> data = newEnterpriseDao.getNewContractList(creditCode);
+
+        return MyResponseUtil.getResultMap(data,0,"success");
     }
 
     /**

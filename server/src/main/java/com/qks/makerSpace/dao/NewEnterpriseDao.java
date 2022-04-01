@@ -144,4 +144,15 @@ public interface NewEnterpriseDao {
 
     @Select("select note from new where credit_code = #{creditCode} and submit_time = #{submitTime}")
     String getNewNoteByCreditCodeAndTime(String creditCode, String submitTime);
+
+    @Select("select new_id from new where credit_code = #{creditCode}")
+    List<String> getNewIdList(String creditCode);
+
+    @Insert("insert into contract " +
+            "set contract_id = #{contractId}, credit_code = #{creditCode}, " +
+            "voucher = #{voucher}, submit_time = #{submitTime}")
+    Integer addContract(Contract contract);
+
+    @Select("select * from contract where credit_code = #{creditCode}")
+    List<Contract> getNewContractList(String creditCode);
 }
