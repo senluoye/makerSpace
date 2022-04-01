@@ -235,8 +235,9 @@ token 保存时间待定
     "data":{
         "name":"<String>",				// 公司名
         "describe":"int",				// 企业性质(2表示科技园new，3表示科技园old，4表示众创空间)
-        "submit_time":"<String>", 		// 入驻日期
-        "demand_time":"<String>"		// 上次缴费日期
+        "submitTime":"<String>", 		// 入驻日期
+        "demandTime":"<String>",		// 上次缴费日期
+        "enter":"<String>"				// 递交申请书状态（未递交申请书、已递交申请书但未入园、已成功入园）
     },
     "code":0,
     "msg":"success"

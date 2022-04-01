@@ -85,7 +85,13 @@ public class OldEnterpriseController {
         return oldEnterpriseService.oldEnterpriseContract(httpServletRequest.getHeader("token"), voucher);
     }
 
-
+    /**
+     * 获取以往缴费记录
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     * @throws IOException
+     */
     @RequestMapping(value = "old/demand", method = RequestMethod.GET)
     private Map<String, Object> getOldEnterprisePay(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
         return oldEnterpriseService.getOldEnterpriseContract(httpServletRequest.getHeader("token"));

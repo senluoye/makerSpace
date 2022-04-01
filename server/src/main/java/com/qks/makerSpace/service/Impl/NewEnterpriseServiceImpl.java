@@ -106,7 +106,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                 newIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
             }
         }
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
         news.setSubmitTime(time);
 
         if (newEnterpriseDao.insertNew(news) <= 0)
@@ -209,7 +209,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         NewDemand newDemand = JSONObject.parseObject(json, NewDemand.class);
         String creditCode = jsonObject.getString("creditCode");
 
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
         String submitTime = dateFormat.format(new Date());
 
         String newDemandId = newEnterpriseDao.demandExit(creditCode);

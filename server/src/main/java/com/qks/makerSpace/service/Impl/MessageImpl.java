@@ -31,7 +31,7 @@ public class MessageImpl implements MessageService {
         Message message = new Message();
         message.setMessageId(UUID.randomUUID().toString());
         message.setMessageText(jsonObject.getString("messageText"));
-        message.setMessageTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        message.setMessageTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
         message.setUserId(JWTUtils.parser(token).get("userId").toString());
 
         if (messageDao.insertMessage(message) < 1)

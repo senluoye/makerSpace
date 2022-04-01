@@ -147,7 +147,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             }
         }
 
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
         // 存放表单提交时间
         old.setSubmitTime(time);
 
@@ -298,7 +298,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         if (oldIdList.size() == 0) throw new ServiceException("您还没有填写入驻申请表");
 
         String creditCode = creditCodes.get(0);
-        String submitTime = new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss").format(new Date());
+        String submitTime = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss").format(new Date());
 
         Contract contract = new Contract();
         contract.setContractId(UUID.randomUUID().toString());
@@ -323,7 +323,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         if (creditCodes.size() == 0) throw new ServiceException("您并没有填写入驻申请表");
 
         String creditCode = creditCodes.get(0);
-
         List<Contract> data = oldEnterpriseDao.getOldContractList(creditCode);
 
         return MyResponseUtil.getResultMap(data, 0, "success");

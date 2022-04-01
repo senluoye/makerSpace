@@ -129,7 +129,7 @@ public interface LeaderDao {
     @Select("select * from audit where credit_code = #{creditCode} and submit_time = #{submitTime}")
     Audit getSameAuditByCreditCode(String creditCode, String submitTime);
 
-    @Update("update audit set administrator_audit = #{agree} where audit_id = #{id}")
+    @Update("update audit set leadership_audit = #{agree} where audit_id = #{id}")
     Integer agreeById(String id, String agree);
 
     @Select("select * from old where old_id = #{oldId}")

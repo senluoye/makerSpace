@@ -16,8 +16,14 @@ public interface UserDao {
     @Select("select * from user where user_id = #{userId}")
     List<User> getUserByUserId(String userId);
 
+    @Select("select * from audit where credit_code = #{creditCode}")
+    List<Audit> getAuditByCreditCode(String creditCode);
+
     @Select("select * from user where name = #{name}")
     List<User> getUserByName(String name);
+
+    @Select("select max(submit_time) from contract where credit_code = #{creditCode}")
+    String getLastSubmitTimeByCreditCode(String creditCode);
 
     @Update("update user set email = #{email} where user_id = #{userId}")
     Integer changeUserEmail(String userId, String email);

@@ -8,4 +8,5 @@ public class HomePageRes {
     private int describe;
     private String submitTime;
     private String demandTime;
+    private String enter;
 }

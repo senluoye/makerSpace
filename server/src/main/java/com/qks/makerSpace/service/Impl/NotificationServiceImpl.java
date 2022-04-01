@@ -46,7 +46,7 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setText(text);
         notification.setForTop(forTop);
         Date date = new Date();
-        notification.setNoticeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+        notification.setNoticeTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(date));
 
         if (notificationDao.addNotification(notification) > 0) {
             return MyResponseUtil.getResultMap(null,0,"success");
@@ -68,7 +68,7 @@ public class NotificationServiceImpl implements NotificationService {
         notification.setTitle(title);
         notification.setAuthor(author);
         Date date = new Date();
-        notification.setNoticeTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date));
+        notification.setNoticeTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(date));
 
         if (notificationDao.updateNotification(notification) > 0) {
             return MyResponseUtil.getResultMap(null,0,"success");

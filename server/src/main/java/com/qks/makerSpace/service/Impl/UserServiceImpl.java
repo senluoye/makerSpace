@@ -44,32 +44,37 @@ public class UserServiceImpl implements UserService {
             homePageRes.setName(user.getName());
             homePageRes.setDemandTime("");
             homePageRes.setSubmitTime("");
+            homePageRes.setEnter("未递交申请书");
             return MyResponseUtil.getResultMap(homePageRes, 0, "success");
         }
 
         // 之前已经提交过入园申请
         String creditCode = userCompany.get(0).getCreditCode();
-        if (user.getUserDescribe() == 2) { // 如果用户是new
+        if (user.getUserDescribe() == 2 || user.getUserDescribe() == 4) {
+            // 如果用户是new 或者 space
             News news = userDao.getLastNewByCreditCode(creditCode);
             homePageRes.setSubmitTime(news.getSubmitTime());
             homePageRes.setName(news.getName());
-            NewDemand newDemand = userDao.getLastNewDemandById(news.getNewDemandId());
-            homePageRes.setDemandTime(newDemand.getTime());
-        } else if (user.getUserDescribe() == 3) { // 如果用户是old
+        } else if (user.getUserDescribe() == 3) {
+            // 如果用户是old
             Old old = userDao.getLastOldByCreditCode(creditCode);
             homePageRes.setSubmitTime(old.getSubmitTime());
             homePageRes.setName(old.getName());
-            OldDemand oldDemand = userDao.getLastOldDemandById(old.getOldDemandId());
-            homePageRes.setDemandTime(oldDemand.getTime());
-        } else if (user.getUserDescribe() == 4) { // 如果用户是space
-            Space space = userDao.getLastSpaceById(creditCode);
-            homePageRes.setName(space.getCreateName());
-            homePageRes.setSubmitTime(space.getSubmitTime());
-            homePageRes.setDemandTime("");
         } else {
-            homePageRes.setName("admin");
+            homePageRes.setName(user.getName());
             homePageRes.setSubmitTime(null);
             homePageRes.setDemandTime(null);
+        }
+
+        String lastSubmitTime = userDao.getLastSubmitTimeByCreditCode(creditCode);
+        homePageRes.setDemandTime(lastSubmitTime);
+        homePageRes.setEnter("已递交申请书但未入园");
+        List<Audit> auditList = userDao.getAuditByCreditCode(creditCode);
+        for (Audit audit : auditList) {
+            if (audit.getLeadershipAudit().equals("通过")) {
+                homePageRes.setEnter("已成功入园");
+                break;
+            }
         }
 
         return MyResponseUtil.getResultMap(homePageRes, 0, null);
