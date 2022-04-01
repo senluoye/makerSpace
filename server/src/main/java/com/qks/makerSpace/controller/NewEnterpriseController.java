@@ -83,12 +83,23 @@ public class NewEnterpriseController {
      * @throws IOException
      */
     @RequestMapping(value = "demand", method = RequestMethod.PUT)
-    private Map<String, Object> oldEnterprisePay(@RequestPart("map") String json,
+    private Map<String, Object> newEnterprisePay(HttpServletRequest httpServletRequest,
                                                  @RequestPart("paymentVoucher") MultipartFile voucher) throws ServiceException, IOException {
         if (voucher == null)
             throw new ServiceException("缺少缴费凭证");
 
-        return newEnterpriseService.newEnterpriseContract(json, voucher);
+        return newEnterpriseService.newEnterpriseContract(httpServletRequest.getHeader("token"), voucher);
+    }
+
+    /**
+     * 获取续约记录
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     */
+    @RequestMapping(value = "demand", method = RequestMethod.GET)
+    private Map<String, Object> getNewEnterprisePay(HttpServletRequest httpServletRequest) throws ServiceException {
+        return newEnterpriseService.getNewEnterpriseContract(httpServletRequest.getHeader("token"));
     }
 
     /**

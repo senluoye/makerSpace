@@ -10,7 +10,6 @@ import java.util.Map;
 public interface NewEnterpriseService {
 
     Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
-    Map<String, Object> newEnterpriseContract(String json, MultipartFile voucher) throws ServiceException, IOException;
     Map<String, Object> getNewEnterpriseApplying(String token);
     Map<String, Object> updateNewEnterprise(String token,
                                     String str,
@@ -20,4 +19,7 @@ public interface NewEnterpriseService {
                                     MultipartFile[] intellectualFile) throws Exception;
 
     Map<String, Object> getNewEnterprise(String id);
+
+    Map<String, Object> newEnterpriseContract(String token, MultipartFile file) throws ServiceException, IOException;
+    Map<String, Object> getNewEnterpriseContract(String token) throws ServiceException;
 }

@@ -106,7 +106,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                 newIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
             }
         }
-        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         news.setSubmitTime(time);
 
         if (newEnterpriseDao.insertNew(news) <= 0)
@@ -209,7 +209,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         NewDemand newDemand = JSONObject.parseObject(json, NewDemand.class);
         String creditCode = jsonObject.getString("creditCode");
 
-        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
+        SimpleDateFormat dateFormat= new SimpleDateFormat("yyyy-MM-dd :hh:mm:ss");
         String submitTime = dateFormat.format(new Date());
 
         String newDemandId = newEnterpriseDao.demandExit(creditCode);
@@ -226,6 +226,18 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             throw new ServiceException("续约失败");
 
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
+    }
+
+    @Override
+    public Map<String, Object> getNewEnterpriseContract(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) throw new ServiceException("您并没有填写入驻申请表");
+
+        String creditCode = creditCodes.get(0);
+        List<Contract> data = newEnterpriseDao.getNewContractList(creditCode);
+
+        return MyResponseUtil.getResultMap(data,0,"success");
     }
 
     /**
