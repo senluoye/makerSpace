@@ -70,10 +70,10 @@ public interface FormDao {
     Integer addForm(FormReq form);
 
     @Update("update form set medium_file = #{mediumFile} where form_id = #{formId}")
-    Integer updateMediumFile(byte[] mediumFile, String formId);
+    Integer updateMediumFile(String mediumFile, String formId);
 
     @Update("update form set header_file = #{headerFile} where form_id = #{formId}")
-    Integer updateHeaderFile(byte[] headerFile, String formId);
+    Integer updateHeaderFile(String headerFile, String formId);
 
     @Insert("insert into form_high_enterprise(high_enterprise_id, high_enterprise_file, get_time, certificate_code) " +
             "VALUES (#{highEnterpriseId}, #{highEnterpriseFile}, #{getTime}, #{certificateCode})")

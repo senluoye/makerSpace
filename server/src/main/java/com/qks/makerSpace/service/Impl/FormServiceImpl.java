@@ -70,7 +70,7 @@ public class FormServiceImpl implements FormService {
         String employmentId = UUID.randomUUID().toString();
         String awardsId = UUID.randomUUID().toString();
         String formId = UUID.randomUUID().toString();
-        String time = new SimpleDateFormat("yyyy-MM-ddHH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
         String creditCode = form.getCreditCode();
 
         form.setFormId(formId); // 注意，这个才是主键
@@ -109,7 +109,8 @@ public class FormServiceImpl implements FormService {
         if (form.getMediumSized().equals("是")) {
             if (mediumFile != null) {
                 // 根据formId，在Form表里更新
-                if (formDao.updateMediumFile(mediumFile.getBytes(), formId) < 1)
+                String mediumFileName = FileUtils.upload(mediumFile, uploadPath);
+                if (formDao.updateMediumFile(mediumFileName, formId) < 1)
                     throw new ServiceException("填报数据失败:mediumFile");
             } else {
                 throw new ServiceException("请供科技型中小企业获批截屏");
@@ -117,10 +118,10 @@ public class FormServiceImpl implements FormService {
         }
         // 判断是否为 大学生创业 或 高校科研院所人员
         if (form.getHeaderKind().equals("大学生创业") || form.getHeaderKind().equals("高校科研院所人员")) {
-//            System.out.println(headerFile);
             if (headerFile != null) {
                 // 根据formId，在Form表里更新
-                if (formDao.updateHeaderFile(headerFile.getBytes(), formId) < 1)
+                String headerFileName = FileUtils.upload(headerFile, uploadPath);
+                if (formDao.updateHeaderFile(headerFileName, formId) < 1)
                     throw new ServiceException("填报数据失败:headerFile");
             }
             else
@@ -166,7 +167,7 @@ public class FormServiceImpl implements FormService {
 
         // 定义返回体
         Map<String, Object> result = new HashMap<>();
-        result.put("creditCode", creditCode);
+        result.put("formId", form.getFormId());
 
         return MyResponseUtil.getResultMap(result, 0, "success");
     }
