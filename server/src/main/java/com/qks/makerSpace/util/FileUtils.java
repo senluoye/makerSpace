@@ -15,7 +15,7 @@ public class FileUtils {
      * @param fileName
      * @return
      */
-    public static String getSuffix(String fileName){
+    private static String getSuffix(String fileName){
         return fileName.substring(fileName.lastIndexOf("."));
     }
 
@@ -24,7 +24,7 @@ public class FileUtils {
      * @param fileOriginName 源文件名
      * @return
      */
-    public static String getFileName(String fileOriginName){
+    private static String getFileName(String fileOriginName){
         return UUID.randomUUID() + getSuffix(fileOriginName);
     }
 
@@ -32,10 +32,9 @@ public class FileUtils {
      * 上传文件
      * @param file
      * @param path
-     * @param fileName
      * @return
      */
-    public static String upload(MultipartFile file, String path){
+    public static String upload(MultipartFile file, String path) throws IOException{
         // 生成新的文件名和路径
         String fileName = file.getOriginalFilename();
         String newFileName = getFileName(fileName);
@@ -48,14 +47,8 @@ public class FileUtils {
             dest.getParentFile().mkdir();
         }
 
-        try {
-            //保存文件
-            file.transferTo(dest);
-            return newFileName;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-
+        //保存文件
+        file.transferTo(dest);
+        return newFileName;
     }
 }

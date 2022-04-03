@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class EmploymentData {
     private String employmentId;
-    private byte[] contractFile;
+    private String contractFile;
 }

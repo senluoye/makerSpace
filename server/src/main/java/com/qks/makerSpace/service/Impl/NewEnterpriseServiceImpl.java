@@ -8,13 +8,12 @@ import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NewEnterpriseService;
-import com.qks.makerSpace.util.ChangeUtils;
-import com.qks.makerSpace.util.JWTUtils;
-import com.qks.makerSpace.util.MyResponseUtil;
-import com.qks.makerSpace.util.NewParserUtils;
+import com.qks.makerSpace.util.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
 import java.rmi.ServerException;
@@ -24,8 +23,10 @@ import java.util.*;
 @Service
 public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializable {
 
-    private final NewEnterpriseDao newEnterpriseDao;
+    @Value("${web.upload-path}")
+    private String uploadPath;
 
+    private final NewEnterpriseDao newEnterpriseDao;
     private final OldEnterpriseDao oldEnterpriseDao;
 
     public NewEnterpriseServiceImpl(NewEnterpriseDao newEnterpriseDao, OldEnterpriseDao oldEnterpriseDao) {
@@ -217,7 +218,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         Contract contract = new Contract();
         contract.setContractId(UUID.randomUUID().toString());
         contract.setCreditCode(creditCode);
-        contract.setVoucher(file.getBytes());
+        String voucherName = FileUtils.upload(file, uploadPath);
+        contract.setVoucher(voucherName);
         contract.setSubmitTime(submitTime);
 
         if (oldEnterpriseDao.addContract(contract) < 1) throw new ServiceException("上传缴费凭证失败，请重新上传");

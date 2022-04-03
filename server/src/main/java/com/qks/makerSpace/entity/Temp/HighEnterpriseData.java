@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class HighEnterpriseData {
     private String getTime;
-    private byte[] highEnterpriseFile;
+    private String highEnterpriseFile;
     private String certificateCode;
 }

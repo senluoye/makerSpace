@@ -9,6 +9,6 @@ import lombok.Data;
 public class Contract {
     private String contractId;
     private String creditCode;
-    private byte[] voucher;
+    private String voucher; // 文件路径
     private String submitTime;
 }

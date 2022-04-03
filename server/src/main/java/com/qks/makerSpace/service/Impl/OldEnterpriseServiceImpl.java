@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
-import com.qks.makerSpace.entity.response.OldContractRes;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
@@ -307,7 +306,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         Contract contract = new Contract();
         contract.setContractId(UUID.randomUUID().toString());
         contract.setCreditCode(creditCode);
-        contract.setVoucher(file.getBytes());
+        String voucherName = FileUtils.upload(file, uploadPath);
+        contract.setVoucher(voucherName);
         contract.setSubmitTime(submitTime);
 
         if (oldEnterpriseDao.addContract(contract) < 1) throw new ServiceException("上传缴费凭证失败，请重新上传");

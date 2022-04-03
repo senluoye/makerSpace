@@ -13,6 +13,7 @@ import com.qks.makerSpace.entity.response.TecBasicRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.FormService;
 import com.qks.makerSpace.util.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,9 @@ import java.util.*;
 
 @Service
 public class FormServiceImpl implements FormService {
+
+    @Value("${web.upload-path}")
+    private String uploadPath;
 
     private final FormDao formDao;
 
@@ -87,7 +91,8 @@ public class FormServiceImpl implements FormService {
             formHighEnterprise.setGetTime(highEnterpriseData.getString("getTime"));
             formHighEnterprise.setCertificateCode(highEnterpriseData.getString("certificateCode"));
             formHighEnterprise.setHighEnterpriseId(highEnterpriseId);
-            formHighEnterprise.setHighEnterpriseFile(highEnterpriseFile.getBytes());
+            String highEnterpriseFileName = FileUtils.upload(highEnterpriseFile, uploadPath);
+            formHighEnterprise.setHighEnterpriseFile(highEnterpriseFileName);
 
             form.setHighEnterpriseId(highEnterpriseId);
 
@@ -130,7 +135,8 @@ public class FormServiceImpl implements FormService {
 
                     formEmployment.setFormEmploymentId(employmentId); // 对应Form表
                     formEmployment.setEmploymentId(UUID.randomUUID().toString()); // 主键
-                    formEmployment.setContractFile(multipartFile.getBytes());
+                    String multipartFileName = FileUtils.upload(multipartFile, uploadPath);
+                    formEmployment.setContractFile(multipartFileName);
 
                     if (formDao.addContractFile(formEmployment) < 1)
                         throw new ServiceException("填报数据失败:contractFile");
@@ -147,7 +153,8 @@ public class FormServiceImpl implements FormService {
 
                     formAwards.setFormAwardsId(awardsId); // 对应Form表
                     formAwards.setAwardsId(UUID.randomUUID().toString()); // 主键
-                    formAwards.setAwardsFile(multipartFile.getBytes());
+                    String multipartFileName = FileUtils.upload(multipartFile, uploadPath);
+                    formAwards.setAwardsFile(multipartFileName);
 
                     if (formDao.addAwardsFile(formAwards) < 1)
                         throw new ServiceException("填报数据失败:awardsFile");
