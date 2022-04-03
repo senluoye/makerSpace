@@ -9,13 +9,14 @@ public class Old {
     private String charge;
     private String name;
     private String represent;
+    private String representFile; // 文件路径
     private String representPhone;
     private String registerAddress;
     private String representEmail;
     private String agent;
     private String agentPhone;
     private String agentEmail;
-    private byte[] license;
+    private String license; // 文件路径
     private String registerCapital;
     private String realAddress;
     private String realCapital;
@@ -25,7 +26,7 @@ public class Old {
     private String originNumber;
     private String setDate;
     private String nature;
-    private byte[] certificate;
+    private String certificate; // 文件路径
     private String involved;
     private String mainBusiness;
     private String way;

@@ -8,10 +8,8 @@ import com.qks.makerSpace.entity.response.OldContractRes;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
-import com.qks.makerSpace.util.ChangeUtils;
-import com.qks.makerSpace.util.JWTUtils;
-import com.qks.makerSpace.util.MyResponseUtil;
-import com.qks.makerSpace.util.OldParserUtils;
+import com.qks.makerSpace.util.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,6 +20,9 @@ import java.util.*;
 
 @Service
 public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializable {
+
+    @Value("${web.upload-path}")
+    private String uploadPath;
 
     private final OldEnterpriseDao oldEnterpriseDao;
 
@@ -47,10 +48,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                                                    MultipartFile certificate,
                                                    MultipartFile[] intellectualFile,
                                                    MultipartFile representFile) throws Exception {
-        System.out.println(license);
-        System.out.println(certificate);
-        System.out.println(intellectualFile.length);
-        System.out.println(representFile);
         /**
          * 首先验证用户是否存在
          */
@@ -94,7 +91,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         }
 
         try {
-            old.setLicense(license.getBytes());
+            String newName = FileUtils.upload(license, uploadPath);
+            old.setLicense(newName);
         } catch (Exception e) {
             throw new ServiceException("营业执照未上传");
         }
@@ -102,7 +100,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         String nature = old.getNature();
         if (nature.equals("大学生创业企业") || nature.equals("高校教师创业企业")) {
             try {
-                old.setCertificate(certificate.getBytes());
+                String newName = FileUtils.upload(certificate, uploadPath);
+                old.setCertificate(newName);
             } catch (Exception e) {
                 throw new ServiceException("请提供与企业性质对应的文件");
             }
@@ -143,13 +142,18 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
                 return MyResponseUtil.getResultMap(null, -1, "知识产权文件数量不足");
             // 将文件放入知识产权类中
             for (int i = 0; i < oldIntellectuals.size(); i++) {
-                oldIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
+                String newName = FileUtils.upload(intellectualFile[i], uploadPath);
+                oldIntellectuals.get(i).setIntellectualFile(newName);
             }
         }
 
         String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
         // 存放表单提交时间
         old.setSubmitTime(time);
+
+        // 上传法人身份证
+        String newName = FileUtils.upload(representFile, uploadPath);
+        old.setRepresentFile(newName);
 
         /**
          * 首先向old表中插入数据
@@ -313,7 +317,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
     /**
      * 获取以往缴费信息
-     * @param map
+     * @param token
      * @return
      */
     @Override
