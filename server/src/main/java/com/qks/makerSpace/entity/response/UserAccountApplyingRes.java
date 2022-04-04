@@ -9,4 +9,5 @@ public class UserAccountApplyingRes {
     private int describe; // 公司描述
     private String email; // 公司邮箱
     private String submitTime; // 申请提交时间
+    private Boolean administratorAudit; // 领导审核状态
 }

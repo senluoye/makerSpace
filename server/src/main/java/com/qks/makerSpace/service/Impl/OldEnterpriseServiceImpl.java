@@ -53,6 +53,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         String userId = JWTUtils.parser(token).get("userId").toString();
         User user = oldEnterpriseDao.getUserByUserId(userId);
         if (user == null) return MyResponseUtil.getResultMap(null, -1, "用户不存在");
+        if (user.getUserDescribe() != 3) throw new ServiceException("该用户所属类型不为迁入企业");
 
         /**
          * 提取数据
@@ -254,16 +255,18 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         List<OldProject> oldProject = oldEnterpriseDao.getOldProjectById(old.getOldProjectId());
         List<OldShareholder> oldShareholder = oldEnterpriseDao.getOldShareholderById(old.getOldShareholderId());
 
-        Map<String, Object> temp = OldParserUtils.OldGetResponse(old);
+//        Map<String, Object> temp = OldParserUtils.OldGetResponse(old);
 
-        temp.put("oldDemand", oldDemand);
-        temp.put("oldMainPerson", oldMainPerson);
-        temp.put("oldProject", oldProject);
-        temp.put("oldFunding", oldFunding);
-        temp.put("oldShareholder", oldShareholder);
-        temp.put("oldIntellectual", oldIntellectual);
+        Map<String, Object> data = new HashMap<>();
+        data.put("old", old);
+        data.put("oldDemand", oldDemand);
+        data.put("oldMainPerson", oldMainPerson);
+        data.put("oldProject", oldProject);
+        data.put("oldFunding", oldFunding);
+        data.put("oldShareholder", oldShareholder);
+        data.put("oldIntellectual", oldIntellectual);
 
-        return MyResponseUtil.getResultMap(temp, 0, "success");
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 
     /**

@@ -99,6 +99,9 @@ public class FormParserUtils {
                                                     List<EmploymentData> employmentData,
                                                     List<FormAwardsData> formAwardsData,
                                                     Form form) {
+//        System.out.println(highEnterpriseData);
+//        System.out.println(employmentData);
+//        System.out.println(formAwardsData);
         Map<String, Object> data = new HashMap<>();
 
         data.put("year", form.getYear());
@@ -115,7 +118,8 @@ public class FormParserUtils {
         data.put("graduatedTime", form.getGraduatedTime());
         data.put("highEnterprise", form.getHighEnterprise());
         data.put("certificateCode", highEnterpriseData.getCertificateCode());
-        data.put("getTime", highEnterpriseData.getGetTime());
+        data.put("highEnterpriseFile", highEnterpriseData.getHighEnterpriseFile());
+        data.put("getTime", form.getGetTime());
         data.put("mediumSized", form.getMediumSized());
         data.put("mediumFile", form.getMediumFile());
         data.put("mentorRelationship", form.getMentorRelationship());

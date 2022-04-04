@@ -60,11 +60,15 @@ public class FormServiceImpl implements FormService {
 
         // 先判断有没有填写入驻申请
         String userId = JWTUtils.parser(token).get("userId").toString();
-        if (formDao.getCompanyByUserId(userId) == null)
+        List<UserCompany> userCompanies = formDao.getCompanyByUserId(userId);
+        if (userCompanies == null || userCompanies.size() == 0)
             throw new ServiceException("请先填写入驻申请");
 
         // 初始化一些数据
         FormReq form = FormParserUtils.parser(map);
+
+        if (!form.getCreditCode().equals(userCompanies.get(0).getCreditCode()))
+            throw new ServiceException("该信用代码与入园时填写数据不一致，请填写正确的社会信用代码");
 
         String highEnterpriseId = UUID.randomUUID().toString();
         String employmentId = UUID.randomUUID().toString();
@@ -205,6 +209,7 @@ public class FormServiceImpl implements FormService {
     @Override
     public Map<String, Object> getTechnologyFormById(String token, String formId) {
         Form form = formDao.getFormByFormId(formId);
+        System.out.println(form);
 
         Map<String, Object> data;
         HighEnterpriseData highEnterpriseData = formDao.getHighEnterpriseById(form.getHighEnterpriseId());

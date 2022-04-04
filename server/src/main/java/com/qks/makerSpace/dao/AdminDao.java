@@ -25,9 +25,12 @@ public interface AdminDao {
      * 根据时间获取所有用户账号申请
      * @return
      */
-    @Select("select user_account_id, name, email, `describe`, submit_time " +
+    @Select("select user_account_id, name, email, `describe`, submit_time, administrator_audit " +
             "from user_account_applying where administrator_audit = 0 order by submit_time")
     List<UserAccountApplyingRes> getUserAccountApplying();
+
+    @Update("update user_account_applying set administrator_audit = true where name = #{name}")
+    Integer updateUserApplying(String name);
 
     /**
      * 根据名称查找用户

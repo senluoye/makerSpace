@@ -53,13 +53,17 @@ public class UserServiceImpl implements UserService {
         if (user.getUserDescribe() == 2 || user.getUserDescribe() == 4) {
             // 如果用户是new 或者 space
             News news = userDao.getLastNewByCreditCode(creditCode);
-            homePageRes.setSubmitTime(news.getSubmitTime());
-            homePageRes.setName(news.getName());
+            if (news != null) {
+                homePageRes.setSubmitTime(news.getSubmitTime());
+                homePageRes.setName(news.getName());
+            }
         } else if (user.getUserDescribe() == 3) {
             // 如果用户是old
             Old old = userDao.getLastOldByCreditCode(creditCode);
-            homePageRes.setSubmitTime(old.getSubmitTime());
-            homePageRes.setName(old.getName());
+            if (old != null) {
+                homePageRes.setSubmitTime(old.getSubmitTime());
+                homePageRes.setName(old.getName());
+            }
         } else {
             homePageRes.setName(user.getName());
             homePageRes.setSubmitTime(null);

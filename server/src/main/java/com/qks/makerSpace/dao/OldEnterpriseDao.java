@@ -50,14 +50,14 @@ public interface OldEnterpriseDao {
             "last_tax, employees, origin_number, set_date, nature, certificate, " +
             "involved, main_business, way, business, old_demand_id, old_shareholder_id, " +
             "old_mainperson_id, old_project_id, old_intellectual_id, old_funding_id, cooperation, " +
-            "suggestion, note, submit_time, room, outapply_id) " +
+            "suggestion, note, submit_time, room, outapply_id, representFile) " +
             "VALUES (#{oldId}, #{creditCode}, #{charge}, #{name}, #{represent}, " +
             "#{representPhone}, #{registerAddress}, #{representEmail}, #{agent}, #{agentPhone}, " +
             "#{agentEmail}, #{license}, #{registerCapital}, #{realAddress}, #{realCapital}, #{lastIncome}, " +
             "#{lastTax}, #{employees}, #{originNumber}, #{setDate}, #{nature}, #{certificate}, " +
             "#{involved}, #{mainBusiness}, #{way}, #{business}, #{oldDemandId}, #{oldShareholderId}, " +
             "#{oldMainpersonId}, #{oldProjectId}, #{oldIntellectualId}, #{oldFundingId}, #{cooperation}, " +
-            "#{suggestion}, #{note}, #{submitTime}, #{room}, #{outapplyId})")
+            "#{suggestion}, #{note}, #{submitTime}, #{room}, #{outapplyId}, #{representFile})")
     Integer insertOld(Old old);
 
     /**

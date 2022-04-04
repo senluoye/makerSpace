@@ -166,6 +166,7 @@ public class OldParserUtils {
     public static Map<String, Object> OldGetResponse(Old old){
         Map<String, Object> result = new HashMap<>();
 
+        result.put("charge", old.getCharge());
         result.put("registerAddress", old.getRegisterAddress());
         result.put("license", old.getLicense());
         result.put("registerCapital", old.getRegisterCapital());

@@ -56,9 +56,9 @@ public class AdminServiceImpl implements AdminService {
         /**
          * 获取公司名称和密码
          */
+        String userAccountId = map.getString("userAccountId");
         String name = map.getString("name");
         String password = map.getString("password");
-        String userId = map.getString("userAccountId");
 
         // 首先看看申请表里有没有这位用户
         UserAccountApplying userAccountApplying = adminDao.getUserFormApplyingByName(name);
@@ -67,20 +67,21 @@ public class AdminServiceImpl implements AdminService {
         /**
          * 如果user表中没有该用户，则修改密码并向user表中添加用户，否则报错
          */
-        List<User> users = adminDao.getUserById(userId);
-        if (users.size() != 0) throw new ServiceException("用户已存在，不需要重新分配");
+        List<User> users = adminDao.getUserById(userAccountId);
+        if (users.size() != 0) throw new ServiceException("该用户账号已存在，不可重复使用");
+
+        // 先修改申请表中对应用户的申请记录
+        if (adminDao.updateUserApplying(name) < 1) throw new ServiceException("分配该用户失败");
 
         User user = new User();
-        user.setUserId(userId);
+        user.setUserId(userAccountId);
         user.setName(userAccountApplying.getName());
         user.setPassword(password);
         user.setUserDescribe(userAccountApplying.getDescribe());
         user.setEmail(userAccountApplying.getEmail());
         user.setSubmitTime(userAccountApplying.getSubmitTime());
-        adminDao.addNewUser(user);
-
-        // 之后删除申请表中对应用户的申请记录
-        adminDao.deleteUserAccountApplying(userId);
+        user.setAlive(true);
+        if (adminDao.addNewUser(user) < 1) throw new ServiceException("分配用户失败");
 
         String text = "公司名称：" + user.getName() + "\n" + "公司密码：" + user.getPassword();
 
@@ -100,7 +101,6 @@ public class AdminServiceImpl implements AdminService {
 
         user.setPassword(null); // 去掉密码
         return MyResponseUtil.getResultMap(user, 0, "success");
-
     }
 
     /**

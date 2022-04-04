@@ -41,7 +41,7 @@ public class FileController {
                                                                             MediaType.IMAGE_GIF_VALUE})
     @ResponseBody
     public byte[] getImage(@PathVariable("id") String id) throws IOException {
-        System.out.println(id);
+//        System.out.println(id);
         File file = new File(uploadPath + id);
         FileInputStream inputStream = new FileInputStream(file);
         byte[] bytes = new byte[inputStream.available()];
