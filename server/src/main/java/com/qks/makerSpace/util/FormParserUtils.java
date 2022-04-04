@@ -101,6 +101,7 @@ public class FormParserUtils {
                                                     Form form) {
         Map<String, Object> data = new HashMap<>();
 
+        data.put("time",form.getYear()+ "-0" +form.getQuarter());
         data.put("year", form.getYear());
         data.put("quarter", form.getQuarter());
         data.put("teamName", form.getTeamName());
@@ -116,6 +117,7 @@ public class FormParserUtils {
         data.put("highEnterprise", form.getHighEnterprise());
         data.put("certificateCode", highEnterpriseData.getCertificateCode());
         data.put("getTime", highEnterpriseData.getGetTime());
+        data.put("highEnterpriseFile", highEnterpriseData.getHighEnterpriseFile());
         data.put("mediumSized", form.getMediumSized());
         data.put("mediumFile", form.getMediumFile());
         data.put("mentorRelationship", form.getMentorRelationship());
@@ -182,11 +184,6 @@ public class FormParserUtils {
         data.put("governmentGrant", form.getGovernmentGrant());
         data.put("selfRaised", form.getSelfRaised());
 
-        return data;
-    }
-
-    public static Map<String, Object> FormMapParser(Old old) {
-        Map<String, Object> data = new HashMap<>();
         return data;
     }
 }

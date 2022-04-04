@@ -7,9 +7,9 @@ public class News {
     private String NewId;
     private String creditCode;
     private String name;
-    private byte[] picture;
+    private String picture;
     private String represent;
-    private byte[] representCard;
+    private String representCard;
     private String representPerson;
     private String representPhone;
     private String representEmail;
@@ -21,7 +21,7 @@ public class News {
     private String originNumber;
     private String registerTime;
     private String nature;
-    private byte[] certificate;
+    private String certificate;
     private String involved;
     private String mainBusiness;
     private String way;
