@@ -130,6 +130,7 @@ public class NewParserUtils {
     public static Map<String, Object> NewGetResponse(News news) {
         Map<String, Object> result = new HashMap<>();
 
+        result.put("creditCode",news.getCreditCode());
         result.put("name",news.getName());
         result.put("picture",news.getPicture());
         result.put("represent",news.getRepresent());
