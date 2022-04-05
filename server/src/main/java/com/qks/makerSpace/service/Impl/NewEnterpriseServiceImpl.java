@@ -95,9 +95,12 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         List<NewProject> newProjects = NewParserUtils.NewProjectParser(map.getJSONArray("newProject"));
         List<NewIntellectual> newIntellectuals = NewParserUtils.NewIntellectualParser(map.getJSONArray("newIntellectual"));
         news.setNewDemandId(newDemand.getNewDemandId());
-        news.setNewShareholderId(newShareholders.get(0).getNewShareholderId());
-        news.setNewMainpersonId(newMainPeople.get(0).getNewMainpersonId());
-        news.setNewProjectId(newProjects.get(0).getNewProjectId());
+        if (newShareholders.size() != 0)
+            news.setNewShareholderId(newShareholders.get(0).getNewShareholderId());
+        if (newMainPeople.size() != 0)
+            news.setNewMainpersonId(newMainPeople.get(0).getNewMainpersonId());
+        if (newProjects.size() != 0)
+            news.setNewProjectId(newProjects.get(0).getNewProjectId());
         if (newIntellectuals.size() != 0) {
             news.setNewIntellectualId(newIntellectuals.get(0).getNewIntellectualId());
             if (newIntellectuals.size() != intellectualFile.length){
