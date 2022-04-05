@@ -65,6 +65,7 @@ public class FormServiceImpl implements FormService {
             throw new ServiceException("请先填写入驻申请");
 
         // 初始化一些数据
+        System.out.println("---------------------");
         FormReq form = FormParserUtils.parser(map);
 
         if (!form.getCreditCode().equals(userCompanies.get(0).getCreditCode()))

@@ -80,13 +80,14 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         String nature = news.getNature();
         if (nature.equals("大学生创业企业") || nature.equals("高校教师创业企业")) {
             try {
-                news.setCertificate(certificate.getBytes());
+                String newName = FileUtils.upload(certificate, uploadPath);
+                news.setCertificate(newName);
             } catch (Exception e) {
                 throw new ServiceException("请提供与拟注册企业性质对应的文件");
             }
         }
-        news.setPicture(picture.getBytes());
-        news.setRepresentCard(representCard.getBytes());
+        news.setPicture(FileUtils.upload(picture,uploadPath));
+        news.setRepresentCard(FileUtils.upload(representCard,uploadPath));
         news.setState("未审核");
         NewDemand newDemand = NewParserUtils.newDemandParser(map.getString("newDemand"));
         List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.getJSONArray("newShareholder"));
@@ -104,7 +105,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
             }
             for (int i = 0; i < newIntellectuals.size(); i++) {
-                newIntellectuals.get(i).setIntellectualFile(intellectualFile[i].getBytes());
+                String newName = FileUtils.upload(intellectualFile[i],uploadPath);
+                newIntellectuals.get(i).setIntellectualFile(newName);
             }
         }
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
@@ -186,11 +188,12 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @return
      */
     @Override
-    public Map<String, Object> getFormByCreditCode(String token) {
+    public Map<String, Object> getFormByCreditCode(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
-        String creditCode = creditCodes.get(0);
+        if (creditCodes.size() == 0) throw new ServiceException("您并没有填写入园申请表");
 
+        String creditCode = creditCodes.get(0);
         List<FormDetails> data = newEnterpriseDao.getAllFormDetails(creditCode);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
@@ -198,8 +201,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
 
     /**
      * 新企业续约
-     * @param json
-     * @param voucher
+     * @param token
+     * @param file
      * @return
      * @throws ServiceException
      * @throws IOException
@@ -227,6 +230,12 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
+    /**
+     * 获取以往缴费信息
+     * @param token
+     * @return
+     * @throws ServiceException
+     */
     @Override
     public Map<String, Object> getNewEnterpriseContract(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
@@ -253,9 +262,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         if (creditCodes.size() != 0) {
             creditCode = creditCodes.get(0);
             List<TechnologyApplyingRes> technologyApplyingRes = newEnterpriseDao.selectAuditByCreditCode(creditCode);
-//            List<String> name = newEnterpriseDao.selectNewNameByCredit(creditCode);
-//            List<String> suggestion = newEnterpriseDao.getSuggestionByCreditCode(creditCode);
-//            List<String> id = newEnterpriseDao.getNewIdByCreditCode(creditCode);
             for (TechnologyApplyingRes i : technologyApplyingRes) {
                 String submitTime = i.getSubmitTime();
                 String id = newEnterpriseDao.getNewIdByCreditCodeAndTime(creditCode, submitTime);

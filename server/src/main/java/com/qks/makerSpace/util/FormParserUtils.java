@@ -1,15 +1,15 @@
 package com.qks.makerSpace.util;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.entity.Temp.EmploymentData;
 import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
-import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.database.Form;
 import com.qks.makerSpace.entity.request.FormReq;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class FormParserUtils {
     public static FormReq parser(JSONObject map) {
@@ -99,11 +99,9 @@ public class FormParserUtils {
                                                     List<EmploymentData> employmentData,
                                                     List<FormAwardsData> formAwardsData,
                                                     Form form) {
-//        System.out.println(highEnterpriseData);
-//        System.out.println(employmentData);
-//        System.out.println(formAwardsData);
         Map<String, Object> data = new HashMap<>();
 
+        data.put("time",form.getYear()+ "-0" +form.getQuarter());
         data.put("year", form.getYear());
         data.put("quarter", form.getQuarter());
         data.put("teamName", form.getTeamName());
@@ -186,11 +184,6 @@ public class FormParserUtils {
         data.put("governmentGrant", form.getGovernmentGrant());
         data.put("selfRaised", form.getSelfRaised());
 
-        return data;
-    }
-
-    public static Map<String, Object> FormMapParser(Old old) {
-        Map<String, Object> data = new HashMap<>();
         return data;
     }
 }

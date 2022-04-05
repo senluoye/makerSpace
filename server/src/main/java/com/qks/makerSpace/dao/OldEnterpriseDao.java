@@ -203,4 +203,15 @@ public interface OldEnterpriseDao {
     @Select("select * from form where credit_code = #{creditCode}")
     List<FormDetails> getAllFormDetails(String creditCode);
 
+    @Select("select old_id from old where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String getOldIdByCreditCodeAndTime(String creditCode, String submitTime);
+
+    @Select("select name from old where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String getOldNameByCreditCodeAndTime(String creditCode, String submitTime);
+
+    @Select("select suggestion from old where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String getOldSuggestionByCreditCodeAndTime(String creditCode, String submitTime);
+
+    @Select("select note from old where credit_code = #{creditCode} and submit_time = #{submitTime}")
+    String getOldNoteByCreditCodeAndTime(String creditCode, String submitTime);
 }

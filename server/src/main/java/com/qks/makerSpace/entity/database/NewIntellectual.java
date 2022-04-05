@@ -10,5 +10,5 @@ public class NewIntellectual {
     private String kind;
     private String applyTime;
     private String approvalTime;
-    private byte[] intellectualFile;
+    private String intellectualFile;
 }

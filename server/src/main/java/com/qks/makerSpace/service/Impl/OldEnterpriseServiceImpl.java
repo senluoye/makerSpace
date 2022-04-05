@@ -127,10 +127,14 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         List<OldFunding> oldFundings = OldParserUtils.OldFundingParser(map.getJSONArray("oldFunding"));
 
         // 将子表id填入old表中
-        old.setOldShareholderId(oldShareholders.get(0).getOldShareholderId());
-        old.setOldMainpersonId(oldMainPeoples.get(0).getOldMainpersonId());
-        old.setOldProjectId(oldProjects.get(0).getOldProjectId());
-        old.setOldFundingId(oldFundings.get(0).getFundingId());
+        if (oldShareholders.size() != 0)
+            old.setOldShareholderId(oldShareholders.get(0).getOldShareholderId());
+        if (oldMainPeoples.size() != 0)
+            old.setOldMainpersonId(oldMainPeoples.get(0).getOldMainpersonId());
+        if (oldProjects.size() != 0)
+            old.setOldProjectId(oldProjects.get(0).getOldProjectId());
+        if (oldFundings.size() != 0)
+            old.setOldFundingId(oldFundings.get(0).getFundingId());
         old.setOldDemandId(oldDemand.getOldDemandId());
 
         // 如果知识产权不为空
@@ -286,6 +290,17 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         if (creditCodes.size() != 0) {
             creditCode = creditCodes.get(0);
             List<TechnologyApplyingRes> technologyApplyIngResList = oldEnterpriseDao.selectAuditByCreditCode(creditCode);
+            for (TechnologyApplyingRes i : technologyApplyIngResList) {
+                String submitTime = i.getSubmitTime();
+                String id = oldEnterpriseDao.getOldIdByCreditCodeAndTime(creditCode,submitTime);
+                String name = oldEnterpriseDao.getOldNameByCreditCodeAndTime(creditCode,submitTime);
+                String suggestion = oldEnterpriseDao.getOldSuggestionByCreditCodeAndTime(creditCode,submitTime);
+                String note = oldEnterpriseDao.getOldNoteByCreditCodeAndTime(creditCode,submitTime);
+                i.setName(name);
+                i.setSuggestion(suggestion);
+                i.setId(id);
+                i.setNote(note);
+            }
             return MyResponseUtil.getResultMap(technologyApplyIngResList, 0, "success");
         }
         return MyResponseUtil.getResultMap(new ArrayList<>(), 0, "success");
