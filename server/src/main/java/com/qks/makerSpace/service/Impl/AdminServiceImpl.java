@@ -119,14 +119,17 @@ public class AdminServiceImpl implements AdminService {
                 if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
                 else applyingReq.setDescribe("4");
                 applyingReq.setName(oldNameList.get(0));
+                applyingReq.setId(id);
             } else {
                 List<String> newNameList = adminDao.getNewNameByCreditCode(applyingReq.getCreditCode());
-                id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
-                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
-                else applyingReq.setDescribe("4");
-                applyingReq.setName(newNameList.get(0));
+                if (newNameList.size() != 0) {
+                    id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                    if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                    else applyingReq.setDescribe("4");
+                    applyingReq.setName(newNameList.get(0));
+                    applyingReq.setId(id);
+                }
             }
-            applyingReq.setId(id);
         }
         return MyResponseUtil.getResultMap(lists, 0, "success");
     }
@@ -174,14 +177,17 @@ public class AdminServiceImpl implements AdminService {
                 if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
                 else applyingReq.setDescribe("4");
                 applyingReq.setName(oldNameList.get(0));
+                applyingReq.setId(id);
             } else {
                 List<String> newNameList = adminDao.getNewNameByCreditCode(applyingReq.getCreditCode());
-                id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
-                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
-                else applyingReq.setDescribe("4");
-                applyingReq.setName(newNameList.get(0));
+                if (newNameList.size() != 0) {
+                    id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
+                    if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                    else applyingReq.setDescribe("4");
+                    applyingReq.setName(newNameList.get(0));
+                    applyingReq.setId(id);
+                }
             }
-            applyingReq.setId(id);
         }
         return MyResponseUtil.getResultMap(lists, 0, "success");
     }
