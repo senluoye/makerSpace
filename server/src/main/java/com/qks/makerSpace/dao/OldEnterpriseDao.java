@@ -160,7 +160,7 @@ public interface OldEnterpriseDao {
      * @param newCreditCode
      */
     @Update("update audit " +
-            "set credit_code = #{newCreditCode}" +
+            "set credit_code = #{newCreditCode} " +
             "where audit_id = #{auditId}")
     void updateAuditCreditCode(String auditId, String newCreditCode);
 

@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.entity.database.*;
 
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -48,9 +47,20 @@ public class OldParserUtils {
     }
 
     public static OldDemand OldDemandParser(String obj) {
-        OldDemand oldDemand = JSONObject.parseObject(obj, OldDemand.class);
+        JSONObject json = JSONObject.parseObject(obj);
+
+        OldDemand oldDemand = new OldDemand();
         oldDemand.setId(UUID.randomUUID().toString());
         oldDemand.setOldDemandId(UUID.randomUUID().toString());
+        oldDemand.setLeaseArea(json.getString("leaseArea"));
+        oldDemand.setPosition(json.getString("position"));
+        oldDemand.setLease(json.getString("lease"));
+        oldDemand.setFloor(json.getString("floor"));
+        oldDemand.setElectric(json.getString("electric"));
+        oldDemand.setWater(json.getString("water"));
+        oldDemand.setWeb(json.getString("web"));
+        oldDemand.setOthers(json.getString("others"));
+
         oldDemand.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 
         return oldDemand;
