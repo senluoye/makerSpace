@@ -114,10 +114,8 @@ public class FormParserUtils {
         data.put("field", form.getField());
         data.put("graduatedEnterprise", form.getGraduatedEnterprise());
         data.put("graduatedTime", form.getGraduatedTime());
-        if (highEnterpriseData == null) {
-            data.put("highEnterprise",null);
-        } else {
-            data.put("highEnterprise", form.getHighEnterprise());
+        data.put("highEnterprise", form.getHighEnterprise());
+        if (highEnterpriseData != null) {
             data.put("certificateCode", highEnterpriseData.getCertificateCode());
             data.put("highEnterpriseFile", highEnterpriseData.getHighEnterpriseFile());
             data.put("highGetTime",highEnterpriseData.getGetTime());
