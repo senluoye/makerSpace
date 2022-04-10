@@ -122,7 +122,7 @@ public class NewParserUtils {
         NewDemand newDemand = JSONObject.parseObject(obj,NewDemand.class);
         newDemand.setId(UUID.randomUUID().toString());
         newDemand.setNewDemandId(UUID.randomUUID().toString());
-        newDemand.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        newDemand.setTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
 
         return newDemand;
     }

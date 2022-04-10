@@ -12,7 +12,7 @@ public class SpaceParserUtils {
 
     public static Space spaceParser(JSONObject jsonObject) {
         Space space = new Space();
-        String submitTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String submitTime = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
 
         space.setSpaceId(UUID.randomUUID().toString());
         space.setInApplyId(UUID.randomUUID().toString()); // 先初始化成UUID，后面再修改

@@ -32,6 +32,8 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String password = map.get("password").toString();
         User user = loginDao.adminOrLeaderLogin(id, password, 0);
         if (user == null) throw new ServiceException("请输入正确的账号和密码");
+        if (user.getUserDescribe() != 0)
+            throw new ServiceException("用户不是领导");
 
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> userMap = new HashMap<>();
@@ -53,6 +55,8 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String password = map.get("password").toString();
         User user = loginDao.adminOrLeaderLogin(id, password, 11);
         if (user == null) throw new ServiceException("请输入正确的账号和密码");
+        if (user.getUserDescribe() != 11 && user.getUserDescribe() != 12)
+            throw new ServiceException("用户不是管理员");
 
         Map<String, Object> data = new HashMap<>();
         Map<String, Object> userMap = new HashMap<>();
@@ -74,6 +78,8 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String password = map.get("password").toString();
         User user = loginDao.adminOrLeaderLogin(id, password, 12);
         if (user == null) throw new ServiceException("请输入正确的账号和密码");
+        if (user.getUserDescribe() != 11 && user.getUserDescribe() != 12)
+            throw new ServiceException("用户不是管理员");
 
         Integer userDescribe = user.getUserDescribe();
         Map<String, Object> data = new HashMap<>();
@@ -96,8 +102,10 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String id = map.get("id").toString();
         String password = map.get("password").toString();
         User user = loginDao.commonLogin(id, password);
+        if (user.getUserDescribe() == 11 || user.getUserDescribe() == 12 || user.getUserDescribe() == 0)
+            throw new ServiceException("不存在该用户账号");
 
-        System.out.println(user);
+//        System.out.println(user);
         Map<String, Object> data = new HashMap<>();
         if (user != null) {
             if (user.getAlive()) {

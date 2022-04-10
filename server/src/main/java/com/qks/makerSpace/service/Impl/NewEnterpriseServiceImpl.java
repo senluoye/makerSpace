@@ -112,7 +112,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
                 newIntellectuals.get(i).setIntellectualFile(newName);
             }
         }
-        String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
         news.setSubmitTime(time);
 
         if (newEnterpriseDao.insertNew(news) <= 0)

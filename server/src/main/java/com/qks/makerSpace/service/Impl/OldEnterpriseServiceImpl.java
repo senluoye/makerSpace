@@ -143,7 +143,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             old.setOldIntellectualId(oldIntellectuals.get(0).getOldIntellectualId());
             // 查看文件数量是否正确
             if (oldIntellectuals.size() != intellectualFile.length)
-                return MyResponseUtil.getResultMap(null, -1, "知识产权文件数量不足");
+                return MyResponseUtil.getResultMap(null, -1, "知识产权文件数量与实际上传数据不匹配");
             // 将文件放入知识产权类中
             for (int i = 0; i < oldIntellectuals.size(); i++) {
                 String newName = FileUtils.upload(intellectualFile[i], uploadPath);
@@ -207,6 +207,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         Map<String, Object> forMap = new HashMap<>();
         forMap.put("creditCode",creditCode);
+        forMap.put("oldId", old.getOldId());
         return MyResponseUtil.getResultMap(forMap, 0, "success");
     }
 

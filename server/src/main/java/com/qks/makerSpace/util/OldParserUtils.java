@@ -61,7 +61,7 @@ public class OldParserUtils {
         oldDemand.setWeb(json.getString("web"));
         oldDemand.setOthers(json.getString("others"));
 
-        oldDemand.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+        oldDemand.setTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
 
         return oldDemand;
     }
