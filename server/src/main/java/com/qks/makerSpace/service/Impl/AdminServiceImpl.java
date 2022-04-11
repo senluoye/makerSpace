@@ -119,14 +119,17 @@ public class AdminServiceImpl implements AdminService {
                 if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
                 else applyingReq.setDescribe("4");
                 applyingReq.setName(oldNameList.get(0));
+                applyingReq.setId(id);
             } else {
                 List<String> newNameList = adminDao.getNewNameByCreditCode(applyingReq.getCreditCode());
-                id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
-                if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
-                else applyingReq.setDescribe("4");
-                applyingReq.setName(newNameList.get(0));
+                if (newNameList.size() != 0) {
+                    id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                    if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
+                    else applyingReq.setDescribe("4");
+                    applyingReq.setName(newNameList.get(0));
+                    applyingReq.setId(id);
+                }
             }
-            applyingReq.setId(id);
         }
         return MyResponseUtil.getResultMap(lists, 0, "success");
     }
@@ -165,9 +168,8 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getAllApplying() throws ServiceException {
         List<AdminTechnologyApplyingReq> lists = adminDao.getAllApplying();
         List<AdminTechnologyApplyingReq> data = new ArrayList<>();
-//        System.out.println(lists);
+
         for (AdminTechnologyApplyingReq applyingReq : lists) {
-//            String id;
             int flag = 0;
             // 首先看看该公司在不在旧企业表中
             List<String> oldNameList = adminDao.getOldNameByCreditCode(applyingReq.getCreditCode());

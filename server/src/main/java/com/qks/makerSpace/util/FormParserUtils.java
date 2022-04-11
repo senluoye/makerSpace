@@ -115,8 +115,11 @@ public class FormParserUtils {
         data.put("graduatedEnterprise", form.getGraduatedEnterprise());
         data.put("graduatedTime", form.getGraduatedTime());
         data.put("highEnterprise", form.getHighEnterprise());
-        data.put("certificateCode", highEnterpriseData.getCertificateCode());
-        data.put("highEnterpriseFile", highEnterpriseData.getHighEnterpriseFile());
+        if (highEnterpriseData != null) {
+            data.put("certificateCode", highEnterpriseData.getCertificateCode());
+            data.put("highEnterpriseFile", highEnterpriseData.getHighEnterpriseFile());
+            data.put("highGetTime",highEnterpriseData.getGetTime());
+        }
         data.put("getTime", form.getGetTime());
         data.put("mediumSized", form.getMediumSized());
         data.put("mediumFile", form.getMediumFile());
@@ -156,7 +159,8 @@ public class FormParserUtils {
         data.put("talents", form.getTalents());
         data.put("trainee", form.getTrainee());
         data.put("employment", form.getEmployment());
-        data.put("employmentData",employmentData);
+        if (employmentData.size() != 0)
+            data.put("employmentData",employmentData);
         data.put("applications", form.getApplications());
         data.put("applicationsPatent", form.getApplicationsPatent());
         data.put("granted", form.getGranted());
@@ -171,7 +175,8 @@ public class FormParserUtils {
         data.put("contractUrnover", form.getContractUrnover());
         data.put("projectNum", form.getProjectNum());
         data.put("totalAwards", form.getTotalAwards());
-        data.put("awardsData", formAwardsData);
+        if (formAwardsData.size() != 0)
+            data.put("awardsData", formAwardsData);
         data.put("provinceAwards", form.getProvinceAwards());
         data.put("underProjects", form.getUnderProjects());
         data.put("nationalProject", form.getNationalProject());

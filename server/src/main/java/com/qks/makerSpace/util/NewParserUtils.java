@@ -111,7 +111,7 @@ public class NewParserUtils {
             newIntellectual.setName(obj.getJSONObject(i).getString("name"));
             newIntellectual.setKind(obj.getJSONObject(i).getString("kind"));
             newIntellectual.setApplyTime(obj.getJSONObject(i).getString("applyTime"));
-            newIntellectual.setApplyTime(obj.getJSONObject(i).getString("approvalTime"));
+            newIntellectual.setApprovalTime(obj.getJSONObject(i).getString("approvalTime"));
 
             resultList.add(newIntellectual);
         }

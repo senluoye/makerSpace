@@ -144,7 +144,7 @@ public class OldParserUtils {
             oldIntellectual.setName(obj.getJSONObject(i).getString("name"));
             oldIntellectual.setKind(obj.getJSONObject(i).getString("kind"));
             oldIntellectual.setApplyTime(obj.getJSONObject(i).getString("applyTime"));
-            oldIntellectual.setApplyTime(obj.getJSONObject(i).getString("approvalTime"));
+            oldIntellectual.setApprovalTime(obj.getJSONObject(i).getString("approvalTime"));
 
             resultList.add(oldIntellectual);
         }
