@@ -172,7 +172,7 @@ public class AdminServiceImpl implements AdminService {
             // 首先看看该公司在不在旧企业表中
             List<String> oldNameList = adminDao.getOldNameByCreditCode(applyingReq.getCreditCode());
             if (oldNameList.size() > 0) { // 不为0，在旧企业中
-                id = adminDao.selectOldIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
+                String id = adminDao.selectOldIdByTimeAndCreditCode(applyingReq.getCreditCode(), applyingReq.getSubmitTime());
                 if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("3");
                 else applyingReq.setDescribe("4");
                 applyingReq.setName(oldNameList.get(0));
@@ -181,7 +181,7 @@ public class AdminServiceImpl implements AdminService {
             } else {
                 List<String> newNameList = adminDao.getNewNameByCreditCode(applyingReq.getCreditCode());
                 if (newNameList.size() != 0) {
-                    id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
+                    String id = adminDao.selectNewIdByTimeAndCreditCode(applyingReq.getCreditCode(),applyingReq.getSubmitTime());
                     if (applyingReq.getDescribe().equals("科技园")) applyingReq.setDescribe("2");
                     else applyingReq.setDescribe("4");
                     applyingReq.setName(newNameList.get(0));
