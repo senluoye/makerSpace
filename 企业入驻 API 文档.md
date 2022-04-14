@@ -5455,3 +5455,50 @@ map部分：
 一张图片。
 
 ## 
+
+# 搜索
+
+## 关键子搜索
+
+**简要描述：**
+
+通过某一个关键字，返回企业信息
+
+**请求URL:**
+
+- `/api/search/condition`
+
+**请求方式：**
+
+- POST
+
+**参数：**
+
+~~~json
+{
+    "content":"<String>",															//企业名部分信息
+    "beginTime":"<String>",														//格式为xxxx-xx-xx:xx:xx:xx
+    "endTime":"<String>"														 //格式为xxxx-xx-xx:xx:xx:xx
+}
+~~~
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "id":"<String>",
+        "creditCode":"<Strng>",					// 社会信用代码
+        "name":"<String>",						// 公司名称
+        "submitTime":"<String>",				// 申请递交的时间
+        "administrator_audit":"<String>",		// 管理员审核状态
+        "leadership_audit":"<String>",		// 领导审核状态
+        "describe":"<String>"					// 企业描述(科技园/众创空间)
+    },
+    ......
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
