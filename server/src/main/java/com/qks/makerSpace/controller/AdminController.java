@@ -116,7 +116,7 @@ public class AdminController {
      * 获取某一个旧企业入园申请
      * @return HashMap
      */
-    @RequestMapping(value = "ap{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "oldTechnology/{id}", method = RequestMethod.GET)
     private Map<String, Object> getOldTechnologyById(@PathVariable String id) throws ServiceException {
         return adminService.getOldTechnologyById(id);
     }
