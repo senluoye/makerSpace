@@ -17,6 +17,7 @@ import com.qks.makerSpace.service.LeaderService;
 import com.qks.makerSpace.util.FormParserUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class LeaderServiceImpl implements LeaderService {
 
     private final LeaderDao leaderDao;

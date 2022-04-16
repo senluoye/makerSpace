@@ -865,7 +865,6 @@ map部分：
 
 ```json
 {
-    "creditCode":"<String>",						//统一社会信用代码	
 	"leaseArea":"<String>",							//租赁面积(平方米)
     "position":"<String>",							//位置需求
     "lease":"<String>",								//租期(年)
@@ -933,9 +932,9 @@ map部分：
 
 ## 
 
-## 获取以往续约记录
+## 获取上一次续约记录
 
-**简要描述：**旧企业科技园场地续约
+**简要描述：**获取旧企业科技园场地上一次续约记录
 
 **请求URL：**
 
@@ -945,29 +944,29 @@ map部分：
 
 - GET（带token）
 
-**参数：**
-
-map部分：
+**返回值：**
 
 ```json
 {
-    "creditCode":"<String>",						//统一社会信用代码	
-	"leaseArea":"<String>",							//租赁面积(平方米)
-    "position":"<String>",							//位置需求
-    "lease":"<String>",								//租期(年)
-   	"floor":"<String>",								//楼层需求
-    "electric":"<String>",							//电力需求
-    "water":"<String>",								//给排水需求
-    "web":"<String>",								//网络需求
-    "others":"<String>"								//其他需求
+    "data":{
+        
+    },
+    "code":0,
+    "msg":"success"
 }
 ```
 
-文件部分：
+## 获取以往缴费记录
 
-```json
-"paymentVoucher":"<File>"						// 缴费凭证
-```
+**简要描述：**获取旧企业科技园场地续约记录
+
+**请求URL：**
+
+- `/api/old/amount`
+
+**请求方式：**
+
+- GET（带token）
 
 **返回值：**
 
@@ -980,6 +979,8 @@ map部分：
     "msg":"success"
 }
 ```
+
+
 
 
 

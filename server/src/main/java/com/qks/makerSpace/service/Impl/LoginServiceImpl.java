@@ -8,11 +8,13 @@ import com.qks.makerSpace.service.LoginService;
 import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.util.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class LoginServiceImpl implements LoginService, Serializable {
 
     private final LoginDao loginDao;

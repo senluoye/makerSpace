@@ -9,11 +9,13 @@ import com.qks.makerSpace.service.NotificationService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.apache.xmlbeans.impl.regex.REUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class NotificationServiceImpl implements NotificationService {
 
     private final NotificationDao notificationDao;

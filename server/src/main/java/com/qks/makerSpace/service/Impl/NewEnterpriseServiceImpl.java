@@ -11,6 +11,7 @@ import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -21,6 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializable {
 
     @Value("${web.upload-path}")

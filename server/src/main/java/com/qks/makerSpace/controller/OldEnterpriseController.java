@@ -99,14 +99,26 @@ public class OldEnterpriseController {
     }
 
     /**
-     * 获取以往缴费记录
+     * 获取以往续约记录
      * @param httpServletRequest
      * @return
      * @throws ServiceException
      * @throws IOException
      */
     @RequestMapping(value = "old/demand", method = RequestMethod.GET)
-    private Map<String, Object> getOldEnterprisePay(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
+    private Map<String, Object> getOldEnterpriseDemand(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
+        return oldEnterpriseService.getOldEnterpriseDemand(httpServletRequest.getHeader("token"));
+    }
+
+    /**
+     * 获取以往缴费记录
+     * @param httpServletRequest
+     * @return
+     * @throws ServiceException
+     * @throws IOException
+     */
+    @RequestMapping(value = "old/amount", method = RequestMethod.GET)
+    private Map<String, Object> getOldEnterpriseContract(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
         return oldEnterpriseService.getOldEnterpriseContract(httpServletRequest.getHeader("token"));
     }
 

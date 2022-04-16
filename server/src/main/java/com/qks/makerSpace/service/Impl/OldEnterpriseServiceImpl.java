@@ -10,6 +10,7 @@ import com.qks.makerSpace.service.OldEnterpriseService;
 import com.qks.makerSpace.util.*;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializable {
 
     @Value("${web.upload-path}")
@@ -308,7 +310,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
-     * 续约管理
+     * 场地续约管理
      * @return Hashmap
      */
     @Override
@@ -319,12 +321,24 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             throw new ServiceException("您还没有申请账号");
         }
 
+        Old old = oldEnterpriseDao.getLastOldByCreditCode(creditCodes.get(0));
+        if (old == null) {
+            throw new ServiceException("请提交入园申请表后再进行此类操作");
+        }
+
+        OldDemand oldDemand = OldParserUtils.OldDemandParser(jsonObject);
+        oldDemand.setOldDemandId(old.getOldDemandId());
+        // 更新OldDemand表，不做添加
+        if (oldEnterpriseDao.updateOldDemand(oldDemand) < 1) {
+            throw new ServiceException("上传数据失败，请重新提交");
+        }
+
         return MyResponseUtil.getResultMap(creditCodes.get(0), 0, "success");
     }
 
     /**
      * 缴费管理
-     * @param JSONObject, MultipartFile
+     * @param jsonObject, MultipartFile
      * @return map
      */
     @Override
@@ -356,7 +370,29 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
-     * 获取以往缴费信息
+     * 获取以往续约记录
+     * @param token
+     * @return
+     * @throws ServiceException
+     */
+    @Override
+    public Map<String, Object> getOldEnterpriseDemand(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) {
+            throw new ServiceException("您并没有填写入驻申请表");
+        }
+
+        List<OldDemand> oldDemands = oldEnterpriseDao.getLastOldDemandByCreditCode(creditCodes.get(0));
+        if (oldDemands.size() == 0) {
+            throw new ServiceException("您还没有进行场地申请");
+        }
+
+        return MyResponseUtil.getResultMap(oldDemands.get(0), 0, "success");
+    }
+
+    /**
+     * 获取以往缴费记录
      * @param token
      * @return
      */
@@ -364,10 +400,12 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> getOldEnterpriseContract(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
-        if (creditCodes.size() == 0) throw new ServiceException("您并没有填写入驻申请表");
+        if (creditCodes.size() == 0) {
+            throw new ServiceException("您并没有填写入驻申请表");
+        }
 
         String creditCode = creditCodes.get(0);
-        List<Contract> data = oldEnterpriseDao.getOldContractList(creditCode);
+        List<Contract> data = oldEnterpriseDao.getContractList(creditCode);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
@@ -390,7 +428,5 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
-
-
 }
 

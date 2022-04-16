@@ -32,7 +32,7 @@ public interface OldEnterpriseDao {
     List<String> getUserCompanyByUserId(String userId);
 
     @Select("select * from contract where credit_code = #{creditCode}")
-    List<Contract> getOldContractList(String creditCode);
+    List<Contract> getContractList(String creditCode);
 
     /**
      * 增加缴费记录
@@ -42,6 +42,22 @@ public interface OldEnterpriseDao {
     @Insert("insert into contract values (#{contractId}, #{creditCode}, #{voucher}, " +
             "#{submitTime}, #{amount}, #{quarter}, #{describe})")
     Integer addContract(Contract contract);
+
+    @Select("select * " +
+            "from old " +
+            "where credit_code = #{creditCode} " +
+            "and submit_time = (" +
+            "   select max(submit_time) " +
+            "   from old " +
+            "   where credit_code = #{creditCode}" +
+            ")")
+    Old getLastOldByCreditCode(String creditCode);
+
+    @Update("update old_demand set lease = #{lease}, lease_area = #{leaseArea}, position = #{position}, " +
+            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, " +
+            "others = #{others}, time = #{time} " +
+            "where old_demand_id = #{oldDemandId}")
+    Integer updateOldDemand(OldDemand oldDemand);
 
     /**
      * 向old表中插入一条记录
@@ -118,6 +134,20 @@ public interface OldEnterpriseDao {
      */
     @Select("select * from old_demand where old_demand_id = #{id}")
     List<OldDemand> getOldDemandById(String id);
+
+    @Select("select * " +
+            "from old_demand " +
+            "where old_demand_id = (" +
+            "   select old_demand_id " +
+            "   from old " +
+            "   where credit_code = #{creditCode} " +
+            "   and submit_time = (" +
+            "       select max(submit_time) " +
+            "       from old " +
+            "       where credit_code = #{creditCode}" +
+            "   )" +
+            ")")
+    List<OldDemand> getLastOldDemandByCreditCode(String creditCode);
 
     @Select("select * from old_mainperson where old_mainperson_id = #{id}")
     List<OldMainPerson>  getOldMainPeopleById(String id);

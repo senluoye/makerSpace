@@ -13,10 +13,12 @@ import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import com.qks.makerSpace.util.SpaceParserUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class SpaceServiceImpl implements SpaceService {
 
     private final SpaceDao spaceDao;

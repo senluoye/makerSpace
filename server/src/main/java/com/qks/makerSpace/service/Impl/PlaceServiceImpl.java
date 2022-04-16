@@ -7,11 +7,13 @@ import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.PlaceService;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class PlaceServiceImpl implements PlaceService {
 
     private final PlaceDao placeDao;

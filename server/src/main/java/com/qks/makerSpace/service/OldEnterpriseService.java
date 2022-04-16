@@ -23,5 +23,6 @@ public interface OldEnterpriseService {
     Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
     Map<String, Object> oldEnterpriseContract(String token, JSONObject jsonObject) throws ServiceException, IOException;
     Map<String, Object> getOldEnterpriseContract(String token) throws ServiceException;
+    Map<String, Object> getOldEnterpriseDemand(String token) throws ServiceException;
     Map<String, Object> oldEnterpriseAmount (String token, JSONObject jsonObject, MultipartFile voucher) throws ServiceException;
 }

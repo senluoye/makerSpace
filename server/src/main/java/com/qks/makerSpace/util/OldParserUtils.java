@@ -66,6 +66,23 @@ public class OldParserUtils {
         return oldDemand;
     }
 
+    public static OldDemand OldDemandParser(JSONObject json) {
+        OldDemand oldDemand = new OldDemand();
+
+        oldDemand.setLeaseArea(json.getString("leaseArea"));
+        oldDemand.setPosition(json.getString("position"));
+        oldDemand.setLease(json.getString("lease"));
+        oldDemand.setFloor(json.getString("floor"));
+        oldDemand.setElectric(json.getString("electric"));
+        oldDemand.setWater(json.getString("water"));
+        oldDemand.setWeb(json.getString("web"));
+        oldDemand.setOthers(json.getString("others"));
+
+        oldDemand.setTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
+
+        return oldDemand;
+    }
+
     public static List<OldShareholder> OldShareholderParser(JSONArray obj){
         List<OldShareholder> resultList = new ArrayList<>();
         String OldShareholderId = UUID.randomUUID().toString();

@@ -9,6 +9,7 @@ import com.qks.makerSpace.util.MyResponseUtil;
 import io.jsonwebtoken.Jwt;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class QuitServiceImpl implements QuitService {
 
     public final QuitDao quitDao;
