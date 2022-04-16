@@ -57,7 +57,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         String userDescribe = JWTUtils.parser(token).get("userDescribe").toString();
         User user = newEnterpriseDao.getUserByUserId(userId);
         if (user == null) return  MyResponseUtil.getResultMap(null,-1,"用户不存在");
-        if (user.getUserDescribe() != 2) throw new ServiceException("该用户所属类型不为");
+        if (user.getUserDescribe() == 3) throw new ServiceException("该用户所属类型不为新注册企业或众创空间");
         JSONObject map = JSONObject.parseObject(str);
 
         News news = NewParserUtils.newsParser(map);

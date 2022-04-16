@@ -5541,8 +5541,8 @@ map部分：
 ~~~json
 {
     "content":"<String>",															//企业名部分信息
-    "beginTime":"<String>",														//格式为xxxx-xx-xx:xx:xx:xx
-    "endTime":"<String>"														 //格式为xxxx-xx-xx:xx:xx:xx
+    "beginTime":"<String>",														//格式为xxxx-xx-xx:xx:xx:xx    *可以为空
+    "endTime":"<String>"														 //格式为xxxx-xx-xx:xx:xx:xx    *可以为空
 }
 ~~~
 
