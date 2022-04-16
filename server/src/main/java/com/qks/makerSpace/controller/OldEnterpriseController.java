@@ -73,16 +73,29 @@ public class OldEnterpriseController {
     }
 
     /**
-     * 续约
+     * 续约管理
+     * @param map
+     * @return map
+     */
+    @RequestMapping(value = "old/demand", method = RequestMethod.POST)
+    private Map<String, Object> oldEnterpriseDemand(HttpServletRequest httpServletRequest,
+                                                 @RequestBody JSONObject jsonObject) throws ServiceException, IOException {
+        return oldEnterpriseService.oldEnterpriseContract(httpServletRequest.getHeader("token"), jsonObject);
+    }
+
+    /**
+     * 缴费管理
      * @param map
      * @return
      */
-    @RequestMapping(value = "old/demand", method = RequestMethod.POST)
-    private Map<String, Object> oldEnterprisePay(HttpServletRequest httpServletRequest,
-                                                 @RequestPart(value = "paymentVoucher", required = false) MultipartFile voucher) throws ServiceException, IOException {
-        if (voucher == null)
+    @RequestMapping(value = "old/amount", method = RequestMethod.POST)
+    private Map<String, Object> oldEnterpriseAmount(HttpServletRequest httpServletRequest,
+                                                    @RequestPart("map") JSONObject jsonObject,
+                                                    @RequestPart("voucher") MultipartFile voucher) throws ServiceException, IOException {
+        if (voucher == null) {
             throw new ServiceException("缺少缴费凭证");
-        return oldEnterpriseService.oldEnterpriseContract(httpServletRequest.getHeader("token"), voucher);
+        }
+        return oldEnterpriseService.oldEnterpriseAmount(httpServletRequest.getHeader("token"), jsonObject, voucher);
     }
 
     /**

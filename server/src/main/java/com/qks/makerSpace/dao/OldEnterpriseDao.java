@@ -34,9 +34,13 @@ public interface OldEnterpriseDao {
     @Select("select * from contract where credit_code = #{creditCode}")
     List<Contract> getOldContractList(String creditCode);
 
-    @Insert("insert into contract " +
-            "set contract_id = #{contractId}, credit_code = #{creditCode}, " +
-            "voucher = #{voucher}, submit_time = #{submitTime}")
+    /**
+     * 增加缴费记录
+     * @param contract
+     * @return Integer
+     */
+    @Insert("insert into contract values (#{contractId}, #{creditCode}, #{voucher}, " +
+            "#{submitTime}, #{amount}, #{quarter}, #{describe})")
     Integer addContract(Contract contract);
 
     /**

@@ -1,4 +1,4 @@
-package com.qks.makerSpace.entity.database;
+package com.qks.makerSpace.entity.response;
 
 import lombok.Data;
 
@@ -7,10 +7,10 @@ import lombok.Data;
  * @author 15998
  */
 @Data
-public class Contract {
+public class ContractRes {
     private String contractId;
-    // 公司代码
-    private String creditCode;
+    // 公司名称
+    private String name;
     // 缴费凭证（文件）
     private String voucher;
     // 提交时间

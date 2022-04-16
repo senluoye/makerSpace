@@ -308,30 +308,51 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     }
 
     /**
-     * 续约
+     * 续约管理
      * @return Hashmap
      */
     @Override
-    public Map<String, Object> oldEnterpriseContract(String token, MultipartFile file) throws ServiceException, IOException {
+    public Map<String, Object> oldEnterpriseContract(String token, JSONObject jsonObject) throws ServiceException, IOException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
-        if (creditCodes.size() == 0) throw new ServiceException("您还没有申请账号");
-        List<String> oldIdList = oldEnterpriseDao.getOldIdList(creditCodes.get(0));
-        if (oldIdList.size() == 0) throw new ServiceException("您还没有填写入驻申请表");
+        if (creditCodes.size() == 0) {
+            throw new ServiceException("您还没有申请账号");
+        }
 
-        String creditCode = creditCodes.get(0);
-        String submitTime = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss").format(new Date());
+        return MyResponseUtil.getResultMap(creditCodes.get(0), 0, "success");
+    }
+
+    /**
+     * 缴费管理
+     * @param JSONObject, MultipartFile
+     * @return map
+     */
+    @Override
+    public Map<String, Object> oldEnterpriseAmount(String token, JSONObject jsonObject, MultipartFile voucher) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) {
+            throw new ServiceException("您还没有申请账号");
+        }
 
         Contract contract = new Contract();
-        contract.setContractId(UUID.randomUUID().toString());
-        contract.setCreditCode(creditCode);
-        String voucherName = FileUtils.upload(file, uploadPath);
-        contract.setVoucher(voucherName);
-        contract.setSubmitTime(submitTime);
+        try {
+            contract.setContractId(UUID.randomUUID().toString());
+            contract.setAmount(Integer.parseInt(jsonObject.getString("amount")));
+            contract.setQuarter(Integer.parseInt(jsonObject.getString("quarter")));
+            contract.setDescribe(jsonObject.getString("describe"));
+            contract.setVoucher(FileUtils.upload(voucher, uploadPath));
+            contract.setCreditCode(creditCodes.get(0));
+            contract.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
+        } catch (Exception e) {
+            throw new ServiceException("请传递正确的数据格式");
+        }
 
-        if (oldEnterpriseDao.addContract(contract) < 1) throw new ServiceException("上传缴费凭证失败，请重新上传");
+        if (oldEnterpriseDao.addContract(contract) < 1) {
+            throw new ServiceException("上传数据失败，请重新上传");
+        }
 
-        return MyResponseUtil.getResultMap(creditCode, 0, "success");
+        return MyResponseUtil.getResultMap(creditCodes.get(0), 0, "success");
     }
 
     /**
@@ -350,6 +371,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
 
         return MyResponseUtil.getResultMap(data, 0, "success");
     }
+
+
 
     /**
      * 获取某个企业的所有季度报表

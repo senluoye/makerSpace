@@ -16,7 +16,7 @@ public class MyResponseUtil {
      * @return
      */
     public static Map<String, Object> getResultMap(Object data, Integer code, String msg){
-        Map<String, Object> resultMap = new HashMap<>();
+        Map<String, Object> resultMap = new HashMap<>(3);
         resultMap.put("data", data);
         resultMap.put("code", code);
         resultMap.put("msg", msg);

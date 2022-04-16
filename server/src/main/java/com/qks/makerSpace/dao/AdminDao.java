@@ -306,4 +306,10 @@ public interface AdminDao {
 
     @Select("select * from form_awards where form_awards_id = #{awardsId}")
     List<FormAwardsData> getFormAwardsById(String awardsId);
+
+    @Select("select contract_id, voucher, amount, quarter, `describe` from contract")
+    List<Contract> getAllContract();
+
+    @Select("select name from user where user_id = (select user_id from user_company where credit_code = #{creditCode})")
+    String getNameByCreditCode(String creditCode);
 }

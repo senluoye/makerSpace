@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
         logger.info(req.getRequestURI());
         logger.info(String.valueOf(e));
 
-        return MyResponseUtil.getResultMap(null, -1, "数据库连接异常");
+        return MyResponseUtil.getResultMap(null, -2, "数据库连接异常");
     }
 
     /**

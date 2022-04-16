@@ -48,5 +48,6 @@ public interface AdminService {
     Map<String, Object> getDownLoadForm();
     void downLoadWord(HttpServletResponse response, Map<String , Object> map) throws Exception;
 
-
+    Map<String, Object> getAllAmount(String token) throws ServiceException;
+    Map<String, Object> getAllDemand(String token) throws ServiceException;
 }

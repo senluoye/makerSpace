@@ -21,6 +21,7 @@ public interface OldEnterpriseService {
                                             MultipartFile[] intellectualFile,
                                             MultipartFile representFile) throws Exception;
     Map<String, Object> getFormByCreditCode(String token) throws ServiceException;
-    Map<String, Object> oldEnterpriseContract(String token, MultipartFile voucher) throws ServiceException, IOException;
+    Map<String, Object> oldEnterpriseContract(String token, JSONObject jsonObject) throws ServiceException, IOException;
     Map<String, Object> getOldEnterpriseContract(String token) throws ServiceException;
+    Map<String, Object> oldEnterpriseAmount (String token, JSONObject jsonObject, MultipartFile voucher) throws ServiceException;
 }

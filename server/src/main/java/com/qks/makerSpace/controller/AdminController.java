@@ -5,9 +5,11 @@ import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.AdminService;
 import com.qks.makerSpace.util.JWTUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -367,5 +369,25 @@ public class AdminController {
             return adminService.disagreeFormById(map);
         else
             throw new ServiceException("请求主体非管理员");
+    }
+
+    /**
+     * 获取所有用户的缴费记录
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/amount", method = RequestMethod.POST)
+    private Map<String, Object> allAmount(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
+        return adminService.getAllAmount(httpServletRequest.getHeader("token"));
+    }
+
+    /**
+     * 获取所有用户的续约记录
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/demand", method = RequestMethod.POST)
+    private Map<String, Object> allDemand(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
+        return adminService.getAllDemand(httpServletRequest.getHeader("token"));
     }
 }

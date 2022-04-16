@@ -847,8 +847,6 @@ map部分：
 }
 ~~~
 
-
-
 ## 续约管理
 
 **简要描述：**旧企业科技园场地续约
@@ -879,10 +877,46 @@ map部分：
 }
 ```
 
+**返回值：**
+
+```json
+{
+    "data":{
+        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
+    },
+    "code":0,
+    "msg":"success"
+}
+```
+
+## 缴费管理
+
+**简要描述：**旧企业科技园场地续约
+
+**请求URL：**
+
+- `/api/old/amount`
+
+**请求方式：**
+
+- POST（带token）
+
+**参数：**
+
+map部分：
+
+```json
+{
+    "amount":"<int>",					// 缴费金额
+    "quarter":"<int>",					// 季度
+    "describe":"<String>"				// 描述（物业费、房租费）
+}
+```
+
 文件部分：
 
 ```json
-"paymentVoucher":"<File>"						// 缴费凭证
+"voucher":"<File>"						// 缴费凭证
 ```
 
 **返回值：**
@@ -896,6 +930,8 @@ map部分：
     "msg":"success"
 }
 ```
+
+## 
 
 ## 获取以往续约记录
 
@@ -3236,19 +3272,47 @@ map部分：
 }
 ~~~
 
+## 缴费与租赁设置
+
+### 获取所有用户的缴费记录
+
+**简要描述：**获取所有用户的缴费记录
+
+**请求URL：**
+
+- `/api/admin/amount`
+
+**请求方式:**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "contractId":"<String>",				// 缴费记录id
+        "name":"<String>",						// 公司名称
+        "amount":"<int>",
+        "quarter":"<int>",
+        "describe":"<Strin>",
+        "voucher":"<String>"					// 凭证文件路径
+    }，
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
 
 
-### 缴费设置
 
-
+### 获取所有用户的租赁记录
 
 
 
 
 
 ------
-
-
 
 ## 授权类操作
 

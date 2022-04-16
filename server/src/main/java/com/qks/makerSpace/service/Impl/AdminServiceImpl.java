@@ -733,4 +733,55 @@ public class AdminServiceImpl implements AdminService {
             throw new ServiceException("导出信息表失败");
         }
     }
+
+    /**
+     * 获取所有用户的缴费记录
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAllAmount(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<User> Users = adminDao.getUserById(userId);
+        if (Users.size() != 1 || Users.get(0).getUserDescribe() != 11 || Users.get(0).getUserDescribe() != 12) {
+            throw new ServiceException("没有权限");
+        }
+
+        List<Contract> contracts = adminDao.getAllContract();
+        List<ContractRes> data = new ArrayList<>(contracts.size());
+        for (Contract contract : contracts) {
+            ContractRes contractRes = new ContractRes();
+
+            String name = adminDao.getNameByCreditCode(contract.getCreditCode());
+            if (Objects.equals(name, "") || name == null) {
+                continue;
+            }
+            contractRes.setAmount(contract.getAmount());
+            contractRes.setContractId(contract.getContractId());
+            contractRes.setQuarter(contract.getQuarter());
+            contractRes.setVoucher(contract.getVoucher());
+            contractRes.setDescribe(contract.getDescribe());
+            contractRes.setName(name);
+
+            data.add(contractRes);
+        }
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
+
+    /**
+     * 获取所有用户的续约记录
+     * @param map
+     * @return
+     */
+    @Override
+    public Map<String, Object> getAllDemand(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<User> Users = adminDao.getUserById(userId);
+        if (Users.size() != 1 || Users.get(0).getUserDescribe() != 11 || Users.get(0).getUserDescribe() != 12) {
+            throw new ServiceException("没有权限");
+        }
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
 }
