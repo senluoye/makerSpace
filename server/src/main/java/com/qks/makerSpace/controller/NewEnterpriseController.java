@@ -1,5 +1,6 @@
 package com.qks.makerSpace.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NewEnterpriseService;
@@ -73,32 +74,54 @@ public class NewEnterpriseController {
         return newEnterpriseService.getNewEnterpriseApplying(httpServletRequest.getHeader("token"));
     }
 
-
     /**
-     * 续约
-     * @param json
-     * @param voucher
+     * 续约管理
+     * @param httpServletRequest
+     * @param jsonObject
      * @return
-     * @throws ServiceException
-     * @throws IOException
      */
-    @RequestMapping(value = "demand", method = RequestMethod.PUT)
-    private Map<String, Object> newEnterprisePay(HttpServletRequest httpServletRequest,
-                                                 @RequestPart("paymentVoucher") MultipartFile voucher) throws ServiceException, IOException {
-        if (voucher == null)
-            throw new ServiceException("缺少缴费凭证");
-
-        return newEnterpriseService.newEnterpriseContract(httpServletRequest.getHeader("token"), voucher);
+    @RequestMapping(value = "demand", method = RequestMethod.POST)
+    private Map<String, Object> newEnterpriseDemand(HttpServletRequest httpServletRequest,
+                                                    @RequestBody JSONObject jsonObject) throws ServiceException {
+        return newEnterpriseService.newEnterpriseContract(httpServletRequest.getHeader("token"), jsonObject);
     }
 
     /**
-     * 获取续约记录
+     * 缴费管理
      * @param httpServletRequest
+     * @param str
+     * @param voucher
      * @return
      * @throws ServiceException
      */
+    @RequestMapping(value = "amount", method = RequestMethod.POST)
+    private Map<String, Object> newEnterpriseAmount(HttpServletRequest httpServletRequest,
+                                                    @RequestPart("map") String str,
+                                                    @RequestPart("paymentVoucher") MultipartFile voucher) throws ServiceException {
+        if (voucher == null) {
+            throw new ServiceException("缺少缴费凭证");
+        }
+        JSONObject json = JSONObject.parseObject(str);
+        return newEnterpriseService.newEnterpriseAmount(httpServletRequest.getHeader("token"), json, voucher);
+    }
+
+    /**
+     * 获取以往续约记录
+     * @param httpServletRequest
+     * @return
+     */
     @RequestMapping(value = "demand", method = RequestMethod.GET)
-    private Map<String, Object> getNewEnterprisePay(HttpServletRequest httpServletRequest) throws ServiceException {
+    private Map<String, Object> getNewEnterpriseDemand(HttpServletRequest httpServletRequest) throws ServiceException {
+        return newEnterpriseService.getNewEnterpriseDemand(httpServletRequest.getHeader("token"));
+    }
+
+    /**
+     * 获取以往缴费记录
+     * @param httpServletRequest
+     * @return
+     */
+    @RequestMapping(value = "amount", method = RequestMethod.GET)
+    private Map<String, Object> getNewEnterpriseContract(HttpServletRequest httpServletRequest) throws ServiceException {
         return newEnterpriseService.getNewEnterpriseContract(httpServletRequest.getHeader("token"));
     }
 

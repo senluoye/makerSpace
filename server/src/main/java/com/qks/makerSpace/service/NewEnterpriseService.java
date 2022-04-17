@@ -17,9 +17,10 @@ public interface NewEnterpriseService {
                                     MultipartFile representCard,
                                     MultipartFile certificate,
                                     MultipartFile[] intellectualFile) throws Exception;
-
     Map<String, Object> getNewEnterprise(String id);
 
-    Map<String, Object> newEnterpriseContract(String token, MultipartFile file) throws ServiceException, IOException;
+    Map<String, Object> newEnterpriseContract(String token, JSONObject jsonObject) throws ServiceException;
     Map<String, Object> getNewEnterpriseContract(String token) throws ServiceException;
+    Map<String, Object> newEnterpriseAmount(String token, JSONObject jsonObject, MultipartFile voucher) throws ServiceException;
+    Map<String, Object> getNewEnterpriseDemand(String token) throws ServiceException;
 }

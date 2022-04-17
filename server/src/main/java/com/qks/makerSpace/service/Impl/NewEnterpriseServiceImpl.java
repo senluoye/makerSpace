@@ -1,9 +1,11 @@
 package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.auth0.jwt.JWT;
 import com.qks.makerSpace.dao.NewEnterpriseDao;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.Demand;
 import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import com.qks.makerSpace.exception.ServiceException;
@@ -189,6 +191,37 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
     }
 
     /**
+     * 场地续约管理
+     * @param token
+     * @param jsonObject
+     * @return
+     * @throws ServiceException
+     * @throws IOException
+     */
+    @Override
+    public Map<String, Object> newEnterpriseContract(String token, JSONObject jsonObject) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) {
+            throw new ServiceException("您还没有申请账号");
+        }
+
+        News news = newEnterpriseDao.getLastNewByCreditCode(creditCodes.get(0));
+        if (news == null) {
+            throw new ServiceException("请提交入园申请表后再进行此类操作");
+        }
+
+        NewDemand newDemand = NewParserUtils.newDemandParser(jsonObject);
+        newDemand.setNewDemandId(news.getNewDemandId());
+
+        if (newEnterpriseDao.updateNewDemand(newDemand) < 1) {
+            throw new ServiceException("上传数据失败，请重新提交");
+        }
+
+        return MyResponseUtil.getResultMap(creditCodes.get(0),0,"success");
+    }
+
+    /**
      * 获取某个企业的所有季度报表
      * @param
      * @return
@@ -203,37 +236,6 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         List<FormDetails> data = newEnterpriseDao.getAllFormDetails(creditCode);
 
         return MyResponseUtil.getResultMap(data, 0, "success");
-    }
-
-    /**
-     * 新企业续约
-     * @param token
-     * @param file
-     * @return
-     * @throws ServiceException
-     * @throws IOException
-     */
-    @Override
-    public Map<String, Object> newEnterpriseContract(String token, MultipartFile file) throws ServiceException, IOException {
-        String userId = JWTUtils.parser(token).get("userId").toString();
-        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
-        if (creditCodes.size() == 0) throw new ServiceException("您还没有申请账号");
-        List<String> oldIdList = newEnterpriseDao.getNewIdList(creditCodes.get(0));
-        if (oldIdList.size() == 0) throw new ServiceException("您还没有填写入驻申请表");
-
-        String creditCode = creditCodes.get(0);
-        String submitTime = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss").format(new Date());
-
-        Contract contract = new Contract();
-        contract.setContractId(UUID.randomUUID().toString());
-        contract.setCreditCode(creditCode);
-        String voucherName = FileUtils.upload(file, uploadPath);
-        contract.setVoucher(voucherName);
-        contract.setSubmitTime(submitTime);
-
-        if (oldEnterpriseDao.addContract(contract) < 1) throw new ServiceException("上传缴费凭证失败，请重新上传");
-
-        return MyResponseUtil.getResultMap(creditCode, 0, "success");
     }
 
     /**
@@ -252,6 +254,55 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         List<Contract> data = newEnterpriseDao.getNewContractList(creditCode);
 
         return MyResponseUtil.getResultMap(data,0,"success");
+    }
+
+    @Override
+    public Map<String, Object> newEnterpriseAmount(String token, JSONObject jsonObject, MultipartFile voucher) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) {
+            throw new ServiceException("您还没有申请账号");
+        }
+        Contract contract = new Contract();
+        try {
+            contract.setContractId(UUID.randomUUID().toString());
+            contract.setAmount(Integer.parseInt(jsonObject.getString("amount")));
+            contract.setQuarter(Integer.parseInt(jsonObject.getString("quarter")));
+            contract.setDescribe(jsonObject.getString("describe"));
+            contract.setVoucher(FileUtils.upload(voucher, uploadPath));
+            contract.setCreditCode(creditCodes.get(0));
+            contract.setYear(Integer.parseInt(jsonObject.getString("year")));
+            contract.setSubmitTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
+        } catch (Exception e) {
+            throw new ServiceException("请传递正确的数据格式");
+        }
+
+        Contract con = newEnterpriseDao.getContractByCreditCodeAndQuarter(creditCodes.get(0), contract.getYear(), contract.getQuarter(), contract.getDescribe());
+        if (con != null) {
+            throw new ServiceException("您已提交该季度该类型的缴费凭证");
+        }
+
+        if (newEnterpriseDao.addContract(contract) < 1) {
+            throw new ServiceException("上传数据失败，请重新上传");
+        }
+
+        return MyResponseUtil.getResultMap(creditCodes.get(0),0,"success");
+    }
+
+    @Override
+    public Map<String, Object> getNewEnterpriseDemand(String token) throws ServiceException {
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
+        if (creditCodes.size() == 0) {
+            throw new ServiceException("您并没有填写入驻申请表");
+        }
+
+        List<NewDemand> newDemands = newEnterpriseDao.getLastNewDemandByCreditCode(creditCodes.get(0));
+        if (newDemands.size() == 0) {
+            throw new ServiceException("您还没有进行场地申请");
+        }
+
+        return MyResponseUtil.getResultMap(newDemands.get(0), 0, "success");
     }
 
     /**
