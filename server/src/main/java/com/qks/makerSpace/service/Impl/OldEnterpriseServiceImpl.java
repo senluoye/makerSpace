@@ -362,6 +362,11 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             throw new ServiceException("请传递正确的数据格式");
         }
 
+        Contract con = oldEnterpriseDao.getContractByCreditCodeAndQuarter(creditCodes.get(0), contract.getQuarter(), contract.getDescribe());
+        if (con != null) {
+            throw new ServiceException("您已提交该季度该类型的缴费凭证");
+        }
+
         if (oldEnterpriseDao.addContract(contract) < 1) {
             throw new ServiceException("上传数据失败，请重新上传");
         }

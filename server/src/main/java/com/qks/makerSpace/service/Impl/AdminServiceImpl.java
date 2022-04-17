@@ -784,6 +784,8 @@ public class AdminServiceImpl implements AdminService {
             throw new ServiceException("没有权限");
         }
 
-        return MyResponseUtil.getResultMap(data, 0, "success");
+//        List<Demand> data1 = adminDao.getOldDemand();
+
+        return MyResponseUtil.getResultMap(null, 0, "success");
     }
 }

@@ -34,6 +34,10 @@ public interface OldEnterpriseDao {
     @Select("select * from contract where credit_code = #{creditCode}")
     List<Contract> getContractList(String creditCode);
 
+    @Select("select * from contract " +
+            "where credit_code = #{creditCode} and quarter = #{quarter} and `describe` = #{describe}")
+    Contract getContractByCreditCodeAndQuarter(String creditCode, int quarter, String describe);
+
     /**
      * 增加缴费记录
      * @param contract

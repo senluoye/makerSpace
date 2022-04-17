@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = ServiceException.class)
     @ResponseBody
     private Map<String, Object> ServiceExceptionHandler(HttpServletRequest req, Exception e) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
         logger.info("最新的请求: " + df.format(new Date()));
         logger.info(req.getRequestURI());
         logger.info(String.valueOf(e));
@@ -46,7 +46,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = NullPointerException.class)
     @ResponseBody
     private Map<String, Object> nullPointerExceptionHandler(HttpServletRequest req, Exception e) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-d:HH:mm:ss");
         logger.info("最新的请求: " + df.format(new Date()));
         logger.info(req.getRequestURI());
         logger.info(String.valueOf(e));
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = CommunicationsException.class)
     @ResponseBody
     private Map<String, Object> CommunicationsExceptionHandler(HttpServletRequest req, Exception e) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
         logger.info("最新的请求: " + df.format(new Date()));
         logger.info(req.getRequestURI());
         logger.info(String.valueOf(e));
@@ -80,12 +80,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = RecoverableDataAccessException.class)
     @ResponseBody
     private Map<String, Object> RecoverableDataAccessExceptionHandler(HttpServletRequest req, Exception e) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
         logger.info("最新的请求: " + df.format(new Date()));
         logger.info(req.getRequestURI());
         logger.info(String.valueOf(e));
 
-        return MyResponseUtil.getResultMap(null, -1, "数据库连接异常，请重新提交");
+        return MyResponseUtil.getResultMap(null, -2, "数据库连接异常，请重新提交");
     }
 
     /**
@@ -97,7 +97,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     @ResponseBody
     private Map<String, Object> exceptionHandler(HttpServletRequest req, Exception e) {
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
         logger.info("最新的请求: " + df.format(new Date()));
         logger.info(req.getRequestURI());
         logger.info(String.valueOf(e));

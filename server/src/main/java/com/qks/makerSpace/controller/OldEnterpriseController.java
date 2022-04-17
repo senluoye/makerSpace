@@ -90,12 +90,13 @@ public class OldEnterpriseController {
      */
     @RequestMapping(value = "old/amount", method = RequestMethod.POST)
     private Map<String, Object> oldEnterpriseAmount(HttpServletRequest httpServletRequest,
-                                                    @RequestPart("map") JSONObject jsonObject,
-                                                    @RequestPart("voucher") MultipartFile voucher) throws ServiceException, IOException {
+                                                    @RequestPart("map") String str,
+                                                    @RequestPart("paymentVoucher") MultipartFile voucher) throws ServiceException, IOException {
         if (voucher == null) {
             throw new ServiceException("缺少缴费凭证");
         }
-        return oldEnterpriseService.oldEnterpriseAmount(httpServletRequest.getHeader("token"), jsonObject, voucher);
+        JSONObject json = JSONObject.parseObject(str);
+        return oldEnterpriseService.oldEnterpriseAmount(httpServletRequest.getHeader("token"), json, voucher);
     }
 
     /**

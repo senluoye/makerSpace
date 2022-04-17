@@ -915,7 +915,7 @@ map部分：
 文件部分：
 
 ```json
-"voucher":"<File>"						// 缴费凭证
+"paymentVoucher":"<File>"						// 缴费凭证
 ```
 
 **返回值：**
