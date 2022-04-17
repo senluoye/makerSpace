@@ -41,6 +41,8 @@ public class LoginServiceImpl implements LoginService, Serializable {
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("name", user.getName());
         userMap.put("userDescribe", user.getUserDescribe());
+        userMap.put("userId", user.getUserId());
+        System.out.println(userMap);
         data.put("token", JWTUtils.createToken(userMap));
 
         return MyResponseUtil.getResultMap(data,0,"success");
@@ -64,6 +66,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("name", user.getName());
         userMap.put("userDescribe", user.getUserDescribe());
+        userMap.put("userId", user.getUserId());
         data.put("token", JWTUtils.createToken(userMap));
 
         return MyResponseUtil.getResultMap(data,0,"success");
@@ -88,6 +91,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
         Map<String, Object> userMap = new HashMap<>();
         userMap.put("name", user.getName());
         userMap.put("userDescribe", userDescribe);
+        userMap.put("userId", user.getUserId());
         data.put("token", JWTUtils.createToken(userMap));
 
         return MyResponseUtil.getResultMap(data,0,"success");
@@ -107,7 +111,6 @@ public class LoginServiceImpl implements LoginService, Serializable {
         if (user.getUserDescribe() == 11 || user.getUserDescribe() == 12 || user.getUserDescribe() == 0)
             throw new ServiceException("不存在该用户账号");
 
-//        System.out.println(user);
         Map<String, Object> data = new HashMap<>();
         if (user != null) {
             if (user.getAlive()) {

@@ -9,6 +9,7 @@ import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.Map;
 
 @RestController
@@ -234,5 +235,15 @@ public class LeaderController {
     @RequestMapping(value = "technology/countermand", method = RequestMethod.POST)
     private Map<String, Object> disagreeTechnologyById(@RequestBody JSONObject map) throws ServiceException {
         return leaderService.disagreeTechnologyById(map);
+    }
+
+    /**
+     * 获取所有用户的缴费记录
+     * @param map
+     * @return
+     */
+    @RequestMapping(value = "/amount", method = RequestMethod.GET)
+    private Map<String, Object> allAmount(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
+        return leaderService.getAllAmount(httpServletRequest.getHeader("token"));
     }
 }

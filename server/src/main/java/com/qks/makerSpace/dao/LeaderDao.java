@@ -137,4 +137,13 @@ public interface LeaderDao {
 
     @Select("select * from new where new_id = #{newId}")
     List<News> getNewById(String newId);
+
+    @Select("select * from user where user_id = #{userId}")
+    List<User> getUserById(String userId);
+
+    @Select("select contract_id, credit_code, voucher, amount, quarter, `describe` from contract")
+    List<Contract> getAllContract();
+
+    @Select("select name from user where user_id = (select user_id from user_company where credit_code = #{creditCode})")
+    String getNameByCreditCode(String creditCode);
 }

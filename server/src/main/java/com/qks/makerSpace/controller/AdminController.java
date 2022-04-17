@@ -376,7 +376,7 @@ public class AdminController {
      * @param map
      * @return
      */
-    @RequestMapping(value = "/amount", method = RequestMethod.POST)
+    @RequestMapping(value = "/amount", method = RequestMethod.GET)
     private Map<String, Object> allAmount(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
         return adminService.getAllAmount(httpServletRequest.getHeader("token"));
     }
@@ -386,7 +386,7 @@ public class AdminController {
      * @param map
      * @return
      */
-    @RequestMapping(value = "/demand", method = RequestMethod.POST)
+    @RequestMapping(value = "/demand", method = RequestMethod.GET)
     private Map<String, Object> allDemand(HttpServletRequest httpServletRequest) throws ServiceException, IOException {
         return adminService.getAllDemand(httpServletRequest.getHeader("token"));
     }

@@ -45,4 +45,6 @@ public interface LeaderService {
      */
     Map<String, Object> agreeFormById(JSONObject map) throws ServiceException;
     Map<String, Object> disagreeFormById(JSONObject map) throws ServiceException;
+
+    Map<String, Object> getAllAmount(String token) throws ServiceException;
 }

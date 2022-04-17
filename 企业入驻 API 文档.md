@@ -3309,7 +3309,25 @@ map部分：
 
 ### 获取所有用户的租赁记录
 
+**简要描述：**获取所有用户的缴费记录
 
+**请求URL：**
+
+- `/api/admin/demand`
+
+**请求方式:**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":"<String>",
+    "code":0,
+    "msg":"success"
+}
+~~~
 
 
 
@@ -5020,6 +5038,40 @@ map部分：
     "msg":"success"
 }
 ```
+
+## 获取所有用户的缴费记录
+
+**简要描述：**获取所有用户的缴费记录
+
+**请求URL：**
+
+- `/api/leader/amount`
+
+**请求方式:**
+
+- GET（带token）
+
+**返回值：**
+
+~~~json
+{
+    "data":[{
+        "contractId":"<String>",				// 缴费记录id
+        "name":"<String>",						// 公司名称
+        "amount":"<int>",
+        "quarter":"<int>",
+        "describe":"<Strin>",
+        "voucher":"<String>"					// 凭证文件路径
+    }，
+    ],
+    "code":0,
+    "msg":"success"
+}
+~~~
+
+
+
+
 
 
 

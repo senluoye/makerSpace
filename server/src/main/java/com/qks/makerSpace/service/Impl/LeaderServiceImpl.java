@@ -1,28 +1,25 @@
 package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.auth0.jwt.JWT;
 import com.qks.makerSpace.dao.LeaderDao;
 import com.qks.makerSpace.entity.Temp.EmploymentData;
 import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
-import com.qks.makerSpace.entity.database.Audit;
-import com.qks.makerSpace.entity.database.Form;
-import com.qks.makerSpace.entity.database.News;
-import com.qks.makerSpace.entity.database.Old;
+import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.*;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
+import com.qks.makerSpace.entity.response.ContractRes;
 import com.qks.makerSpace.entity.response.TimeFormRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.LeaderService;
 import com.qks.makerSpace.util.FormParserUtils;
+import com.qks.makerSpace.util.JWTUtils;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
@@ -96,6 +93,8 @@ public class LeaderServiceImpl implements LeaderService {
             return MyResponseUtil.getResultMap(null,0,"success");
         } else throw new ServiceException("不同意操作异常");
     }
+
+
 
     /**
      * 获取领导未通过的季度报表
@@ -355,5 +354,39 @@ public class LeaderServiceImpl implements LeaderService {
         return MyResponseUtil.getResultMap(id, 0, "success");
     }
 
+    @Override
+    public Map<String, Object> getAllAmount(String token) throws ServiceException {
+        if (!JWTUtils.verify(token)) {
+            throw new ServiceException("登陆信息过期，请重新登陆");
+        }
+        System.out.println(JWTUtils.parser(token));
+        String userId = JWTUtils.parser(token).get("userId").toString();
+        System.out.println(userId);
+        List<User> Users = leaderDao.getUserById(userId);
+        if (Users.size() != 1 || Users.get(0).getUserDescribe() != 0) {
+            throw new ServiceException("没有权限");
+        }
 
+        List<Contract> contracts = leaderDao.getAllContract();
+        List<ContractRes> data = new ArrayList<>(contracts.size());
+        for (Contract contract : contracts) {
+            ContractRes contractRes = new ContractRes();
+
+            String name = leaderDao.getNameByCreditCode(contract.getCreditCode());
+            System.out.println(name);
+            if (Objects.equals(name, "") || name == null) {
+                continue;
+            }
+            contractRes.setAmount(contract.getAmount());
+            contractRes.setContractId(contract.getContractId());
+            contractRes.setQuarter(contract.getQuarter());
+            contractRes.setVoucher(contract.getVoucher());
+            contractRes.setDescribe(contract.getDescribe());
+            contractRes.setName(name);
+
+            data.add(contractRes);
+        }
+
+        return MyResponseUtil.getResultMap(data, 0, "success");
+    }
 }

@@ -743,9 +743,12 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public Map<String, Object> getAllAmount(String token) throws ServiceException {
+        if (!JWTUtils.verify(token)) {
+            throw new ServiceException("登陆信息过期，请重新登陆");
+        }
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<User> Users = adminDao.getUserById(userId);
-        if (Users.size() != 1 || Users.get(0).getUserDescribe() != 11 || Users.get(0).getUserDescribe() != 12) {
+        if (Users.size() != 1 || Users.get(0).getUserDescribe() != 11 && Users.get(0).getUserDescribe() != 12) {
             throw new ServiceException("没有权限");
         }
 
@@ -755,6 +758,7 @@ public class AdminServiceImpl implements AdminService {
             ContractRes contractRes = new ContractRes();
 
             String name = adminDao.getNameByCreditCode(contract.getCreditCode());
+            System.out.println(name);
             if (Objects.equals(name, "") || name == null) {
                 continue;
             }
@@ -780,12 +784,11 @@ public class AdminServiceImpl implements AdminService {
     public Map<String, Object> getAllDemand(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<User> Users = adminDao.getUserById(userId);
-        if (Users.size() != 1 || Users.get(0).getUserDescribe() != 11 || Users.get(0).getUserDescribe() != 12) {
+        if (Users.size() != 1 || Users.get(0).getUserDescribe() != 11 && Users.get(0).getUserDescribe() != 12) {
             throw new ServiceException("没有权限");
         }
 
-//        List<Demand> data1 = adminDao.getOldDemand();
 
-        return MyResponseUtil.getResultMap(null, 0, "success");
+        return MyResponseUtil.getResultMap("该接口暂时还没做，感觉不太需要", 0, "success");
     }
 }
