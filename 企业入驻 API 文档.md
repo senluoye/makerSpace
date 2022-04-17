@@ -907,6 +907,7 @@ map部分：
 ```json
 {
     "amount":"<int>",					// 缴费金额
+    "year":"<int>",						// 年度
     "quarter":"<int>",					// 季度
     "describe":"<String>"				// 描述（物业费、房租费）
 }

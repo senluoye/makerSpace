@@ -758,7 +758,6 @@ public class AdminServiceImpl implements AdminService {
             ContractRes contractRes = new ContractRes();
 
             String name = adminDao.getNameByCreditCode(contract.getCreditCode());
-            System.out.println(name);
             if (Objects.equals(name, "") || name == null) {
                 continue;
             }
@@ -768,6 +767,8 @@ public class AdminServiceImpl implements AdminService {
             contractRes.setVoucher(contract.getVoucher());
             contractRes.setDescribe(contract.getDescribe());
             contractRes.setName(name);
+            contractRes.setYear(contract.getYear());
+            contractRes.setSubmitTime(contract.getSubmitTime());
 
             data.add(contractRes);
         }

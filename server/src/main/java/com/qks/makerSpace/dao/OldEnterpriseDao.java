@@ -35,8 +35,8 @@ public interface OldEnterpriseDao {
     List<Contract> getContractList(String creditCode);
 
     @Select("select * from contract " +
-            "where credit_code = #{creditCode} and quarter = #{quarter} and `describe` = #{describe}")
-    Contract getContractByCreditCodeAndQuarter(String creditCode, int quarter, String describe);
+            "where credit_code = #{creditCode} and year = #{year} and quarter = #{quarter} and `describe` = #{describe}")
+    Contract getContractByCreditCodeAndQuarter(String creditCode, int year, int quarter, String describe);
 
     /**
      * 增加缴费记录
@@ -44,7 +44,7 @@ public interface OldEnterpriseDao {
      * @return Integer
      */
     @Insert("insert into contract values (#{contractId}, #{creditCode}, #{voucher}, " +
-            "#{submitTime}, #{amount}, #{quarter}, #{describe})")
+            "#{submitTime}, #{amount}, #{quarter}, #{describe}, #{year})")
     Integer addContract(Contract contract);
 
     @Select("select * " +

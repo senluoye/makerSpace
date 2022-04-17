@@ -359,9 +359,7 @@ public class LeaderServiceImpl implements LeaderService {
         if (!JWTUtils.verify(token)) {
             throw new ServiceException("登陆信息过期，请重新登陆");
         }
-        System.out.println(JWTUtils.parser(token));
         String userId = JWTUtils.parser(token).get("userId").toString();
-        System.out.println(userId);
         List<User> Users = leaderDao.getUserById(userId);
         if (Users.size() != 1 || Users.get(0).getUserDescribe() != 0) {
             throw new ServiceException("没有权限");
@@ -373,7 +371,6 @@ public class LeaderServiceImpl implements LeaderService {
             ContractRes contractRes = new ContractRes();
 
             String name = leaderDao.getNameByCreditCode(contract.getCreditCode());
-            System.out.println(name);
             if (Objects.equals(name, "") || name == null) {
                 continue;
             }
@@ -383,6 +380,8 @@ public class LeaderServiceImpl implements LeaderService {
             contractRes.setVoucher(contract.getVoucher());
             contractRes.setDescribe(contract.getDescribe());
             contractRes.setName(name);
+            contractRes.setYear(contract.getYear());
+            contractRes.setSubmitTime(contract.getSubmitTime());
 
             data.add(contractRes);
         }

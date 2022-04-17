@@ -19,6 +19,8 @@ public class ContractRes {
     private Integer amount;
     // 季度
     private Integer quarter;
+    // 年度
+    private Integer year;
     // 费用类型
     private String describe;
 }

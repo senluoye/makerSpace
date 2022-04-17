@@ -17,6 +17,8 @@ public class Contract {
     private String submitTime;
     // 提交金额
     private Integer amount;
+    // 年度
+    private Integer year;
     // 季度
     private Integer quarter;
     // 费用类型
