@@ -1,6 +1,7 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.response.Demand;
 import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import io.swagger.models.auth.In;
@@ -21,13 +22,6 @@ public interface NewEnterpriseDao {
             "VALUES (#{id}, #{leaseArea}, #{position}, #{lease}, #{floor}, " +
             "#{electric}, #{water}, #{web}, #{others}, #{newDemandId}, #{time})")
     Integer addNewDemand(NewDemand newDemand);
-
-    @Insert("insert into contract(contract_id, credit_code, voucher, time) " +
-            "VALUES (#{contractId}, #{creditCode}, #{voucher}, #{submitTime})")
-    Integer addNewDemandContract(String contractId, String creditCode, byte[] voucher, String submitTime);
-
-    @Select("select * from new_demand where new_demand_id = #{newDemandId}")
-    List<OldDemand> selectDemandByNewDemandId(String newDemandId);
 
     @Insert("insert into " +
             "new_shareholder(id, new_shareholder_id, name, stake, nature) " +
@@ -155,4 +149,30 @@ public interface NewEnterpriseDao {
 
     @Select("select * from contract where credit_code = #{creditCode}")
     List<Contract> getNewContractList(String creditCode);
+
+    @Select("select * from contract " +
+            "where credit_code = #{creditCode} and year = #{year} and quarter = #{quarter} and `describe` = #{describe}")
+    Contract getContractByCreditCodeAndQuarter(String creditCode, int year, int quarter, String describe);
+
+    @Select("select * " +
+            "from new_demand " +
+            "where new_demand_id = (" +
+            "   select new_demand_id " +
+            "   from new " +
+            "   where credit_code = #{creditCode} " +
+            "   and submit_time = (" +
+            "       select max(submit_time) " +
+            "       from new " +
+            "       where credit_code = #{creditCode}" +
+            "   )" +
+            ")")
+    List<NewDemand> getLastNewDemandByCreditCode(String creditCode);
+
+    News getLastNewByCreditCode(String s);
+
+    @Update("update new_demand set lease = #{lease}, lease_area = #{leaseArea}, position = #{position}, " +
+            "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, " +
+            "others = #{others}, time = #{time} " +
+            "where new_demand_id = #{newDemandId}")
+    Integer updateNewDemand(NewDemand newDemand);
 }
