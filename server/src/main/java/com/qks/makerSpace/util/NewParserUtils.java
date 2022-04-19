@@ -3,7 +3,6 @@ package com.qks.makerSpace.util;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.response.Demand;
 
 import java.text.SimpleDateFormat;
 import java.util.*;

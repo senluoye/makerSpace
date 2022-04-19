@@ -1,6 +1,7 @@
 package com.qks.makerSpace.service;
 
 import com.alibaba.fastjson.JSONObject;
+import com.qks.makerSpace.exception.LoginException;
 import com.qks.makerSpace.exception.ServiceException;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,9 +12,9 @@ import java.util.Map;
 
 public interface OldEnterpriseService {
 
-    Map<String, Object> getOldEnterprise(String token);
-    Map<String, Object> getOldEnterpriseById(String token, String oldId);
-    Map<String, Object> getOldEnterpriseApplying(String token);
+    Map<String, Object> getOldEnterprise(String token) throws ServiceException;
+    Map<String, Object> getOldEnterpriseById(String token, String oldId) throws ServiceException;
+    Map<String, Object> getOldEnterpriseApplying(String token) throws ServiceException;
     Map<String, Object> updateOldEnterprise(String token,
                                             String map,
                                             MultipartFile license,

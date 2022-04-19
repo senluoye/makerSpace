@@ -6,6 +6,7 @@ import com.qks.makerSpace.entity.Temp.EmploymentData;
 import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.database.Demand;
 import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
 import com.qks.makerSpace.entity.request.BriefFormReq;
@@ -789,7 +790,7 @@ public class AdminServiceImpl implements AdminService {
             throw new ServiceException("没有权限");
         }
 
-
-        return MyResponseUtil.getResultMap("该接口暂时还没做，感觉不太需要", 0, "success");
+        List<Demand> demands = adminDao.getAllDemand();
+        return MyResponseUtil.getResultMap(demands, 0, "success");
     }
 }

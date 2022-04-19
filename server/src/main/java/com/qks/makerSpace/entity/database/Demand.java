@@ -1,10 +1,14 @@
-package com.qks.makerSpace.entity.response;
+package com.qks.makerSpace.entity.database;
 
 import lombok.Data;
 
+/**
+ * @author 15998
+ */
 @Data
 public class Demand {
     private String id;
+    private String creditCode;
     private String leaseArea;
     private String position;
     private String lease;

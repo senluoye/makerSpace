@@ -70,7 +70,7 @@ public class NewEnterpriseController {
      * @return
      */
     @RequestMapping(value = "newEnterprise/applying",method = RequestMethod.GET)
-    private Map<String, Object> getNewEnterpriseApplying(HttpServletRequest httpServletRequest) {
+    private Map<String, Object> getNewEnterpriseApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         return newEnterpriseService.getNewEnterpriseApplying(httpServletRequest.getHeader("token"));
     }
 

@@ -1,5 +1,7 @@
 package com.qks.makerSpace.util;
 
+import com.qks.makerSpace.exception.LoginException;
+import com.qks.makerSpace.exception.ServiceException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -53,12 +55,16 @@ public class JWTUtils {
      * @param token
      * @return
      */
-    public static Claims parser(String token){
-        return Jwts.parserBuilder()                // 创建解析对象
-                .setSigningKey(secretKey)   // 设置安全密钥（生成签名所需的密钥和算法）
-                .build()
-                .parseClaimsJws(token)      // 解析token
-                .getBody();
+    public static Claims parser(String token) throws ServiceException {
+        if (verify(token)) {
+            return Jwts.parserBuilder()
+                    .setSigningKey(secretKey)
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } else {
+            throw new ServiceException("登陆信息过期或未登录");
+        }
     }
 
 }

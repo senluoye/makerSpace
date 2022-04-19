@@ -126,6 +126,12 @@ public interface OldEnterpriseDao {
             "#{electric}, #{water}, #{web}, #{others}, #{oldDemandId}, #{time})")
     Integer addOldDemand(OldDemand oldDemand);
 
+    @Insert("insert into demand(id, lease_area, position, lease, " +
+            "floor, electric, water, web, others, credit_code, time) " +
+            "VALUES (#{id}, #{leaseArea}, #{position}, #{lease}, #{floor}, " +
+            "#{electric}, #{water}, #{web}, #{others}, #{creditCode}, #{time})")
+    Integer addDemand(Demand demand);
+
     @Insert("insert into contract(contract_id, credit_code, voucher, time) " +
             "VALUES (#{contractId}, #{creditCode}, #{voucher}, #{submitTime})")
     Integer addOldDemandContract(String contractId, String creditCode, byte[] voucher, String submitTime);
@@ -139,19 +145,11 @@ public interface OldEnterpriseDao {
     @Select("select * from old_demand where old_demand_id = #{id}")
     List<OldDemand> getOldDemandById(String id);
 
-    @Select("select * " +
-            "from old_demand " +
-            "where old_demand_id = (" +
-            "   select old_demand_id " +
-            "   from old " +
-            "   where credit_code = #{creditCode} " +
-            "   and submit_time = (" +
-            "       select max(submit_time) " +
-            "       from old " +
-            "       where credit_code = #{creditCode}" +
-            "   )" +
-            ")")
+    @Select("select * from old_demand where old_demand_id in (select old_demand_id from old where credit_code = #{creditCode})")
     List<OldDemand> getLastOldDemandByCreditCode(String creditCode);
+
+    @Select("select * from demand where credit_code = #{creditCode}")
+    List<Demand> getLastDemandByCreditCode(String creditCode);
 
     @Select("select * from old_mainperson where old_mainperson_id = #{id}")
     List<OldMainPerson>  getOldMainPeopleById(String id);

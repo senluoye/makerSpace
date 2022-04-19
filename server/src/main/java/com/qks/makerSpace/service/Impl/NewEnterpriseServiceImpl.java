@@ -1,25 +1,22 @@
 package com.qks.makerSpace.service.Impl;
 
 import com.alibaba.fastjson.JSONObject;
-import com.auth0.jwt.JWT;
 import com.qks.makerSpace.dao.NewEnterpriseDao;
 import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.response.Demand;
 import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.NewEnterpriseService;
 import com.qks.makerSpace.util.*;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
-import java.rmi.ServerException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -266,7 +263,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         Contract contract = new Contract();
         try {
             contract.setContractId(UUID.randomUUID().toString());
-            contract.setAmount(Integer.parseInt(jsonObject.getString("amount")));
+            contract.setAmount(NumberUtils.createBigDecimal(jsonObject.getString("amount")));
             contract.setQuarter(Integer.parseInt(jsonObject.getString("quarter")));
             contract.setDescribe(jsonObject.getString("describe"));
             contract.setVoucher(FileUtils.upload(voucher, uploadPath));
@@ -311,7 +308,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
      * @return
      */
     @Override
-    public Map<String, Object> getNewEnterpriseApplying(String token) {
+    public Map<String, Object> getNewEnterpriseApplying(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = newEnterpriseDao.selectCreditCodeByUserId(userId);
         String creditCode;

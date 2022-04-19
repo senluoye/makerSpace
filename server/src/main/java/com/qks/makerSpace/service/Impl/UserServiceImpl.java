@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public Map<String, Object> getHomepage(String token) {
+    public Map<String, Object> getHomepage(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<User> users = userDao.getUserByUserId(userId);
         if (users.size() < 1)

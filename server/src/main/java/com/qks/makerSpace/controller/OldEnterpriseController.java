@@ -47,7 +47,7 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "old/oldEnterprise", method = RequestMethod.GET)
-    private Map<String, Object> getOldEnterprise(HttpServletRequest httpServletRequest) {
+    private Map<String, Object> getOldEnterprise(HttpServletRequest httpServletRequest) throws ServiceException {
         return oldEnterpriseService.getOldEnterprise(httpServletRequest.getHeader("token"));
     }
 
@@ -58,7 +58,7 @@ public class OldEnterpriseController {
      */
     @RequestMapping(value = "old/oldEnterprise/{id}", method = RequestMethod.GET)
     private Map<String, Object> getOldEnterpriseById(HttpServletRequest httpServletRequest,
-                                                     @PathVariable("id") String id) {
+                                                     @PathVariable("id") String id) throws ServiceException {
         return oldEnterpriseService.getOldEnterpriseById(httpServletRequest.getHeader("token"), id);
     }
 
@@ -68,7 +68,7 @@ public class OldEnterpriseController {
      * @return
      */
     @RequestMapping(value = "old/oldEnterprise/applying", method = RequestMethod.GET)
-    private Map<String, Object> getOldEnterpriseApplying(HttpServletRequest httpServletRequest) {
+    private Map<String, Object> getOldEnterpriseApplying(HttpServletRequest httpServletRequest) throws ServiceException {
         return oldEnterpriseService.getOldEnterpriseApplying(httpServletRequest.getHeader("token"));
     }
 

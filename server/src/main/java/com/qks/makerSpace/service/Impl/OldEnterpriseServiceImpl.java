@@ -5,6 +5,7 @@ import com.qks.makerSpace.dao.OldEnterpriseDao;
 import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
+import com.qks.makerSpace.exception.LoginException;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
 import com.qks.makerSpace.util.*;
@@ -220,7 +221,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return Hashmap
      */
     @Override
-    public Map<String, Object> getOldEnterprise(String token)   {
+    public Map<String, Object> getOldEnterprise(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
         String creditCode = creditCodes.get(0);
@@ -252,7 +253,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return
      */
     @Override
-    public Map<String, Object> getOldEnterpriseById(String token, String oldId) {
+    public Map<String, Object> getOldEnterpriseById(String token, String oldId) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
 
         Old old = oldEnterpriseDao.getOldByOldId(oldId);
@@ -263,8 +264,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         List<OldMainPerson> oldMainPerson = oldEnterpriseDao.getOldMainPeopleById(old.getOldMainpersonId());
         List<OldProject> oldProject = oldEnterpriseDao.getOldProjectById(old.getOldProjectId());
         List<OldShareholder> oldShareholder = oldEnterpriseDao.getOldShareholderById(old.getOldShareholderId());
-
-//        Map<String, Object> temp = OldParserUtils.OldGetResponse(old);
 
         Map<String, Object> data = new HashMap<>();
         data.put("old", old);
@@ -284,7 +283,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
      * @return
      */
     @Override
-    public Map<String, Object> getOldEnterpriseApplying (String token) {
+    public Map<String, Object> getOldEnterpriseApplying (String token) throws ServiceException {
         /**
          * 首先找到与用户对应的公司代码
          */
@@ -328,10 +327,10 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
             throw new ServiceException("请提交入园申请表后再进行此类操作");
         }
 
-        OldDemand oldDemand = OldParserUtils.OldDemandParser(jsonObject);
-        oldDemand.setOldDemandId(old.getOldDemandId());
-        // 更新OldDemand表，不做添加
-        if (oldEnterpriseDao.updateOldDemand(oldDemand) < 1) {
+        Demand demand = OldParserUtils.DemandParser(String.valueOf(jsonObject));
+        demand.setCreditCode(creditCodes.get(0));
+        // 添加记录
+        if (oldEnterpriseDao.addDemand(demand) < 1) {
             throw new ServiceException("上传数据失败，请重新提交");
         }
 
@@ -387,16 +386,16 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
     public Map<String, Object> getOldEnterpriseDemand(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
         List<String> creditCodes = oldEnterpriseDao.selectCreditCodeByUserId(userId);
-        if (creditCodes.size() == 0) {
+        if (creditCodes.isEmpty()) {
             throw new ServiceException("您并没有填写入驻申请表");
         }
 
-        List<OldDemand> oldDemands = oldEnterpriseDao.getLastOldDemandByCreditCode(creditCodes.get(0));
-        if (oldDemands.size() == 0) {
+        List<Demand> demands = oldEnterpriseDao.getLastDemandByCreditCode(creditCodes.get(0));
+        if (demands.isEmpty()) {
             throw new ServiceException("您还没有进行场地申请");
         }
 
-        return MyResponseUtil.getResultMap(oldDemands.get(0), 0, "success");
+        return MyResponseUtil.getResultMap(demands, 0, "success");
     }
 
     /**

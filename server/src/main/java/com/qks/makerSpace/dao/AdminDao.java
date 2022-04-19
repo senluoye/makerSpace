@@ -4,6 +4,7 @@ import com.qks.makerSpace.entity.Temp.EmploymentData;
 import com.qks.makerSpace.entity.Temp.FormAwardsData;
 import com.qks.makerSpace.entity.Temp.HighEnterpriseData;
 import com.qks.makerSpace.entity.database.*;
+import com.qks.makerSpace.entity.database.Demand;
 import com.qks.makerSpace.entity.request.AdminSpaceApplyingReq;
 import com.qks.makerSpace.entity.request.AdminTechnologyApplyingReq;
 import com.qks.makerSpace.entity.request.BriefFormReq;
@@ -312,4 +313,7 @@ public interface AdminDao {
 
     @Select("select name from user where user_id = (select user_id from user_company where credit_code = #{creditCode})")
     String getNameByCreditCode(String creditCode);
+
+    @Select("select * from demand")
+    List<Demand> getAllDemand();
 }

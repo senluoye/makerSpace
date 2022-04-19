@@ -1,6 +1,7 @@
 package com.qks.makerSpace.handler;
 
 import com.mysql.cj.jdbc.exceptions.CommunicationsException;
+import com.qks.makerSpace.exception.LoginException;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.util.MyResponseUtil;
 import org.slf4j.Logger;
@@ -35,6 +36,23 @@ public class GlobalExceptionHandler {
         logger.info(String.valueOf(e));
 
         return MyResponseUtil.getResultMap(null, -1, e.getMessage());
+    }
+
+    /**
+     * 自定义异常
+     * @param req
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(value = LoginException.class)
+    @ResponseBody
+    private Map<String, Object> LoginExceptionHandler(HttpServletRequest req, Exception e) {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss");
+        logger.info("最新的请求: " + df.format(new Date()));
+        logger.info(req.getRequestURI());
+        logger.info(String.valueOf(e));
+
+        return MyResponseUtil.getResultMap(null, -3, e.getMessage());
     }
 
     /**

@@ -1,11 +1,8 @@
 package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.*;
-import com.qks.makerSpace.entity.response.Demand;
 import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
-import io.swagger.models.auth.In;
-import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;

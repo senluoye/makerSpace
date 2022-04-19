@@ -66,6 +66,25 @@ public class OldParserUtils {
         return oldDemand;
     }
 
+    public static Demand DemandParser(String obj) {
+        JSONObject json = JSONObject.parseObject(obj);
+
+        Demand demand = new Demand();
+        demand.setId(UUID.randomUUID().toString());
+        demand.setLeaseArea(json.getString("leaseArea"));
+        demand.setPosition(json.getString("position"));
+        demand.setLease(json.getString("lease"));
+        demand.setFloor(json.getString("floor"));
+        demand.setElectric(json.getString("electric"));
+        demand.setWater(json.getString("water"));
+        demand.setWeb(json.getString("web"));
+        demand.setOthers(json.getString("others"));
+
+        demand.setTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
+
+        return demand;
+    }
+
     public static OldDemand OldDemandParser(JSONObject json) {
         OldDemand oldDemand = new OldDemand();
 
