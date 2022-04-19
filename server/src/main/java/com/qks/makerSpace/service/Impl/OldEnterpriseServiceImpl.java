@@ -8,6 +8,7 @@ import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import com.qks.makerSpace.exception.ServiceException;
 import com.qks.makerSpace.service.OldEnterpriseService;
 import com.qks.makerSpace.util.*;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -352,7 +354,7 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         Contract contract = new Contract();
         try {
             contract.setContractId(UUID.randomUUID().toString());
-            contract.setAmount(Integer.parseInt(jsonObject.getString("amount")));
+            contract.setAmount(NumberUtils.createBigDecimal(jsonObject.getString("amount")));
             contract.setQuarter(Integer.parseInt(jsonObject.getString("quarter")));
             contract.setDescribe(jsonObject.getString("describe"));
             contract.setVoucher(FileUtils.upload(voucher, uploadPath));

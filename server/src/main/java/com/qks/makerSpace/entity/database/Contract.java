@@ -2,6 +2,8 @@ package com.qks.makerSpace.entity.database;
 
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 /**
  * @description 缴费表
  * @author 15998
@@ -16,7 +18,7 @@ public class Contract {
     // 提交时间
     private String submitTime;
     // 提交金额
-    private Integer amount;
+    private BigDecimal amount;
     // 年度
     private Integer year;
     // 季度
