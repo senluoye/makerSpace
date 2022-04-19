@@ -18,7 +18,7 @@ public class Contract {
     // 提交时间
     private String submitTime;
     // 提交金额
-    private BigDecimal amount;
+    private String amount;
     // 年度
     private Integer year;
     // 季度

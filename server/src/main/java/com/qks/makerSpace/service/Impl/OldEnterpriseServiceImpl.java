@@ -353,7 +353,12 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         Contract contract = new Contract();
         try {
             contract.setContractId(UUID.randomUUID().toString());
-            contract.setAmount(NumberUtils.createBigDecimal(jsonObject.getString("amount")));
+            /**
+             * 转成高精度再转回字符串的原因：
+             * Mysql的decimal存储不了小数点
+             * 为了避免精度丢失和传输格式错误的数据，所以这里做了一步双转
+             */
+            contract.setAmount(String.valueOf(NumberUtils.createBigDecimal(jsonObject.getString("amount"))));
             contract.setQuarter(Integer.parseInt(jsonObject.getString("quarter")));
             contract.setDescribe(jsonObject.getString("describe"));
             contract.setVoucher(FileUtils.upload(voucher, uploadPath));
@@ -363,6 +368,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         } catch (Exception e) {
             throw new ServiceException("请传递正确的数据格式");
         }
+
+        System.out.println(contract);
 
         Contract con = oldEnterpriseDao.getContractByCreditCodeAndQuarter(creditCodes.get(0), contract.getYear(), contract.getQuarter(), contract.getDescribe());
         if (con != null) {

@@ -18,7 +18,7 @@ public class ContractRes {
     // 提交时间
     private String submitTime;
     // 提交金额
-    private BigDecimal amount;
+    private String amount;
     // 季度
     private Integer quarter;
     // 年度

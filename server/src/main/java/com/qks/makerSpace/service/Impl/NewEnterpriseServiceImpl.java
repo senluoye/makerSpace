@@ -263,7 +263,7 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         Contract contract = new Contract();
         try {
             contract.setContractId(UUID.randomUUID().toString());
-            contract.setAmount(NumberUtils.createBigDecimal(jsonObject.getString("amount")));
+            contract.setAmount(String.valueOf(NumberUtils.createBigDecimal(jsonObject.getString("amount"))));
             contract.setQuarter(Integer.parseInt(jsonObject.getString("quarter")));
             contract.setDescribe(jsonObject.getString("describe"));
             contract.setVoucher(FileUtils.upload(voucher, uploadPath));
