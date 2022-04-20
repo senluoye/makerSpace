@@ -931,8 +931,6 @@ map部分：
 }
 ```
 
-## 
-
 ## 获取以往续约记录
 
 **简要描述：**获取旧企业科技园场地以往续约记录
@@ -949,9 +947,33 @@ map部分：
 
 ```json
 {
-    "data":{
-        
+    "data":[{
+        "id":"<String>",
+        "creditCode":"<String>",
+        "leaseArea":"<String>",
+        "position":"<String>",
+        "lease":"<String>",
+        "floor":"<String>",
+        "electric":"<String>",
+        "water":"<String>",
+        "web":"<String>",
+        "others":"<String>",
+        "time":"<String>"
+    },{
+        "id":"<String>",
+        "creditCode":"<String>",
+        "leaseArea":"<String>",
+        "position":"<String>",
+        "lease":"<String>",
+        "floor":"<String>",
+        "electric":"<String>",
+        "water":"<String>",
+        "web":"<String>",
+        "others":"<String>",
+        "time":"<String>"
     },
+            ...
+            ],
     "code":0,
     "msg":"success"
 }
@@ -973,9 +995,25 @@ map部分：
 
 ```json
 {
-    "data":{
-        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
+    "data":[{
+        "contractId":"<String>",
+        "creditCode":"<String>",
+        "voucher":"<String>",
+        "submitTime":"<String>",
+        "year":"<int>",
+        "quarter":"<int>",
+        "describe":"<String>"
+    },{
+        "contractId":"<String>",
+        "creditCode":"<String>",
+        "voucher":"<String>",
+        "submitTime":"<String>",
+        "year":"<int>",
+        "quarter":"<int>",
+        "describe":"<String>"
     },
+            ...
+            ],
     "code":0,
     "msg":"success"
 }
@@ -1508,7 +1546,7 @@ map部分：
 
 
 
-## 获取上一次续约记录
+## 获取以往续约记录
 
 **简要描述：**获取新企业科技园场地上一次续约记录
 
@@ -1524,9 +1562,32 @@ map部分：
 
 ```json
 {
-    "data":{
-        
+    "id":"<String>",
+        "creditCode":"<String>",
+        "leaseArea":"<String>",
+        "position":"<String>",
+        "lease":"<String>",
+        "floor":"<String>",
+        "electric":"<String>",
+        "water":"<String>",
+        "web":"<String>",
+        "others":"<String>",
+        "time":"<String>"
+    },{
+        "id":"<String>",
+        "creditCode":"<String>",
+        "leaseArea":"<String>",
+        "position":"<String>",
+        "lease":"<String>",
+        "floor":"<String>",
+        "electric":"<String>",
+        "water":"<String>",
+        "web":"<String>",
+        "others":"<String>",
+        "time":"<String>"
     },
+            ...
+            ],
     "code":0,
     "msg":"success"
 }
@@ -1549,8 +1610,25 @@ map部分：
 ```json
 {
     "data":{
-        "creditCode":"<String>",					//表示迁入和独立企业唯一ID
+         "data":[{
+        "contractId":"<String>",
+        "creditCode":"<String>",
+        "voucher":"<String>",
+        "submitTime":"<String>",
+        "year":"<int>",
+        "quarter":"<int>",
+        "describe":"<String>"
+    },{
+        "contractId":"<String>",
+        "creditCode":"<String>",
+        "voucher":"<String>",
+        "submitTime":"<String>",
+        "year":"<int>",
+        "quarter":"<int>",
+        "describe":"<String>"
     },
+            ...
+            ],
     "code":0,
     "msg":"success"
 }
