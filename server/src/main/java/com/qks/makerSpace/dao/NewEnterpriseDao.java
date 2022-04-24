@@ -151,18 +151,7 @@ public interface NewEnterpriseDao {
             "where credit_code = #{creditCode} and year = #{year} and quarter = #{quarter} and `describe` = #{describe}")
     Contract getContractByCreditCodeAndQuarter(String creditCode, int year, int quarter, String describe);
 
-    @Select("select * " +
-            "from new_demand " +
-            "where new_demand_id = (" +
-            "   select new_demand_id " +
-            "   from new " +
-            "   where credit_code = #{creditCode} " +
-            "   and submit_time = (" +
-            "       select max(submit_time) " +
-            "       from new " +
-            "       where credit_code = #{creditCode}" +
-            "   )" +
-            ")")
+    @Select("select * from demand where credit_code = #{creditCode}")
     List<NewDemand> getLastNewDemandByCreditCode(String creditCode);
 
     News getLastNewByCreditCode(String s);

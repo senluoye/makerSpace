@@ -948,6 +948,7 @@ map部分：
 ```json
 {
     "data":[{
+<<<<<<< HEAD
             "id": "440cd0ce-e0d0-4cd1-9ab6-a72f08720c9e",
             "creditCode": "1234567891234561",
             "leaseArea": "<111>",
@@ -960,6 +961,34 @@ map部分：
             "others": "<111>",
             "time": "2022-04-19:21:27:35"
         },],
+=======
+        "id":"<String>",
+        "creditCode":"<String>",
+        "leaseArea":"<String>",
+        "position":"<String>",
+        "lease":"<String>",
+        "floor":"<String>",
+        "electric":"<String>",
+        "water":"<String>",
+        "web":"<String>",
+        "others":"<String>",
+        "time":"<String>"
+    },{
+        "id":"<String>",
+        "creditCode":"<String>",
+        "leaseArea":"<String>",
+        "position":"<String>",
+        "lease":"<String>",
+        "floor":"<String>",
+        "electric":"<String>",
+        "water":"<String>",
+        "web":"<String>",
+        "others":"<String>",
+        "time":"<String>"
+    },
+            ...
+            ],
+>>>>>>> ff50ad1a341eb74bab110b1a99f4969f2c670f26
     "code":0,
     "msg":"success"
 }
@@ -982,6 +1011,7 @@ map部分：
 ```json
 {
     "data":[{
+<<<<<<< HEAD
             "contractId": "9b7ee79e-48e4-470a-8adf-4204ce5593ad",
             "creditCode": "222",
             "voucher": "be95707c-f908-4d9d-a2a2-0c5b68783fad.png",
@@ -991,6 +1021,26 @@ map部分：
             "quarter": 4,
             "describe": "房租费"
         },],
+=======
+        "contractId":"<String>",
+        "creditCode":"<String>",
+        "voucher":"<String>",
+        "submitTime":"<String>",
+        "year":"<int>",
+        "quarter":"<int>",
+        "describe":"<String>"
+    },{
+        "contractId":"<String>",
+        "creditCode":"<String>",
+        "voucher":"<String>",
+        "submitTime":"<String>",
+        "year":"<int>",
+        "quarter":"<int>",
+        "describe":"<String>"
+    },
+            ...
+            ],
+>>>>>>> ff50ad1a341eb74bab110b1a99f4969f2c670f26
     "code":0,
     "msg":"success"
 }
@@ -1539,6 +1589,7 @@ map部分：
 
 ```json
 {
+<<<<<<< HEAD
     "data":[{
             "id": "440cd0ce-e0d0-4cd1-9ab6-a72f08720c9e",
             "creditCode": "1234567891234561",
@@ -1552,6 +1603,34 @@ map部分：
             "others": "<111>",
             "time": "2022-04-19:21:27:35"
         },],
+=======
+    "id":"<String>",
+        "creditCode":"<String>",
+        "leaseArea":"<String>",
+        "position":"<String>",
+        "lease":"<String>",
+        "floor":"<String>",
+        "electric":"<String>",
+        "water":"<String>",
+        "web":"<String>",
+        "others":"<String>",
+        "time":"<String>"
+    },{
+        "id":"<String>",
+        "creditCode":"<String>",
+        "leaseArea":"<String>",
+        "position":"<String>",
+        "lease":"<String>",
+        "floor":"<String>",
+        "electric":"<String>",
+        "water":"<String>",
+        "web":"<String>",
+        "others":"<String>",
+        "time":"<String>"
+    },
+            ...
+            ],
+>>>>>>> ff50ad1a341eb74bab110b1a99f4969f2c670f26
     "code":0,
     "msg":"success"
 }
@@ -1573,6 +1652,7 @@ map部分：
 
 ```json
 {
+<<<<<<< HEAD
     "data":[{
             "contractId": "9b7ee79e-48e4-470a-8adf-4204ce5593ad",
             "creditCode": "222",
@@ -1583,6 +1663,28 @@ map部分：
             "quarter": 4,
             "describe": "房租费"
         },],
+=======
+    "data":{
+         "data":[{
+        "contractId":"<String>",
+        "creditCode":"<String>",
+        "voucher":"<String>",
+        "submitTime":"<String>",
+        "year":"<int>",
+        "quarter":"<int>",
+        "describe":"<String>"
+    },{
+        "contractId":"<String>",
+        "creditCode":"<String>",
+        "voucher":"<String>",
+        "submitTime":"<String>",
+        "year":"<int>",
+        "quarter":"<int>",
+        "describe":"<String>"
+    },
+            ...
+            ],
+>>>>>>> ff50ad1a341eb74bab110b1a99f4969f2c670f26
     "code":0,
     "msg":"success"
 }
