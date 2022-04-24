@@ -791,6 +791,23 @@ public class AdminServiceImpl implements AdminService {
         }
 
         List<Demand> demands = adminDao.getAllDemand();
-        return MyResponseUtil.getResultMap(demands, 0, "success");
+        List<DemandRes> data = new ArrayList<>(demands.size());
+        for (Demand i : demands) {
+            DemandRes demandRes = DemandRes.builder()
+                    .id(i.getId())
+                    .leaseArea(i.getLeaseArea())
+                    .position(i.getPosition())
+                    .lease(i.getLease())
+                    .floor(i.getFloor())
+                    .electric(i.getElectric())
+                    .water(i.getWater())
+                    .web(i.getWeb())
+                    .others(i.getOthers())
+                    .time(i.getTime())
+                    .name(adminDao.getNameByCreditCode(i.getCreditCode()))
+                    .build();
+            data.add(demandRes);
+        }
+        return MyResponseUtil.getResultMap(data, 0, "success");
     }
 }
