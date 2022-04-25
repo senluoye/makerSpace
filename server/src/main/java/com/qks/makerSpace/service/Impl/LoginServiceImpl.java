@@ -108,7 +108,7 @@ public class LoginServiceImpl implements LoginService, Serializable {
         String id = map.get("id").toString();
         String password = map.get("password").toString();
         User user = loginDao.commonLogin(id, password);
-        if (user.getUserDescribe() == 11 || user.getUserDescribe() == 12 || user.getUserDescribe() == 0)
+        if (user == null || user.getUserDescribe() == 11 || user.getUserDescribe() == 12 || user.getUserDescribe() == 0)
             throw new ServiceException("不存在该用户账号");
 
         Map<String, Object> data = new HashMap<>();
