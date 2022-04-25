@@ -1,5 +1,6 @@
 package com.qks.makerSpace.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.qks.makerSpace.entity.database.*;
@@ -118,29 +119,31 @@ public class NewParserUtils {
         return resultList;
     }
 
+    public static Demand DemandParser(String obj) {
+        JSONObject json = JSONObject.parseObject(obj);
+
+        Demand demand = new Demand();
+        demand.setId(UUID.randomUUID().toString());
+        demand.setLeaseArea(json.getString("leaseArea"));
+        demand.setPosition(json.getString("position"));
+        demand.setLease(json.getString("lease"));
+        demand.setFloor(json.getString("floor"));
+        demand.setElectric(json.getString("electric"));
+        demand.setWater(json.getString("water"));
+        demand.setWeb(json.getString("web"));
+        demand.setOthers(json.getString("others"));
+
+        demand.setTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
+
+        return demand;
+    }
+
     public static NewDemand newDemandParser(String obj) {
         JSONObject json = JSONObject.parseObject(obj);
 
         NewDemand newDemand = new NewDemand();
         newDemand.setId(UUID.randomUUID().toString());
         newDemand.setNewDemandId(UUID.randomUUID().toString());
-        newDemand.setLeaseArea(json.getString("leaseArea"));
-        newDemand.setPosition(json.getString("position"));
-        newDemand.setLease(json.getString("lease"));
-        newDemand.setFloor(json.getString("floor"));
-        newDemand.setElectric(json.getString("electric"));
-        newDemand.setWater(json.getString("water"));
-        newDemand.setWeb(json.getString("web"));
-        newDemand.setOthers(json.getString("others"));
-
-        newDemand.setTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
-
-        return newDemand;
-    }
-
-    public static NewDemand newDemandParser(JSONObject json) {
-        NewDemand newDemand = new NewDemand();
-
         newDemand.setLeaseArea(json.getString("leaseArea"));
         newDemand.setPosition(json.getString("position"));
         newDemand.setLease(json.getString("lease"));

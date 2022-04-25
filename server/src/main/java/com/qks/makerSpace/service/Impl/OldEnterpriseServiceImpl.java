@@ -113,6 +113,9 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         }
         old.setState("未审核");
 
+        Demand demand = OldParserUtils.DemandParser(map.getString("oldDemand"));
+        demand.setCreditCode(map.getString("creditCode"));
+
         // 租赁
         OldDemand oldDemand = OldParserUtils.OldDemandParser(map.getString("oldDemand"));
 
@@ -173,6 +176,8 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         /**
          * 其次向从表中插入数据
          */
+        if (oldEnterpriseDao.addDemand(demand) <= 0)
+            throw new ServiceException("信息插入失败：demand");
         if (oldEnterpriseDao.addOldDemand(oldDemand) <= 0)
             throw new ServiceException("信息插入失败:房租");
         for (OldMainPerson oldMainPeople : oldMainPeoples) {

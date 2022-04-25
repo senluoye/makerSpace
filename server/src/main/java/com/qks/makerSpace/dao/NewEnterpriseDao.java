@@ -152,7 +152,7 @@ public interface NewEnterpriseDao {
     Contract getContractByCreditCodeAndQuarter(String creditCode, int year, int quarter, String describe);
 
     @Select("select * from demand where credit_code = #{creditCode}")
-    List<NewDemand> getLastNewDemandByCreditCode(String creditCode);
+    List<Demand> getLastNewDemandByCreditCode(String creditCode);
 
     News getLastNewByCreditCode(String s);
 
@@ -161,4 +161,11 @@ public interface NewEnterpriseDao {
             "others = #{others}, time = #{time} " +
             "where new_demand_id = #{newDemandId}")
     Integer updateNewDemand(NewDemand newDemand);
+
+
+    @Insert("insert into demand(id, lease_area, position, lease, " +
+            "floor, electric, water, web, others, credit_code, time) " +
+            "VALUES (#{id}, #{leaseArea}, #{position}, #{lease}, #{floor}, " +
+            "#{electric}, #{water}, #{web}, #{others}, #{creditCode}, #{time})")
+    Integer addDemand(Demand demand);
 }

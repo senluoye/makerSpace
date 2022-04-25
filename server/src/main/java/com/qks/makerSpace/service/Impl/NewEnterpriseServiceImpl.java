@@ -91,6 +91,8 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         news.setPicture(FileUtils.upload(picture,uploadPath));
         news.setRepresentCard(FileUtils.upload(representCard,uploadPath));
         news.setState("未审核");
+        Demand demand = NewParserUtils.DemandParser(map.getString("newDemand"));
+        demand.setCreditCode(map.getString("creditCode"));
         NewDemand newDemand = NewParserUtils.newDemandParser(map.getString("newDemand"));
         List<NewShareholder> newShareholders = NewParserUtils.NewShareholdersParser(map.getJSONArray("newShareholder"));
         List<NewMainPerson> newMainPeople = NewParserUtils.NewMainPersonParser(map.getJSONArray("newMainPerson"));
@@ -116,6 +118,9 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
         }
         String time = new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date());
         news.setSubmitTime(time);
+
+        if (newEnterpriseDao.addDemand(demand) <= 0)
+            throw new ServiceException("信息插入失败：demand");
 
         if (newEnterpriseDao.insertNew(news) <= 0)
             throw new ServiceException("信息插入失败：news");
@@ -208,10 +213,10 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             throw new ServiceException("请提交入园申请表后再进行此类操作");
         }
 
-        NewDemand newDemand = NewParserUtils.newDemandParser(jsonObject);
-        newDemand.setNewDemandId(news.getNewDemandId());
+        Demand demand = NewParserUtils.DemandParser(String.valueOf(jsonObject));
+        demand.setCreditCode(creditCodes.get(0));
 
-        if (newEnterpriseDao.updateNewDemand(newDemand) < 1) {
+        if (newEnterpriseDao.addDemand(demand) < 1) {
             throw new ServiceException("上传数据失败，请重新提交");
         }
 
@@ -294,12 +299,12 @@ public class NewEnterpriseServiceImpl implements NewEnterpriseService , Serializ
             throw new ServiceException("您并没有填写入驻申请表");
         }
 
-        List<NewDemand> newDemands = newEnterpriseDao.getLastNewDemandByCreditCode(creditCodes.get(0));
-        if (newDemands.size() == 0) {
+        List<Demand> demands = newEnterpriseDao.getLastNewDemandByCreditCode(creditCodes.get(0));
+        if (demands.isEmpty()) {
             throw new ServiceException("您还没有进行场地申请");
         }
 
-        return MyResponseUtil.getResultMap(newDemands.get(0), 0, "success");
+        return MyResponseUtil.getResultMap(demands, 0, "success");
     }
 
     /**
