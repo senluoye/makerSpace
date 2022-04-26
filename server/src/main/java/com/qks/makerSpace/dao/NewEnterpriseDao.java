@@ -139,9 +139,8 @@ public interface NewEnterpriseDao {
     @Select("select new_id from new where credit_code = #{creditCode}")
     List<String> getNewIdList(String creditCode);
 
-    @Insert("insert into contract " +
-            "set contract_id = #{contractId}, credit_code = #{creditCode}, " +
-            "voucher = #{voucher}, submit_time = #{submitTime}")
+    @Insert("insert into contract values (#{contractId}, #{creditCode}, #{voucher}, " +
+            "#{submitTime}, #{amount}, #{quarter}, #{describe}, #{year})")
     Integer addContract(Contract contract);
 
     @Select("select * from contract where credit_code = #{creditCode}")
@@ -154,7 +153,15 @@ public interface NewEnterpriseDao {
     @Select("select * from demand where credit_code = #{creditCode}")
     List<Demand> getLastNewDemandByCreditCode(String creditCode);
 
-    News getLastNewByCreditCode(String s);
+    @Select("select * " +
+            "from new " +
+            "where credit_code = #{creditCode} " +
+            "and submit_time = (" +
+            "   select max(submit_time) " +
+            "   from new " +
+            "   where credit_code = #{creditCode}" +
+            ")")
+    News getLastNewByCreditCode(String creditCode);
 
     @Update("update new_demand set lease = #{lease}, lease_area = #{leaseArea}, position = #{position}, " +
             "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, " +
