@@ -22,10 +22,11 @@ public class SearchUtils {
         searchRequest.setContent(selectContent(searchRequest.getContent()));
         if (searchRequest.getBeginTime().isEmpty())
             searchRequest.setBeginTime("2020-01-01:00:00:00");
-        else searchRequest.setBeginTime(selectTime(searchRequest.getBeginTime()));
+        else searchRequest.setBeginTime(searchRequest.getBeginTime()+":00:00:00");
+
         if (searchRequest.getEndTime().isEmpty())
             searchRequest.setEndTime(new SimpleDateFormat("yyyy-MM-dd:HH:mm:ss").format(new Date()));
-        else searchRequest.setEndTime(selectTime(searchRequest.getEndTime()));
+        else searchRequest.setEndTime(searchRequest.getEndTime()+":23:59:59");
 
         return searchRequest;
     }

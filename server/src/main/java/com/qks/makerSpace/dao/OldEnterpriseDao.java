@@ -206,11 +206,9 @@ public interface OldEnterpriseDao {
     @Select("select old_id from old where credit_code = #{creditCode}")
     List<String> getOldIdList(String creditCode);
 
-    @Select("select old.old_id id, old.name, old.suggestion, audit.administrator_audit, audit.leadership_audit, audit.submit_time " +
-            "from old, audit " +
-            "where old.credit_code = #{creditCode} " +
-            "and audit.credit_code = old.credit_code " +
-            "and audit.submit_time = old.submit_time " +
+    @Select("select audit.administrator_audit, audit.leadership_audit, audit.submit_time, n.old_id as id, n.name, n.suggestion, n.note " +
+            "from audit join old n on audit.credit_code = n.credit_code and audit.submit_time = n.submit_time " +
+            "where audit.credit_code = #{creditCode} " +
             "order by submit_time desc")
     List<TechnologyApplyingRes> selectAuditByCreditCode(String creditCode);
 

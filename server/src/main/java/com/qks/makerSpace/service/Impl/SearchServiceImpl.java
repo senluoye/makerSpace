@@ -10,9 +10,7 @@ import com.qks.makerSpace.util.SearchUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,19 +28,14 @@ public class SearchServiceImpl implements SearchService {
     public Map<String, Object> searchContent(SearchRequest searchRequest) throws ServiceException {
         List<SearchResponse> searchResponseList = new ArrayList<>();
         SearchRequest dealRequest = SearchUtils.dealSearch(searchRequest);
-        System.out.println(dealRequest);
 
         List<SearchResponse> searchResponseListA =  searchDao.selectOld(dealRequest);
         for (SearchResponse searchResponse : searchResponseListA) {
             searchResponse.setDescribe("3");
-            searchResponse.setAdministratorAudit(searchDao.selectAdministratorAudit(searchResponse.getCreditCode(),searchResponse.getSubmitTime()));
-            searchResponse.setLeadershipAudit(searchDao.selectLeadershipAudit(searchResponse.getCreditCode(),searchResponse.getSubmitTime()));
         }
         List<SearchResponse> searchResponseListB =  searchDao.selectNew(searchRequest);
         for (SearchResponse searchResponse : searchResponseListB) {
             searchResponse.setDescribe("2");
-            searchResponse.setAdministratorAudit(searchDao.selectAdministratorAudit(searchResponse.getCreditCode(),searchResponse.getSubmitTime()));
-            searchResponse.setLeadershipAudit(searchDao.selectLeadershipAudit(searchResponse.getCreditCode(),searchResponse.getSubmitTime()));
         }
 
         searchResponseList.addAll(searchResponseListA);

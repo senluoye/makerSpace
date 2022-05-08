@@ -61,7 +61,7 @@ public class MessageImpl implements MessageService {
     @Override
     public Map<String, Object> getAllUserMessage(String token) throws ServiceException {
         String userId = JWTUtils.parser(token).get("userId").toString();
-        if (!userId.equals("1"))
+        if (!userId.equals("admin"))
             throw new ServiceException("请求主体不为管理员");
 
         List<Message> messageList = messageDao.getAllUserMessage();

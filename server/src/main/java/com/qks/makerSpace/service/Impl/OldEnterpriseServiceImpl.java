@@ -299,17 +299,6 @@ public class  OldEnterpriseServiceImpl implements OldEnterpriseService, Serializ
         if (creditCodes.size() != 0) {
             creditCode = creditCodes.get(0);
             List<TechnologyApplyingRes> technologyApplyIngResList = oldEnterpriseDao.selectAuditByCreditCode(creditCode);
-            for (TechnologyApplyingRes i : technologyApplyIngResList) {
-                String submitTime = i.getSubmitTime();
-                String id = oldEnterpriseDao.getOldIdByCreditCodeAndTime(creditCode,submitTime);
-                String name = oldEnterpriseDao.getOldNameByCreditCodeAndTime(creditCode,submitTime);
-                String suggestion = oldEnterpriseDao.getOldSuggestionByCreditCodeAndTime(creditCode,submitTime);
-                String note = oldEnterpriseDao.getOldNoteByCreditCodeAndTime(creditCode,submitTime);
-                i.setName(name);
-                i.setSuggestion(suggestion);
-                i.setId(id);
-                i.setNote(note);
-            }
             return MyResponseUtil.getResultMap(technologyApplyIngResList, 0, "success");
         }
         return MyResponseUtil.getResultMap(new ArrayList<>(), 0, "success");

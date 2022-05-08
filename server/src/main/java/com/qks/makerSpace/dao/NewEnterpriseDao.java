@@ -92,8 +92,9 @@ public interface NewEnterpriseDao {
             "values (#{auditId}, #{administratorAudit}, #{leadershipAudit}, #{describe}, #{submitTime}, #{creditCode})")
     Integer insertAudit(Audit audit);
 
-    @Select("select administrator_audit, leadership_audit, submit_time " +
-            "from audit where credit_code = #{creditCode} " +
+    @Select("select audit.administrator_audit, audit.leadership_audit, audit.submit_time, n.new_id as id, n.name, n.suggestion, n.note " +
+            "from audit join new n on audit.credit_code = n.credit_code and audit.submit_time = n.submit_time " +
+            "where audit.credit_code = #{creditCode} " +
             "order by submit_time desc")
     List<TechnologyApplyingRes> selectAuditByCreditCode(String creditCode);
 

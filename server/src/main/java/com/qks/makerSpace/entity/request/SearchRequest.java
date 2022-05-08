@@ -14,10 +14,10 @@ public class SearchRequest {
     private String content;
 
     @ApiModelProperty("搜索起始时间")
-    @Pattern(regexp = "^\\d{4}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$|^\\s*$", message = "时间格式不匹配")
+    @Pattern(regexp = "^[1-9]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$|^\\s*$", message = "时间格式不匹配")
     private String beginTime;
 
     @ApiModelProperty("搜索中止时间")
-    @Pattern(regexp = "^\\d{4}\\D\\:\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D+\\d{1,2}\\D*$|^\\s*$", message = "时间格式不匹配")
+    @Pattern(regexp = "^[1-9]\\d{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$|^\\s*$", message = "时间格式不匹配")
     private String endTime;
 }
