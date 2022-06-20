@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableCaching
 //@SpringBootApplication(exclude = {MultipartAutoConfiguration.class})
 @SpringBootApplication
-@MapperScan("con.qks.makerSpace")
 @EnableTransactionManagement
 public class MakerSpaceApplication {
 

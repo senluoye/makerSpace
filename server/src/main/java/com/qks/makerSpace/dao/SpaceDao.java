@@ -5,15 +5,12 @@ import com.qks.makerSpace.entity.database.Space;
 import com.qks.makerSpace.entity.database.SpacePerson;
 import com.qks.makerSpace.entity.database.UserSpace;
 import io.swagger.models.auth.In;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface SpaceDao {
 
     @Select("select * from space where create_name = #{createName}")

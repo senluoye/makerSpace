@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Map;
 
-@Repository
+@Mapper
 public interface AdminDao {
 
     @Select("select * from user_account_applying where name = #{name}")

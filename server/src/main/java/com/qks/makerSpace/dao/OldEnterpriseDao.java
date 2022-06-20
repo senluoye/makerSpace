@@ -5,13 +5,14 @@ import com.qks.makerSpace.entity.response.FormDetails;
 import com.qks.makerSpace.entity.response.OldContractRes;
 import com.qks.makerSpace.entity.response.TechnologyApplyingRes;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface OldEnterpriseDao {
 
     /**

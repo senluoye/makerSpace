@@ -7,13 +7,14 @@ import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.*;
 import com.qks.makerSpace.entity.response.TimeFormRes;
 import io.swagger.models.auth.In;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface LeaderDao {
 
     @Select("select credit_code, administrator_audit administratorAudit, leadership_audit leadershipAudit, `describe`, max(submit_time) submitTime " +

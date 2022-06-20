@@ -7,13 +7,14 @@ import com.qks.makerSpace.entity.database.*;
 import com.qks.makerSpace.entity.request.FormReq;
 import com.qks.makerSpace.entity.response.AllForm;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface FormDao {
     @Select("select * from user where user_id = #{userId}")
     User getUserByUserId(String userId);

@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 import java.beans.PropertyVetoException;
 
-@Configuration
-@MapperScan("com.qks.makerSpace.dao")
+//@Configuration
+//@MapperScan("com.qks.makerSpace.dao")
 public class DataSourceConfiguration {
     @Value("${jdbc.driver}")
     private String jdbcDriver;

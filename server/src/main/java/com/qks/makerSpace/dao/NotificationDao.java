@@ -2,15 +2,12 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.database.Notification;
 import com.qks.makerSpace.entity.response.NoticeResponse;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface NotificationDao {
 
     @Insert("insert into notification(notice_id, title, author, text, for_top, notice_time) " +

@@ -2,12 +2,13 @@ package com.qks.makerSpace.dao;
 
 import com.qks.makerSpace.entity.request.SearchRequest;
 import com.qks.makerSpace.entity.response.SearchResponse;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface SearchDao {
 
     @Select("select old_id id, credit_code, name, submit_time, leadership_audit, administrator_audit " +

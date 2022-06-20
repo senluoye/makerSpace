@@ -7,15 +7,12 @@ import com.qks.makerSpace.entity.response.AdminSpaceSuggestion;
 import com.qks.makerSpace.entity.response.AdminSuggestion;
 import com.qks.makerSpace.entity.response.AllTechnology;
 import com.qks.makerSpace.entity.response.MessageRes;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
+@Mapper
 public interface MessageDao {
 
     @Insert("insert into message(message_id, user_id, message_text, message_time) " +
