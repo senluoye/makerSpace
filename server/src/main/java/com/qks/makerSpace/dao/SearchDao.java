@@ -21,10 +21,4 @@ public interface SearchDao {
             "natural join audit " +
             "where submit_time in (select max(submit_time) from audit group by credit_code) and name like #{content} and submit_time between #{beginTime} and #{endTime}")
     List<SearchResponse> selectNew(SearchRequest searchRequest);
-
-    @Select("select administrator_audit from audit where credit_code = #{creditCode} and submit_time = #{submitTime}")
-    String selectAdministratorAudit(String creditCode, String submitTime);
-
-    @Select("select leadership_audit from audit where credit_code = #{creditCode} and submit_time = #{submitTime}")
-    String selectLeadershipAudit(String creditCode, String submitTime);
 }
