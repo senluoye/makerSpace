@@ -139,9 +139,8 @@ public interface NewEnterpriseDao {
     @Select("select new_id from new where credit_code = #{creditCode}")
     List<String> getNewIdList(String creditCode);
 
-    @Insert("insert into contract " +
-            "set contract_id = #{contractId}, credit_code = #{creditCode}, " +
-            "voucher = #{voucher}, submit_time = #{submitTime}")
+    @Insert("insert into contract values (#{contractId}, #{creditCode}, #{voucher}, " +
+            "#{submitTime}, #{amount}, #{quarter}, #{describe}, #{year})")
     Integer addContract(Contract contract);
 
     @Select("select * from contract where credit_code = #{creditCode}")
@@ -152,13 +151,28 @@ public interface NewEnterpriseDao {
     Contract getContractByCreditCodeAndQuarter(String creditCode, int year, int quarter, String describe);
 
     @Select("select * from demand where credit_code = #{creditCode}")
-    List<NewDemand> getLastNewDemandByCreditCode(String creditCode);
+    List<Demand> getLastNewDemandByCreditCode(String creditCode);
 
-    News getLastNewByCreditCode(String s);
+    @Select("select * " +
+            "from new " +
+            "where credit_code = #{creditCode} " +
+            "and submit_time = (" +
+            "   select max(submit_time) " +
+            "   from new " +
+            "   where credit_code = #{creditCode}" +
+            ")")
+    News getLastNewByCreditCode(String creditCode);
 
     @Update("update new_demand set lease = #{lease}, lease_area = #{leaseArea}, position = #{position}, " +
             "floor = #{floor}, electric = #{electric}, water = #{water}, web = #{web}, " +
             "others = #{others}, time = #{time} " +
             "where new_demand_id = #{newDemandId}")
     Integer updateNewDemand(NewDemand newDemand);
+
+
+    @Insert("insert into demand(id, lease_area, position, lease, " +
+            "floor, electric, water, web, others, credit_code, time) " +
+            "VALUES (#{id}, #{leaseArea}, #{position}, #{lease}, #{floor}, " +
+            "#{electric}, #{water}, #{web}, #{others}, #{creditCode}, #{time})")
+    Integer addDemand(Demand demand);
 }
