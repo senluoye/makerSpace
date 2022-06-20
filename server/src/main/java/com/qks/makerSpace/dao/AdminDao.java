@@ -218,10 +218,9 @@ public interface AdminDao {
     @Select("select distinct year from form")
     List<String> getTimeList();
 
-    @Select("select form_id, team_name, credit_code, get_time, admin_audit, leader_audit, concat(year, quarter) time " +
+    @Select("select form_id, team_name, credit_code, get_time, admin_audit, leader_audit, quarter time " +
             "from form " +
             "where year = #{year} and quarter = #{quarter} "
-//            + "group by credit_code"
             )
     List<TimeFormRes> getFormListByTime(String year, String quarter);
 
